@@ -1,3 +1,26 @@
-<view class="container">
-    testtest
+<!-- <view class="container">
+    {{courseData}}
+</view> -->
+  <!-- <block wx:if={{courseData}}>
+    
+  </block>
+  <block wx:else>
+    
+  </block> -->
+
+
+
+<view class="jar">
+  <view class="mouth"></view>
+  <view class="neck"></view>
+  <view class="base">
+    <view class="liquid"> </view>
+    <view class="wave"></view>
+    <view class="wave"></view>
+    <view class="bubble"></view>
+    <view class="bubble"></view>
+  </view>
+  <view class="bubble"></view>
+  <view class="bubble"></view>
 </view>
+<p>loading.....</p>

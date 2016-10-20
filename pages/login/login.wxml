@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+    <view>
+      <input type="number" bindinput="usernameInput" placeholder="请输入学号" />
+    </view>
+    <view>
+      <input bindinput="passwordInput" password placeholder="请输入密码" />
+    </view>
+</view>
+<view class="container">
+  <button type="primary" bindtap="gotoHome" plain>确定</button>
+</view>

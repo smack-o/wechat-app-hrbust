@@ -5,5 +5,10 @@ Page({
     wx.navigateTo({
       url: '../course/course'
     })
+  },
+  login: function() {
+    wx.navigateTo({
+      url: '../login/login'
+    })
   }
 })

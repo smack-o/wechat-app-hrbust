@@ -4,52 +4,23 @@ Page({
   data: {
     timeStyle: 'timeLeftRight',
     isTouch: false,
+    top: 0,
   },
   gotoCourse: function(e) {
     wx.redirectTo({
       url: '../course/course'
     })
   },
-  touchendPage: function(e) {
-    console.log(1);
-    // this.setData({
-    //   isTouch: false,
-    //   timeStyle: 'timeLeftRight'
-    // });
-  },
-  touchmovePage: function(e) {
-    console.log(e);
-    // const touchmoveX = e.touches[0].pageX;
-    // const touchmoveY = e.touches[0].pageY;
-    // if (this.data.isTouch) {
-    //   return;
-    // }
-    // if ( Math.abs(touchmoveY - this.pageY) > Math.abs(touchmoveX - this.pageX) ) {
-    //   console.log("top-down");
-    //   this.setData({
-    //     timeStyle: 'timeTopDown',
-    //     isTouch: true
-    //   });
-    // } else {
-    //   console.log("left-right");
-    //   this.setData({
-    //     timeStyle: 'timeLeftRight',
-    //     isTouch: true
-    //   });
-    // }
-  },
-  touchstartPage: function(e) {
-    this.pageX = e.touches[0].pageX;
-    this.pageY = e.touches[0].pageY;
-  },
   onLoad: function() {
-    console.log('course onload');
+    console.log('course onload1');
+    var day = new Date().getDay();
     const that = this;
     const courseData = wx.getStorageSync('courseData');
 
     if (courseData) {
       that.setData({
         courseData,
+        day,
       });
     } else {
       const username = wx.getStorageSync('username');
@@ -70,7 +41,8 @@ Page({
             data: res.data
           });
           that.setData({
-            courseData: res.data
+            courseData: res.data,
+            day,
           });
         }
       });

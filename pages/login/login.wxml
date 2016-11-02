@@ -1,12 +1,29 @@
-<!--index.wxml-->
-<view class="container">
-    <view>
-      <input type="number" bindinput="usernameInput" placeholder="请输入学号" />
-    </view>
-    <view>
-      <input bindinput="passwordInput" password placeholder="请输入密码" />
-    </view>
-</view>
-<view class="container">
-  <button type="primary" bindtap="gotoHome" plain>确定</button>
-</view>
+<import src="../../utils/loading.wxml"/>
+
+<block wx:if="{{loginStatus=='start'}}">
+  <template is="loading" data="{{text: '正在登陆中'}}"/>
+</block>
+<block wx:elif="{{loginStatus=='complete'}}">
+  <view class="container">
+    <p>登陆成功</p>
+  </view>
+</block>
+<block wx:else>
+  <view class="container">
+      <picker bindchange="changeUser" value="{{username}}" range="{{userList}}">
+        <view class="picker">
+          切换账号> {{username}}
+        </view>
+      </picker>
+
+      <view>
+        <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="请输入学号" />
+      </view>
+      <view>
+        <input value="{{password}}" bindinput="passwordInput" password placeholder="请输入密码" />
+      </view>
+  </view>
+  <view class="container">
+    <button type="primary" bindtap="confirm" plain>确定</button>
+  </view>
+</block>

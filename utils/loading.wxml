@@ -1,0 +1,20 @@
+<template name="loading">
+  <view class="container">
+    <view class="jar">
+      <view class="mouth"></view>
+      <view class="neck"></view>
+      <view class="base">
+        <view class="liquid"> </view>
+        <view class="wave wave1"></view>
+        <view class="wave wave2"></view>
+        <view class="bubble bubble1"></view>
+        <view class="bubble bubble2"></view>
+      </view>
+      <view class="bubble bubble3"></view>
+      <view class="bubble bubble4"></view>
+    </view>
+  </view>
+  <view class="loadingText">
+    {{text}}<p class="dotting"></p>
+  </view>
+</template>

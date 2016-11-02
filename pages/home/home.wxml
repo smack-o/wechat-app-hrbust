@@ -4,3 +4,6 @@
 <view class="grade container">
   <button type="primary" bindtap="gotoGrade" plain>成绩</button>
 </view>
+<view class="grade container">
+  <button type="primary" bindtap="login" plain>login</button>
+</view>

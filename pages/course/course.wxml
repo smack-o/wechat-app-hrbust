@@ -17,7 +17,7 @@
         <view class="bubble bubble4"></view>
       </view>
     </view>
-    <view class="loading">
+    <view class="loadingText">
       正在加载<p class="dotting"></p>
     </view>
   </block>
@@ -27,7 +27,12 @@
         <view class="timetableWrapper" wx:for="{{courseData.timetableArr}}" wx:for-index="idx" wx:for-item="timetableItem">
           <view class="time">{{idx}}</view>
           <view class="timetableContent" wx:for="{{timetableItem}}" wx:for-index="idx" wx:for-item="item">
-            <view>{{item}}</view>
+            <block wx:if="{{day == idx+1 || (day == 0 && idx == 6)}}">
+              <view class="todayStyle courseItem">{{item}}</view>
+            </block>
+            <block wx:else>
+              <view class="courseItem">{{item}}</view>
+            </block>
           </view>
         </view>
       </view>

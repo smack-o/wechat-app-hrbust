@@ -3,7 +3,7 @@
 var app = getApp()
 Page({
   loginButton: function(e) {
-    if (this.data.username && this.data.password) {
+    if (this.data.selectUsername) {
       wx.redirectTo({
         url: '../home/home'
       })
@@ -15,15 +15,9 @@ Page({
   },
   onLoad: function () {
     console.log('onLoad')
-    const username = wx.getStorageSync('username');
-    const password = wx.getStorageSync('password');
-    this.username = username;
-    this.password = password;
-    console.log(username,password,1111);
-    const that = this;
-    that.setData({
-      username,
-      password
+    const selectUsername = wx.getStorageSync('selectUsername');
+    this.setData({
+      selectUsername
     })
   }
 })

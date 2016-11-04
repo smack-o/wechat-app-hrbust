@@ -10,15 +10,15 @@
   font-family: arial;
   color: #fff;
 }*/
-page {
+/*page {
   background-color: #fff;
   color: #000;
 }
-
+*/
 
 .timetableWrapper {
-  margin-left: 5rem;
-  font-size: 16px;
+  /*margin-left: 5rem;*/
+  font-size: 12px;
   display: flex;
   position: relative;
   justify-content: space-between;
@@ -35,9 +35,9 @@ page {
   padding: 0;
   text-align: center;
 }
-.wrap {
-  width: 1000px;
-}
+/*.wrap {
+  width: 500px;
+}*/
 .topWrap {
   width: 20rem;
   /*overflow: hidden;*/
@@ -57,7 +57,8 @@ page {
 }
 
 .courseItem {
-  border-top: 10px solid #fff;
+  /*border-top: 10px solid #fff;*/
+  text-align: center;
   padding: 10px;
 }
 
@@ -83,3 +84,33 @@ page {
   position: absolute;
   left: -5rem;
 }*/
+
+
+.detial {
+  position: absolute;
+  width: 500rpx;
+  height: 500rpx;
+  padding: 20rpx;
+  z-index: 100;
+  font-size: 14px;
+  line-height: 14px;
+  border-radius: 40px;
+  top: 200rpx;
+  left: 50%;
+  margin-left: -260rpx;
+  opacity: 0.8;
+  background-color: #000;
+}
+
+.detial button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 200rpx;
+  height: 80rpx;
+  margin-left: -100rpx;
+  text-align: center;
+  font-size: 14px;
+  line-height: 80rpx;
+  border: 0 !important;
+}

@@ -1,3 +1,6 @@
+<view class="">
+  <button type="primary" bindtap="gotoCourse" plain>{{username}}</button>
+</view>
 <view class="course container">
   <button type="primary" bindtap="gotoCourse" plain>课表</button>
 </view>

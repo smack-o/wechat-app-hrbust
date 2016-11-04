@@ -16,7 +16,8 @@ Page({
   confirm: function(e) {
     var username = this.data.username;
     var password = this.data.password;
-    var cookie = this.data.cookie || '';
+    // var cookie = this.data.cookie || '';
+    var cookie = (this.data.userInfo[username] && this.data.userInfo[username].cookie) || '';
     this.setData({
       loginStatus: 'start'
     });
@@ -44,26 +45,32 @@ Page({
           wx.redirectTo({
             url: '../home/home'
           });
-          that.getUserName(username, password, cookie, function(name) {
-            var userInfo = that.data.userInfo;
-            userInfo[username] = {
-              password,
-              cookie: res.data.cookie,
-              name: name
-            };
-            wx.setStorage({
-              key: 'selectUsername',
-              data: that.data.username
-            });
-            wx.setStorage({
-              key: 'userInfo',
-              data: userInfo
-            });
-            wx.setStorage({
-              key: 'thisWeek',
-              data: res.data.thisWeek
-            });
+          var userInfo = that.data.userInfo;
+          userInfo[username] = Object.assign({}, userInfo[username], {
+            password,
+            cookie: res.data.cookie
           });
+          wx.setStorage({
+            key: 'selectUsername',
+            data: that.data.username
+          });
+          wx.setStorage({
+            key: 'userInfo',
+            data: userInfo
+          });
+          wx.setStorage({
+            key: 'thisWeek',
+            data: res.data.thisWeek
+          });
+          // // 获取用户名字
+          // !userInfo[username].name && that.getUserName(username, password, cookie, function(name) {
+          //   var userInfo = wx.getStorageSync('userInfo') || {};
+          //   userInfo[username].name = name;
+          //   wx.setStorage({
+          //     key: 'userInfo',
+          //     data: userInfo
+          //   });
+          // });
         }
       }
     });
@@ -84,7 +91,8 @@ Page({
         if (res.error) {
           console.log("getname error");
         } else {
-          callback(res.name);
+          console.log(res.data.name);
+          callback(res.data.name);
         }
       }
     });
@@ -104,6 +112,7 @@ Page({
   onLoad: function () {
     console.log('onLoad')
     var userInfo = wx.getStorageSync('userInfo') || {};
+    console.log(userInfo);
     var selectUsername = wx.getStorageSync('selectUsername');
     var data = {
       userInfo,

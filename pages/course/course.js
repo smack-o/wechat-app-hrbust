@@ -56,7 +56,7 @@ Page({
       const password = userInfo[selectUsername].password;
       const cookie = userInfo[selectUsername].cookie;
       wx.request({
-        url: 'http://test.gebilaowu.cn/api/education/getCourse?',
+        url: 'https://test.gebilaowu.cn/api/education/getCourse?',
         data: {
           username: selectUsername,
           password,

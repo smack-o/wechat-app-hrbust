@@ -13,7 +13,7 @@ Page({
   },
   getUserName: function(username, password, cookie, callback) {
     wx.request({
-      url: 'http://test.gebilaowu.cn/api/education/getUserName?',
+      url: 'https://test.gebilaowu.cn/api/education/getUserName?',
       data: {
         username,
         password,

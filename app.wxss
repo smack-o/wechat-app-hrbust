@@ -1,3 +1,4 @@
+@import 'utils/weui.wxss';
 /**app.wxss**/
 .container {
   height: 100%;
@@ -15,7 +16,7 @@ page {
 /* loading */
 .dotting {
     display: inline-block; min-width: 2px; min-height: 2px;
-    box-shadow: 2px 0 currentColor, 6px 0 currentColor, 10px 0 currentColor; 
+    box-shadow: 2px 0 currentColor, 6px 0 currentColor, 10px 0 currentColor;
     animation: dot 2s infinite step-start both;
 }
 .dotting::before { content: ''; }

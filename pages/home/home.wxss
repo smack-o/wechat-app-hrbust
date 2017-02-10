@@ -1,0 +1,17 @@
+.title {
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+  text-align: center;
+  color: #1aad19;
+  border-bottom: 1px solid #1aad19;
+}
+
+.changeUserButton {
+  position: absolute;
+  display: inline-block;
+  right: 10px;
+  top: 50%;
+  font-size: 12px;
+  transform: translateY(-50%);
+}

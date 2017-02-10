@@ -38,15 +38,15 @@ Page({
     var password = userInfo[selectUsername].password;
     var cookie = userInfo[selectUsername].cookie;
     var that = this;
-    // this.setData({
-    //   username: userInfo[selectUsername].name
-    // });
     // 获取用户名字
     if (userInfo[selectUsername].name) {
       that.setData({
         username: userInfo[selectUsername].name
       });
     } else {
+      that.setData({
+        username: selectUsername,
+      });
       that.getUserName(selectUsername, password, cookie, function(name) {
         console.log(name);
         that.setData({

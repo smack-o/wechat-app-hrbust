@@ -1,12 +1,11 @@
-<view class="">
-  <button type="primary" bindtap="gotoCourse" plain>{{username}}</button>
+<view class="title">
+  <text class="weui-flex__item">{{username}}</text>
+ <!--  <button class="weui-flex__item" class="changeUserButton" type="primary" bindtap="gotoCourse" plain>切换账号</button> -->
+ <button class="changeUserButton" type="primary" bindtap="login" plain>切换</button>
 </view>
 <view class="course container">
   <button type="primary" bindtap="gotoCourse" plain>课表</button>
 </view>
 <view class="grade container">
   <button type="primary" bindtap="gotoGrade" plain>成绩</button>
-</view>
-<view class="grade container">
-  <button type="primary" bindtap="login" plain>login</button>
 </view>

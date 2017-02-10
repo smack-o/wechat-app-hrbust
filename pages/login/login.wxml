@@ -1,6 +1,6 @@
 <import src="../../utils/loading.wxml"/>
 
-<block wx:if="{{loginStatus=='start'}}">
+<block wx:if="{{loginStatus=='loading'}}">
   <template is="loading" data="{{text: '正在登陆中'}}"/>
 </block>
 <block wx:elif="{{loginStatus=='complete'}}">
@@ -12,15 +12,15 @@
   <view class="container">
       <picker bindchange="changeUser" value="{{username}}" range="{{userList}}">
         <view class="picker">
-          切换账号> {{username}}
+          切换学号： {{username || '无'}}
         </view>
       </picker>
 
       <view>
-        <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="请输入学号" />
+        <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
       </view>
       <view>
-        <input value="{{password}}" bindinput="passwordInput" password placeholder="请输入密码" />
+        <input value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
       </view>
   </view>
   <view class="container">

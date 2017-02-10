@@ -1,5 +1,5 @@
 //index.js
-//获取应用实例
+
 Page({
   usernameInput: function(e) {
     this.setData({
@@ -12,18 +12,27 @@ Page({
     })
   },
 
-  // 处理请求
+  // confirm
   confirm: function(e) {
     var username = this.data.username;
     var password = this.data.password;
+
+    // handler error for username or password.
+    if (!username || !password) {
+      this.showError('账号密码不能为空', this);
+      return;
+    }
+
     // var cookie = this.data.cookie || '';
     var cookie = (this.data.userInfo[username] && this.data.userInfo[username].cookie) || '';
     this.setData({
-      loginStatus: 'start'
+      loginStatus: 'loading'
     });
     var that = this;
+
+    // request login
     wx.request({
-      url: 'http://test.gebilaowu.cn/api/education/login?',
+      url: 'https://test.gebilaowu.cn/api/education/login?',
       data: {
         username,
         password,
@@ -33,11 +42,9 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        if (res.error) {
-          that.setData({
-            loginStatus: 'error',
-            error: res.error
-          });
+        if (res.error || res.statusCode === 400) {
+          // 请求报错或者服务器端报错（账号密码验证错误等...）。
+          that.showError(res.error || res.data, that);
         } else {
           that.setData({
             loginStatus: 'complete'
@@ -62,41 +69,25 @@ Page({
             key: 'thisWeek',
             data: res.data.thisWeek
           });
-          // // 获取用户名字
-          // !userInfo[username].name && that.getUserName(username, password, cookie, function(name) {
-          //   var userInfo = wx.getStorageSync('userInfo') || {};
-          //   userInfo[username].name = name;
-          //   wx.setStorage({
-          //     key: 'userInfo',
-          //     data: userInfo
-          //   });
-          // });
         }
       }
     });
   },
 
-  getUserName: function(username, password, cookie, callback) {
-    wx.request({
-      url: 'http://test.gebilaowu.cn/api/education/getUserName?',
-      data: {
-        username,
-        password,
-        cookie
-      },
-      header: {
-        'Content-Type': 'application/json'
-      },
+  showError: (message, that) => {
+    wx.showModal({
+      content: message,
+      showCancel: false,
       success: function(res) {
-        if (res.error) {
-          console.log("getname error");
-        } else {
-          console.log(res.data.name);
-          callback(res.data.name);
+        if (res.confirm) {
+          that.setData({
+            loginStatus: 'error',
+          });
         }
       }
     });
   },
+
   // 选择用户
   changeUser: function(e) {
     var userInfo = this.data.userInfo;
@@ -111,18 +102,32 @@ Page({
 
   onLoad: function () {
     console.log('onLoad')
-    var userInfo = wx.getStorageSync('userInfo') || {};
-    console.log(userInfo);
+    var userInfo_storage = wx.getStorageSync('userInfo');
+
     var selectUsername = wx.getStorageSync('selectUsername');
     var data = {
-      userInfo,
-      userList: Object.keys(userInfo)
+      userInfo: {},
+      userList: [],
     };
-    if (selectUsername) {
-      data.username = selectUsername;
-      data.password = userInfo[selectUsername].password;
-      data.cookie = userInfo[selectUsername].cookie;
+
+    // 在storage中有1个以上存储的学号
+    if (userInfo_storage && Object.keys(userInfo_storage).length > 0) {
+      data.userInfo = userInfo_storage;
+      data.userList = Object.keys(userInfo_storage);
+
+      if (selectUsername) {
+        data.username = selectUsername;
+        data.password = userInfo_storage[selectUsername].password;
+        data.cookie = userInfo_storage[selectUsername].cookie;
+      } else {
+        data.username = userList[0];
+        data.password = userInfo_storage[userList[0]].password;
+        data.cookie = userInfo_storage[userList[0]].cookie;
+      }
+
+      this.setData(data);
     }
-    this.setData(data)
+
+
   }
 })

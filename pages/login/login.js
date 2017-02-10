@@ -1,6 +1,12 @@
 //index.js
 
 Page({
+  data: {
+    userInfo: {},
+    userList: [],
+    userNameList: [],
+  },
+
   usernameInput: function(e) {
     this.setData({
       username: e.detail.value
@@ -105,16 +111,15 @@ Page({
     var userInfo_storage = wx.getStorageSync('userInfo');
 
     var selectUsername = wx.getStorageSync('selectUsername');
-    var data = {
-      userInfo: {},
-      userList: [],
-    };
 
     // 在storage中有1个以上存储的学号
     if (userInfo_storage && Object.keys(userInfo_storage).length > 0) {
+      var data = {};
       data.userInfo = userInfo_storage;
       data.userList = Object.keys(userInfo_storage);
-
+      data.userNameList = Object.keys(userInfo_storage).map((item) => {
+        return userInfo_storage[item].name ? userInfo_storage[item].name : item;
+      });
       if (selectUsername) {
         data.username = selectUsername;
         data.password = userInfo_storage[selectUsername].password;
@@ -127,7 +132,5 @@ Page({
 
       this.setData(data);
     }
-
-
   }
 })

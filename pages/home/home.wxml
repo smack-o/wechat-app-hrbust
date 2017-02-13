@@ -1,7 +1,7 @@
 <view class="title">
   <text class="weui-flex__item">{{username}}</text>
  <!--  <button class="weui-flex__item" class="changeUserButton" type="primary" bindtap="gotoCourse" plain>切换账号</button> -->
- <button class="changeUserButton" type="primary" bindtap="login" plain>切换</button>
+  <image class="changeUserButton" bindtap="login" mode="{{item.mode}}" src="./change_green.png"></image>
 </view>
 <view class="course container">
   <button type="primary" bindtap="gotoCourse" plain>课表</button>

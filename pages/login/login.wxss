@@ -20,6 +20,30 @@
   margin-top: 200px;
 }
 
-input {
+.container button {
+  border-color: #fff;
+  color: #fff;
+}
+
+.username-wrapper,
+.password-wrapper {
+  position: relative;
   margin-top: 20px;
+}
+
+.change-icon {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  top: 50%;
+  margin-top: -0.5rem;
+}
+
+.change-username {
+  height: 1.4rem;
+  width: 1.4rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
 }

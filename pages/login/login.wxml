@@ -10,18 +10,15 @@
 </block>
 <block wx:else>
   <view class="container">
-      <block wx:if="{{userList.length > 0}}">
-        <picker bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
-          <view class="picker">
-            切换学号： {{username || '无'}}
-          </view>
-        </picker>
-      </block>
-
-      <view>
+      <view class="username-wrapper">
         <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
+        <block wx:if="{{userList.length > 0}}">
+          <picker class="change-username" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
+            <image class="change-icon" mode="{{item.mode}}" src="./change.png"></image>
+          </picker>
+        </block>
       </view>
-      <view>
+      <view class="password-wrapper">
         <input value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
       </view>
   </view>

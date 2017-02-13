@@ -1,10 +1,37 @@
 //index.js
 //获取应用实例
 Page({
-  gotoCourse: function(e) {
-    wx.navigateTo({
-      url: '../course/course'
-    })
+  data: {
+    contents: [{
+      image: '../../images/course_icon.png',
+      text: '课表',
+      url: '../course/course',
+    },{
+      image: '../../images/grade_icon.png',
+      text: '成绩',
+      url: '../course/course',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },{
+      image: '../../images/course_icon.png',
+      text: '课表',
+    },],
   },
   login: function() {
     wx.navigateTo({

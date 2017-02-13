@@ -1,10 +1,14 @@
+page {
+  height: 100%;
+  overflow: hidden;
+}
+
 .title {
   height: 50px;
   line-height: 50px;
   position: relative;
   text-align: center;
-  color: #1aad19;
-  border-bottom: 1px solid #1aad19;
+  color: #fff;
 }
 
 .changeUserButton {
@@ -16,4 +20,38 @@
   top: 50%;
   font-size: 12px;
   transform: translateY(-50%);
+}
+
+.wrapper {
+  height: calc(100% - 50px);
+  width: 100%;
+}
+
+.content {
+  width: calc(100% / 3);
+}
+
+.page__bd {
+  height: 100%;
+}
+
+.weui-grids {
+  border-color: #424242;
+  height:100%;
+}
+
+.weui-grid {
+  border-color: #424242;
+  height: calc(100% / 3);
+  padding: 60px 10px;
+}
+
+.weui-grid__icon {
+  width: 32px;
+  height: 32px;
+}
+
+.weui-grid__label {
+  color: #fff;
+  margin-top: 20px;
 }

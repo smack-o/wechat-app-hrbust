@@ -3,13 +3,13 @@
     "pages/index/index",
     "pages/login/login",
     "pages/home/home",
-    "pages/course/course",
-    "pages/logs/logs"
+    "pages/course/course"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "backgroundTextStyle":"white",
+    "backgroundColor": "#292929",
+    "navigationBarBackgroundColor": "#292929",
+    "navigationBarTitleText": "哈理工助手",
+    "navigationBarTextStyle":"white"
   }
 }

@@ -14,7 +14,7 @@
         <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
         <block wx:if="{{userList.length > 0}}">
           <picker class="change-username" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
-            <image class="change-icon" mode="{{item.mode}}" src="./change.png"></image>
+            <image class="change-icon" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
           </picker>
         </block>
       </view>

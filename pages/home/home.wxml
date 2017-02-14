@@ -1,8 +1,15 @@
 <view class="title">
-  <text class="weui-flex__item">{{username}}</text>
-  <navigator url="../login/login">
-    <image class="changeUserButton" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
-  </navigator>
+  <block wx:if="{{loginStatus}}">
+    <text class="weui-flex__item">{{username}}</text>
+    <navigator url="../login/login">
+      <image class="changeUserButton" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
+    </navigator>
+  </block>
+  <block wx:else>
+    <navigator url="../login/login">
+      <text class="weui-flex__item">点击登陆(未登陆部分功能受限)</text>
+    </navigator>
+  </block>
 </view>
 
 <view class="wrapper">
@@ -10,8 +17,10 @@
     <view class="weui-grids">
       <block wx:for-items="{{contents}}" wx:key="{{item}}">
         <navigator url="{{item.url}}" class="weui-grid">
+          <view class="icon-wrapper">
             <image class="weui-grid__icon" bindtap="{{item.bindtap}}" src="{{item.image}}" />
             <view class="weui-grid__label">{{item.text}}</view>
+          </view>
         </navigator>
       </block>
     </view>

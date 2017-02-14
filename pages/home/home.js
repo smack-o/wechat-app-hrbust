@@ -53,7 +53,6 @@ Page({
         if (res.error) {
           console.log("getname error");
         } else {
-          console.log(res.data.name);
           callback(res.data.name);
         }
       }
@@ -62,9 +61,22 @@ Page({
   onLoad: function() {
     var userInfo = wx.getStorageSync('userInfo');
     var selectUsername = wx.getStorageSync('selectUsername');
+    if (!selectUsername) {
+      // 没有任何登陆信息
+      this.setData({
+        loginStatus: false,
+      });
+      return;
+    }
+
+    this.setData({
+      loginStatus: true,
+    });
+
     var password = userInfo[selectUsername].password;
     var cookie = userInfo[selectUsername].cookie;
     var that = this;
+
     // 获取用户名字
     if (userInfo[selectUsername].name) {
       that.setData({
@@ -75,7 +87,6 @@ Page({
         username: selectUsername,
       });
       that.getUserName(selectUsername, password, cookie, function(name) {
-        console.log(name);
         that.setData({
           username: name
         });

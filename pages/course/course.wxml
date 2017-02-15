@@ -9,7 +9,6 @@
 </block>
 
 <block wx:else>
-  <!-- <scroll-view  bindtouchend="touchendPage" bindtouchstart="touchstartPage" bindtouchmove="touchmovePage" scroll-x="true" class="topWrap" > -->
   <view scroll-x="true" class="wrap" >
     <view class="">
       <view class="" wx:key="day" wx:for="{{dayNum}}" wx:for-index="dayIndex" wx:for-item="dayItem">
@@ -25,7 +24,9 @@
               <block wx:if="{{dayIndex == 0}}">
               <!-- time and timenum -->
                 <view class="courseItem">{{timeItem}}</view>
-                <view class="courseItem">{{timeNum[timeIndex]}}</view>
+                <block wx:key="timeNumItem" wx:for="{{timeNum[timeIndex]}}" wx:for-item="item">
+                  <view class="timeNumItem">{{item}}</view>
+                </block>
               </block>
               <block wx:else>
                 <block wx:if="{{timeIndex == 0}}">
@@ -34,8 +35,13 @@
                 </block>
                 <block wx:else>
                 <!-- course -->
-                  <view class="courseItem" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}"  bindtap="detailHandler">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
-                  <!-- <view class="courseItem">{{courseData.courseArrange[timeIndex][dayIndex-1][2]}}</view> -->
+                  <!-- 当前时间对应的课程 -->
+                  <block wx:if="{{dayIndex==nowDayIndex&&timeIndex==nowTimeIndex}}">
+                    <view class="courseItem nowCourse" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
+                  </block>
+                  <block wx:else>
+                    <view class="courseItem" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}"  bindtap="detailHandler">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
+                  </block>
                 </block>
               </block>
             </block>
@@ -44,16 +50,18 @@
       </view>
     </view>
   </view>
-  <!-- </scroll-view > -->
 </block>
 
 <!-- Detail -->
 <block wx:if="{{detailOpen}}">
-  <!-- <template is="loading" data="{{text: '正在加载'}}"/> -->
   <view class="detial">
-    <view class="detailData" wx:key="day" wx:for="{{detailData}}" wx:for-index="idx" wx:for-item="detailItem">
-      {{detailItem}}
+    <view class="detialWrapper">
+      <view class="detailData" wx:key="day" wx:for="{{detailData}}" wx:for-index="idx" wx:for-item="detailItem">
+        {{detailItem}}
+      </view>
     </view>
-    <button type="primary" bindtap="closeDetail" plain>关闭</button>
+    <button type="primary" bindtap="closeDetail" plain>
+      <icon type="cancel" size="23" color="#1aad19"></icon>
+    </button>
   </view>
 </block>

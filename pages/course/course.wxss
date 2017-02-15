@@ -1,21 +1,3 @@
-/** {
-  box-sizing: border-box;
-  font-family: arial;
-}*/
-/*body {
-  background-color: #191F26;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  font-family: arial;
-  color: #fff;
-}*/
-/*page {
-  background-color: #fff;
-  color: #000;
-}
-*/
-
 .timetableWrapper {
   /*margin-left: 5rem;*/
   font-size: 12px;
@@ -24,7 +6,7 @@
   justify-content: space-between;
 }
 .timetableContent {
-  border: 1px solid #eeeeee;
+  border: 1px solid #424242;
   flex: 1;
   line-height: 24px;
   margin-left: -1px;
@@ -46,7 +28,7 @@
 .time {
   position: absolute;
   left: -5rem;
-  border: 1px solid #eeeeee;
+  border: 1px solid #424242;
 
 }
 
@@ -66,40 +48,26 @@
   border-top: 10px solid #2196f3;
   margin: 0 -1px;
 }
-/** {
-
-}*/
-/*.timeLeftRight {
-  overflow-y: auto;
-  background: red;
-}*/
-/*.timeLeftRight .time{
-  position: fixed;
-  left: 0;
-}
-*//*.timeTopDown {
-  overflow-x: hidden; 
-}*/
-/*.timeTopDown .time{
-  position: absolute;
-  left: -5rem;
-}*/
-
 
 .detial {
-  position: absolute;
-  width: 500rpx;
-  height: 500rpx;
-  padding: 20rpx;
+  position: fixed;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 100%;
+  height: 100%;
+  top: 0;
   z-index: 100;
-  font-size: 14px;
-  line-height: 14px;
-  border-radius: 40px;
-  top: 200rpx;
+  font-size: 16px;
+  line-height: 30px;
+  background-color: rgba(0, 0, 0, .8);
+  overflow: auto;
+}
+
+.detialWrapper {
+  position: absolute;
+  top: 50%;
   left: 50%;
-  margin-left: -260rpx;
-  opacity: 0.8;
-  background-color: #000;
+  transform: translate(-50%, -50%);
 }
 
 .detial button {
@@ -113,4 +81,11 @@
   font-size: 14px;
   line-height: 80rpx;
   border: 0 !important;
+}
+
+.nowCourse {
+  background: #000;
+  height: 100%;
+  width: 100%;
+  padding: 0;
 }

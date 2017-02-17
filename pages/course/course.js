@@ -13,14 +13,14 @@ Page({
   detailHandler: function(event) {
     const dayIndex = event.currentTarget.dataset.dayindex;
     const timeIndex = event.currentTarget.dataset.timeindex;
-    // console.log(event);
-    // console.log(dayIndex, timeIndex);
-    // console.log(this.data.courseData.courseArrange[timeIndex][dayIndex-1]);
+    const courseArrange = this.data.courseData.courseArrange;
 
-    this.setData({
-      detailOpen: true,
-      detailData: this.data.courseData.courseArrange[timeIndex][dayIndex-1]
-    });
+    if (courseArrange[timeIndex][dayIndex-1]) {
+      this.setData({
+        detailOpen: true,
+        detailData: courseArrange[timeIndex][dayIndex-1]
+      });
+    }
   },
   closeDetail: function () {
     this.setData({
@@ -50,6 +50,66 @@ Page({
     });
   },
 
+  getCourse: function  (userInfo, selectUsername, callback) {
+    const password = userInfo[selectUsername].password;
+    const cookie = userInfo[selectUsername].cookie;
+    const that = this;
+    wx.request({
+      url: 'https://test.gebilaowu.cn/api/education/getCourse?',
+      data: {
+        username: selectUsername,
+        password,
+        cookie,
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        userInfo[selectUsername].courseData = res.data;
+        userInfo[selectUsername].cookie = res.data.cookie;
+        wx.setStorage({
+          key: 'userInfo',
+          data: userInfo
+        });
+        that.setData({
+          courseData: res.data,
+          thisWeek: res.data.thisWeek,
+        });
+
+        callback && callback();
+      }
+    });
+  },
+
+  getWeek: function  () {
+    let thisWeek = wx.getStorageSync('thisWeek');
+    this.setData({
+      thisWeek,
+    });
+
+    const that = this;
+    wx.request({
+      url: 'https://test.gebilaowu.cn/api/education/getWeek',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        if (res.data.thisWeek) {
+          thisWeek = res.data.thisWeek;
+        }
+        that.setData({
+          thisWeek,
+        });
+      },
+      fail: function () {
+        console.log('请求当前周数失败，请检查网络重试');
+        that.setData({
+          thisWeek,
+        });
+      }
+    });
+  },
+
   onLoad: function () {
     console.log('course onload');
     const date = new Date();
@@ -71,47 +131,38 @@ Page({
     });
 
     const that = this;
-    const thisWeek = wx.getStorageSync('thisWeek');
+    // const thisWeek = wx.getStorageSync('thisWeek');
+
+    // 获取当前周数
+
     const userInfo = wx.getStorageSync('userInfo');
     const selectUsername = wx.getStorageSync('selectUsername');
     const courseData = userInfo[selectUsername].courseData;
     if (courseData) {
+      this.getWeek();
       that.setData({
-        courseData,
-        day: thisDay,
-        thisWeek,
+        courseData
       });
     } else {
       // 缓存中没有数据，需要请求
-      const password = userInfo[selectUsername].password;
-      const cookie = userInfo[selectUsername].cookie;
-      wx.request({
-        url: 'https://test.gebilaowu.cn/api/education/getCourse?',
-        data: {
-          username: selectUsername,
-          password,
-          cookie,
-        },
-        header: {
-          'Content-Type': 'application/json'
-        },
-        success: function(res) {
-          userInfo[selectUsername].courseData = res.data;
-          wx.setStorage({
-            key: 'userInfo',
-            data: userInfo
-          });
-          that.setData({
-            courseData: res.data,
-            day,
-            thisWeek,
-          });
-        }
-      });
+      this.getCourse(userInfo, selectUsername);
     }
-    // wx.setStorage();
   },
 
+  // 下拉刷新
+  onPullDownRefresh: function() {
+    const that = this;
+    const userInfo = wx.getStorageSync('userInfo');
+    const selectUsername = wx.getStorageSync('selectUsername');
+    this.getCourse(userInfo, selectUsername, () => {
+      wx.stopPullDownRefresh();
+    });
+    // this.getWeek(() => {
+    //   this.getCourse(userInfo, selectUsername, () => {
+    //     wx.stopPullDownRefresh();
+    //   });
+    // });
+  },
   // remove interval when leave page
   onHide: function () {
     // body...

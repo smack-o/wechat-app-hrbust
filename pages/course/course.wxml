@@ -37,7 +37,7 @@
                 <!-- course -->
                   <!-- 当前时间对应的课程 -->
                   <block wx:if="{{dayIndex==nowDayIndex&&timeIndex==nowTimeIndex}}">
-                    <view class="courseItem nowCourse" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
+                    <view class="courseItem nowCourse" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
                   </block>
                   <block wx:else>
                     <view class="courseItem" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}"  bindtap="detailHandler">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>

@@ -64,7 +64,20 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
+      fail: function () {
+        wx.showModal({
+          content: '拉取数据失败，请检查你的网络',
+          showCancel: false,
+        });
+      },
       success: function(res) {
+        if (res.error) {
+          wx.showModal({
+            content: `拉取数据失败。${res.error}`,
+            showCancel: false,
+          });
+          return;
+        }
         userInfo[selectUsername].courseData = res.data;
         userInfo[selectUsername].cookie = res.data.cookie;
         wx.setStorage({
@@ -74,6 +87,12 @@ Page({
         that.setData({
           courseData: res.data,
           thisWeek: res.data.thisWeek,
+        });
+
+        wx.showToast({
+          title: '拉取数据成功',
+          icon: 'success',
+          duration: 2000
         });
 
         callback && callback();

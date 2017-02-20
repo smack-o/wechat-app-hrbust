@@ -9,7 +9,7 @@ Page({
     },{
       image: '../../images/grade_icon.png',
       text: '成绩',
-      url: '../course/course',
+      url: '../grade/grade',
     },{
       image: '../../images/course_icon.png',
       text: '课表',

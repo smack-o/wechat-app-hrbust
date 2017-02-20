@@ -1,0 +1,47 @@
+.weui-grids {
+  border-color: #424242;
+}
+
+.gradeWrapper {
+  overflow: auto;
+}
+.weui-flex__item {
+  width: calc(100% / 6);
+  border-bottom: 1px solid #424242;
+  border-right: 1px solid #424242;
+  font-size: 12px;
+  padding: 10px;
+  text-align: center;
+  /*box-sizing: border-box;*/
+}
+
+.weui-flex__item {
+  width: 50px;
+}
+
+.gradeWrapper :nth-child(1) .weui-flex__item {
+  border-top: 1px solid #424242;
+}
+
+.weui-flex :nth-child(1).weui-flex__item {
+  width: 150px;
+  border-left: 1px solid #424242;
+}
+
+.context {
+  width: 50px;
+}
+
+.weui-flex :nth-child(1) .context {
+  width: 150px;
+}
+
+.picker-year {
+  margin: 10px 20px;
+}
+
+.change-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}

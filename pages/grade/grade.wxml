@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<block wx:if="{{getGradeLoading}}">
+  <view class="weui-loadmore">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</block>
+
+<view>
+  <view class="picker-wrapper">
+    <picker class="picker-year" bindchange="changeTerm" value="{{slected_term}}" range="{{terms}}">
+      <text>学期：{{term}}</text>
+      <image class="change-icon" mode="{{item.mode}}" src="../../images/change_icon.png" />
+    </picker>
+  </view>
+  <view class="gradeWrapper">
+    <view  class="weui-flex">
+      <view class="weui-flex__item" wx:for="{{titles}}" wx:key="title">
+          <view class="context">{{item}}</view>
+      </view>
+    </view>
+    <block wx:if="{{gradeData.length <= 0}}">
+      <view>您选择的学期没有成绩数据</view>
+    </block>
+    <block wx:else>
+      <view  class="weui-flex" wx:for="{{gradeData}}" wx:for-item="grade" wx:key="gradeData">
+        <view class="weui-flex__item" wx:for="{{grade}}" wx:key="grade">
+            <view class="context">{{item}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

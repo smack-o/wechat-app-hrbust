@@ -9,45 +9,66 @@
 </block>
 
 <block wx:else>
-  <view scroll-x="true" class="wrap" >
-    <view class="">
-      <view class="" wx:key="day" wx:for="{{dayNum}}" wx:for-index="dayIndex" wx:for-item="dayItem">
-      <!-- day loop -->
-        <view class="timetableWrapper">
-          <view class="timetableContent" wx:key="day" wx:for="{{time}}" wx:for-index="timeIndex" wx:for-item="timeItem">
-          <!-- time loop -->
-            <block wx:if="{{dayIndex == 0 && timeIndex == 0}}">
-            <!-- week -->
-              <view class="courseItem">{{thisWeek}}</view>
+  <view class="wrap" >
+    <view class="top-week">
+      <view class="item-content">
+        {{thisWeek}}
+      </view>
+      <block wx:key="day" wx:for="{{dayNum}}" wx:for-item="dayItem">
+        <view class="item-content">
+          {{dayItem}}
+        </view>
+      </block>
+    </view>
+    <!-- <view class="timetableWrapper" wx:key="day" wx:for="{{dayNum}}" wx:for-index="dayIndex" wx:for-item="dayItem"> -->
+    <!-- </view> -->
+    <view class="course-wrapper">
+     <block wx:key="time" wx:for="{{time}}" wx:for-index="timeIndex" wx:for-item="timeItem">
+       <block wx:key="course-content" wx:for="{{[0,1,2,3,4,5,6,7]}}" wx:for-index="dayIndex">
+          <block wx:if="{{dayIndex===0}}">
+            <!-- 左侧时间列表 -->
+            <view class="border-left item-content">
+              <text>{{timeItem}}</text>
+              <text>{{timeNum[timeIndex][0]}}</text>
+              <text>~</text>
+              <text>{{timeNum[timeIndex][1]}}</text>
+            </view>
+          </block>
+          <block wx:else>
+            <!-- 课表内容 -->
+            <block wx:if="{{dayIndex==nowDayIndex&&timeIndex+1==nowTimeIndex}}">
+              <view class="item-content now-course" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">
+                {{courseData.courseArrange[dayIndex - 1][timeIndex][0]}}
+              </view>
             </block>
             <block wx:else>
-              <block wx:if="{{dayIndex == 0}}">
-              <!-- time and timenum -->
-                <view class="courseItem">{{timeItem}}</view>
-                <block wx:key="timeNumItem" wx:for="{{timeNum[timeIndex]}}" wx:for-item="item">
-                  <view class="timeNumItem">{{item}}</view>
-                </block>
-              </block>
-              <block wx:else>
-                <block wx:if="{{timeIndex == 0}}">
-                <!-- day -->
-                  <view class="courseItem">{{courseData.courseArrange[timeIndex][dayIndex-1]}}</view>
-                </block>
-                <block wx:else>
-                <!-- course -->
-                  <!-- 当前时间对应的课程 -->
-                  <block wx:if="{{dayIndex==nowDayIndex&&timeIndex==nowTimeIndex}}">
-                    <view class="courseItem nowCourse" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
-                  </block>
-                  <block wx:else>
-                    <view class="courseItem" data-timeIndex="{{timeIndex}}" data-dayIndex="{{dayIndex}}"  bindtap="detailHandler">{{courseData.courseArrange[timeIndex][dayIndex-1][0]}}</view>
-                  </block>
-                </block>
-              </block>
+              <view class="item-content" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">
+                {{courseData.courseArrange[dayIndex - 1][timeIndex][0]}}
+              </view>
             </block>
+          </block>
+        </block>
+
+     </block>
+    </view>
+    <view class="text">没有具体上课时间或地点的课程</view>
+    <view class="noArrange-course-wrapper">
+      <block wx:key="noArrange" wx:for="{{courseData.noArrangement}}" wx:for-index="timeIndex" wx:for-item="timeItem">
+       <block wx:key="course-content" wx:for="{{[0,1,2,3,4,5,6]}}" wx:for-index="dayIndex">
+          <view wx:if="{{timeIndex===0&&dayIndex===0}}" class="item-content border-top border-left">
+            {{courseData.noArrangement[timeIndex][dayIndex+1]}}
           </view>
-        </view>
-      </view>
+          <view wx:elif="{{timeIndex===0}}" class="item-content border-top">
+            {{courseData.noArrangement[timeIndex][dayIndex+1]}}
+          </view>
+          <view wx:elif="{{dayIndex===0}}" class="item-content border-left">
+            {{courseData.noArrangement[timeIndex][dayIndex+1]}}
+          </view>
+          <view wx:else class="item-content">
+            {{courseData.noArrangement[timeIndex][dayIndex+1]}}
+          </view>
+       </block>
+     </block>
     </view>
   </view>
 </block>

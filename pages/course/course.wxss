@@ -1,52 +1,52 @@
-.timetableWrapper {
-  /*margin-left: 5rem;*/
+.wrap {
+  overflow: auto;
   font-size: 12px;
+}
+
+.top-week {
   display: flex;
-  position: relative;
-  justify-content: space-between;
-}
-.timetableContent {
-  border: 1px solid #424242;
-  flex: 1;
-  line-height: 24px;
-  margin-left: -1px;
-  margin-bottom: -1px;
-  /*background-color: #a1887f*/
-}
-.timetableWrapper:first-child .timetableContent {
-  padding: 0;
-  text-align: center;
-}
-/*.wrap {
-  width: 500px;
-}*/
-.topWrap {
-  width: 20rem;
-  /*overflow: hidden;*/
+  width: 560px;
 }
 
-.time {
-  position: absolute;
-  left: -5rem;
-  border: 1px solid #424242;
-
-}
-
-.timetableWrapper:first-child .timetableContent{
-  /*background-color: #ff8a65;*/
-  position: relative;
-  top: 0;
-}
-
-.courseItem {
-  /*border-top: 10px solid #fff;*/
-  text-align: center;
+.item-content {
+  width: 70px;
+  /*border: 1px solid #424242;*/
+  border-bottom: 1px solid #424242;
+  border-right: 1px solid #424242;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-direction: column;
 }
 
-.todayStyle {
-  border-top: 10px solid #2196f3;
-  margin: 0 -1px;
+.top-week,
+.border-top {
+  border-top: 1px solid #424242;
+}
+
+.top-week :first-child {
+  border-left: 1px solid #424242;
+}
+
+.border-left {
+  border-left: 1px solid #424242;
+}
+
+.course-wrapper,
+.noArrange-course-wrapper {
+  display: flex;
+  width: 560px;
+  flex-wrap: wrap;
+}
+
+.noArrange-course-wrapper .item-content{
+  width: 80px;
+}
+
+.now-course {
+  background: #263238;
 }
 
 .detial {
@@ -83,9 +83,6 @@
   border: 0 !important;
 }
 
-.nowCourse {
-  background: #000;
-  height: 100%;
-  width: 100%;
-  padding: 0;
+.text {
+  margin: 20px;
 }

@@ -89,15 +89,16 @@ Page({
           const newData = {
             gradeData: gradeData,
             getGradeLoading: false,
+            term: res.data.gradeTerm,
           }
 
-          if (res.data.data.length > 0) {
-            newData.term = res.data.data[0][0] + ' ' + res.data.data[0][1];
-          }
+          // if (res.data.data.length > 0) {
+          //   newData.term = res.data.data[0][0] + ' ' + res.data.data[0][1];
+          // }
 
           userInfo[username].cookie = res.data.cookie;
           userInfo[username].grade = gradeData;
-          userInfo[username].gradeItem = newData.term;
+          userInfo[username].gradeTerm = newData.term;
 
           wx.setStorage({
             key: 'userInfo',
@@ -123,18 +124,19 @@ Page({
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;
-    const gradeItem = userInfo[username].gradeItem;
+    const gradeTerm = userInfo[username].gradeTerm;
 
     const data = {
       gradeData,
       username,
       userInfo,
-      term: gradeItem,
+      term: gradeTerm,
     }
 
     this.setData(data);
-    this.getGrade();
-
+    if (!gradeData) {
+      this.getGrade();
+    }
   },
     // 下拉刷新
   onPullDownRefresh: function() {

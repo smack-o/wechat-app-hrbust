@@ -11,11 +11,11 @@ Page({
       text: '成绩',
       url: '../grade/grade',
     },{
-      image: '../../images/course_icon.png',
-      text: '课表',
+      image: '../../images/exam_icon.png',
+      text: '考试',
     },{
-      image: '../../images/course_icon.png',
-      text: '课表',
+      image: '../../images/news_icon.png',
+      text: '教务公告',
     },{
       image: '../../images/course_icon.png',
       text: '课表',

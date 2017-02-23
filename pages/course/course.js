@@ -21,6 +21,7 @@ Page({
       });
     }
   },
+
   closeDetail: function () {
     this.setData({
       detailOpen: false,
@@ -116,6 +117,10 @@ Page({
         }
         that.setData({
           thisWeek,
+        });
+        wx.setStorage({
+          key: 'thisWeek',
+          data: thisWeek
         });
       },
       fail: function () {

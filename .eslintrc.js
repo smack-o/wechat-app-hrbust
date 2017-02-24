@@ -14,5 +14,7 @@ module.exports = {
 	"rules" : {
 		// "global-require": 0,
 		"indent": [0, "tab"], // 去掉tab约定,IDE会有问题
+		"new-cap": ["error", { "capIsNew": false }],
+		"no-console": [2, { "allow": [ "warn", "error" ]}]
 	},
 };

@@ -7,8 +7,12 @@
     "dev": "cross-env NODE_ENV=dev gulp dev",
     "dev-es5": "cross-env NODE_ENV=dev gulp dev:es5",
     "build": "cross-env NODE_ENV=production gulp build",
-    "build-es5": "cross-env NODE_ENV=production gulp build:es5"
+    "build-es5": "cross-env NODE_ENV=production gulp build:es5",
+    "lint": "eslint src"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "author": "kodo",
   "license": "ISC",
   "devDependencies": {

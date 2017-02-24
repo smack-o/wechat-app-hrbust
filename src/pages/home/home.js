@@ -1,3 +1,4 @@
+const requestUrl = require('../../utils/get-request-url');
 
 Page({
   data: {
@@ -39,7 +40,7 @@ Page({
   },
   getUserName(username, password, cookie, callback) {
     wx.request({
-      url: 'https://test.gebilaowu.cn/api/education/getUserName?',
+      url: `${requestUrl}/api/education/getUserName`,
       data: {
         username,
         password,

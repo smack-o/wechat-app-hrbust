@@ -1,3 +1,4 @@
+const requestUrl = require('../../utils/get-request-url');
 
 Page({
   data: {
@@ -37,7 +38,7 @@ Page({
 
     // request login
     wx.request({
-      url: 'https://test.gebilaowu.cn/api/education/login?',
+      url: `${requestUrl}/api/education/login`,
       data: {
         username,
         password,

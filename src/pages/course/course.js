@@ -1,3 +1,4 @@
+const requestUrl = require('../../utils/get-request-url');
 
 Page({
   data: {
@@ -54,7 +55,7 @@ Page({
     const cookie = userInfo[selectUsername].cookie;
     const that = this;
     wx.request({
-      url: 'https://test.gebilaowu.cn/api/education/getCourse?',
+      url: `${requestUrl}/api/education/getCourse`,
       data: {
         username: selectUsername,
         password,
@@ -107,7 +108,7 @@ Page({
 
     const that = this;
     wx.request({
-      url: 'https://test.gebilaowu.cn/api/education/getWeek',
+      url: `${requestUrl}/api/education/getWeek`,
       header: {
         'Content-Type': 'application/json',
       },

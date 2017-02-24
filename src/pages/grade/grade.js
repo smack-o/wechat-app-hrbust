@@ -1,3 +1,5 @@
+const requestUrl = require('../../utils/get-request-url');
+
 const date = new Date();
 const terms = [];
 for (let i = date.getFullYear(); i >= date.getFullYear() - 5; i -= 1) {
@@ -46,7 +48,7 @@ Page({
       data.term = termsObj[term];
     }
     wx.request({
-      url: 'https://test.gebilaowu.cn/api/education/getGrade',
+      url: `${requestUrl}/api/education/getGrade`,
       data,
       header: {
         'Content-Type': 'application/json',

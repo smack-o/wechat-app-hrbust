@@ -1,66 +1,65 @@
-//index.js
-//获取应用实例
+
 Page({
   data: {
     contents: [{
       image: '../../images/course_icon.png',
       text: '课表',
       url: '../course/course',
-    },{
+    }, {
       image: '../../images/grade_icon.png',
       text: '成绩',
       url: '../grade/grade',
-    },{
+    }, {
       image: '../../images/exam_icon.png',
       text: '考试',
-    },{
+    }, {
       image: '../../images/news_icon.png',
       text: '教务公告',
-    },{
+    }, {
       image: '../../images/course_icon.png',
       text: '课表',
-    },{
+    }, {
       image: '../../images/course_icon.png',
       text: '课表',
-    },{
+    }, {
       image: '../../images/course_icon.png',
       text: '课表',
-    },{
+    }, {
       image: '../../images/course_icon.png',
       text: '课表',
-    },{
+    }, {
       image: '../../images/course_icon.png',
       text: '课表',
-    },],
+    }],
   },
-  login: function() {
+  login() {
     wx.navigateTo({
-      url: '../login/login'
-    })
+      url: '../login/login',
+    });
   },
-  getUserName: function(username, password, cookie, callback) {
+  getUserName(username, password, cookie, callback) {
     wx.request({
       url: 'https://test.gebilaowu.cn/api/education/getUserName?',
       data: {
         username,
         password,
-        cookie
+        cookie,
       },
       header: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      success: function(res) {
+      success(res) {
         if (res.error) {
-          console.log("getname error");
+          console.error('getname error');
         } else {
           callback(res.data.name);
         }
-      }
+      },
     });
   },
-  onLoad: function() {
-    var userInfo = wx.getStorageSync('userInfo');
-    var selectUsername = wx.getStorageSync('selectUsername');
+  onLoad() {
+    const userInfo = wx.getStorageSync('userInfo');
+    const selectUsername = wx.getStorageSync('selectUsername');
     if (!selectUsername) {
       // 没有任何登陆信息
       this.setData({
@@ -73,29 +72,29 @@ Page({
       loginStatus: true,
     });
 
-    var password = userInfo[selectUsername].password;
-    var cookie = userInfo[selectUsername].cookie;
-    var that = this;
+    const password = userInfo[selectUsername].password;
+    const cookie = userInfo[selectUsername].cookie;
+    const that = this;
 
     // 获取用户名字
     if (userInfo[selectUsername].name) {
       that.setData({
-        username: userInfo[selectUsername].name
+        username: userInfo[selectUsername].name,
       });
     } else {
       that.setData({
         username: selectUsername,
       });
-      that.getUserName(selectUsername, password, cookie, function(name) {
+      that.getUserName(selectUsername, password, cookie, (name) => {
         that.setData({
-          username: name
+          username: name,
         });
         userInfo[selectUsername].name = name;
         wx.setStorage({
           key: 'userInfo',
-          data: userInfo
+          data: userInfo,
         });
       });
     }
-  }
-})
+  },
+});

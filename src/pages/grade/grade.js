@@ -1,8 +1,8 @@
 const date = new Date();
 const terms = [];
-for (let i = date.getFullYear(); i >= date.getFullYear() - 5; i--) {
-  terms.push(i + ' ' + '秋');
-  terms.push(i + ' ' + '春');
+for (let i = date.getFullYear(); i >= date.getFullYear() - 5; i -= 1) {
+  terms.push(`${i} 秋`);
+  terms.push(`${i} 春`);
 }
 
 Page({
@@ -12,7 +12,7 @@ Page({
   },
 
   // 切换学年学期
-  changeTerm: function(e) {
+  changeTerm(e) {
     const term = terms[e.detail.value];
     this.setData({
       term,
@@ -20,7 +20,7 @@ Page({
     this.getGrade(term.split(' ')[0], term.split(' ')[1]);
   },
 
-  getGrade: function (year, term, onPullDownRefresh) {
+  getGrade(year, term, onPullDownRefresh) {
     if (!onPullDownRefresh) {
       this.setData({
         getGradeLoading: true,
@@ -36,31 +36,31 @@ Page({
       username,
       password,
       cookie,
-    }
+    };
     if (year && term) {
       data.year = parseInt(year) - 1980;
       const termsObj = {
-        '春': 1,
-        '秋': 2,
-      }
+        春: 1,
+        秋: 2,
+      };
       data.term = termsObj[term];
     }
     wx.request({
       url: 'https://test.gebilaowu.cn/api/education/getGrade',
       data,
       header: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      fail: function () {
+      fail() {
         wx.showModal({
           content: '拉取数据失败，请检查你的网络',
           showCancel: false,
           getGradeLoading: false,
         });
       },
-      success: function(res) {
+      success(res) {
         if (res.error) {
-          console.log("get grade error", res.error);
+          console.error('get grade error', res.error);
           this.setData({
             getGradeLoading: false,
           });
@@ -87,14 +87,10 @@ Page({
           }, []);
 
           const newData = {
-            gradeData: gradeData,
+            gradeData,
             getGradeLoading: false,
             term: res.data.gradeTerm,
-          }
-
-          // if (res.data.data.length > 0) {
-          //   newData.term = res.data.data[0][0] + ' ' + res.data.data[0][1];
-          // }
+          };
 
           userInfo[username].cookie = res.data.cookie;
           userInfo[username].grade = gradeData;
@@ -102,25 +98,21 @@ Page({
 
           wx.setStorage({
             key: 'userInfo',
-            data: userInfo
+            data: userInfo,
           });
-
-          if (res.data.data.length > 0) {
-            newData.term = res.data.data[0][0] + ' ' + res.data.data[0][1];
-          }
 
           that.setData(newData);
 
           wx.showToast({
             title: '拉取数据成功',
             icon: 'success',
-            duration: 2000
+            duration: 2000,
           });
         }
-      }
+      },
     });
   },
-  onLoad: function () {
+  onLoad() {
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;
@@ -131,7 +123,7 @@ Page({
       username,
       userInfo,
       term: gradeTerm,
-    }
+    };
 
     this.setData(data);
     if (!gradeData) {
@@ -139,7 +131,7 @@ Page({
     }
   },
     // 下拉刷新
-  onPullDownRefresh: function() {
+  onPullDownRefresh() {
     this.getGrade(null, null, true);
   },
-})
+});

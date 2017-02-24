@@ -1,4 +1,3 @@
-//index.js
 
 Page({
   data: {
@@ -7,21 +6,21 @@ Page({
     userNameList: [],
   },
 
-  usernameInput: function(e) {
+  usernameInput(e) {
     this.setData({
-      username: e.detail.value
-    })
+      username: e.detail.value,
+    });
   },
-  passwordInput: function(e) {
+  passwordInput(e) {
     this.setData({
-      password: e.detail.value
-    })
+      password: e.detail.value,
+    });
   },
 
   // confirm
-  confirm: function(e) {
-    var username = this.data.username;
-    var password = this.data.password;
+  confirm() {
+    const username = this.data.username;
+    const password = this.data.password;
 
     // handler error for username or password.
     if (!username || !password) {
@@ -29,12 +28,12 @@ Page({
       return;
     }
 
-    // var cookie = this.data.cookie || '';
-    var cookie = (this.data.userInfo[username] && this.data.userInfo[username].cookie) || '';
+    // const cookie = this.data.cookie || '';
+    const cookie = (this.data.userInfo[username] && this.data.userInfo[username].cookie) || '';
     this.setData({
-      loginStatus: 'loading'
+      loginStatus: 'loading',
     });
-    var that = this;
+    const that = this;
 
     // request login
     wx.request({
@@ -42,41 +41,41 @@ Page({
       data: {
         username,
         password,
-        cookie
+        cookie,
       },
       header: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      success: function(res) {
+      success(res) {
         if (res.error || res.statusCode === 400) {
           // 请求报错或者服务器端报错（账号密码验证错误等...）。
           that.showError(res.error || res.data, that);
         } else {
           that.setData({
-            loginStatus: 'complete'
+            loginStatus: 'complete',
           });
           wx.redirectTo({
-            url: '../home/home'
+            url: '../home/home',
           });
-          var userInfo = that.data.userInfo;
+          const userInfo = that.data.userInfo;
           userInfo[username] = Object.assign({}, userInfo[username], {
             password,
-            cookie: res.data.cookie
+            cookie: res.data.cookie,
           });
           wx.setStorage({
             key: 'selectUsername',
-            data: that.data.username
+            data: that.data.username,
           });
           wx.setStorage({
             key: 'userInfo',
-            data: userInfo
+            data: userInfo,
           });
           wx.setStorage({
             key: 'thisWeek',
-            data: res.data.thisWeek
+            data: res.data.thisWeek,
           });
         }
-      }
+      },
     });
   },
 
@@ -84,53 +83,54 @@ Page({
     wx.showModal({
       content: message,
       showCancel: false,
-      success: function(res) {
+      success(res) {
         if (res.confirm) {
           that.setData({
             loginStatus: 'error',
           });
         }
-      }
+      },
     });
   },
 
   // 选择用户
-  changeUser: function(e) {
-    var userInfo = this.data.userInfo;
-    var userList = this.data.userList;
-    var selectUsername = userList[e.detail.value];
+  changeUser(e) {
+    const userInfo = this.data.userInfo;
+    const userList = this.data.userList;
+    const selectUsername = userList[e.detail.value];
     this.setData({
       username: selectUsername,
       password: userInfo[selectUsername].password,
-      cookie: userInfo[selectUsername].cookie
-    })
+      cookie: userInfo[selectUsername].cookie,
+    });
   },
 
-  onLoad: function () {
-    console.log('onLoad')
-    var userInfo_storage = wx.getStorageSync('userInfo');
+  onLoad() {
+    const userInfoStorage = wx.getStorageSync('userInfo');
 
-    var selectUsername = wx.getStorageSync('selectUsername');
+    const selectUsername = wx.getStorageSync('selectUsername');
 
     // 在storage中有1个以上存储的学号
-    if (userInfo_storage && Object.keys(userInfo_storage).length > 0) {
-      var data = {};
-      data.userInfo = userInfo_storage;
-      data.userList = Object.keys(userInfo_storage);
-      data.userNameList = Object.keys(userInfo_storage).map((item) => {
-        return userInfo_storage[item].name ? userInfo_storage[item].name : item;
+    if (userInfoStorage && Object.keys(userInfoStorage).length > 0) {
+      const data = {};
+      data.userInfo = userInfoStorage;
+      data.userList = Object.keys(userInfoStorage);
+      data.userNameList = Object.keys(userInfoStorage).map((item) => {
+        const result = userInfoStorage[item].name ? userInfoStorage[item].name : item;
+        return result;
       });
+
       if (selectUsername) {
         data.username = selectUsername;
-        data.password = userInfo_storage[selectUsername].password;
-        data.cookie = userInfo_storage[selectUsername].cookie;
+        data.password = userInfoStorage[selectUsername].password;
+        data.cookie = userInfoStorage[selectUsername].cookie;
       } else {
-        data.username = userList[0];
-        data.password = userInfo_storage[userList[0]].password;
-        data.cookie = userInfo_storage[userList[0]].cookie;
+        data.username = data.userList[0];
+        data.password = userInfoStorage[data.userList[0]].password;
+        data.cookie = userInfoStorage[data.userList[0]].cookie;
       }
 
       this.setData(data);
     }
-  }
-})
+  },
+});

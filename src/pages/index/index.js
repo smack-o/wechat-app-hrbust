@@ -1,26 +1,11 @@
-//index.js
-//获取应用实例
-var app = getApp()
+// index.js
+// 获取应用实例
+
+const app = getApp();
 Page({
-  loginButton: function(e) {
+  loginButton: function() {
     wx.redirectTo({
-      url: '../home/home'
-    })
-    // if (this.data.selectUsername) {
-    //   wx.redirectTo({
-    //     url: '../home/home'
-    //   })
-    // } else {
-    //   wx.redirectTo({
-    //     url: '../login/login'
-    //   })
-    // }
+      url: '../home/home',
+    });
   },
-  // onLoad: function () {
-  //   console.log('onLoad')
-  //   const selectUsername = wx.getStorageSync('selectUsername');
-  //   this.setData({
-  //     selectUsername
-  //   })
-  // }
-})
+});

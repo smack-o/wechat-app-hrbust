@@ -1,5 +1,18 @@
 # Created by .ignore support plugin (hsz.mobi)
-node_modules
-.idea
+
+
+#system files
 .DS_Store
+.idea/
+.tags*
+
+#library files
+node_modules
+npm-debug.log
+
+#compiled files
+.temp.js
+~
+
+#dist files
 dist/

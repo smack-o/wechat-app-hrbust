@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view>
     <view>
-      <image style="width: 100%;background-color: #eeeeee;" mode="{{item.mode}}" src="http://ofc93yuj4.bkt.clouddn.com/atumn.jpeg"></image>
+      <image style="width: 100%;background-color: #eeeeee;" mode="{{item.mode}}" src="http://om478cuzx.bkt.clouddn.com/atumn.jpeg"></image>
     </view>
     <view class="container">
       <button type="primary" bindtap="loginButton" plain>点击进入哈理工助手</button>

@@ -27,7 +27,6 @@ Page({
         success(res) {
           let newsData = that.data.newsData || [];
           let imageList = that.data.imageList || [];
-          // console.log(newsData, imageList);
           const resData = res.data.data;
           const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}?timestamp=${Date.now()}`);
 
@@ -45,17 +44,17 @@ Page({
           });
           resolve();
         },
-        fail() {
-          that.showError(that);
+        fail(error) {
+          that.showError(that, error);
           resolve();
         },
       });
     });
     return promise;
   },
-  showError(that) {
+  showError(that, error) {
     wx.showModal({
-      content: '加载失败，请检查您的网络。',
+      content: error || '加载失败，请检查您的网络。',
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {

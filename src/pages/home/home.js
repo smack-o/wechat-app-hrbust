@@ -16,6 +16,7 @@ Page({
       image: '../../images/exam_icon.png',
       text: '考试',
       needLogin: true,
+      disable: true,
     }, {
       image: '../../images/news_icon.png',
       text: '教务公告',
@@ -23,18 +24,23 @@ Page({
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
+      disable: true,
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
+      disable: true,
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
+      disable: true,
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
+      disable: true,
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
+      disable: true,
     }],
   },
   jumpPage(event) {

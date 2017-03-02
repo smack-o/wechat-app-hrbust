@@ -1,0 +1,25 @@
+<!-- <image class="image" bindtap="viewImage" style="width: 100%;background-color: #eeeeee;" mode="aspectFit" src="http://7xqw3n.com1.z0.glb.clouddn.com/baidu.png" /> -->
+<import src="../../utils/loading.wxml"/>
+
+<!-- Loading -->
+<block wx:if="{{!newsData}}">
+  <template is="loading" data="{{text: '正在加载'}}"/>
+</block>
+
+<block wx:else>
+  <view class="wrapper">
+    <block wx:key="news" wx:for="{{newsData}}" wx:for-item="newsItem" wx:for-index="index">
+      <view class="news-wrapper" bindtap="viewImage" data-index="{{index}}">
+        <view class="news-title">
+          {{newsItem.title}}
+        </view>
+        <view class="news-image">
+          <image class="image" style="width: 80px; height: 80px;" src='{{imageList[index] + "&imageView/1/w/80/h/80"}}' />
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{loading}}" class="loadingText">
+      正在加载<p class="dotting"></p>
+    </view>
+  </view>
+</block>

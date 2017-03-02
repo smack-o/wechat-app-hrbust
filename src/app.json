@@ -4,13 +4,14 @@
     "pages/login/login",
     "pages/home/home",
     "pages/course/course",
-    "pages/grade/grade"
+    "pages/grade/grade",
+    "pages/news/news"
   ],
   "window":{
     "backgroundTextStyle": "white",
     "backgroundColor": "#292929",
     "navigationBarBackgroundColor": "#292929",
-    "navigationBarTitleText": "哈理工助手",
+    "navigationBarTitleText": "哈理工SSR",
     "navigationBarTextStyle": "white"
   }
 }

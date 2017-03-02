@@ -16,6 +16,7 @@ Page({
     }, {
       image: '../../images/news_icon.png',
       text: '教务公告',
+      url: '../news/news',
     }, {
       image: '../../images/course_icon.png',
       text: '课表',

@@ -18,101 +18,100 @@ Page({
     const term = terms[e.detail.value];
     this.setData({
       term,
+      getGradeLoading: true,
     });
-    this.getGrade(term.split(' ')[0], term.split(' ')[1]);
+    this.getGrade(term.split(' ')[0], term.split(' ')[1]).then(() => {
+      this.setData({
+        getGradeLoading: false,
+      });
+    });
   },
 
-  getGrade(year, term, onPullDownRefresh) {
-    if (!onPullDownRefresh) {
-      this.setData({
-        getGradeLoading: true,
-      });
-    }
-
-    const userInfo = this.data.userInfo;
-    const username = this.data.username;
-    const password = userInfo[username].password;
-    const cookie = userInfo[username].cookie;
-    const that = this;
-    const data = {
-      username,
-      password,
-      cookie,
-    };
-    if (year && term) {
-      data.year = parseInt(year) - 1980;
-      const termsObj = {
-        春: 1,
-        秋: 2,
+  getGrade(year, term) {
+    const promise = new Promise((resolve) => {
+      const userInfo = this.data.userInfo;
+      const username = this.data.username;
+      const password = userInfo[username].password;
+      const cookie = userInfo[username].cookie;
+      const that = this;
+      const data = {
+        username,
+        password,
+        cookie,
       };
-      data.term = termsObj[term];
-    }
-    wx.request({
-      url: `${requestUrl}/api/education/getGrade`,
-      data,
-      header: {
-        'Content-Type': 'application/json',
-      },
-      fail() {
-        wx.showModal({
-          content: '拉取数据失败，请检查你的网络',
-          showCancel: false,
-          getGradeLoading: false,
-        });
-      },
-      success(res) {
-        if (res.error) {
-          console.error('get grade error', res.error);
-          this.setData({
-            getGradeLoading: false,
-          });
+      if (year && term) {
+        data.year = parseInt(year) - 1980;
+        const termsObj = {
+          春: 1,
+          秋: 2,
+        };
+        data.term = termsObj[term];
+      }
+      wx.request({
+        url: `${requestUrl}/api/education/getGrade`,
+        data,
+        header: {
+          'Content-Type': 'application/json',
+        },
+        fail() {
           wx.showModal({
-            content: `拉取数据失败。${res.error}`,
+            content: '拉取数据失败，请检查你的网络',
             showCancel: false,
           });
-        } else {
-          let gradeData = res.data.data;
+          resolve();
+        },
+        success(res) {
+          if (res.error) {
+            console.error('get grade error', res.error);
+            wx.showModal({
+              content: `拉取数据失败。${res.error}`,
+              showCancel: false,
+            });
+          } else {
+            let gradeData = res.data.data;
 
-          gradeData = gradeData.reduce((arr, item) => {
-            const items = [];
-            items.push(item[3]);
-            items.push(item[6]);
-            items.push(item[12]);
-            items.push(item[7]);
-            items.push(item[9]);
-            items.push(item[10]);
-            items.push(item[11]);
+            gradeData = gradeData.reduce((arr, item) => {
+              const items = [];
+              items.push(item[3]);
+              items.push(item[6]);
+              items.push(item[12]);
+              items.push(item[7]);
+              items.push(item[9]);
+              items.push(item[10]);
+              items.push(item[11]);
 
-            arr.push(items);
+              arr.push(items);
 
-            return arr;
-          }, []);
+              return arr;
+            }, []);
 
-          const newData = {
-            gradeData,
-            getGradeLoading: false,
-            term: res.data.gradeTerm,
-          };
+            const newData = {
+              gradeData,
+              term: res.data.gradeTerm,
+            };
 
-          userInfo[username].cookie = res.data.cookie;
-          userInfo[username].grade = gradeData;
-          userInfo[username].gradeTerm = newData.term;
+            userInfo[username].cookie = res.data.cookie;
+            userInfo[username].grade = gradeData;
+            userInfo[username].gradeTerm = newData.term;
 
-          wx.setStorage({
-            key: 'userInfo',
-            data: userInfo,
-          });
+            wx.setStorage({
+              key: 'userInfo',
+              data: userInfo,
+            });
 
-          that.setData(newData);
+            that.setData(newData);
 
-          wx.showToast({
-            title: '拉取数据成功',
-            icon: 'success',
-            duration: 2000,
-          });
-        }
-      },
+            wx.showToast({
+              title: '拉取数据成功',
+              icon: 'success',
+              duration: 2000,
+            });
+          }
+          resolve();
+        },
+      });
     });
+    return promise;
   },
   onLoad() {
     const userInfo = wx.getStorageSync('userInfo');
@@ -129,11 +128,20 @@ Page({
 
     this.setData(data);
     if (!gradeData) {
-      this.getGrade();
+      this.setData({
+        getGradeLoading: true,
+      });
+      this.getGrade().then(() => {
+        this.setData({
+          getGradeLoading: false,
+        });
+      });
     }
   },
-    // 下拉刷新
+  // 下拉刷新
   onPullDownRefresh() {
-    this.getGrade(null, null, true);
+    this.getGrade().then(() => {
+      wx.stopPullDownRefresh();
+    });
   },
 });

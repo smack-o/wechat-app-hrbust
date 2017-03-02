@@ -6,13 +6,16 @@ Page({
       image: '../../images/course_icon.png',
       text: '课表',
       url: '../course/course',
+      needLogin: true,
     }, {
       image: '../../images/grade_icon.png',
       text: '成绩',
       url: '../grade/grade',
+      needLogin: true,
     }, {
       image: '../../images/exam_icon.png',
       text: '考试',
+      needLogin: true,
     }, {
       image: '../../images/news_icon.png',
       text: '教务公告',
@@ -34,9 +37,13 @@ Page({
       text: '课表',
     }],
   },
-  login() {
+  jumpPage(event) {
+    const item = event.currentTarget.dataset.item;
+    if (item.needLogin && !this.data.isLogin) {
+      return;
+    }
     wx.navigateTo({
-      url: '../login/login',
+      url: item.url,
     });
   },
   getUserName(username, password, cookie, callback) {
@@ -65,13 +72,13 @@ Page({
     if (!selectUsername) {
       // 没有任何登陆信息
       this.setData({
-        loginStatus: false,
+        isLogin: false,
       });
       return;
     }
 
     this.setData({
-      loginStatus: true,
+      isLogin: true,
     });
 
     const password = userInfo[selectUsername].password;

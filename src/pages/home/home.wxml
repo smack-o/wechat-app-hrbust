@@ -1,5 +1,5 @@
 <view class="title">
-  <block wx:if="{{loginStatus}}">
+  <block wx:if="{{isLogin}}">
     <text class="weui-flex__item">{{username}}</text>
     <navigator url="../login/login">
       <image class="changeUserButton" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
@@ -16,9 +16,15 @@
   <view class="page__bd">
     <view class="weui-grids">
       <block wx:for-items="{{contents}}" wx:key="{{item}}">
-        <navigator url="{{item.url}}" class="weui-grid">
+        <view wx:if="{{item.needLogin&&!isLogin || item.disable}}" data-item="{{item}}" class="weui-grid disable">
           <view class="icon-wrapper">
-            <image class="weui-grid__icon" bindtap="{{item.bindtap}}" src="{{item.image}}" />
+            <image class="weui-grid__icon" src="{{item.image}}" />
+            <view class="weui-grid__label">{{item.text}}</view>
+          </view>
+        </view>
+        <navigator wx:else url="{{item.url}}" class="weui-grid">
+          <view class="icon-wrapper">
+            <image class="weui-grid__icon" src="{{item.image}}" />
             <view class="weui-grid__label">{{item.text}}</view>
           </view>
         </navigator>

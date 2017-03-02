@@ -43,6 +43,12 @@ page {
 .weui-grid {
   border-color: #424242;
   height: calc(100% / 3);
+
+  &.disable {
+    .icon-wrapper {
+      opacity: .3;
+    }
+  }
   /*padding: 60px 10px;*/
 }
 
@@ -62,3 +68,4 @@ page {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+

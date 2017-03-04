@@ -5,7 +5,8 @@
     "pages/home/home",
     "pages/course/course",
     "pages/grade/grade",
-    "pages/news/news"
+    "pages/news/news",
+    "pages/cet4/cet4"
   ],
   "window":{
     "backgroundTextStyle": "white",

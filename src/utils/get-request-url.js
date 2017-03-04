@@ -1,5 +1,5 @@
-// const dev = 'http://127.0.0.1:4001';
-var production = 'https://test.gebilaowu.cn';
+const dev = 'http://127.0.0.1:4001';
+// var production = 'https://test.gebilaowu.cn';
 
 // let url = null;
 // es6 版本
@@ -13,6 +13,6 @@ var production = 'https://test.gebilaowu.cn';
 // if ('NODE_ENV' === 'dev') {
 //     url = dev;
 // } else if ('NODE_ENV' === 'production') {
-var url = production;
+var url = dev;
 // }
 module.exports = url;

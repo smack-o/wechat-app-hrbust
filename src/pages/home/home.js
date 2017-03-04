@@ -22,10 +22,10 @@ Page({
       text: '教务公告',
       url: '../news/news',
     }, {
-      image: '../../images/grade_icon.png',
+      image: '../../images/cet4_icon.png',
       text: '四六级成绩',
       url: '../cet4/cet4',
-      needLogin:true
+      needLogin: true,
     }, {
       image: '../../images/course_icon.png',
       text: '课表',

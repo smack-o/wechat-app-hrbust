@@ -27,7 +27,7 @@ Page({
       url: '../cet4/cet4',
       needLogin: true,
     }, {
-      image: '../../images/course_icon.png',
+      image: '../../images/job_icon.png',
       text: '校招信息',
       url: '../job/job',
     }, {

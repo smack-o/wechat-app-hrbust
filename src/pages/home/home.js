@@ -28,8 +28,8 @@ Page({
       needLogin: true,
     }, {
       image: '../../images/course_icon.png',
-      text: '课表',
-      disable: true,
+      text: '校招信息',
+      url: '../job/job',
     }, {
       image: '../../images/course_icon.png',
       text: '课表',

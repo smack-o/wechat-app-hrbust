@@ -1,0 +1,21 @@
+@import "../../utils/loading.wxss";
+
+.wrapper {
+  font-size: 14px;
+}
+
+.news-wrapper {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  line-height: 0;
+}
+
+.news-title {
+  line-height: 25px;
+  margin-right: 10px;
+}
+
+.loadingText {
+  margin-bottom: 10px;
+}

@@ -6,7 +6,8 @@
     "pages/course/course",
     "pages/grade/grade",
     "pages/news/news",
-    "pages/cet4/cet4"
+    "pages/cet4/cet4",
+    "pages/job/job"
   ],
   "window":{
     "backgroundTextStyle": "white",

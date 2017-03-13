@@ -53,8 +53,11 @@ Page({
     return promise;
   },
   showError(that, error) {
+    if (error) {
+      console.error(error);
+    }
     wx.showModal({
-      content: error || '加载失败，请检查您的网络。',
+      content: '加载失败，请检查您的网络。',
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {

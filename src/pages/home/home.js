@@ -18,30 +18,31 @@ Page({
       needLogin: true,
       disable: true,
     }, {
-      image: '../../images/news_icon.png',
-      text: '教务公告',
-      url: '../news/news',
-    }, {
       image: '../../images/cet4_icon.png',
       text: '四六级成绩',
       url: '../cet4/cet4',
       needLogin: true,
     }, {
+      image: '../../images/news_icon.png',
+      text: '教务公告',
+      url: '../news/news',
+      disable: true,
+    }, {
       image: '../../images/job_icon.png',
       text: '校招信息',
       url: '../job/job',
+      disable: true,
+    }, {
+      image: '../../images/library_icon.png',
+      text: '图书馆',
+      url: '../library/library',
     }, {
       image: '../../images/course_icon.png',
       text: '课表',
       disable: true,
     }, {
-      image: '../../images/course_icon.png',
-      text: '课表',
-      disable: true,
-    }, {
-      image: '../../images/course_icon.png',
-      text: '课表',
-      disable: true,
+      image: '../../images/about_icon.png',
+      text: 'About As',
     }],
   },
   jumpPage(event) {

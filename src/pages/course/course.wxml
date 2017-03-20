@@ -5,7 +5,7 @@
 
 <!-- Loading -->
 <block wx:if="{{!courseData}}">
-  <template is="loading" data="{{text: '正在加载'}}"/>
+  <template is="loading" />
 </block>
 
 <block wx:else>

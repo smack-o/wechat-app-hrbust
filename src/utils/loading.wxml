@@ -18,3 +18,9 @@
     {{text}}<p class="dotting"></p>
   </view>
 </template>
+
+<template name="loading_bottom">
+  <view class="loadingText loading_bottom">
+    {{text || '正在加载'}}<p class="dotting"></p>
+  </view>
+</template>

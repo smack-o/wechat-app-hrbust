@@ -18,8 +18,8 @@
         </view>
       </view>
     </block>
-    <view wx:if="{{loading}}" class="loadingText">
-      正在加载<p class="dotting"></p>
-    </view>
+    <block wx:if="{{loading}}">
+      <template is="loading_bottom"/>
+    </block>
   </view>
 </block>

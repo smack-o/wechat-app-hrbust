@@ -123,4 +123,11 @@ Page({
       }
     }
   },
+  goToDetail(event) {
+    const detail = event.currentTarget.dataset.detail;
+    wx.navigateTo({
+      url: `library-detail?detail=${JSON.stringify(detail)}`,
+    });
+    // console.log(detail);
+  },
 });

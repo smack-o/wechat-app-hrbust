@@ -8,7 +8,8 @@
     "pages/news/news",
     "pages/cet4/cet4",
     "pages/job/job",
-    "pages/library/library"
+    "pages/library/library",
+    "pages/library/library-detail"
   ],
   "window":{
     "backgroundTextStyle": "white",

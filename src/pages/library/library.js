@@ -4,6 +4,10 @@ Page({
   data: {
     inputShowed: false,
     inputVal: '',
+    loading: false,
+    page: 1,
+    showClear: false,
+    noData: false,
   },
   showInput() {
     this.setData({
@@ -14,40 +18,58 @@ Page({
     this.setData({
       inputVal: '',
       inputShowed: false,
+      showClear: false,
     });
   },
   clearInput() {
     this.setData({
       inputVal: '',
+      showClear: false,
     });
   },
   inputTyping(e) {
-    // console.log(e.detail.value);
+    if (e.detail.value !== '') {
+      this.setData({
+        showClear: true,
+      });
+    }
+  },
+  inputConfirm(e) {
+    // 实时获取输入内容并发起请求
     const that = this;
+    const page = 1;
     this.setData({
       inputVal: e.detail.value,
+      page,
     });
-    this.getData(e.detail.value).then((result) => {
-      if (result.error) {
-        console.error(result.error);
-        wx.showModal({
-          content: '拉取数据失败，请检查你的网络',
-          showCancel: false,
-        });
-      } else {
-        that.setData({
-          libraryData: result,
-        });
-        // console.log(that.data.libraryData);
-      }
-    });
+    if (e.detail.value !== '') {
+      this.getData(e.detail.value, page).then((result) => {
+        if (result.error) {
+          console.error(result.error);
+          that.setData({
+            libraryData: [],
+            noData: true,
+          });
+        } else if (result.length === 0) {
+          that.setData({
+            libraryData: [],
+            noData: true,
+          });
+        } else {
+          that.setData({
+            libraryData: result,
+            noData: false,
+          });
+        }
+      });
+    }
   },
   getData(keyValue, page) {
-    // const that = this;
+    // 获取数据
     const pageNum = page || 1;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/api/education/library?keyValue=${keyValue}&page=${pageNum}`,
+        url: `${requestUrl}/api/education/library?keyValue=${encodeURI(keyValue)}&page=${pageNum}`,
         header: {
           'Content-Type': 'application/json',
         },
@@ -63,5 +85,42 @@ Page({
       });
     });
     return promise;
+  },
+  onReachBottom() {
+    // 底部加载
+    const that = this;
+    if (!this.data.loading) {
+      this.setData({
+        loading: true,
+      });
+      const newPage = this.data.page + 1;
+      this.setData({
+        page: newPage,
+      });
+      const inputVal = this.data.inputVal;
+      if (inputVal !== '') {
+        this.getData(inputVal, newPage).then((result) => {
+          const libraryData = that.data.libraryData;
+          if (result.error) {
+            console.error(result.error);
+            that.setData({
+              loading: false,
+            });
+          } else {
+            if (result.length === 0) {
+              wx.showToast({
+                title: '已经到底了...',
+                icon: 'success',
+                duration: 2000,
+              });
+            }
+            that.setData({
+              libraryData: libraryData.concat(result),
+              loading: false,
+            });
+          }
+        });
+      }
+    }
   },
 });

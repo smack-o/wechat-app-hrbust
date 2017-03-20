@@ -13,3 +13,33 @@ page {
   background-color: #fff;
   color: #000;
 }
+
+.information {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .weui-media-box__desc {
+    width: 50%;
+  }
+}
+
+.noData {
+  text-align: center;
+  margin: 20px;
+  font-size: 16px;
+  color: #999;
+}
+
+.library_page__title {
+  font-size: 14px;
+  margin: 5px;
+  color: #999;
+  text-align: center;
+}
+
+.library_page__desc {
+  font-size: 14px;
+  margin: 5px;
+  color: #999;
+}

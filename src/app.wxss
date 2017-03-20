@@ -1,5 +1,5 @@
-@import 'utils/weui.wxss';
-@import 'utils/loading.wxss';
+@import 'utils/weui.scss';
+@import 'utils/loading.scss';
 
 /**app.wxss**/
 .container {
@@ -16,4 +16,3 @@ page {
   background-color: rgb(41,41,41);
   color: #fff;
 }
-

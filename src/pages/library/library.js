@@ -43,12 +43,21 @@ Page({
       page,
     });
     if (e.detail.value !== '') {
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading',
+        duration: 10000,
+      });
       this.getData(e.detail.value, page).then((result) => {
+        wx.hideToast();
         if (result.error) {
           console.error(result.error);
           that.setData({
             libraryData: [],
-            noData: true,
+          });
+          wx.showModal({
+            content: '拉取数据失败，请检查你的网络',
+            showCancel: false,
           });
         } else if (result.length === 0) {
           that.setData({
@@ -106,6 +115,10 @@ Page({
             that.setData({
               loading: false,
             });
+            wx.showModal({
+              content: '拉取数据失败，请检查你的网络',
+              showCancel: false,
+            });
           } else {
             if (result.length === 0) {
               wx.showToast({
@@ -128,6 +141,10 @@ Page({
     wx.navigateTo({
       url: `library-detail?detail=${JSON.stringify(detail)}`,
     });
-    // console.log(detail);
+  },
+  onLoad() {
+    wx.setNavigationBarTitle({
+      title: '哈理工图书馆查询',
+    });
   },
 });

@@ -33,13 +33,18 @@ page {
 
 .library_page__title {
   font-size: 14px;
-  margin: 5px;
+  padding: 5px;
   color: #999;
   text-align: center;
+  background-color: #efeff4;
 }
 
 .library_page__desc {
   font-size: 14px;
   margin: 5px;
   color: #999;
+}
+
+.weui-search-bar  {
+  border-top: 0;
 }

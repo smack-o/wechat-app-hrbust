@@ -1,9 +1,6 @@
 <import src="../../utils/loading.wxml"/>
 
 <view class="page">
-    <view class="page__hd">
-      <view class="library_page__title">哈理工图书馆书籍查询</view>
-    </view>
     <view class="page__bd">
         <view class="weui-search-bar">
             <view class="weui-search-bar__form">

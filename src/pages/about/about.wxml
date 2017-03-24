@@ -33,7 +33,17 @@
 
   <!-- </view> -->
   <view class="bottom">
-      <image class="bottom__image" src="../../images/wechat_bottom.jpeg"></image>
+    <view class="contact-button">
+      <block wx:for="{{[0,0,0,0,0,0,0,0,0,0,0,0]}}">
+        <contact-button
+          type="default-light"
+          size="27"
+          session-from="weapp"
+          >
+        </contact-button>
+      </block>
+    </view>
+    <image class="bottom__image" src="../../images/wechat_bottom.jpeg"></image>
   </view>
   <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="http://7xl432.com1.z0.glb.clouddn.com/weixin.mp3" id="myAudio"></audio>
 </view>

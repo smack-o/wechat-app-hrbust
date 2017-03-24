@@ -27,7 +27,7 @@
               <view class="contact-button">
                 <contact-button
                   type="default-light"
-                  size="32"
+                  size="27"
                   session-from="weapp"
                 >
                 </contact-button>

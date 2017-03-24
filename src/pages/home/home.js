@@ -41,7 +41,7 @@ Page({
       type: 'service',
     }, {
       image: '../../images/about_icon.png',
-      text: '关于',
+      text: '别点我',
       url: '../about/about',
     }],
   },

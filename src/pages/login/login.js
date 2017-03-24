@@ -50,7 +50,7 @@ Page({
       success(res) {
         if (res.error || res.statusCode === 400) {
           // 请求报错或者服务器端报错（账号密码验证错误等...）。
-          that.showError(res.error || res.data, that);
+          that.showError(res.data.error || res.data, that);
         } else {
           that.setData({
             loginStatus: 'complete',

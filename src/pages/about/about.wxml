@@ -34,7 +34,7 @@
   <!-- </view> -->
   <view class="bottom">
     <view class="contact-button">
-      <block wx:for="{{[0,0,0,0,0,0,0,0,0,0,0,0]}}">
+      <block wx:key="contactButton" wx:for="{{[0,0,0,0,0,0,0,0,0,0,0,0]}}">
         <contact-button
           type="default-light"
           size="27"

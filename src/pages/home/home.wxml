@@ -22,6 +22,20 @@
             <view class="weui-grid__label">{{item.text}}</view>
           </view>
         </view>
+        <view wx:elif="{{item.type == 'service'}}" class="weui-grid">
+            <view class="icon-wrapper">
+              <view class="contact-button">
+                <contact-button
+                  type="default-light"
+                  size="32"
+                  session-from="weapp"
+                >
+                </contact-button>
+              </view>
+              <!-- <image class="weui-grid__icon" src="{{item.image}}" /> -->
+              <view class="weui-grid__label">{{item.text}}</view>
+            </view>
+        </view>
         <navigator wx:else url="{{item.url}}" class="weui-grid">
           <view class="icon-wrapper">
             <image class="weui-grid__icon" src="{{item.image}}" />

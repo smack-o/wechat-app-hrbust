@@ -37,12 +37,12 @@ Page({
       text: '图书馆',
       url: '../library/library',
     }, {
-      image: '../../images/course_icon.png',
-      text: '课表',
-      disable: true,
+      text: '联系我们',
+      type: 'service',
     }, {
       image: '../../images/about_icon.png',
-      text: 'About As',
+      text: '关于',
+      url: '../about/about',
     }],
   },
   jumpPage(event) {

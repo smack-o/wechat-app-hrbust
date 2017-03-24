@@ -9,7 +9,8 @@
     "pages/cet4/cet4",
     "pages/job/job",
     "pages/library/library",
-    "pages/library/library-detail"
+    "pages/library/library-detail",
+    "pages/about/about"
   ],
   "window":{
     "backgroundTextStyle": "white",

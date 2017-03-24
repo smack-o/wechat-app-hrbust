@@ -1,0 +1,39 @@
+<view class="wrapper">
+  <view>
+  </view>
+  <view>
+  </view>
+
+  <!-- <view class="list-wrapper"> -->
+  <scroll-view class="list-wrapper" scroll-y="true" scroll-top="{{scrollTop}}">
+    <view class="time">{{time}}</view>
+    <view class="list">
+      <view wx:key="wechat" wx:for="{{itemList}}" id="item_{{index}}">
+        <view class="wechat animation {{item.position}}">
+          <!-- {{index}} -->
+          <view class="avatar">
+            <image class="avatar__image" src="{{ item.position == 'left' ? '../../images/app_avatar.jpg' : avatarUrl}}"></image>
+          </view>
+          <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.src}}">
+            <view class="picture">
+              <image class="content__image" src="{{item.src}}"></image>
+            </view>
+          </view>
+          <view wx:else class="content content-text">
+            <view class="plain">
+              <!-- <text class="text"> -->
+                <text>{{item.text}}</text>
+              <!-- </text> -->
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- </view> -->
+  <view class="bottom">
+      <image class="bottom__image" src="../../images/wechat_bottom.jpeg"></image>
+  </view>
+  <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="http://7xl432.com1.z0.glb.clouddn.com/weixin.mp3" id="myAudio"></audio>
+</view>

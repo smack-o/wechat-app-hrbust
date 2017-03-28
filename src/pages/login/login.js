@@ -38,7 +38,7 @@ Page({
 
     // request login
     wx.request({
-      url: `${requestUrl}/api/education/login`,
+      url: `${requestUrl}/login`,
       data: {
         username,
         password,

@@ -48,7 +48,7 @@ Page({
         data.term = termsObj[term];
       }
       wx.request({
-        url: `${requestUrl}/api/education/getGrade`,
+        url: `${requestUrl}/getGrade`,
         data,
         header: {
           'Content-Type': 'application/json',

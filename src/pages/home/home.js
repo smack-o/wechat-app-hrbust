@@ -56,7 +56,7 @@ Page({
   },
   getUserName(username, password, cookie, callback) {
     wx.request({
-      url: `${requestUrl}/api/education/getUserName`,
+      url: `${requestUrl}/getUserName`,
       data: {
         username,
         password,

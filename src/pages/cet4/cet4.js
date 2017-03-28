@@ -10,7 +10,7 @@ Page({
         const that = this;
         const promise = new Promise((resolve) => {
             wx.request({
-                url: `${requestUrl}/api/education/getCet?username=${usename}`,
+                url: `${requestUrl}/getCet?username=${usename}`,
                 header: {
                     'Content-Type': 'application/json',
                 },

@@ -78,7 +78,7 @@ Page({
     const pageNum = page || 1;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/api/education/library?keyValue=${encodeURI(keyValue)}&page=${pageNum}`,
+        url: `${requestUrl}/library?keyValue=${encodeURI(keyValue)}&page=${pageNum}`,
         header: {
           'Content-Type': 'application/json',
         },

@@ -20,7 +20,7 @@ Page({
     const that = this;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/api/education/getNews?&page=${page}`,
+        url: `${requestUrl}/getNews?&page=${page}`,
         header: {
           'Content-Type': 'application/json',
         },

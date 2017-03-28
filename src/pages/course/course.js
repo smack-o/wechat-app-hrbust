@@ -55,7 +55,7 @@ Page({
     const cookie = userInfo[selectUsername].cookie;
     const that = this;
     wx.request({
-      url: `${requestUrl}/api/education/getCourse`,
+      url: `${requestUrl}/getCourse`,
       data: {
         username: selectUsername,
         password,
@@ -108,7 +108,7 @@ Page({
 
     const that = this;
     wx.request({
-      url: `${requestUrl}/api/education/getWeek`,
+      url: `${requestUrl}/getWeek`,
       header: {
         'Content-Type': 'application/json',
       },

@@ -14,7 +14,8 @@ Page({
       {
         position: 'left',
         type: 'image',
-        src: 'http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg',
+        src: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?imageView/1/w/150/h/225&timestamps=${Date.now()}`,
+        viewUrl: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?timestamps=${Date.now()}`,
       },
       {
         position: 'left',
@@ -26,11 +27,11 @@ Page({
       },
       {
         position: 'left',
-        text: '目前主要是查询教务在线的信息。支持多账号登陆，在登陆页面可以登陆新账号，也可以切换已经登陆过的账号。当然，如果你有很好的建议，我们会考虑加更多的功能。',
+        text: '1.主要是查询教务在线的信息。2.支持多账号登陆，在登陆页面可以登陆新账号，可以切换已经登陆过的账号。3.图书馆可以查询图书在馆还是借出。4.数据展示页面下拉刷新上拉加载。',
       },
       {
         position: 'left',
-        text: '记得当时每次查成绩、看教务信息、看课表、查图书馆的书等等在手机上都特别不方便。而且每次都要输入账号密码验证码！！！',
+        text: '当然，如果你有很好的建议，我们会考虑加更多的功能。',
       },
       {
         position: 'right',

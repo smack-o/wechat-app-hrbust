@@ -14,7 +14,7 @@
           <view class="avatar">
             <image class="avatar__image" src="{{ item.position == 'left' ? '../../images/app_avatar.jpg' : avatarUrl}}"></image>
           </view>
-          <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.src}}">
+          <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.viewUrl || item.src}}">
             <view class="picture">
               <image class="content__image" src="{{item.src}}"></image>
             </view>

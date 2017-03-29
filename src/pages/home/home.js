@@ -26,12 +26,10 @@ Page({
       image: '../../images/news_icon.png',
       text: '教务公告',
       url: '../news/news',
-      disable: true,
     }, {
       image: '../../images/job_icon.png',
       text: '校招信息',
       url: '../job/job',
-      disable: true,
     }, {
       image: '../../images/library_icon.png',
       text: '图书馆',

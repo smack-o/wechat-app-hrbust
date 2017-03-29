@@ -28,20 +28,30 @@ Page({
           let newsData = that.data.newsData || [];
           let imageList = that.data.imageList || [];
           const resData = res.data.data;
-          const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}?timestamp=${Date.now()}`);
-
-          if (needConcat) {
-            newsData = newsData.concat(resData);
-            imageList = imageList.concat(resImageList);
+          if (resData.length === 0) {
+            // 没有加载到数据
+            wx.showToast({
+              title: '哥，真没有了...',
+              icon: 'success',
+              duration: 2000,
+            });
+            that.setData({
+              page: that.data.page - 1,
+            });
           } else {
-            newsData = resData;
-            imageList = resImageList;
+            const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}?timestamp=${Date.now()}`);
+            if (needConcat) {
+              newsData = newsData.concat(resData);
+              imageList = imageList.concat(resImageList);
+            } else {
+              newsData = resData;
+              imageList = resImageList;
+            }
+            that.setData({
+              newsData,
+              imageList,
+            });
           }
-
-          that.setData({
-            newsData,
-            imageList,
-          });
           resolve();
         },
         fail(error) {

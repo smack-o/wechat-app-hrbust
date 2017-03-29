@@ -22,6 +22,10 @@
         <input value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
       </view>
   </view>
+  <view class="test-message">
+      <view>测试账号:1234 密码:1234</view>
+      <view>(此账号仅供测试，数据不真实)</view>
+  </view>
   <view class="container">
     <button type="primary" bindtap="confirm" plain>登陆</button>
   </view>

@@ -72,6 +72,12 @@ Page({
       },
     });
   },
+  onShareAppMessage() {
+    return {
+      title: '哈理工专属的工具-哈理工SSR',
+      path: '/page/home',
+    };
+  },
   onLoad() {
     const userInfo = wx.getStorageSync('userInfo');
     const selectUsername = wx.getStorageSync('selectUsername');

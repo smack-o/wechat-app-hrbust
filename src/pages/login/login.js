@@ -47,17 +47,36 @@ Page({
       header: {
         'Content-Type': 'application/json',
       },
+      fail() {
+        that.showError('', that);
+      },
       success(res) {
         if (res.error || res.statusCode === 400) {
           // 请求报错或者服务器端报错（账号密码验证错误等...）。
           that.showError(res.data.error || res.data, that);
         } else {
-          that.setData({
-            loginStatus: 'complete',
-          });
-          wx.redirectTo({
-            url: '../home/home',
-          });
+          // that.setData({
+          //   loginStatus: 'complete',
+          // });
+          if (wx.reLaunch) {
+            wx.reLaunch({
+              url: 'pages/home/home',
+            });
+          } else {
+            // 兼容
+            wx.showModal({
+              title: 'warning',
+              content: '请升级最新版的微信客户端来更好的体验小程序, 否则部分页面可能会有问题。',
+              confirmText: '朕知道了',
+              success(resS) {
+                if (resS.confirm) {
+                  wx.redirectTo({
+                    url: '../home/home',
+                  });
+                }
+              },
+            });
+          }
           const userInfo = that.data.userInfo;
           userInfo[username] = Object.assign({}, userInfo[username], {
             password,
@@ -82,7 +101,7 @@ Page({
 
   showError: (message, that) => {
     wx.showModal({
-      content: message,
+      content: message || '登陆失败，请检查您的网络。',
       showCancel: false,
       success(res) {
         if (res.confirm) {

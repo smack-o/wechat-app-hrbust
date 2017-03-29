@@ -12,8 +12,18 @@
 .news-title {
   line-height: 25px;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding:2px 0;
+  box-sizing:border-box;
 }
 
 .loadingText {
   margin-bottom: 10px;
+}
+
+.text-small {
+  font-size: 12px;
 }

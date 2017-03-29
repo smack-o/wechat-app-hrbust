@@ -68,6 +68,7 @@ Page({
               title: 'warning',
               content: '请升级最新版的微信客户端来更好的体验小程序, 否则部分页面可能会有问题。',
               confirmText: '朕知道了',
+              showCancel: false,
               success(resS) {
                 if (resS.confirm) {
                   wx.redirectTo({

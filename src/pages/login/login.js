@@ -48,7 +48,7 @@ Page({
         'Content-Type': 'application/json',
       },
       fail() {
-        that.showError('', that);
+        that.showError(null, that);
       },
       success(res) {
         if (res.error || res.statusCode === 400) {

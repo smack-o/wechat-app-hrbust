@@ -9,24 +9,22 @@
   </view>
 </block>
 <block wx:else>
+  <picker class="login-setting" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
+    <image class="login-setting" mode="{{item.mode}}" src="../../images/user-setting_icon.png"></image>
+  </picker>
   <view class="container">
       <view class="username-wrapper">
-        <input type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
-        <block wx:if="{{userList.length > 0}}">
-          <picker class="change-username" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
-            <image class="change-icon" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
-          </picker>
-        </block>
+        <input class="input" type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
       </view>
       <view class="password-wrapper">
-        <input value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
+        <input class="input" value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
       </view>
+  </view>
+  <view class="container">
+    <button class="button" bindtap="confirm">登陆</button>
   </view>
   <view class="test-message">
       <view>测试账号:1234 密码:1234</view>
       <view>(此账号仅供测试，数据不真实)</view>
-  </view>
-  <view class="container">
-    <button type="primary" bindtap="confirm" plain>登陆</button>
   </view>
 </block>

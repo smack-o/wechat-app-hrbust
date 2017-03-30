@@ -2,7 +2,7 @@
   <block wx:if="{{isLogin}}">
     <text class="weui-flex__item">{{username}}</text>
     <navigator url="../login/login">
-      <image class="changeUserButton" mode="{{item.mode}}" src="../../images/change_icon.png"></image>
+      <image class="changeUserButton" mode="{{item.mode}}" src="../../images/user-change_icon.png"></image>
     </navigator>
   </block>
   <block wx:else>

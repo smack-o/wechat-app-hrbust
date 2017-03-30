@@ -1,8 +1,7 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/login/login",
     "pages/home/home",
+    "pages/login/login",
     "pages/course/course",
     "pages/grade/grade",
     "pages/news/news",
@@ -16,7 +15,7 @@
     "backgroundTextStyle": "white",
     "backgroundColor": "#292929",
     "navigationBarBackgroundColor": "#292929",
-    "navigationBarTitleText": "哈理工SSR",
+    "navigationBarTitleText": "理工喵",
     "navigationBarTextStyle": "white"
   }
 }

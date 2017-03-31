@@ -22,6 +22,10 @@
 
 .container {
   padding: 150rpx 0;
+
+  &.input-wrapper {
+    padding: 240rpx 0 50rpx 0;
+  }
 }
 
 .button {
@@ -142,4 +146,6 @@ page {
 
 .check-username {
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

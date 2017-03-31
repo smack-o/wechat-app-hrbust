@@ -15,7 +15,7 @@
   <view class="user-setting" bindtap="userSetting">
     <image class="user-setting_image" mode="{{item.mode}}" src="../../images/user-setting_icon.png"></image>
   </view>
-  <view class="container">
+  <view class="container input-wrapper">
       <view class="check-username">
         {{checkUsername}}
       </view>

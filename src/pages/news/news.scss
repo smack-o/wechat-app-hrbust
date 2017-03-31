@@ -3,13 +3,10 @@
 }
 
 .news-wrapper {
-  display: flex;
-  padding: 20px;
-  justify-content: space-between;
-  line-height: 0;
+  padding: 20px 10px 0px 10px;
 }
 
-.news-title {
+.news-message {
   line-height: 25px;
   margin-right: 10px;
   display: flex;
@@ -23,6 +20,23 @@
   margin-bottom: 10px;
 }
 
+.news-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .text-small {
   font-size: 12px;
+  color: #999;
+}
+
+.padding-wrapper {
+  padding: 10px;
+  box-shadow: 0 0 10px #000;
+  display: flex;
+  justify-content: space-between;
+  line-height: 0;
 }

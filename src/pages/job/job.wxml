@@ -10,12 +10,14 @@
   <view class="wrapper">
     <block wx:key="news" wx:for="{{newsData}}" wx:for-item="newsItem" wx:for-index="index">
       <view class="news-wrapper" bindtap="viewImage" data-index="{{index}}">
-        <view class="news-title">
-          <view>{{newsItem.title}}</view>
-          <view class="text-small"> 发布时间：{{newsItem.date}}</view>
-        </view>
-        <view class="news-image">
-          <image class="image" style="width: 80px; height: 80px;" src='{{imageList[index] + "&imageView/1/w/80/h/80"}}' />
+        <view class="padding-wrapper">
+          <view class="news-message">
+            <view class="news-title"> <text>{{newsItem.top ? "(置顶)" : ""}}</text> {{newsItem.title}} </view>
+            <view class="text-small"> 发布时间：{{newsItem.date}}</view>
+          </view>
+          <view class="news-image">
+            <image class="image" style="width: 80px; height: 80px;" src='{{imageList[index] + "&imageView/1/w/80/h/80"}}' />
+          </view>
         </view>
       </view>
     </block>

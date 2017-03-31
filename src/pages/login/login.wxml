@@ -9,9 +9,12 @@
   </view>
 </block>
 <block wx:else>
-  <picker class="login-setting" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
+  <!-- <picker class="login-setting" bindchange="changeUser" value="{{username}}" range="{{userNameList}}">
     <image class="login-setting" mode="{{item.mode}}" src="../../images/user-setting_icon.png"></image>
-  </picker>
+  </picker> -->
+  <view class="user-setting" bindtap="userSetting">
+    <image class="user-setting_image" mode="{{item.mode}}" src="../../images/user-setting_icon.png"></image>
+  </view>
   <view class="container">
       <view class="username-wrapper">
         <input class="input" type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
@@ -28,3 +31,23 @@
       <view>(此账号仅供测试，数据不真实)</view>
   </view>
 </block>
+
+<view wx:if="{{settingPage}}" class="setting-page">
+  <view class="wrapper">
+    <block wx:for="{{userInfo}}" wx:key="user">
+      <view class="user-item" bindtouchstart="touchStart" data-userId="{{index}}" bindtouchend="touchend">
+        <view>{{item.name || index}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+    </block>
+    <view class="user-item" bindtap="addUser">
+      <view class="add-wrapper">
+        <image class="add-icon" mode="{{item.mode}}" src="../../images/add_icon.png"></image>
+        <text>添加账号</text>
+      </view>
+    </view>
+  </view>
+  <view class="test-message" bindtap="addUser">
+    长按删除
+  </view>
+</view>

@@ -3,8 +3,7 @@ const requestUrl = require('../../utils/get-request-url');
 Page({
   data: {
     userInfo: {},
-    userList: [],
-    userNameList: [],
+    settingPage: false,
   },
 
   usernameInput(e) {
@@ -114,19 +113,135 @@ Page({
     });
   },
 
-  // 选择用户
-  changeUser(e) {
-    const userInfo = this.data.userInfo;
-    const userList = this.data.userList;
-    const selectUsername = userList[e.detail.value];
+  // 账号
+  userSetting() {
+    wx.setNavigationBarTitle({
+      title: '账号管理',
+    });
     this.setData({
-      username: selectUsername,
-      password: userInfo[selectUsername].password,
-      cookie: userInfo[selectUsername].cookie,
+      settingPage: true,
     });
   },
 
+  touchStart(event) {
+    const that = this;
+    const timer = setTimeout(() => {
+      // 长按删除
+      const selectUsernameStorage = wx.getStorageSync('selectUsername');
+      const selectUsername = event.currentTarget.dataset.userid;
+      if (parseInt(selectUsernameStorage) === parseInt(selectUsername)) {
+        // 删除的是正在登陆的账号
+        wx.showModal({
+          title: '删除',
+          content: '此账号为正在登陆的账号，删除将退出登陆，确定删除此账号？',
+          success(res) {
+            if (res.confirm) {
+              const newInfo = Object.assign({}, that.data.userInfo);
+              delete newInfo[selectUsername];
+              if (newInfo.length > 0) {
+                const infoKeys = Object.keys(newInfo);
+                that.setData({
+                  username: infoKeys[0],
+                  password: newInfo[infoKeys[0]].password,
+                  userInfo: newInfo,
+                });
+                wx.setStorageSync('selectUsername', infoKeys[0]);
+              } else {
+                that.setData({
+                  username: '',
+                  password: '',
+                  userInfo: newInfo,
+                });
+                wx.setStorageSync('selectUsername', null);
+                if (wx.reLaunch) {
+                  wx.reLaunch({
+                    url: 'pages/home/home',
+                  });
+                } else {
+                  // 兼容
+                  wx.showModal({
+                    title: 'warning',
+                    content: '请升级最新版的微信客户端来更好的体验小程序, 否则部分页面可能会有问题。',
+                    confirmText: '朕知道了',
+                    showCancel: false,
+                    success(resS) {
+                      if (resS.confirm) {
+                        wx.redirectTo({
+                          url: '../home/home',
+                        });
+                      }
+                    },
+                  });
+                }
+              }
+              wx.setStorageSync('userInfo', newInfo);
+            }
+          },
+        });
+      } else {
+        wx.showModal({
+          title: '删除',
+          content: '确定删除此账号？',
+          success(res) {
+            if (res.confirm) {
+              const newInfo = Object.assign({}, that.data.userInfo);
+              delete newInfo[selectUsername];
+              if (newInfo.length > 0) {
+                const infoKeys = Object.keys(newInfo);
+                that.setData({
+                  username: infoKeys[0],
+                  password: newInfo[infoKeys[0]].password,
+                  userInfo: newInfo,
+                });
+                wx.setStorageSync('selectUsername', infoKeys[0]);
+              } else {
+                that.setData({
+                  username: '',
+                  password: '',
+                  userInfo: newInfo,
+                });
+                wx.setStorageSync('selectUsername', null);
+              }
+              wx.setStorageSync('userInfo', newInfo);
+            }
+          },
+        });
+      }
+    }, 350);
+    this.setData({
+      touchStartTime: Date.now(),
+      timer,
+    });
+  },
+  touchend(event) {
+    const touchendTime = Date.now();
+    const that = this;
+    if (touchendTime - this.data.touchStartTime < 300) {
+      this.data.timer && clearTimeout(this.data.timer);
+      const selectUsername = event.currentTarget.dataset.userid;
+      wx.setStorageSync('selectUsername', selectUsername);
+      this.setData({
+        username: selectUsername,
+        settingPage: false,
+        password: that.data.userInfo[selectUsername].password,
+      });
+      wx.setNavigationBarTitle({
+        title: '登陆页面',
+      });
+    }
+  },
+  addUser() {
+    // 添加用户
+    this.setData({
+      username: '',
+      settingPage: false,
+      password: '',
+    });
+  },
   onLoad() {
+    wx.setNavigationBarTitle({
+      title: '登陆页面',
+    });
     const userInfoStorage = wx.getStorageSync('userInfo');
 
     const selectUsername = wx.getStorageSync('selectUsername');
@@ -135,20 +250,15 @@ Page({
     if (userInfoStorage && Object.keys(userInfoStorage).length > 0) {
       const data = {};
       data.userInfo = userInfoStorage;
-      data.userList = Object.keys(userInfoStorage);
-      data.userNameList = Object.keys(userInfoStorage).map((item) => {
-        const result = userInfoStorage[item].name ? userInfoStorage[item].name : item;
-        return result;
-      });
 
-      if (selectUsername) {
+      if (selectUsername && userInfoStorage[selectUsername]) {
         data.username = selectUsername;
         data.password = userInfoStorage[selectUsername].password;
         data.cookie = userInfoStorage[selectUsername].cookie;
       } else {
-        data.username = data.userList[0];
-        data.password = userInfoStorage[data.userList[0]].password;
-        data.cookie = userInfoStorage[data.userList[0]].cookie;
+        data.username = Object.keys(userInfoStorage)[0];
+        data.password = userInfoStorage[data.username].password;
+        data.cookie = userInfoStorage[data.username].cookie;
       }
 
       this.setData(data);

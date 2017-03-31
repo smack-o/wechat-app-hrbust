@@ -74,7 +74,7 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '哈理工专属的工具-哈理工SSR',
+      title: '哈理工专属小程序',
       path: 'pages/home/home',
     };
   },

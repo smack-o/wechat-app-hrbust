@@ -35,10 +35,14 @@
   box-shadow:inset 0 0 20px #fff;
 }
 
-.username-wrapper,
 .password-wrapper {
   position: relative;
   margin-top: 20px;
+}
+
+.username-wrapper {
+  position: relative;
+  margin-top: 50px;
 }
 
 .user-setting {
@@ -134,4 +138,8 @@ page {
   padding: 10px 20px;
   box-shadow: 0 0 10px #000;
   margin: 10px;
+}
+
+.check-username {
+  position: absolute;
 }

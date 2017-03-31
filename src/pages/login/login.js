@@ -16,7 +16,20 @@ Page({
       password: e.detail.value,
     });
   },
-
+  checkUsername(event) {
+    const userInfo = this.data.userInfo;
+    const username = event.detail.value;
+    if (userInfo[username]) {
+      this.setData({
+        password: userInfo[username].password,
+        checkUsername: userInfo[username].name.split('(')[0],
+      });
+    } else {
+      this.setData({
+        checkUsername: '',
+      });
+    }
+  },
   // confirm
   confirm() {
     const username = this.data.username;
@@ -260,7 +273,11 @@ Page({
         data.password = userInfoStorage[data.username].password;
         data.cookie = userInfoStorage[data.username].cookie;
       }
-
+      try {
+        data.checkUsername = userInfoStorage[data.username].name.split('(')[0];
+      } catch (e) {
+        data.checkUsername = '';
+      }
       this.setData(data);
     }
   },

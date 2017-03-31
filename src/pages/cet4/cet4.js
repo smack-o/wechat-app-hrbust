@@ -46,6 +46,9 @@ Page({
     },
 
     onLoad() {
+        wx.setNavigationBarTitle({
+          title: '四六级成绩',
+        });
         const that = this;
         this.getCet(that.data.usename);
     },

@@ -114,6 +114,9 @@ Page({
     return promise;
   },
   onLoad() {
+    wx.setNavigationBarTitle({
+      title: '成绩',
+    });
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;

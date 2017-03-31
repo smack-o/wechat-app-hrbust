@@ -90,6 +90,9 @@ Page({
     });
   },
   onLoad() {
+    wx.setNavigationBarTitle({
+      title: '校招信息',
+    });
     this.getNews();
   },
   onPullDownRefresh() {

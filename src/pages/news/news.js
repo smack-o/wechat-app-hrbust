@@ -86,6 +86,9 @@ Page({
     });
   },
   onLoad() {
+    wx.setNavigationBarTitle({
+      title: '教务公告',
+    });
     this.getNews();
   },
   onPullDownRefresh() {

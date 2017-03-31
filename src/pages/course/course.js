@@ -134,6 +134,9 @@ Page({
   },
 
   onLoad() {
+    wx.setNavigationBarTitle({
+      title: '大节课表',
+    });
     let date = new Date();
     let thisDay = date.getDay();
     let thisHours = date.getHours();

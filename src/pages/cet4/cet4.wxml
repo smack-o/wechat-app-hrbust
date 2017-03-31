@@ -11,7 +11,7 @@
          {{item}}({{index}})
        </view>
     </view>
-    <view wx:else class="loadingText">
+    <view wx:else class="loadingText text">
       今年你未参加四六级考试，明年加油!
     </view>
 </block>

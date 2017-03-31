@@ -21,6 +21,7 @@ Page({
     const username = event.detail.value;
     if (userInfo[username]) {
       this.setData({
+        username,
         password: userInfo[username].password,
         checkUsername: userInfo[username].name.split('(')[0],
       });

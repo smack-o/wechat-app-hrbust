@@ -28,6 +28,15 @@ Page({
           let newsData = that.data.newsData || [];
           let imageList = that.data.imageList || [];
           const resData = res.data.data;
+          if (!needConcat && (!resData || resData.length === 0)) {
+            // 第一次加载没有数据
+            that.showError(that, '');
+            that.setData({
+              newsData: [],
+            });
+            resolve();
+            return;
+          }
           if (resData.length === 0) {
             // 没有加载到数据
             wx.showToast({

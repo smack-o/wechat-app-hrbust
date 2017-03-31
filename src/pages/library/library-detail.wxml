@@ -21,7 +21,7 @@
         </view>
         <view class="weui-panel__hd border--top">书籍描述</view>
         <view class="weui-media-box weui-media-box_text">
-          <view class="weui-media-box__desc">{{detail.info || '无'}}</view>
+          <view class="text">{{detail.info || '无'}}</view>
         </view>
         <view class="weui-panel__hd">馆藏情况</view>
         <block wx:key="book" wx:for="{{detail.book}}">

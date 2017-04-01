@@ -9,7 +9,8 @@
     "pages/job/job",
     "pages/library/library",
     "pages/library/library-detail",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/exam/exam"
   ],
   "window":{
     "backgroundTextStyle": "white",

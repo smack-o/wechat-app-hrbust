@@ -1,0 +1,35 @@
+<!-- <image class="image" bindtap="viewImage" style="width: 100%;background-color: #eeeeee;" mode="aspectFit" src="http://7xqw3n.com1.z0.glb.clouddn.com/baidu.png" /> -->
+<import src="../../utils/loading.wxml"/>
+
+<!-- Loading -->
+<block wx:if="{{!examData}}">
+  <template is="loading" />
+</block>
+
+<block wx:else>
+  <view class="wrapper">
+    <block wx:key="news" wx:for="{{examData}}">
+      <view class="news-wrapper" data-index="{{index}}">
+        <view class="padding-wrapper">
+          <view class="news-message">
+            <view class="flex-box">
+              <view>{{item.examCourse}}</view>
+              <view class="text-small">{{item.time}}</view>
+            </view>
+            <view class="flex-box">
+              <view class="text-small text-gray">{{item.position}}</view>
+              <view class="text-small text-gray">{{item.info}}</view>
+            </view>
+            <view class="flex-box align-right">
+              <view class="align-right {{item.className}}">{{item.message}}</view>
+            </view>
+            <!-- <view class="text-small"> {{item.examCourse}} </view> -->
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:if="{{loading}}">
+      <template is="loading_bottom"/>
+    </block>
+  </view>
+</block>

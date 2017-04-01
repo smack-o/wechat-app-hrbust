@@ -129,4 +129,10 @@ Page({
       },
     });
   },
+  onShareAppMessage() {
+    return {
+      title: '哈理工专属小程序, 功能介绍。',
+      path: 'pages/about/about',
+    };
+  },
 });

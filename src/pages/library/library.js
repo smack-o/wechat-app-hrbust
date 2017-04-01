@@ -147,4 +147,10 @@ Page({
       title: '哈理工图书馆查询',
     });
   },
+  onShareAppMessage() {
+    return {
+      title: '哈理工专属小程序, 图书馆图书查询。',
+      path: 'pages/library/library',
+    };
+  },
 });

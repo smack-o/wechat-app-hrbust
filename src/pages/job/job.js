@@ -121,4 +121,10 @@ Page({
       });
     }
   },
+  onShareAppMessage() {
+    return {
+      title: '哈理工专属小程序, 校招信息。',
+      path: 'pages/job/job',
+    };
+  },
 });

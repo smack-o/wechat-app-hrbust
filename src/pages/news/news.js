@@ -117,4 +117,10 @@ Page({
       });
     }
   },
+  onShareAppMessage() {
+    return {
+      title: '哈理工专属小程序, 教务公告。',
+      path: 'pages/news/news',
+    };
+  },
 });

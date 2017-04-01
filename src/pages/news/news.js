@@ -94,6 +94,11 @@ Page({
   onPullDownRefresh() {
     this.getNews().then(() => {
       wx.stopPullDownRefresh();
+      wx.showToast({
+        title: '拉取数据成功',
+        icon: 'success',
+        duration: 1000,
+      });
     });
   },
   onReachBottom() {

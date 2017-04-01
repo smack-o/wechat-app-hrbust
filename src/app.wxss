@@ -18,3 +18,8 @@ page {
   font-size: 16px;
   box-shadow: inset 0 5px 5px -5px #000;
 }
+
+.weui-loadmore {
+  margin: 0 auto;
+  padding: 1.5em 0;
+}

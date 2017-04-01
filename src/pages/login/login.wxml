@@ -17,10 +17,10 @@
   </view>
   <view class="container input-wrapper">
       <view class="check-username">
-        {{checkUsername}}
+        {{displayUsername}}
       </view>
       <view class="username-wrapper">
-        <input class="input" type="number" value="{{username}}" bindinput="usernameInput" bindinput="checkUsername" placeholder="点击输入学号" />
+        <input class="input" type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
       </view>
       <view class="password-wrapper">
         <input class="input" value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />

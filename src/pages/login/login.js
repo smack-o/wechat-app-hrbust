@@ -6,30 +6,26 @@ Page({
     settingPage: false,
   },
 
-  usernameInput(e) {
-    this.setData({
-      username: e.detail.value,
-    });
-  },
-  passwordInput(e) {
-    this.setData({
-      password: e.detail.value,
-    });
-  },
-  checkUsername(event) {
+  usernameInput(event) {
     const userInfo = this.data.userInfo;
     const username = event.detail.value;
     if (userInfo[username]) {
       this.setData({
         username,
         password: userInfo[username].password,
-        checkUsername: userInfo[username].name.split('(')[0],
+        displayUsername: userInfo[username].name.split('(')[0],
       });
     } else {
       this.setData({
-        checkUsername: '',
+        displayUsername: '',
+        username,
       });
     }
+  },
+  passwordInput(e) {
+    this.setData({
+      password: e.detail.value,
+    });
   },
   // confirm
   confirm() {
@@ -42,7 +38,6 @@ Page({
       return;
     }
 
-    // const cookie = this.data.cookie || '';
     const cookie = (this.data.userInfo[username] && this.data.userInfo[username].cookie) || '';
     this.setData({
       loginStatus: 'loading',
@@ -238,6 +233,7 @@ Page({
         username: selectUsername,
         settingPage: false,
         password: that.data.userInfo[selectUsername].password,
+        displayUsername: that.data.userInfo[selectUsername].name && that.data.userInfo[selectUsername].name.split('(')[0],
       });
       wx.setNavigationBarTitle({
         title: '登陆页面',
@@ -250,6 +246,7 @@ Page({
       username: '',
       settingPage: false,
       password: '',
+      displayUsername: '',
     });
   },
   onLoad() {
@@ -275,9 +272,9 @@ Page({
         data.cookie = userInfoStorage[data.username].cookie;
       }
       try {
-        data.checkUsername = userInfoStorage[data.username].name.split('(')[0];
+        data.displayUsername = userInfoStorage[data.username].name.split('(')[0];
       } catch (e) {
-        data.checkUsername = '';
+        data.displayUsername = '';
       }
       this.setData(data);
     }

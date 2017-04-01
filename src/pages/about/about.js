@@ -13,6 +13,10 @@ Page({
       },
       {
         position: 'left',
+        text: '我们都是理工毕业的学长。 ',
+      },
+      {
+        position: 'left',
         type: 'image',
         src: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?imageView/1/w/150/h/225&timestamps=${Date.now()}`,
         viewUrl: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?timestamps=${Date.now()}`,
@@ -27,11 +31,11 @@ Page({
       },
       {
         position: 'left',
-        text: '1.主要是查询教务在线的信息。2.支持多账号登陆，在登陆页面可以登陆新账号，可以切换已经登陆过的账号。3.图书馆可以查询图书在馆还是借出。4.数据展示页面下拉刷新上拉加载。',
+        text: '1.主要是查询教务在线的信息。2.支持多账号登陆。3.图书馆可以查询图书在馆还是借出。4.数据展示页面下拉刷新上拉加载。',
       },
       {
         position: 'left',
-        text: '当然，如果你有很好的建议，我们会考虑加更多的功能。',
+        text: '大概就这些。当然，如果你有很好的建议，我们会考虑加更多的功能。',
       },
       {
         position: 'right',
@@ -47,7 +51,7 @@ Page({
       },
       {
         position: 'left',
-        text: '如果觉得这个小程序还不错，可以保存下方图片，识别二维码给我们一点点赞助。毕竟服务器以及程序的后期维护也都需要费用。1分也是爱🤑 。',
+        text: '如果觉得这个小程序还不错，可以保存下方图片，识别二维码给我们一点点打赏。毕竟服务器以及程序的后期维护也都需要费用。1分也是爱🤑 。',
       },
       {
         position: 'left',

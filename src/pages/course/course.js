@@ -133,10 +133,20 @@ Page({
     });
   },
 
-  onLoad() {
+  onLoad(options) {
     wx.setNavigationBarTitle({
       title: '大节课表',
     });
+
+    if (options.courseData) {
+      // 通过分享进入页面
+      const courseData = JSON.parse(options.courseData);
+      this.setData(Object.assign({}, courseData, {
+        doNotRefresh: true,
+      }));
+      return;
+    }
+
     let date = new Date();
     let thisDay = date.getDay();
     let thisHours = date.getHours();
@@ -158,6 +168,10 @@ Page({
     const that = this;
     const userInfo = wx.getStorageSync('userInfo');
     const selectUsername = wx.getStorageSync('selectUsername');
+    const shareName = userInfo[selectUsername].name.split('(')[0];
+    this.setData({
+      shareName,
+    });
     const courseData = userInfo[selectUsername].courseData;
     if (courseData) {
       this.getWeek();
@@ -172,6 +186,10 @@ Page({
 
   // 下拉刷新
   onPullDownRefresh() {
+    if (this.data.doNotRefresh) {
+      wx.stopPullDownRefresh();
+      return;
+    }
     const userInfo = wx.getStorageSync('userInfo');
     const selectUsername = wx.getStorageSync('selectUsername');
     this.getCourse(userInfo, selectUsername, () => {
@@ -186,5 +204,12 @@ Page({
   onUnload() {
     // body...
     clearInterval(this.data.timer);
+  },
+  onShareAppMessage() {
+    // courseData
+    return {
+      title: `哈理工专属小程序, ${this.data.shareName}的课程表。`,
+      path: `pages/course/course?courseData=${JSON.stringify(this.data)}`,
+    };
   },
 });

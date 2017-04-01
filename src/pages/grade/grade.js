@@ -15,6 +15,9 @@ Page({
 
   // 切换学年学期
   changeTerm(e) {
+    if (this.data.doNotRefresh) {
+      return;
+    }
     const term = terms[e.detail.value];
     this.setData({
       term,
@@ -113,20 +116,30 @@ Page({
     });
     return promise;
   },
-  onLoad() {
+  onLoad(options) {
     wx.setNavigationBarTitle({
       title: '成绩',
     });
+    if (options.gradeData) {
+      // 通过分享进入页面
+      const gradeData = JSON.parse(options.gradeData);
+      this.setData(Object.assign({}, gradeData, {
+        doNotRefresh: true,
+      }));
+      return;
+    }
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;
     const gradeTerm = userInfo[username].gradeTerm;
+    const shareName = userInfo[username].name.split('(')[0];
 
     const data = {
       gradeData,
       username,
       userInfo,
       term: gradeTerm,
+      shareName,
     };
 
     this.setData(data);
@@ -141,8 +154,19 @@ Page({
       });
     }
   },
+  onShareAppMessage() {
+    // courseData
+    return {
+      title: `哈理工专属小程序, ${this.data.shareName}的成绩。`,
+      path: `pages/course/course?courseData=${JSON.stringify(this.data)}`,
+    };
+  },
   // 下拉刷新
   onPullDownRefresh() {
+    if (this.data.doNotRefresh) {
+      wx.stopPullDownRefresh();
+      return;
+    }
     this.getGrade().then(() => {
       wx.stopPullDownRefresh();
     });

@@ -16,6 +16,9 @@ Page({
       const password = userInfo[username].password;
       const cookie = userInfo[username].cookie;
 
+      that.setData({
+        shareName: userInfo[username].name.split('(')[0],
+      });
 
       wx.request({
         url: `${requestUrl}/getExam?username=${username}&password=${password}&cookie=${cookie}&page=${page}`,
@@ -101,13 +104,26 @@ Page({
       },
     });
   },
-  onLoad() {
+  onLoad(options) {
     wx.setNavigationBarTitle({
       title: '考试信息',
     });
+    if (options.examData) {
+      // 通过分享进入页面
+      const examData = JSON.parse(options.examData);
+      this.setData({
+        examData,
+        doNotRefresh: true,
+      });
+      return;
+    }
     this.getExam(1);
   },
   onPullDownRefresh() {
+    if (this.data.doNotRefresh) {
+      wx.stopPullDownRefresh();
+      return;
+    }
     this.getExam(1).then(() => {
       wx.stopPullDownRefresh();
       wx.showToast({
@@ -118,6 +134,9 @@ Page({
     });
   },
   onReachBottom() {
+    if (this.data.doNotRefresh) {
+      return;
+    }
     if (!this.data.loading) {
       this.setData({
         loading: true,
@@ -132,5 +151,12 @@ Page({
         });
       });
     }
+  },
+  onShareAppMessage() {
+    const message = this.data.shareName ? `${this.data.shareName}的考试信息` : '考试信息';
+    return {
+      title: `哈理工专属小程序, ${message}。`,
+      path: `pages/exam/exam?examData=${JSON.stringify(this.data.examData)}`,
+    };
   },
 });

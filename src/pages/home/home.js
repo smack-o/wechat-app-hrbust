@@ -1,5 +1,6 @@
 const requestUrl = require('../../utils/get-request-url');
 
+getApp();
 Page({
   data: {
     contents: [{

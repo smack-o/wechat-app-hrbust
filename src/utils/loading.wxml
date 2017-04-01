@@ -15,7 +15,7 @@
     </view>
   </view>
   <view class="loadingText">
-    {{text}}<p class="dotting"></p>
+    {{text || '正在加载'}}<p class="dotting"></p>
   </view>
 </template>
 

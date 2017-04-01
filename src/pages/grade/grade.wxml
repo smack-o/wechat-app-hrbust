@@ -9,8 +9,9 @@
 <view>
   <view class="picker-wrapper">
     <picker class="picker-year" bindchange="changeTerm" value="{{slected_term}}" range="{{terms}}">
-      <text>学期：{{term}}</text>
-      <image class="change-icon" mode="{{item.mode}}" src="../../images/change_icon.png" />
+      <view class="flex-box">
+        <button class="button">学期：{{term}}<text wx:if="{{!doNotRefresh}}">(点击切换)</text></button>
+      </view>
     </picker>
   </view>
   <view class="gradeWrapper">

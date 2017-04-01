@@ -46,17 +46,20 @@ Page({
     },
 
     onLoad(options) {
-        wx.setNavigationBarTitle({
-          title: '四六级成绩',
-        });
         if (options.cetData) {
           // 通过分享进入页面
           const cetData = JSON.parse(options.cetData);
+          wx.setNavigationBarTitle({
+            title: `${cetData.shareName}的四六级成绩`,
+          });
           this.setData(Object.assign({}, cetData, {
             doNotRefresh: true,
           }));
           return;
         }
+        wx.setNavigationBarTitle({
+          title: '四六级成绩',
+        });
         const that = this;
         this.getCet(that.data.usename);
     },
@@ -76,8 +79,10 @@ Page({
       const userInfo = wx.getStorageSync('userInfo');
       const shareName = userInfo[this.data.usename].name.split('(')[0];
       return {
-        title: `哈理工专属小程序, ${shareName}的四六级成绩。`,
-        path: `pages/course/course?courseData=${JSON.stringify(this.data)}`,
+        title: `${shareName}的四六级成绩。`,
+        path: `pages/cet4/cet4?cetData=${JSON.stringify(Object.assign({}, this.data, {
+          shareName,
+        }))}`,
       };
     },
 });

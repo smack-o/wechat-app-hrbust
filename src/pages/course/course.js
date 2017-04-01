@@ -3,8 +3,6 @@ const requestUrl = require('../../utils/get-request-url');
 Page({
   data: {
     timeStyle: 'timeLeftRight',
-    isTouch: false,
-    top: 0,
     dayNum: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     time: ['第一大节', '第二大节', '第三大节', '第四大节', '第五大节'],
     timeNum: [['08:10', '09:50'], ['10:10', '11:50'], ['13:30', '15:10'], ['15:20', '17:00'], ['18:00', '19:40']],
@@ -134,19 +132,6 @@ Page({
   },
 
   onLoad(options) {
-    wx.setNavigationBarTitle({
-      title: '大节课表',
-    });
-
-    if (options.courseData) {
-      // 通过分享进入页面
-      const courseData = JSON.parse(options.courseData);
-      this.setData(Object.assign({}, courseData, {
-        doNotRefresh: true,
-      }));
-      return;
-    }
-
     let date = new Date();
     let thisDay = date.getDay();
     let thisHours = date.getHours();
@@ -163,6 +148,22 @@ Page({
 
     this.setData({
       timer,
+    });
+
+    if (options.shareData) {
+      // 通过分享进入页面
+      const shareData = JSON.parse(options.shareData);
+      wx.setNavigationBarTitle({
+        title: `${shareData.shareName}的课程表`,
+      });
+      this.setData(Object.assign({}, shareData, {
+        doNotRefresh: true,
+      }));
+      return;
+    }
+
+    wx.setNavigationBarTitle({
+      title: '大节课表',
     });
 
     const that = this;
@@ -207,9 +208,20 @@ Page({
   },
   onShareAppMessage() {
     // courseData
+    const data = this.data;
+    const courseData = Object.assign({}, this.data.courseData, {
+      cookie: '',
+    });
+    const shareData = {
+      terms: data.terms,
+      titles: data.titles,
+      courseData,
+      shareName: data.shareName,
+      thisWeek: data.thisWeek,
+    };
     return {
-      title: `哈理工专属小程序, ${this.data.shareName}的课程表。`,
-      path: `pages/course/course?courseData=${JSON.stringify(this.data)}`,
+      title: `${data.shareName}的课程表`,
+      path: `pages/course/course?shareData=${JSON.stringify(shareData)}`,
     };
   },
 });

@@ -117,17 +117,20 @@ Page({
     return promise;
   },
   onLoad(options) {
-    wx.setNavigationBarTitle({
-      title: '成绩',
-    });
-    if (options.gradeData) {
+    if (options.shareData) {
       // 通过分享进入页面
-      const gradeData = JSON.parse(options.gradeData);
-      this.setData(Object.assign({}, gradeData, {
+      const shareData = JSON.parse(options.shareData);
+      wx.setNavigationBarTitle({
+        title: `${shareData.shareName}的成绩`,
+      });
+      this.setData(Object.assign({}, shareData, {
         doNotRefresh: true,
       }));
       return;
     }
+    wx.setNavigationBarTitle({
+      title: '成绩',
+    });
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;
@@ -155,10 +158,16 @@ Page({
     }
   },
   onShareAppMessage() {
-    // courseData
+    const data = this.data;
+    const shareData = {
+      term: data.term,
+      titles: data.titles,
+      gradeData: data.gradeData,
+      shareName: data.shareName,
+    };
     return {
-      title: `哈理工专属小程序, ${this.data.shareName}的成绩。`,
-      path: `pages/course/course?courseData=${JSON.stringify(this.data)}`,
+      title: `${data.shareName}的成绩`,
+      path: `pages/grade/grade?shareData=${JSON.stringify(shareData)}`,
     };
   },
   // 下拉刷新

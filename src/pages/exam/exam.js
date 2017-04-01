@@ -105,18 +105,21 @@ Page({
     });
   },
   onLoad(options) {
-    wx.setNavigationBarTitle({
-      title: '考试信息',
-    });
     if (options.examData) {
       // 通过分享进入页面
       const examData = JSON.parse(options.examData);
+      wx.setNavigationBarTitle({
+        title: `${examData.shareName}的考试信息`,
+      });
       this.setData({
         examData,
         doNotRefresh: true,
       });
       return;
     }
+    wx.setNavigationBarTitle({
+      title: '考试信息',
+    });
     this.getExam(1);
   },
   onPullDownRefresh() {
@@ -155,8 +158,10 @@ Page({
   onShareAppMessage() {
     const message = this.data.shareName ? `${this.data.shareName}的考试信息` : '考试信息';
     return {
-      title: `哈理工专属小程序, ${message}。`,
-      path: `pages/exam/exam?examData=${JSON.stringify(this.data.examData)}`,
+      title: message,
+      path: `pages/exam/exam?examData=${JSON.stringify(Object.assign({}, this.data.examData, {
+        shareName: this.data.shareName,
+      }))}`,
     };
   },
 });

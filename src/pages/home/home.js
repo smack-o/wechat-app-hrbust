@@ -15,8 +15,8 @@ Page({
     }, {
       image: '../../images/exam_icon.png',
       text: '考试',
+      url: '../exam/exam',
       needLogin: true,
-      disable: true,
     }, {
       image: '../../images/cet4_icon.png',
       text: '四六级成绩',

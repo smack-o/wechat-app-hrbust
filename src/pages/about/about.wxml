@@ -12,7 +12,7 @@
         <view class="wechat animation {{item.position}}">
           <!-- {{index}} -->
           <view class="avatar">
-            <image class="avatar__image" src="{{ item.position == 'left' ? '../../images/app_avatar.jpg' : avatarUrl}}"></image>
+            <image class="avatar__image" src="{{ item.position == 'left' ? '../../images/app_avatar.png' : avatarUrl}}"></image>
           </view>
           <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.viewUrl || item.src}}">
             <view class="picture">

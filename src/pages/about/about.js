@@ -31,7 +31,7 @@ Page({
       },
       {
         position: 'left',
-        text: '1.主要是查询教务在线的信息。2.支持多账号登陆。3.图书馆可以查询图书在馆还是借出。4.数据展示页面下拉刷新上拉加载。',
+        text: '1.主要是查询教务在线的信息。2.个人课表、成绩、考试信息等可分享给好友（右上角分享）。3.支持多账号登陆。4.图书馆可以查询图书在馆还是借出。5.数据展示页面下拉刷新上拉加载。',
       },
       {
         position: 'left',
@@ -81,7 +81,7 @@ Page({
     app.getUserInfo((userInfo) => {
       // 更新数据
       const listConfig = that.data.listConfig;
-      listConfig[0].text = `你好，${userInfo.nickName}。`;
+      listConfig[0].text = `你好，${userInfo.nickName}`;
       const avatarUrl = userInfo.avatarUrl;
       that.setData({
         avatarUrl: avatarUrl || '../../images/user_avatar.png',

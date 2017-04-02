@@ -34,6 +34,13 @@ Page({
           let examData = that.data.examData || [];
           let resData = res.data.data;
 
+          // update cookie
+          userInfo[username].cookie = res.data.cookie;
+          wx.setStorage({
+            key: 'userInfo',
+            data: userInfo,
+          });
+
           if (!needConcat && (!resData || resData.length === 0)) {
             // 第一次加载没有数据
             that.showError(that, '');
@@ -82,8 +89,8 @@ Page({
           }
           resolve();
         },
-        fail(error) {
-          that.showError(that, error);
+        fail() {
+          that.showError(that);
           resolve();
         },
       });

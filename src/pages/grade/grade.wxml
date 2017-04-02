@@ -29,9 +29,10 @@
       <view class="noGrade">您选择的学期没有成绩数据</view>
     </block>
     <block wx:else>
-      <view  class="weui-flex" wx:for="{{gradeData}}" wx:for-item="grade" wx:key="gradeData">
+      <view  class="weui-flex" wx:for="{{gradeData}}" wx:for-item="grade" wx:key="gradeData" wx:for-index="listIndex">
         <view class="weui-flex__item" wx:for="{{grade}}" wx:key="grade">
-            <view class="context">{{item}}</view>
+            <view wx:if="{{index === 2}}" class="context {{item === '及格' ? 'pass' : 'noPass'}}">{{item}}</view>
+            <view wx:else class="context">{{item}}</view>
         </view>
       </view>
     </block>

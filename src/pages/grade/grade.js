@@ -130,6 +130,7 @@ Page({
     wx.setNavigationBarTitle({
       title: '成绩',
     });
+
     const userInfo = wx.getStorageSync('userInfo');
     const username = wx.getStorageSync('selectUsername');
     const gradeData = userInfo[username].grade;
@@ -145,16 +146,15 @@ Page({
     };
 
     this.setData(data);
-    if (!gradeData) {
+
+    this.setData({
+      getGradeLoading: true,
+    });
+    this.getGrade().then(() => {
       this.setData({
-        getGradeLoading: true,
+        getGradeLoading: false,
       });
-      this.getGrade().then(() => {
-        this.setData({
-          getGradeLoading: false,
-        });
-      });
-    }
+    });
   },
   onShareAppMessage() {
     const data = this.data;

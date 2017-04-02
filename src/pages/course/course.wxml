@@ -71,7 +71,7 @@
      </block>
     </view>
   </view>
-  <navigator wx:if="{{!doNotRefresh}}" url="../home/home">
+  <navigator wx:if="{{doNotRefresh}}" url="../home/home">
     <view class="common-button-wrapper">
       <view class="common-button-flex">
         <button class="common-button">返回主页</button>

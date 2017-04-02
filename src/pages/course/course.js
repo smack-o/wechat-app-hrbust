@@ -69,9 +69,9 @@ Page({
         });
       },
       success(res) {
-        if (res.error) {
+        if (res.statusCode === 400) {
           wx.showModal({
-            content: `拉取数据失败。${res.error}`,
+            content: `拉取数据失败。${res.data.error}`,
             showCancel: false,
           });
           return;

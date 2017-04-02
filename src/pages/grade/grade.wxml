@@ -7,12 +7,17 @@
 </block>
 
 <view>
-  <view class="picker-wrapper">
+  <view wx:if="{{!doNotRefresh}}" class="picker-wrapper">
     <picker class="picker-year" bindchange="changeTerm" value="{{slected_term}}" range="{{terms}}">
       <view class="flex-box">
-        <button class="button">学期：{{term}}<text wx:if="{{!doNotRefresh}}">(点击切换)</text></button>
+        <button class="button">学期：{{term}}（点击切换）</button>
       </view>
     </picker>
+  </view>
+  <view wx:else class="share-title">
+      <view class="flex-box">
+        学期：{{term}}
+      </view>
   </view>
   <view class="gradeWrapper">
     <view  class="weui-flex">
@@ -31,4 +36,11 @@
       </view>
     </block>
   </view>
+  <navigator wx:if="{{doNotRefresh}}" url="../home/home">
+    <view class="common-button-wrapper">
+      <view class="common-button-flex">
+        <button class="common-button">返回主页</button>
+      </view>
+    </view>
+  </navigator>
 </view>

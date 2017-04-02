@@ -14,4 +14,11 @@
     <view wx:else class="loadingText text">
       今年你未参加四六级考试，明年加油!
     </view>
+    <navigator wx:if="{{doNotRefresh}}" url="../home/home">
+      <view class="common-button-wrapper">
+        <view class="common-button-flex">
+          <button class="common-button">返回主页</button>
+        </view>
+      </view>
+    </navigator>
 </block>

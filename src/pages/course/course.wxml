@@ -38,12 +38,12 @@
             <!-- 课表内容 -->
             <block wx:if="{{dayIndex==nowDayIndex&&timeIndex+1==nowTimeIndex}}">
               <view class="item-content now-course" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">
-                {{courseData.courseArrange[dayIndex - 1][timeIndex][0]}}
+                {{courseData.courseArrange[timeIndex][dayIndex - 1][0]}}
               </view>
             </block>
             <block wx:else>
               <view class="item-content" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">
-                {{courseData.courseArrange[dayIndex - 1][timeIndex][0]}}
+                {{courseData.courseArrange[timeIndex][dayIndex - 1][0]}}
               </view>
             </block>
           </block>

@@ -12,10 +12,10 @@ Page({
     const dayIndex = event.currentTarget.dataset.dayindex;
     const timeIndex = event.currentTarget.dataset.timeindex;
     const courseArrange = this.data.courseData.courseArrange;
-    if (courseArrange[dayIndex - 1][timeIndex]) {
+    if (courseArrange[timeIndex][dayIndex - 1]) {
       this.setData({
         detailOpen: true,
-        detailData: courseArrange[dayIndex - 1][timeIndex],
+        detailData: courseArrange[timeIndex][dayIndex - 1],
       });
     }
   },
@@ -33,14 +33,13 @@ Page({
     timeArr.forEach((item, index) => {
       const start = item[0].split(':');
       const end = item[1].split(':');
-      const startM = `${parseInt(start[0]) * 60}${parseInt(start[1])}`;
-      const endM = `${parseInt(end[0]) * 60}${parseInt(end[1])}`;
-      const nowM = `${thisHours * 60}${thisMinutes}`;
+      const startM = (parseInt(start[0]) * 60) + parseInt(start[1]);
+      const endM = (parseInt(end[0]) * 60) + parseInt(end[1]);
+      const nowM = (thisHours * 60) + thisMinutes;
       if (nowM > startM && nowM < endM) {
         nowTimeIndex = index + 1;
       }
     });
-
     this.setData({
       nowTimeIndex,
       nowDayIndex,

@@ -38,7 +38,7 @@
             <!-- 课表内容 -->
             <view class="{{dayIndex==nowDayIndex&&timeIndex+1==nowTimeIndex ? 'now-course' : ''}} item-content" data-timeIndex="{{timeIndex}}" bindtap="detailHandler" data-dayIndex="{{dayIndex}}">
               <block wx:key="course" wx:for="{{courseData.courseArrange[timeIndex][dayIndex - 1]}}">
-                <view class="this-week" wx:if="{{ (item.weekObj.parity && item.weekObj.parity === '单周' && thisWeekNum/2 === 1) || ((item.weekObj.parity && item.weekObj.parity === '双周' && thisWeekNum/2 === 0)) || !item.weekObj.parity && thisWeekNum >= item.weekObj.start && thisWeekNum <= item.weekObj.end}}">
+                <view class="this-week" wx:if="{{ (item.weekObj.parity && item.weekObj.parity === '单周' && thisWeekNum%2 === 1) || ((item.weekObj.parity && item.weekObj.parity === '双周' && thisWeekNum%2 === 0)) || !item.weekObj.parity && thisWeekNum >= item.weekObj.start && thisWeekNum <= item.weekObj.end}}">
                   《{{item.title}}》
                 </view>
                 <view class="no-this-week" wx:else>
@@ -85,7 +85,7 @@
   <view class="detial">
     <view class="detialWrapper">
       <view class="detailData" wx:key="day" wx:for="{{detailData}}" wx:for-item="detailItem">
-        <view class="this-week" wx:if="{{ (detailItem.weekObj.parity && detailItem.weekObj.parity === '单周' && thisWeekNum/2 === 1) || ((detailItem.weekObj.parity && detailItem.weekObj.parity === '双周' && thisWeekNum/2 === 0)) || !detailItem.weekObj.parity && thisWeekNum >= detailItem.weekObj.start && thisWeekNum <= detailItem.weekObj.end}}">
+        <view class="this-week" wx:if="{{ (detailItem.weekObj.parity && detailItem.weekObj.parity === '单周' && thisWeekNum%2 === 1) || ((detailItem.weekObj.parity && detailItem.weekObj.parity === '双周' && thisWeekNum%2 === 0)) || !detailItem.weekObj.parity && thisWeekNum >= detailItem.weekObj.start && thisWeekNum <= detailItem.weekObj.end}}">
           <view wx:for="{{detailItem}}">
             <text wx:if="{{index !== 'weekObj'}}">{{item}}</text>
           </view>

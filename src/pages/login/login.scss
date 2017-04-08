@@ -145,3 +145,12 @@ page {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.togle-password_image {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 16px;
+}

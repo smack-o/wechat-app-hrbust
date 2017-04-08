@@ -4,8 +4,13 @@ Page({
   data: {
     userInfo: {},
     settingPage: false,
+    showPassword: false,
   },
-
+  toglePassword() {
+    this.setData({
+      showPassword: !this.data.showPassword,
+    });
+  },
   usernameInput(event) {
     const userInfo = this.data.userInfo;
     const username = event.detail.value;

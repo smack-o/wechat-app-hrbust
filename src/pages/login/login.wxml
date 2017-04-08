@@ -23,7 +23,8 @@
         <input class="input" type="number" value="{{username}}" bindinput="usernameInput" placeholder="点击输入学号" />
       </view>
       <view class="password-wrapper">
-        <input class="input" value="{{password}}" bindinput="passwordInput" password placeholder="点击输入密码" />
+        <input class="input" value="{{password}}" bindinput="passwordInput" password="{{showPassword ? false : true}}" placeholder="点击输入密码" />
+        <image class="togle-password_image" bindtap="toglePassword" src="../../images/{{showPassword ? 'unshow_icon.png' : 'show_icon.png'}}"></image>
       </view>
   </view>
   <view class="container">

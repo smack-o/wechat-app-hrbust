@@ -36,7 +36,7 @@ Page({
       const startM = (parseInt(start[0]) * 60) + parseInt(start[1]);
       const endM = (parseInt(end[0]) * 60) + parseInt(end[1]);
       const nowM = (thisHours * 60) + thisMinutes;
-      if (nowM > startM && nowM < endM) {
+      if (nowM >= startM && nowM <= endM) {
         nowTimeIndex = index + 1;
       }
     });
@@ -98,7 +98,7 @@ Page({
   },
 
   getWeek() {
-    let thisWeek = wx.getStorageSync('thisWeek');
+    let thisWeek = wx.getStorageSync('thisWeek') || '';
     this.setData({
       thisWeek,
     });
@@ -113,8 +113,10 @@ Page({
         if (res.data.thisWeek) {
           thisWeek = res.data.thisWeek;
         }
+
         that.setData({
           thisWeek,
+          thisWeekNum: thisWeek.match(/第(\w*)周/) && thisWeek.match(/第(\w*)周/)[1],
         });
         wx.setStorage({
           key: 'thisWeek',
@@ -180,6 +182,7 @@ Page({
       });
     } else {
       // 缓存中没有数据，需要请求
+      this.getWeek();
       this.getCourse(userInfo, selectUsername);
     }
   },

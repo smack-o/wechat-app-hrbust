@@ -6,10 +6,30 @@
   <template is="loading" data="{{text: '正在加载'}}"/>
 </block>
 <block wx:else>
-    <view wx:if="{{cetData.id}}">
-       <view class="weui-flex__item center" wx:for="{{cetData}}" wx:key="item" wx:index="index">
-         {{item}}({{index}})
-       </view>
+    <view class="wrapper" wx:if="{{cetData.id}}">
+      <view class="shadow-box">
+        <view class="item center">
+          <view>姓名</view><view>{{cetData.name}}</view>
+        </view>
+        <view class="item center">
+          <view>学校</view><view>{{cetData.school}}</view>
+        </view>
+        <view class="item center">
+          <view>考试</view><view>{{cetData.type}}</view>
+        </view>
+        <view class="item center">
+          <view>听力</view><view>{{cetData.listen}}</view>
+        </view>
+        <view class="item center">
+          <view>阅读</view><view>{{cetData.reading}}</view>
+        </view>
+        <view class="item center">
+          <view>写作</view><view>{{cetData.writing}}</view>
+        </view>
+        <view class="item center border-top {{cetData.total >= 425 ? 'pass' : 'noPass'}}">
+          <view>总分</view><view>{{cetData.total}}</view>
+        </view>
+      </view>
     </view>
     <view wx:else class="loadingText text">
       今年你未参加四六级考试，明年加油!

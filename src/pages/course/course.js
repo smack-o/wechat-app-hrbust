@@ -220,6 +220,7 @@ Page({
       courseData,
       shareName: data.shareName,
       thisWeek: data.thisWeek,
+      thisWeekNum: data.thisWeekNum,
     };
     return {
       title: `${data.shareName}的课程表`,

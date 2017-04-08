@@ -18,6 +18,11 @@ Page({
           that.setData({
             cetData,
           });
+          wx.showToast({
+            title: '拉取数据成功',
+            icon: 'success',
+            duration: 1000,
+          });
           resolve();
         },
         fail(error) {
@@ -63,8 +68,7 @@ Page({
     this.setData({
       username,
     });
-    const that = this;
-    this.getCet(that.data.username);
+    this.getCet(this.data.username);
   },
 
   onPullDownRefresh() {
@@ -72,9 +76,8 @@ Page({
       wx.stopPullDownRefresh();
       return;
     }
-    const that = this;
-    this.getCet(that.data.username).then(() => {
-      wx.stopPullDownReresh();
+    this.getCet(this.data.username).then(() => {
+      wx.stopPullDownRefresh();
     });
   },
   onShareAppMessage() {

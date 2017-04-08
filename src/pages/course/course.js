@@ -101,6 +101,7 @@ Page({
     let thisWeek = wx.getStorageSync('thisWeek') || '';
     this.setData({
       thisWeek,
+      thisWeekNum: thisWeek.match(/第(\w*)周/) && thisWeek.match(/第(\w*)周/)[1],
     });
 
     const that = this;
@@ -125,8 +126,9 @@ Page({
       },
       fail() {
         console.error('请求当前周数失败，请检查网络重试');
-        that.setData({
-          thisWeek,
+        wx.showModal({
+          content: '请求当前周数失败，请检查您的网络',
+          showCancel: false,
         });
       },
     });

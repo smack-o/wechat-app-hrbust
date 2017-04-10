@@ -118,10 +118,9 @@ Page({
       wx.setNavigationBarTitle({
         title: `${examData.shareName}的考试信息`,
       });
-      this.setData({
-        examData,
+      this.setData(Object.assign({}, examData, {
         doNotRefresh: true,
-      });
+      }));
       return;
     }
     wx.setNavigationBarTitle({
@@ -166,9 +165,7 @@ Page({
     const message = this.data.shareName ? `${this.data.shareName}的考试信息` : '考试信息';
     return {
       title: message,
-      path: `pages/exam/exam?examData=${JSON.stringify(Object.assign({}, this.data.examData, {
-        shareName: this.data.shareName,
-      }))}`,
+      path: `pages/exam/exam?examData=${JSON.stringify(Object.assign({}, { examData: this.data.examData, shareName: this.data.shareName }))}`,
     };
   },
 });

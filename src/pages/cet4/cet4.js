@@ -81,9 +81,14 @@ Page({
     });
   },
   onShareAppMessage() {
-    // courseData
-    const userInfo = wx.getStorageSync('userInfo');
-    const shareName = userInfo[this.data.username].name.split('(')[0];
+    let shareName = '';
+    if (this.data.doNotRefresh) {
+      shareName = this.data.shareName;
+    } else {
+      const userInfo = wx.getStorageSync('userInfo');
+      shareName = userInfo[this.data.username].name.split('(')[0];
+    }
+
     return {
       title: `${shareName}的四六级成绩。`,
       path: `pages/cet4/cet4?cetData=${JSON.stringify(Object.assign({}, this.data, {

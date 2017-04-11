@@ -48,7 +48,7 @@ Page({
               page: that.data.page - 1,
             });
           } else {
-            const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}?timestamp=${Date.now()}`);
+            const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}`);
             if (needConcat) {
               newsData = newsData.concat(resData);
               imageList = imageList.concat(resImageList);

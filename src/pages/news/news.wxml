@@ -16,7 +16,7 @@
             <view class="text-small"> 发布时间：{{newsItem.date}}</view>
           </view>
           <view class="news-image">
-            <image class="image" style="width: 80px; height: 80px;" src='{{imageList[index] + "&imageView/1/w/80/h/80"}}' />
+            <image class="image" style="width: 80px; height: 80px;" src='{{imageList[index] + "?imageView/1/w/80/h/80"}}' />
           </view>
         </view>
       </view>

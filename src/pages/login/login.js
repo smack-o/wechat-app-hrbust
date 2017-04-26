@@ -73,7 +73,7 @@ Page({
           // });
           if (wx.reLaunch) {
             wx.reLaunch({
-              url: 'pages/home/home',
+              url: '../home/home',
             });
           } else {
             // 兼容

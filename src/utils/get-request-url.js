@@ -1,6 +1,6 @@
 const dev = 'http://127.0.0.1:4001/api';
 // const production = 'https://test.gebilaowu.cn/api';
-const production = 'https://nhrbust.gebilaowu.cn/api';
+const production = 'https://hrbust.tkmain.cn/api';
 
 let url = null;
 // es6 版本

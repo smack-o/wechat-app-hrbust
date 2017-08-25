@@ -1,0 +1,48 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="搜索" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
+                    <view class="weui-icon-clear" wx:if="{{showClear}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text">输入名称或关键字（书名、作者均可）</view>
+                </label>
+            </view>
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+    </view>
+</view>
+
+<view wx:if="{{info.length > 0}}" class="wrapper page__bd">
+  <block wx:key="book" wx:for="{{info}}">
+    <view class="item-content">
+      <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__title">学院：{{item[2]}}</view>
+              <view class="weui-media-box__desc">姓名：{{item[0]}}</view>
+              <view class="weui-media-box__desc">学号：{{item[1]}}</view>
+              <view class="weui-media-box__desc">专业：{{item[3]}}</view>
+              <view class="weui-media-box__desc">班级：{{item[4]}}</view>
+              <view class="weui-media-box__desc">性别：{{item[5]}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{loading}}">
+    <template is="loading_bottom"/>
+  </block>
+</view>
+
+<view wx:if="{{noData}}" class="noData">
+  没有找到与您搜索相关的书籍。
+</view>

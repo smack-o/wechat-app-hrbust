@@ -4,21 +4,21 @@
             <view class="weui-search-bar__form">
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="搜索" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
+                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="请输入名字进行信息查询" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
                     <view class="weui-icon-clear" wx:if="{{showClear}}" bindtap="clearInput">
                         <icon type="clear" size="14"></icon>
                     </view>
                 </view>
                 <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
                     <icon class="weui-icon-search" type="search" size="14"></icon>
-                    <view class="weui-search-bar__text">输入名称或关键字（书名、作者均可）</view>
+                    <view class="weui-search-bar__text">请输入名字进行信息查询</view>
                 </label>
             </view>
             <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
         </view>
     </view>
 </view>
-
+<p class="message">数据均来自于理工官微，理工喵承诺绝不存储任何用户隐私数据！</p>
 <view wx:if="{{info.length > 0}}" class="wrapper page__bd">
   <block wx:key="book" wx:for="{{info}}">
     <view class="item-content">
@@ -44,5 +44,5 @@
 </view>
 
 <view wx:if="{{noData}}" class="noData">
-  没有找到与您搜索相关的书籍。
+  没有找到您搜索的信息。
 </view>

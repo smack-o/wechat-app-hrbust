@@ -47,7 +47,6 @@ Page({
       this.getInfo(e.detail.value, page).then((result) => {
         wx.hideToast();
         if (result.error) {
-          console.error(result.error);
           that.setData({
             info: [],
           });
@@ -56,7 +55,7 @@ Page({
             showCancel: false,
             noData: true,
           });
-        } else if (result.length === 0) {
+        } else if (!result || result.length === 0) {
           that.setData({
             info: [],
             noData: true,
@@ -88,11 +87,13 @@ Page({
             icon: 'success',
             duration: 1000,
           });
-          resolve();
+          resolve(info);
         },
         fail(error) {
           that.showError(that, error);
-          resolve();
+          resolve({
+            error: 'error',
+          });
         },
       });
     });
@@ -112,44 +113,5 @@ Page({
         }
       },
     });
-  },
-
-  onLoad(options) {
-    // if (options.info) {
-    //   // 通过分享进入页面
-    //   const info = JSON.parse(options.info);
-    //   wx.setNavigationBarTitle({
-    //     title: `${info.shareName}的四六级成绩`,
-    //   });
-    //   this.setData(Object.assign({}, info, {
-    //     doNotRefresh: true,
-    //   }));
-    //   return;
-    // }
-    // wx.setNavigationBarTitle({
-    //   title: '我的班级信息',
-    // });
-    // const username = wx.getStorageSync('selectUsername');
-    // this.setData({
-    //   username,
-    // });
-    // this.getCet(this.data.username);
-  },
-
-  onShareAppMessage() {
-    let shareName = '';
-    if (this.data.doNotRefresh) {
-      shareName = this.data.shareName;
-    } else {
-      const userInfo = wx.getStorageSync('userInfo');
-      shareName = userInfo[this.data.username].name.split('(')[0];
-    }
-
-    return {
-      title: `${shareName}的四六级成绩。`,
-      path: `pages/cet4/cet4?cetData=${JSON.stringify(Object.assign({}, this.data, {
-          shareName,
-        }))}`,
-    };
   },
 });

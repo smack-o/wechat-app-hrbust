@@ -3,6 +3,7 @@ const requestUrl = require('../../utils/get-request-url');
 getApp();
 Page({
   data: {
+    showMessage: true,
     contents: [{
       image: '../../images/course_icon.png',
       text: '课表',
@@ -56,6 +57,29 @@ Page({
       url: item.url,
     });
   },
+  onCloseMessage() {
+    this.setData({
+      showMessage: false,
+    });
+  },
+  getMessage() {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: `${requestUrl}/message`,
+        header: {
+          'Content-Type': 'application/json',
+        },
+        success(res) {
+          resolve(res.data.data);
+        },
+        fail() {
+          reject({
+            error: 'error',
+          });
+        },
+      });
+    });
+  },
   getUserName(username, password, cookie, callback) {
     wx.request({
       url: `${requestUrl}/getUserName`,
@@ -82,9 +106,28 @@ Page({
       path: 'pages/home/home',
     };
   },
+  onShow() {
+    const that = this;
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+    this.getMessage().then((result) => {
+      const messageStorage = wx.getStorageSync('message');
+      if (messageStorage && messageStorage._id === result[0]._id) {
+        return;
+      }
+      that.setData({
+        message: result,
+      });
+      wx.setStorage({
+        key: 'message',
+        data: result[0],
+      });
+    });
+  },
   onLoad() {
     const userInfo = wx.getStorageSync('userInfo');
     const selectUsername = wx.getStorageSync('selectUsername');
+    const that = this;
+
     if (!selectUsername) {
       // 没有任何登陆信息
       this.setData({
@@ -99,7 +142,6 @@ Page({
 
     const password = userInfo[selectUsername].password;
     const cookie = userInfo[selectUsername].cookie;
-    const that = this;
 
     // 获取用户名字
     if (userInfo[selectUsername].name) {

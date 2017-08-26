@@ -1,3 +1,10 @@
+<import src="../../utils/message.wxml"/>
+
+<!-- message -->
+<block wx:if="{{showMessage && message}}">
+  <template is="message" data="{{...message[0]}}"/>
+</block>
+
 <view class="title">
   <block wx:if="{{isLogin}}">
     <text class="weui-flex__item">{{username}}</text>

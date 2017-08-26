@@ -1,0 +1,10 @@
+<template name="message">
+  <view class="message-wrapper">
+    <image class="image" style="width: 100%" mode="widthFix" src='{{"http://ova96t3fz.bkt.clouddn.com/" + image}}' />
+    <view class="message-content">{{content}}</view>
+    <view class="message-date">{{date}}</view>
+    <view class="message-close">
+      <view bindtap="onCloseMessage" class="message-close__button">X</view>
+    </view>
+  </view>
+</template>

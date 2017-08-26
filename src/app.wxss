@@ -1,5 +1,6 @@
 @import 'utils/weui.scss';
 @import 'utils/loading.scss';
+@import 'utils/message.scss';
 
 /**app.wxss**/
 .container {

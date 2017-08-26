@@ -73,7 +73,7 @@ Page({
     const that = this;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/new_student_info?name=${name}`,
+        url: `${requestUrl}/new_student_info?name=${encodeURI(name)}`,
         header: {
           'Content-Type': 'application/json',
         },

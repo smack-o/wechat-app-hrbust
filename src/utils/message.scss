@@ -5,10 +5,13 @@
   top: 50%;
   z-index: 1000;
   transform: translate(-50%, -50%);
-  background: #000;
+  background: #292929;
   color: #fff;
   border-radius: 20rpx;
   overflow: hidden;
+  opacity: 0.8;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
 
   .message-content {
     box-sizing: border-box;

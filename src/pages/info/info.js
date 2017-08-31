@@ -4,6 +4,7 @@ Page({
   data: {
     info: [],
     noData: false,
+    rongcheng: false,
   },
   showInput() {
     this.setData({
@@ -72,8 +73,12 @@ Page({
   getInfo(name) {
     const that = this;
     const promise = new Promise((resolve) => {
+      let url = `${requestUrl}/new_student_info?name=${encodeURI(name)}`;
+      if (that.data.rongcheng) {
+        url = `${requestUrl}/new_student_info?identity=${name}`;
+      }
       wx.request({
-        url: `${requestUrl}/new_student_info?name=${encodeURI(name)}`,
+        url,
         header: {
           'Content-Type': 'application/json',
         },
@@ -113,5 +118,22 @@ Page({
         }
       },
     });
+  },
+  switchChange(e) {
+    if (e.detail.value) {
+      this.setData({
+        rongcheng: true,
+        inputVal: '',
+        showClear: false,
+        info: [],
+      });
+    } else {
+      this.setData({
+        rongcheng: false,
+        inputVal: '',
+        showClear: false,
+        info: [],
+      });
+    }
   },
 });

@@ -4,14 +4,14 @@
             <view class="weui-search-bar__form">
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="请输入名字进行信息查询" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
+                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="{{rongcheng ? '请输入身份证号进行信息查询' : '请输入名字进行信息查询'}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
                     <view class="weui-icon-clear" wx:if="{{showClear}}" bindtap="clearInput">
                         <icon type="clear" size="14"></icon>
                     </view>
                 </view>
                 <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
                     <icon class="weui-icon-search" type="search" size="14"></icon>
-                    <view class="weui-search-bar__text">请输入名字进行信息查询</view>
+                    <view class="weui-search-bar__text">{{rongcheng ? '请输入身份证号进行信息查询' : '请输入名字进行信息查询' }}</view>
                 </label>
             </view>
             <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
@@ -19,7 +19,33 @@
     </view>
 </view>
 <p class="message">数据均来自于理工官微，理工喵承诺绝不存储任何用户隐私数据！</p>
-<view wx:if="{{info.length > 0}}" class="wrapper page__bd">
+
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">荣成校区</view>
+        <view class="weui-cell__ft">
+            <switch bindchange="switchChange" />
+        </view>
+    </view>
+</view>
+
+<view wx:if="{{rongcheng && info.length > 0}}" class="wrapper page__bd">
+  <block>
+    <view class="item-content">
+      <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__desc" wx:key="book" wx:for="{{info}}">{{item.title}}：{{item.text}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{!rongcheng && info.length > 0}}" class="wrapper page__bd">
   <block wx:key="book" wx:for="{{info}}">
     <view class="item-content">
       <view class="weui-panel weui-panel_access">
@@ -37,9 +63,6 @@
         </view>
       </view>
     </view>
-  </block>
-  <block wx:if="{{loading}}">
-    <template is="loading_bottom"/>
   </block>
 </view>
 

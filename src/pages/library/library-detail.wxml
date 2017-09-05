@@ -1,7 +1,7 @@
 <view class="page">
   <view class="page__bd">
     <view class="weui-panel weui-panel_access">
-      <view class="weui-panel__hd">{{detail.title}}</view>
+      <view class="weui-panel__hd"><text selectable="true">{{detail.title}}</text></view>
       <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
@@ -21,14 +21,15 @@
         </view>
         <view class="weui-panel__hd border--top">书籍描述</view>
         <view class="weui-media-box weui-media-box_text">
-          <view class="text">{{detail.info || '无'}}</view>
+          <view class="text"><text selectable="true">{{detail.info || '无'}}</text></view>
         </view>
         <view class="weui-panel__hd">馆藏情况</view>
         <block wx:key="book" wx:for="{{detail.book}}">
           <view class="weui-media-box weui-media-box_text">
             <view class="information">
-              <view class="weui-media-box__desc">条码号：{{item.barcode}}</view>
+              <view class="weui-media-box__desc"><text selectable="true">条码号：{{item.barcode}}</text></view>
               <!-- <view class="weui-media-box__desc">馆藏地点： {{item.local}}</view> -->
+              <view class="weui-media-box__desc"><text selectable="true">索书号： {{item.callno}}</text></view>
               <view class="weui-media-box__desc">流通类型： {{item.cirtype}}</view>
               <!-- <view class="weui-media-box__desc">馆藏状态：{{item.localstatu}}</view> -->
             </view>

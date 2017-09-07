@@ -1,7 +1,7 @@
 <template name="message">
   <view class="message-wrapper">
     <image class="image" style="width: 100%" mode="widthFix" src='{{"http://ova96t3fz.bkt.clouddn.com/" + image}}' />
-    <view class="message-content">{{content}}</view>
+    <view class="message-content"><text selectable="true">{{content}}</text></view>
     <image wx:if="{{contentImage}}" class="image" style="width: 50%" mode="widthFix" src='{{"http://ova96t3fz.bkt.clouddn.com/" + contentImage}}' />
     <view class="message-date">{{date}}</view>
     <view class="message-close">

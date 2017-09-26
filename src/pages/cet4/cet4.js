@@ -14,7 +14,10 @@ Page({
           'Content-Type': 'application/json',
         },
         success(res) {
-          const cetData = res.data.data[0];
+          let cetData = {};
+          if (res.statusCode !== 400) {
+            cetData = res.data.data[0];
+          }
           that.setData({
             cetData,
           });
@@ -25,8 +28,8 @@ Page({
           });
           resolve();
         },
-        fail(error) {
-          that.showError(that, error);
+        fail() {
+          // that.showError(that, error);
           resolve();
         },
       });

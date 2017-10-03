@@ -10,6 +10,7 @@
 
 <block wx:else>
   <view class="wrap" >
+    <view class="info">更新课表请下拉刷新</view>
     <view class="top-week">
       <view class="item-content">
         {{thisWeek}}

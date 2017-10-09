@@ -7,7 +7,7 @@
 </block>
 
 <block wx:else>
-  <view class="wrapper">
+  <view class="wrapper" wx:if="{{examData.length > 0}}">
     <block wx:key="news" wx:for="{{examData}}">
       <view class="news-wrapper" data-index="{{index}}">
         <view class="padding-wrapper">
@@ -31,6 +31,9 @@
     <block wx:if="{{loading}}">
       <template is="loading_bottom"/>
     </block>
+  </view>
+  <view wx:else class="info">
+    你还没有任何考试信息！
   </view>
   <navigator wx:if="{{doNotRefresh}}" url="../home/home">
     <view class="common-button-wrapper">

@@ -43,7 +43,6 @@ Page({
 
           if (!needConcat && (!resData || resData.length === 0)) {
             // 第一次加载没有数据
-            that.showError(that, '');
             that.setData({
               examData: [],
             });

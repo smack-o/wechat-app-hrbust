@@ -111,7 +111,7 @@ Page({
     /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
     this.getMessage().then((result) => {
       const messageStorage = wx.getStorageSync('message');
-      if (messageStorage && messageStorage._id === result[0]._id) {
+      if ((messageStorage && messageStorage._id === result[0]._id) || result.length === 0) {
         return;
       }
       that.setData({

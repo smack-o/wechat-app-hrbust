@@ -5,32 +5,27 @@ Page({
     page: 1,
     loading: false,
   },
-  viewImage(event) {
-    const index = event.currentTarget.dataset.index;
-    const imageList = this.data.imageList || [];
-    wx.previewImage({
-      current: imageList[index],
-      urls: imageList,
-      fail() {
-        console.error('fail');
-      },
+  viewDetail(event) {
+    const id = event.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/news-detail/news-detail?id=${id}`,
     });
   },
   getNews(page, needConcat) {
     const that = this;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/getNews?&page=${page}`,
+        url: `${requestUrl}/getNewsList?&page=${page}`,
         header: {
           'Content-Type': 'application/json',
         },
         success(res) {
           let newsData = that.data.newsData || [];
-          let imageList = that.data.imageList || [];
-          const resData = res.data.data;
+          // let imageList = that.data.imageList || [];
+          const resData = res.data;
           if (!needConcat && (!resData || resData.length === 0)) {
             // 第一次加载没有数据
-            that.showError(that, '');
+            that.showError(that, '没有拉取到数据~请稍后重试');
             that.setData({
               newsData: [],
             });
@@ -48,17 +43,17 @@ Page({
               page: that.data.page - 1,
             });
           } else {
-            const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}`);
+            // const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}`);
             if (needConcat) {
               newsData = newsData.concat(resData);
-              imageList = imageList.concat(resImageList);
+              // imageList = imageList.concat(resImageList);
             } else {
               newsData = resData;
-              imageList = resImageList;
+              // imageList = resImageList;
             }
             that.setData({
               newsData,
-              imageList,
+              // imageList,
             });
           }
           resolve();
@@ -76,7 +71,7 @@ Page({
       console.error(error);
     }
     wx.showModal({
-      content: '加载失败，请检查您的网络。',
+      content: error || '加载失败，请检查您的网络。',
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {

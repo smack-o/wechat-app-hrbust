@@ -8,12 +8,12 @@
 
 .news-message {
   line-height: 25px;
-  margin-right: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   padding:2px 0;
   box-sizing:border-box;
+  width: 100%;
 }
 
 .loadingText {
@@ -26,6 +26,21 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  display: flex;
+
+  &.detail-time {
+    background: #fff;
+    color: #7e7e7e;
+    height: 32px;
+    align-items: center;
+    box-shadow: 0 0 5px #fff;
+    margin: 5px -10px;
+    padding: 0 10px;
+    .image {
+      position: relative;
+      top: -4px;
+    }
+  }
 }
 
 .text-small {
@@ -39,4 +54,9 @@
   display: flex;
   justify-content: space-between;
   line-height: 0;
+}
+
+.go-detail {
+  text-align: right;
+  color: #377cec;
 }

@@ -5,35 +5,29 @@ Page({
     page: 1,
     loading: false,
   },
-  viewImage(event) {
-    const index = event.currentTarget.dataset.index;
-    const imageList = this.data.imageList || [];
-    wx.previewImage({
-      current: imageList[index],
-      urls: imageList,
-      fail() {
-        console.error('fail');
-      },
+  viewDetail(event) {
+    const url = event.currentTarget.dataset.url;
+    wx.navigateTo({
+      url: `/pages/job-detail/job-detail?url=${encodeURI(url)}`,
     });
   },
-  getNews(page, needConcat) {
+  getJobList(page, needConcat) {
     const that = this;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/getJob?&page=${page}`,
+        url: `${requestUrl}/getJobList?&page=${page}`,
         header: {
           'Content-Type': 'application/json',
         },
         success(res) {
-          let newsData = that.data.newsData || [];
-          let imageList = that.data.imageList || [];
-          const resData = res.data.data;
+          let jobData = that.data.jobData || [];
+          const resData = res.data;
 
           if (!needConcat && (!resData || resData.length === 0)) {
             // 第一次加载没有数据
-            that.showError(that, '');
+            that.showError(that, '没有加载到数据~请稍后重试！');
             that.setData({
-              newsData: [],
+              jobData: [],
             });
             resolve();
             return;
@@ -50,19 +44,14 @@ Page({
               page: that.data.page - 1,
             });
           } else {
-            const resImageList = resData.map(item => `http://om478cuzx.bkt.clouddn.com/${item.imageName}`);
-
             if (needConcat) {
-              newsData = newsData.concat(resData);
-              imageList = imageList.concat(resImageList);
+              jobData = jobData.concat(resData);
             } else {
-              newsData = resData;
-              imageList = resImageList;
+              jobData = resData;
             }
 
             that.setData({
-              newsData,
-              imageList,
+              jobData,
             });
           }
           resolve();
@@ -80,11 +69,11 @@ Page({
       console.error(error);
     }
     wx.showModal({
-      content: '加载失败，请检查您的网络。',
+      content: error || '加载失败，请检查您的网络。',
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {
-          that.getNews();
+          that.getJobList();
         }
       },
     });
@@ -93,10 +82,10 @@ Page({
     wx.setNavigationBarTitle({
       title: '校招信息',
     });
-    this.getNews();
+    this.getJobList();
   },
   onPullDownRefresh() {
-    this.getNews().then(() => {
+    this.getJobList().then(() => {
       wx.stopPullDownRefresh();
       wx.showToast({
         title: '拉取数据成功',
@@ -114,7 +103,7 @@ Page({
       this.setData({
         page: newPage,
       });
-      this.getNews(newPage, true).then(() => {
+      this.getJobList(newPage, true).then(() => {
         this.setData({
           loading: false,
         });

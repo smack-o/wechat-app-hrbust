@@ -9,6 +9,7 @@
     "pages/info/info",
     "pages/cet4/cet4",
     "pages/job/job",
+    "pages/job-detail/job-detail",
     "pages/library/library",
     "pages/library/library-detail",
     "pages/about/about",

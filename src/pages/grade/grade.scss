@@ -78,3 +78,16 @@
 .pass {
   color: #64dd17;
 }
+
+
+.pinggu-wrapper {
+  padding-top: 100px;
+  text-align: center;
+  .pinggu__text {
+    margin-bottom: 40px;
+    display: block;
+  }
+  .pinggu__info {
+    display: block;
+  }
+}

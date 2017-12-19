@@ -6,7 +6,15 @@
   </view>
 </block>
 
-<view>
+<block wx:if="{{pingGuText}}">
+  <view class="pinggu-wrapper">
+    <text selectable="true" class="pinggu__text pass">{{pingGuText}}</text>
+    <text selectable="true" class="pinggu__info">请您去教务在线官网进行评估课程</text>
+    <text selectable="true" class="pinggu__info">教务在线地址：http://jwzx.hrbust.edu.cn</text>
+  </view>
+</block>
+
+<view wx:else>
   <view wx:if="{{!doNotRefresh}}" class="picker-wrapper">
     <picker class="picker-year" bindchange="changeTerm" value="{{slected_term}}" range="{{terms}}">
       <view class="flex-box">

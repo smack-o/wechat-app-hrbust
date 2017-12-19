@@ -11,6 +11,7 @@ Page({
   data: {
     titles: ['课程', '成绩', '及格标志', '学分', '选课属性', '备注', '考试性质'],
     terms,
+    pingGuText: '',
   },
 
   // 切换学年学期
@@ -69,6 +70,11 @@ Page({
               content: `拉取数据失败。${res.data.error}`,
               showCancel: false,
             });
+          } else if (res.data.status === -1) {
+            // 需要评估
+            that.setData({
+              pingGuText: res.data.data,
+            });
           } else {
             let gradeData = res.data.data;
 
@@ -90,6 +96,7 @@ Page({
             const newData = {
               gradeData,
               term: res.data.gradeTerm,
+              pingGuText: '',
             };
 
             userInfo[username].cookie = res.data.cookie;

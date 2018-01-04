@@ -63,14 +63,17 @@ Page({
           } else {
             resData = resData.map((item) => {
               const newItem = item;
-              const time = item.time.split('--')[0];
-              const nowTime = moment().format('YYYY-MM-DD HH:mm');
-              if (moment(nowTime) > moment(time)) {
+              const time = moment(item.time.split('--')[0]);
+              const nowTime = moment();
+              if (nowTime > time) {
                 newItem.message = '已考完';
                 newItem.className = 'text-gray';
               } else {
-                const endOf = moment(time).endOf('minute').fromNow().replace('内', '后');
-                const calendar = moment(time).subtract().calendar();
+                const calendar = time.week() === nowTime.week() ?
+                  time.subtract().calendar().replace('下', '本') :
+                  time.subtract().calendar()
+                  ;
+                const endOf = time.endOf('minute').fromNow().replace('内', '后');
                 newItem.message = `${calendar}（${endOf}）`;
                 newItem.className = 'text-green';
               }

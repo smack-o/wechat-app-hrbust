@@ -9,9 +9,11 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 5; i -= 1) {
 
 Page({
   data: {
-    titles: ['课程', '成绩', '及格标志', '学分', '选课属性', '备注', '考试性质'],
+    titles: ['课程', '成绩', '及格标志', '学分', 'GPA', '选课属性', '备注', '考试性质'],
     terms,
     pingGuText: '',
+    AVERAGE_GPA: '',
+    AVERAGE_GRADE: '',
   },
 
   // 切换学年学期
@@ -84,6 +86,7 @@ Page({
               items.push(item[6]);
               items.push(item[12]);
               items.push(item[7]);
+              items.push(item[13]);
               items.push(item[9]);
               items.push(item[10]);
               items.push(item[11]);
@@ -97,6 +100,8 @@ Page({
               gradeData,
               term: res.data.gradeTerm,
               pingGuText: '',
+              AVERAGE_GPA: res.data.AVERAGE_GPA,
+              AVERAGE_GRADE: res.data.AVERAGE_GRADE,
             };
 
             userInfo[username].cookie = res.data.cookie;

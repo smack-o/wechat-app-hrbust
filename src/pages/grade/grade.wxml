@@ -27,6 +27,8 @@
         学期：{{term}}
       </view>
   </view>
+  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均分：{{AVERAGE_GRADE}}</text>
+  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均学分绩点(GPA)：{{AVERAGE_GPA}}</text>
   <view class="gradeWrapper">
     <view  class="weui-flex">
       <view class="weui-flex__item" wx:for="{{titles}}" wx:key="title">

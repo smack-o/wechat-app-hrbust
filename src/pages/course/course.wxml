@@ -4,16 +4,28 @@
 <import src="../../utils/loading.wxml"/>
 
 <!-- Loading -->
-<block wx:if="{{!courseData}}">
+<block wx:if="{{loading}}">
   <template is="loading" />
 </block>
 
 <block wx:else>
   <view class="wrap" >
     <view class="info">更新课表请下拉刷新</view>
+    <view wx:if="{{!doNotRefresh}}" class="picker-wrapper">
+      <picker class="picker-year" bindchange="changeTerm" value="{{slectedTerm}}" range="{{terms}}">
+        <view class="flex-box">
+          <button class="button">学期：{{terms[slectedTerm]}}</button>
+        </view>
+      </picker>
+      <picker class="picker-year" bindchange="changeWeek" value="{{slectedWeek}}" range="{{weeks}}">
+        <view class="flex-box">
+          <button class="button">周数：{{weeks[slectedWeek]}}</button>
+        </view>
+      </picker>
+    </view>
     <view class="top-week">
       <view class="item-content">
-        {{thisWeek}}
+        当前：{{thisWeek}}
       </view>
       <block wx:key="day" wx:for="{{dayNum}}" wx:for-item="dayItem">
         <view class="item-content">

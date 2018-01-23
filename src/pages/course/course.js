@@ -1,11 +1,15 @@
 const requestUrl = require('../../utils/get-request-url');
+const { sameTerm, formatTerm } = require('../../utils/util');
 
 Page({
   data: {
     timeStyle: 'timeLeftRight',
+    terms: [],
+    weeks: [],
     dayNum: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     time: ['第一大节', '第二大节', '第三大节', '第四大节', '第五大节'],
     timeNum: [['08:10', '09:50'], ['10:10', '11:50'], ['13:30', '15:10'], ['15:20', '17:00'], ['18:00', '19:40']],
+    loading: true,
   },
 
   detailHandler(event) {
@@ -23,6 +27,38 @@ Page({
   closeDetail() {
     this.setData({
       detailOpen: false,
+    });
+  },
+
+  // 切换学年学期
+  changeTerm(e) {
+    if (this.data.doNotRefresh) {
+      return;
+    }
+    const term = this.data.terms[e.detail.value];
+    this.setData({
+      slectedTerm: e.detail.value,
+      slectedWeek: 0,
+      thisWeekNum: 1,
+    });
+    const formatTerms = formatTerm(term);
+    wx.showLoading({
+      title: '正在加载数据',
+    });
+    this.getCourse(formatTerms.term, formatTerms.year, true).then(() => {
+      wx.hideLoading();
+    });
+  },
+
+  // 切换周数
+  changeWeek(e) {
+    if (this.data.doNotRefresh) {
+      return;
+    }
+    const week = this.data.weeks[e.detail.value];
+    this.setData({
+      slectedWeek: e.detail.value,
+      thisWeekNum: week,
     });
   },
 
@@ -46,91 +82,118 @@ Page({
     });
   },
 
-  getCourse(userInfoP, selectUsername, callback) {
-    const userInfo = userInfoP;
+  getCourse(term, year, noStorage) {
+    const userInfo = this.data.userInfo;
+    const selectUsername = this.data.selectUsername;
     const password = userInfo[selectUsername].password;
     const cookie = userInfo[selectUsername].cookie;
     const that = this;
-    wx.request({
-      url: `${requestUrl}/getCourse`,
-      data: {
-        username: selectUsername,
-        password,
-        cookie,
-      },
-      header: {
-        'Content-Type': 'application/json',
-      },
-      fail() {
-        wx.showModal({
-          content: '拉取数据失败，请检查你的网络',
-          showCancel: false,
-        });
-      },
-      success(res) {
-        if (res.statusCode === 400) {
+    return new Promise((resolve) => {
+      wx.request({
+        url: `${requestUrl}/getCourse`,
+        data: {
+          username: selectUsername,
+          password,
+          cookie,
+          term: term || that.data.term,
+          year: year || that.data.year,
+        },
+        header: {
+          'Content-Type': 'application/json',
+        },
+        fail() {
           wx.showModal({
-            content: `拉取数据失败。${res.data.error}`,
+            content: '拉取数据失败，请检查你的网络',
             showCancel: false,
           });
-          return;
-        }
-        userInfo[selectUsername].courseData = res.data;
-        userInfo[selectUsername].cookie = res.data.cookie;
-        wx.setStorage({
-          key: 'userInfo',
-          data: userInfo,
-        });
-        that.setData({
-          courseData: res.data,
-          thisWeek: res.data.thisWeek,
-        });
+        },
+        success(res) {
+          if (res.statusCode === 400) {
+            wx.showModal({
+              content: `拉取数据失败。${res.data.error}`,
+              showCancel: false,
+            });
+            return;
+          }
+          if (!noStorage) {
+            userInfo[selectUsername].courseData = res.data;
+            userInfo[selectUsername].cookie = res.data.cookie;
+            wx.setStorage({
+              key: 'userInfo',
+              data: userInfo,
+            });
+          }
+          that.setData({
+            courseData: res.data,
+            thisWeek: res.data.thisWeek,
+            loading: false,
+          });
 
-        wx.showToast({
-          title: '拉取数据成功',
-          icon: 'success',
-          duration: 2000,
-        });
-
-        callback && callback();
-      },
+          wx.showToast({
+            title: '拉取数据成功',
+            icon: 'success',
+            duration: 2000,
+          });
+          resolve();
+        },
+      });
     });
   },
 
   getWeek() {
-    let thisWeek = wx.getStorageSync('thisWeek') || '';
-    this.setData({
-      thisWeek,
-      thisWeekNum: thisWeek.match(/第(\w*)周/) && thisWeek.match(/第(\w*)周/)[1],
-    });
+    return new Promise((resolve, reject) => {
+      const that = this;
+      const nowDate = new Date();
+      const terms = [];
+      const weeks = Array.from(new Array(30), (val, index) => index + 1);
+      for (let i = nowDate.getFullYear(); i >= nowDate.getFullYear() - 5; i -= 1) {
+        terms.push(`${i} 秋`);
+        terms.push(`${i} 春`);
+      }
 
-    const that = this;
-    wx.request({
-      url: `${requestUrl}/getWeek`,
-      header: {
-        'Content-Type': 'application/json',
-      },
-      success(res) {
-        if (res.data.thisWeek) {
-          thisWeek = res.data.thisWeek;
-        }
-
-        that.setData({
-          thisWeek,
-          thisWeekNum: thisWeek.match(/第(\w*)周/) && thisWeek.match(/第(\w*)周/)[1],
-        });
-        wx.setStorage({
-          key: 'thisWeek',
-          data: thisWeek,
-        });
-      },
-      fail() {
-        console.error('请求当前周数失败，请检查网络重试');
-        wx.showModal({
-          content: '请求当前周数失败，请检查您的网络',
-          showCancel: false,
-        });
-      },
+      wx.request({
+        url: `${requestUrl}/getWeek`,
+        header: {
+          'Content-Type': 'application/json',
+        },
+        success(res) {
+          let slectedTerm = 0;
+          let slectedWeek = 0;
+          const tTerms = terms.map((item, index) => {
+            if (sameTerm(item, res.data.term, res.data.year)) {
+              slectedTerm = index;
+              return `${item} (当前)`;
+            }
+            return item;
+          });
+          const tWeeks = weeks.map((item, index) => {
+            if (res.data.week === item) {
+              slectedWeek = index;
+              return `${item} (当前)`;
+            }
+            return item;
+          });
+          that.setData({
+            thisWeek: res.data.thisWeek,
+            thisWeekNum: res.data.week,
+            term: res.data.term,
+            year: res.data.year,
+            terms: tTerms,
+            weeks: tWeeks,
+            slectedTerm,
+            slectedWeek,
+          });
+          resolve();
+        },
+        fail() {
+          console.error('请求当前周数失败，请检查网络重试');
+          wx.showModal({
+            content: '请求当前周数失败，请检查您的网络',
+            showCancel: false,
+          });
+          reject();
+        },
+      });
     });
   },
 
@@ -175,18 +238,23 @@ Page({
     const shareName = userInfo[selectUsername].name.split('(')[0];
     this.setData({
       shareName,
+      userInfo,
+      selectUsername,
     });
-    const courseData = userInfo[selectUsername].courseData;
-    if (courseData) {
-      this.getWeek();
-      that.setData({
-        courseData,
-      });
-    } else {
-      // 缓存中没有数据，需要请求
-      this.getWeek();
-      this.getCourse(userInfo, selectUsername);
-    }
+    this.getWeek().then(() => {
+      const courseData = userInfo[selectUsername].courseData;
+      if (courseData) {
+        that.setData({
+          courseData,
+          loading: false,
+        });
+      } else {
+        // 缓存中没有数据，需要请求
+        this.getWeek().then(() => {
+          this.getCourse();
+        });
+      }
+    });
   },
 
   // 下拉刷新
@@ -195,9 +263,7 @@ Page({
       wx.stopPullDownRefresh();
       return;
     }
-    const userInfo = wx.getStorageSync('userInfo');
-    const selectUsername = wx.getStorageSync('selectUsername');
-    this.getCourse(userInfo, selectUsername, () => {
+    this.getCourse().then(() => {
       wx.stopPullDownRefresh();
     });
   },

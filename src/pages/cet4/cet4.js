@@ -3,17 +3,24 @@ const requestUrl = require('../../utils/get-request-url');
 Page({
   data: {
     loading: false,
+    name: '',
+    id: '',
   },
 
-  getCet(username) {
+  getCet(name, id) {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+    });
     const that = this;
     const promise = new Promise((resolve) => {
       wx.request({
-        url: `${requestUrl}/getCet?username=${username}`,
+        url: `${requestUrl}/getCet?name=${name}&id=${id}`,
         header: {
           'Content-Type': 'application/json',
         },
         success(res) {
+          wx.hideToast();
           let cetData = {};
           if (res.statusCode !== 400) {
             cetData = res.data.data[0];
@@ -29,6 +36,7 @@ Page({
           resolve();
         },
         fail() {
+          wx.hideToast();
           // that.showError(that, error);
           resolve();
         },
@@ -46,7 +54,7 @@ Page({
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {
-          that.getCet(that.data.username);
+          that.getCet(that.data.name, that.data.id);
         }
       },
     });
@@ -68,20 +76,49 @@ Page({
       title: '四六级成绩',
     });
     const username = wx.getStorageSync('selectUsername');
-    this.setData({
-      username,
-    });
-    this.getCet(this.data.username);
+    const userInfo = wx.getStorageSync('userInfo');
+    if (userInfo && userInfo[username]) {
+      this.setData({
+        name: userInfo[username].name.split('(')[0],
+      });
+    }
+    // this.getCet(this.data.username);
   },
 
-  onPullDownRefresh() {
-    if (this.data.doNotRefresh) {
-      wx.stopPullDownRefresh();
+  // onPullDownRefresh() {
+  //   if (this.data.doNotRefresh) {
+  //     wx.stopPullDownRefresh();
+  //     return;
+  //   }
+  //   this.getCet(this.data.username).then(() => {
+  //     wx.stopPullDownRefresh();
+  //   });
+  // },
+  nameInput(e) {
+    this.setData({
+      displayUsername: '',
+      name: e.detail.value,
+    });
+  },
+  idInput(e) {
+    this.setData({
+      id: e.detail.value,
+    });
+  },
+  confirm() {
+    const name = this.data.name;
+    const id = this.data.id;
+    if (!name || !id) {
+      wx.showToast({
+        title: '填写错误',
+        icon: 'none',
+      });
+      setTimeout(() => {
+        wx.hideToast();
+      }, 1000);
       return;
     }
-    this.getCet(this.data.username).then(() => {
-      wx.stopPullDownRefresh();
-    });
+    this.getCet(name, id);
   },
   onShareAppMessage() {
     let shareName = '';

@@ -1,9 +1,18 @@
-<!-- <image class="image" bindtap="viewImage" style="width: 100%;background-color: #eeeeee;" mode="aspectFit" src="http://7xqw3n.com1.z0.glb.clouddn.com/baidu.png" /> -->
-<import src="../../utils/loading.wxml"/>
-
-<!-- Loading -->
 <block wx:if="{{!cetData}}">
-  <template is="loading" data="{{text: '正在加载'}}"/>
+  <view class="container input-wrapper">
+      <view class="check-username">
+        {{displayUsername}}
+      </view>
+      <view class="username-wrapper">
+        <input class="input" focus="true" type="number" value="{{name}}" bindinput="nameInput" placeholder="点击输入姓名" />
+      </view>
+      <view class="password-wrapper">
+        <input class="input" value="{{id}}" bindinput="idInput" password placeholder="点击输入准考证号" />
+      </view>
+  </view>
+  <view class="container">
+    <button class="button" bindtap="confirm">查询</button>
+  </view>
 </block>
 <block wx:else>
     <view class="wrapper" wx:if="{{cetData.id}}">

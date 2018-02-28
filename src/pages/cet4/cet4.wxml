@@ -4,10 +4,10 @@
         {{displayUsername}}
       </view>
       <view class="username-wrapper">
-        <input class="input" focus="true" type="number" value="{{name}}" bindinput="nameInput" placeholder="点击输入姓名" />
+        <input class="input" focus="true" value="{{name}}" bindinput="nameInput" placeholder="点击输入姓名" />
       </view>
       <view class="password-wrapper">
-        <input class="input" value="{{id}}" bindinput="idInput" password placeholder="点击输入准考证号" />
+        <input class="input" type="number" value="{{id}}" bindinput="idInput" placeholder="点击输入准考证号" />
       </view>
   </view>
   <view class="container">

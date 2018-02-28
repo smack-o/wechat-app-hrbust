@@ -11,6 +11,7 @@ Page({
     wx.showToast({
       title: '加载中...',
       icon: 'loading',
+      duration: 10000,
     });
     const that = this;
     const promise = new Promise((resolve) => {

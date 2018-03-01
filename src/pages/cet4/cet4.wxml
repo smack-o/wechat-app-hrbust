@@ -1,4 +1,6 @@
+
 <block wx:if="{{!cetData}}">
+  <button class="button button1" bindtap="confirm1">本人无准考证查询</button>
   <view class="container input-wrapper">
       <view class="check-username">
         {{displayUsername}}

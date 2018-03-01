@@ -3,11 +3,12 @@ const requestUrl = require('../../utils/get-request-url');
 Page({
   data: {
     loading: false,
+    username: '',
     name: '',
     id: '',
   },
 
-  getCet(name, id) {
+  getCet(name, id, username) {
     wx.showToast({
       title: '加载中...',
       icon: 'loading',
@@ -15,8 +16,12 @@ Page({
     });
     const that = this;
     const promise = new Promise((resolve) => {
+      let url = `${requestUrl}/getCet?name=${name}&id=${id}`;
+      if (username) {
+        url = `${requestUrl}/getCet?username=${username}`;
+      }
       wx.request({
-        url: `${requestUrl}/getCet?name=${name}&id=${id}`,
+        url,
         header: {
           'Content-Type': 'application/json',
         },
@@ -55,7 +60,7 @@ Page({
       confirmText: '重新加载',
       success(res) {
         if (res.confirm) {
-          that.getCet(that.data.name, that.data.id);
+          that.getCet(that.data.name, that.data.id, that.data.username);
         }
       },
     });
@@ -78,9 +83,10 @@ Page({
     });
     const username = wx.getStorageSync('selectUsername');
     const userInfo = wx.getStorageSync('userInfo');
-    if (userInfo && userInfo[username]) {
+    if (username && userInfo && userInfo[username]) {
       this.setData({
-        name: userInfo[username].name.split('(')[0],
+        name: userInfo[username].name && userInfo[username].name.split('(')[0],
+        username,
       });
     }
     // this.getCet(this.data.username);
@@ -105,6 +111,9 @@ Page({
     this.setData({
       id: e.detail.value,
     });
+  },
+  confirm1() {
+    this.getCet(null, null, this.data.username);
   },
   confirm() {
     const name = this.data.name;

@@ -1,6 +1,6 @@
 .wrapper {
   font-size: 14px;
-  padding-bottom:20px;
+  padding-bottom: 128px;
 }
 
 .news-wrapper {
@@ -64,4 +64,11 @@
   font-size: 14px;
   color: #999;
   padding: 20px;
+}
+
+.advertising {
+  position: fixed;
+  bottom: 0;
+  transform: scale(.8) !important;
+  transform-origin: center bottom;
 }

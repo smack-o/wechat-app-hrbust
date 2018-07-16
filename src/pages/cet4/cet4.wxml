@@ -53,3 +53,11 @@
       </view>
     </navigator>
 </block>
+<block wx:if="{{showCaptcha}}">
+  <view class="captcha-wrapper">
+    <view class="title">看不清?点击图片更换验证码</view>
+    <image bindtap="changeCaptcha" class="captcha-image" src="{{ cetCaptchaSrc }}"></image>
+    <input class="input captcha-input" focus="{{!showCaptcha}}" value="{{yzm}}" bindinput="captchaInput" placeholder="请输入验证码" />
+    <button class="button" bindtap="submit">查询</button>
+  </view>
+</block>

@@ -6,8 +6,33 @@ Page({
     username: '',
     name: '',
     id: '',
+    cetCaptchaSrc: '',
+    cookie: '',
+    type: '',
+    yzm: '',
+    showCaptcha: false,
   },
-
+  getCetCaptcha() {
+    const that = this;
+    return new Promise((resolve) => {
+      wx.request({
+        url: `${requestUrl}/getCetCaptcha`,
+        header: {
+          'Content-Type': 'application/json',
+        },
+        success(res) {
+          that.setData({
+            cookie: res.data.cookie,
+            cetCaptchaSrc: `data:image/png;base64, ${res.data.base64}`,
+          });
+          resolve();
+        },
+        fail() {
+          resolve();
+        },
+      });
+    });
+  },
   getCet(name, id, username) {
     wx.showToast({
       title: '加载中...',
@@ -15,18 +40,30 @@ Page({
       duration: 10000,
     });
     const that = this;
-    const promise = new Promise((resolve) => {
+    const promise = new Promise((resolve, reject) => {
       let url = `${requestUrl}/getCet?name=${name}&id=${id}`;
       if (username) {
         url = `${requestUrl}/getCet?username=${username}`;
       }
       wx.request({
         url,
+        method: 'POST',
+        data: {
+          id,
+          name,
+          username,
+          yzm: that.data.yzm,
+          cookie: that.data.cookie,
+        },
         header: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         success(res) {
           wx.hideToast();
+          if (res.statusCode === 400) {
+            reject(res.data.error);
+            return;
+          }
           let cetData = {};
           if (res.statusCode !== 400) {
             cetData = res.data.data[0];
@@ -44,7 +81,7 @@ Page({
         fail() {
           wx.hideToast();
           // that.showError(that, error);
-          resolve();
+          reject();
         },
       });
     });
@@ -112,8 +149,63 @@ Page({
       id: e.detail.value,
     });
   },
+  captchaInput(e) {
+    this.setData({
+      yzm: e.detail.value,
+    });
+  },
+  changeCaptcha() {
+    this.getCetCaptcha();
+  },
+  submit() {
+    if (!this.data.yzm) {
+      wx.showToast({
+        title: '不能为空',
+        icon: 'none',
+      });
+      setTimeout(() => {
+        wx.hideToast();
+      }, 1000);
+      return;
+    }
+
+    const that = this;
+    let params = [];
+    if (this.data.type === 'noid') {
+      params = [null, null, this.data.username, this.data.yzm, this.data.cookie];
+      // this.getCet(null, null, this.data.username, this.data.yzm, this.data.cookie);
+    } else {
+      params = [this.data.name, this.data.id, null, this.data.yzm, this.data.cookie];
+    }
+    this.getCet(...params).then(() => {
+      this.setData({
+        showCaptcha: false,
+      });
+    }).catch((e) => {
+      // console.log(e);
+      wx.showModal({
+        title: '错误',
+        content: e,
+        confirmText: '重新输入',
+        showCancel: false,
+        success(data) {
+          if (data.confirm) {
+            that.getCetCaptcha();
+            that.setData({
+              yzm: '',
+            });
+          }
+        },
+      });
+    });
+  },
   confirm1() {
-    this.getCet(null, null, this.data.username);
+    this.getCetCaptcha();
+    // this.getCet(null, null, this.data.username);
+    this.setData({
+      type: 'noid',
+      showCaptcha: true,
+    });
   },
   confirm() {
     const name = this.data.name;
@@ -128,7 +220,12 @@ Page({
       }, 1000);
       return;
     }
-    this.getCet(name, id);
+    this.getCetCaptcha();
+    // this.getCet(name, id);
+    this.setData({
+      type: 'haveid',
+      showCaptcha: true,
+    });
   },
   onShareAppMessage() {
     let shareName = '';

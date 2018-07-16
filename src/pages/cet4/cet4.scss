@@ -45,3 +45,33 @@
 .button1 {
   color: #64dd17;
 }
+
+.captcha-wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  padding: 50px 20px;
+  box-sizing: border-box;
+  background: rgb(41,41,41);
+  top: 0;
+  left: 0;
+  z-index: 10;
+  .title {
+    margin: 5px 10px;
+    text-align: center;
+  }
+  .subtitle {
+    margin: 5px 10px;
+    font-size: 12px;
+    color: gray;
+  }
+  .captcha-image {
+    width: 200px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+  .captcha-input {
+    padding: 20px;
+  }
+}

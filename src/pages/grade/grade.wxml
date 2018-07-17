@@ -27,8 +27,9 @@
         学期：{{term}}
       </view>
   </view>
-  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均分：{{AVERAGE_GRADE}}</text>
-  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均学分绩点(GPA)：{{AVERAGE_GPA}}</text>
+  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">加权平均分 ：{{AVERAGE_GRADE}}</text>
+  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均学分绩点GPA（全部）：{{AVERAGE_GPA}}</text>
+  <text wx:if="{{AVERAGE_GPA}}" class="average-gpa">平均学分绩点GPA（仅必修）：{{OBLIGATORY_AVERAGE_GPA}}</text>
   <view class="gradeWrapper">
     <view  class="weui-flex">
       <view class="weui-flex__item" wx:for="{{titles}}" wx:key="title">
@@ -47,6 +48,8 @@
       </view>
     </block>
   </view>
+  <ad class="advertising" unit-id="adunit-764ee39c0d27492c">
+  </ad>
   <navigator wx:if="{{doNotRefresh}}" url="../home/home">
     <view class="common-button-wrapper">
       <view class="common-button-flex">

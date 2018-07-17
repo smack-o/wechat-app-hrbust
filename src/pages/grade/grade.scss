@@ -4,6 +4,7 @@
 
 .gradeWrapper {
   overflow: auto;
+  padding-bottom: 108px;
 }
 .weui-flex__item {
   width: calc(100% / 6);
@@ -96,4 +97,43 @@
   font-size: 12px;
   padding: 0 10px 10px 10px;
   display: block;
+}
+
+.advertising-wrapper {
+  text-align: center;
+  line-height: 107px;
+  background: rgba(0, 0, 0, .2);
+  position: fixed;
+  bottom: 0;
+  height: 107px;
+  transform: scale(.8) !important;
+  transform-origin: center bottom;
+  width: 100%;
+  .advertising {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform-origin: center bottom;
+    transform: scale(1) !important;
+  }
+
+  .close-advertising {
+    width: 40px;
+    height: 40px;
+    // border-radius: 50%;
+    background: rgba(0, 0, 0, .7);
+    position: absolute;
+    right: -40px;
+    bottom: 0;
+    text-align: center;
+    line-height: 40px;
+  }
+}
+
+.advertising {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  transform-origin: center bottom;
+  transform: scale(0.8) !important;
 }

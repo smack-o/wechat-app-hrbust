@@ -35,7 +35,7 @@
   <view wx:else class="info">
     你还没有任何考试信息！
   </view>
-  <ad class="advertising" unit-id="adunit-20521f8411ad8419"></ad>
+  <ad class="advertising" unit-id="adunit-764ee39c0d27492c"></ad>
   <navigator wx:if="{{doNotRefresh}}" url="../home/home">
     <view class="common-button-wrapper">
       <view class="common-button-flex">

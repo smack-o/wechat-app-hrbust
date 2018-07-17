@@ -14,6 +14,13 @@ Page({
     pingGuText: '',
     AVERAGE_GPA: '',
     AVERAGE_GRADE: '',
+    OBLIGATORY_AVERAGE_GPA: '',
+    showAdvertising: true,
+  },
+  closeAdvertising() {
+    this.setData({
+      showAdvertising: false,
+    });
   },
 
   // 切换学年学期
@@ -77,6 +84,11 @@ Page({
             that.setData({
               pingGuText: res.data.data,
             });
+          } else if (res.statusCode >= 500) {
+            wx.showModal({
+              content: '拉取数据失败。请重新尝试',
+              showCancel: false,
+            });
           } else {
             let gradeData = res.data.data;
 
@@ -102,6 +114,7 @@ Page({
               pingGuText: '',
               AVERAGE_GPA: res.data.AVERAGE_GPA,
               AVERAGE_GRADE: res.data.AVERAGE_GRADE,
+              OBLIGATORY_AVERAGE_GPA: res.data.OBLIGATORY_AVERAGE_GPA,
             };
 
             userInfo[username].cookie = res.data.cookie;
@@ -155,13 +168,10 @@ Page({
       userInfo,
       term: gradeTerm,
       shareName,
-    };
-
-    this.setData(data);
-
-    this.setData({
       getGradeLoading: true,
-    });
+      showAdvertising: username !== '1234',
+    };
+    this.setData(data);
     this.getGrade().then(() => {
       this.setData({
         getGradeLoading: false,

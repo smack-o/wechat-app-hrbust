@@ -7,6 +7,12 @@ Page({
   data: {
     page: 1,
     loading: false,
+    showAdvertising: false,
+  },
+  closeAdvertising() {
+    this.setData({
+      showAdvertising: false,
+    });
   },
   getExam(page, needConcat) {
     const that = this;
@@ -59,6 +65,11 @@ Page({
             });
             that.setData({
               page: that.data.page - 1,
+            });
+          } else if (res.statusCode >= 500) {
+            wx.showModal({
+              content: '拉取数据失败。请重新尝试',
+              showCancel: false,
             });
           } else {
             resData = resData.map((item) => {
@@ -129,6 +140,12 @@ Page({
       title: '考试信息',
     });
     this.getExam(1);
+    const username = wx.getStorageSync('selectUsername');
+    if (username !== '1234') {
+      this.setData({
+        showAdvertising: true,
+      });
+    }
   },
   onPullDownRefresh() {
     if (this.data.doNotRefresh) {

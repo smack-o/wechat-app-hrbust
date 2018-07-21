@@ -79,15 +79,15 @@ Page({
               content: `拉取数据失败。${res.data.error}`,
               showCancel: false,
             });
-          } else if (res.data.status === -1) {
-            // 需要评估
-            that.setData({
-              pingGuText: res.data.data,
-            });
           } else if (res.statusCode >= 500) {
             wx.showModal({
               content: '拉取数据失败。请重新尝试',
               showCancel: false,
+            });
+          } else if (res.data.status === -1) {
+            // 需要评估
+            that.setData({
+              pingGuText: res.data.data,
             });
           } else {
             let gradeData = res.data.data;

@@ -16,7 +16,7 @@ Page({
   },
   getExam(page, needConcat) {
     const that = this;
-    const promise = new Promise((resolve) => {
+    const promise = new Promise((resolve, reject) => {
       const userInfo = wx.getStorageSync('userInfo');
       const username = wx.getStorageSync('selectUsername');
       const password = userInfo[username].password;
@@ -35,6 +35,15 @@ Page({
           if (res.statusCode === 400) {
             // 账号密码错误
             that.showError(that, res.data.error);
+            reject();
+            return;
+          }
+          if (res.statusCode >= 500) {
+            wx.showModal({
+              content: '拉取数据失败。请稍候重新尝试',
+              showCancel: false,
+            });
+            reject();
             return;
           }
           let examData = that.data.examData || [];
@@ -65,11 +74,6 @@ Page({
             });
             that.setData({
               page: that.data.page - 1,
-            });
-          } else if (res.statusCode >= 500) {
-            wx.showModal({
-              content: '拉取数据失败。请重新尝试',
-              showCancel: false,
             });
           } else {
             resData = resData.map((item) => {
@@ -140,12 +144,12 @@ Page({
       title: '考试信息',
     });
     this.getExam(1);
-    const username = wx.getStorageSync('selectUsername');
-    if (username !== '1234') {
-      this.setData({
-        showAdvertising: true,
-      });
-    }
+    // const username = wx.getStorageSync('selectUsername');
+    // if (username !== '1234') {
+    //   this.setData({
+    //     showAdvertising: true,
+    //   });
+    // }
   },
   onPullDownRefresh() {
     if (this.data.doNotRefresh) {

@@ -1,0 +1,48 @@
+<view class="wrapper">
+<view class="weui-cells__title">输入信息</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+          <view class="weui-label">考号：</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" type="number" placeholder="请输入考生号" type="number" value="{{id}}" bindinput="idInput" />
+      </view>
+  </view>
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+          <view class="weui-label">姓名：</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" value="{{name}}" bindinput="nameInput" placeholder="请输入姓名" />
+      </view>
+  </view>
+</view>
+<view class="weui-cells__tips">如果您的考号不足14位，请使用“18”+所在省份代码两位，补足14位考号。例：182306****0332</view>
+<view wx:if="{{showNoResult}}" class="weui-btn-area">
+    <view class="info">暂未查询到录取信息</view>
+</view>
+<view wx:if="{{!zy}}" class="weui-btn-area">
+    <button loading="{{loading}}" class="weui-btn" type="primary" bindtap="confirm">查询</button>
+</view>
+<block wx:else>
+  <view class="info">恭喜您，您已经被我校{{zy}}专业录取！</view>
+  <view class="weui-cells__title">查询录取通知书快递信息请输入验证码</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+          <view class="weui-label">验证码</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" value="{{captchaValue}}" bindinput="captchaInput" placeholder="请输入验证码" />
+      </view>
+      <view class="weui-cell__ft">
+          <image bindtap="changeCaptcha" class="weui-vcode-img" src="{{captcha}}" style="width: 108px"></image>
+      </view>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="confirm2">查询通知书物流</button>
+  </view>
+</block>
+</view>

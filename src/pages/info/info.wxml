@@ -1,71 +1,40 @@
-<view class="page">
-    <view class="page__bd">
-        <view class="weui-search-bar">
-            <view class="weui-search-bar__form">
-                <view class="weui-search-bar__box">
-                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" focus="true" value="{{inputVal}}" class="weui-search-bar__input" placeholder="{{rongcheng ? '请输入身份证号进行信息查询' : '请输入名字进行信息查询'}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="inputConfirm" />
-                    <view class="weui-icon-clear" wx:if="{{showClear}}" bindtap="clearInput">
-                        <icon type="clear" size="14"></icon>
-                    </view>
-                </view>
-                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
-                    <icon class="weui-icon-search" type="search" size="14"></icon>
-                    <view class="weui-search-bar__text">{{rongcheng ? '请输入身份证号进行信息查询' : '请输入名字进行信息查询' }}</view>
-                </label>
-            </view>
-            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+<view class="wrapper">
+  <view class="weui-cells__title">输入信息</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">身份证号：</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入身份证号" value="{{id}}" bindinput="idInput" />
         </view>
     </view>
-</view>
-<p class="message">数据均来自于理工官微，理工喵承诺绝不存储任何用户隐私数据！</p>
-
-<view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">荣成校区</view>
-        <view class="weui-cell__ft">
-            <switch bindchange="switchChange" />
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+            <view class="weui-label">姓名：</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" value="{{name}}" bindinput="nameInput" placeholder="请输入姓名" />
         </view>
     </view>
+  </view>
 </view>
+<button loading="{{loading}}" class="weui-btn" type="primary" bindtap="confirm">查询</button>
 
-<view wx:if="{{rongcheng && info.length > 0}}" class="wrapper page__bd">
-  <block>
-    <view class="item-content">
-      <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__bd">
-          <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__desc" wx:key="book" wx:for="{{info}}">{{item.title}}：{{item.text}}</view>
-            </view>
+<view wx:if="{{!showNoResult && info}}" class="wrapper page__bd">
+  <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">查询结果</view>
+      <view class="weui-panel__bd">
+        <block wx:key="book" wx:for="{{info}}">
+          <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">{{item.name}}</view>
+              <view class="weui-media-box__desc">{{item.value}}</view>
           </view>
-        </view>
+        </block>
       </view>
-    </view>
-  </block>
+  </view>
 </view>
 
-<view wx:if="{{!rongcheng && info.length > 0}}" class="wrapper page__bd">
-  <block wx:key="book" wx:for="{{info}}">
-    <view class="item-content">
-      <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__bd">
-          <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__title">学院：{{item[2]}}</view>
-              <view class="weui-media-box__desc">姓名：{{item[0]}}</view>
-              <view class="weui-media-box__desc">学号：{{item[1]}}</view>
-              <view class="weui-media-box__desc">专业：{{item[3]}}</view>
-              <view class="weui-media-box__desc">班级：{{item[4]}}</view>
-              <view class="weui-media-box__desc">性别：{{item[5]}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </block>
-</view>
-
-<view wx:if="{{noData}}" class="noData">
-  没有找到您搜索的信息。
+<view wx:if="{{showNoResult}}" class="weui-btn-area">
+    <view class="info">暂时没有查到您的分班信息。</view>
 </view>

@@ -2,9 +2,23 @@ const requestUrl = require('../../utils/get-request-url');
 
 Page({
   data: {
-    info: [],
+    name: '',
+    id: '',
+    info: null,
     noData: false,
     rongcheng: false,
+  },
+  nameInput(event) {
+    const name = event.detail.value;
+    this.setData({
+      name,
+    });
+  },
+  idInput(event) {
+    const id = event.detail.value;
+    this.setData({
+      id,
+    });
   },
   showInput() {
     this.setData({
@@ -70,6 +84,79 @@ Page({
       });
     }
   },
+
+  confirm() {
+    const id = this.data.id;
+    const name = this.data.name;
+    if (!id) {
+      wx.showModal({
+        content: '请输入您的身份证号',
+        confirmText: '我知道了',
+      });
+      return;
+    }
+    if (!name) {
+      wx.showModal({
+        content: '请输入您的姓名',
+        confirmText: '我知道了',
+      });
+      return;
+    }
+    this.getData(name, id);
+  },
+  getData(name, id) {
+    // 获取数据
+    const that = this;
+    that.setData({
+      loading: true,
+    });
+    const promise = new Promise((resolve) => {
+      wx.showToast({
+          title: '数据加载中',
+          icon: 'loading',
+          duration: 6000,
+      });
+      wx.request({
+        url: `${requestUrl}/fenban?name=${encodeURI(name)}&id=${id}`,
+        header: {
+          'Content-Type': 'application/json',
+        },
+        success(res) {
+          const resData = res.data;
+          // console.log(resData);
+          const { error, data } = resData;
+          if (error === 0) {
+            that.setData({
+              showNoResult: true,
+              loading: false,
+              info: null,
+            });
+          } else {
+            that.setData({
+              info: data[0],
+              showNoResult: false,
+              loading: false,
+            });
+          }
+          wx.hideToast();
+          resolve(resData);
+        },
+        fail(error) {
+          wx.hideToast();
+          that.setData({
+            loading: false,
+            info: null,
+            showNoResult: true,
+          });
+          resolve({
+            error,
+          });
+        },
+      });
+    });
+    return promise;
+  },
+
   getInfo(name) {
     const that = this;
     const promise = new Promise((resolve) => {

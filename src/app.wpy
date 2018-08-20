@@ -1,4 +1,5 @@
 <style lang="less">
+@import './style/weui.less';
 .container {
   height: 100%;
   display: flex;
@@ -22,13 +23,45 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/test'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#999999',
+      selectedColor: '#1AAD19',
+      backgroundColor: '#fff',
+      list: [
+        {
+          pagePath: 'pages/index',
+          text: '首页',
+          iconPath: './assets/icon/home.png',
+          selectedIconPath: './assets/icon/home_selected.png'
+        },
+        {
+          pagePath: 'pages/test',
+          text: '校园',
+          iconPath: './assets/icon/campus.png',
+          selectedIconPath: './assets/icon/campus_selected.png'
+        },
+        {
+          pagePath: 'pages/index',
+          text: '发现',
+          iconPath: './assets/icon/find.png',
+          selectedIconPath: './assets/icon/find_selected.png'
+        },
+        {
+          pagePath: 'pages/index',
+          text: '我',
+          iconPath: './assets/icon/account.png',
+          selectedIconPath: './assets/icon/account_selected.png'
+        }
+      ]
     }
   }
 

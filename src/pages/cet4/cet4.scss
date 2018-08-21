@@ -1,3 +1,12 @@
+page {
+  background-color: #f8f8f8;
+  color: #363636;
+}
+
+button {
+  margin: 20px;
+}
+
 .text {
   padding: 20px;
 }
@@ -6,6 +15,7 @@
   padding: 20px 10px;
   width: 100%;
   box-sizing: border-box;
+  color: #363636;
 }
 
 .item {
@@ -74,4 +84,14 @@
   .captcha-input {
     padding: 20px;
   }
+}
+
+.info {
+  color: #E64340;
+  font-size: 9px;
+  padding: 2px 20px;
+}
+
+.info-wrapper {
+  margin-top: 20px;
 }

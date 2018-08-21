@@ -11,6 +11,7 @@ Page({
     type: '',
     yzm: '',
     showCaptcha: false,
+    disable: false,
   },
   getCetCaptcha() {
     const that = this;
@@ -104,6 +105,11 @@ Page({
   },
 
   onLoad(options) {
+    if (Date.now() < 1534899600000) {
+      this.setData({
+        disable: true,
+      });
+    }
     if (options.cetData) {
       // 通过分享进入页面
       const cetData = JSON.parse(options.cetData);

@@ -1,20 +1,45 @@
 
 <block wx:if="{{!cetData}}">
-  <button class="button button1" bindtap="confirm1">本人无准考证查询</button>
-  <view class="container input-wrapper">
-      <view class="check-username">
-        {{displayUsername}}
+  <!-- <button class="button button1" bindtap="confirm1">本人无准考证查询</button> -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="check-username">
+      {{displayUsername}}
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">姓名：</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" focus="true" placeholder="请输入输入姓名" value="{{name}}" bindinput="nameInput" />
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+            <view class="weui-label">准考证号</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" type="number" value="{{id}}" bindinput="idInput" placeholder="请输入准考证号" />
+        </view>
+    </view>
+    <view wx:if="{{showCaptcha}}" class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+          <view class="weui-label">验证码</view>
       </view>
-      <view class="username-wrapper">
-        <input class="input" focus="true" value="{{name}}" bindinput="nameInput" placeholder="点击输入姓名" />
+      <view class="weui-cell__bd">
+          <input class="weui-input" value="{{yzm}}" bindinput="captchaInput" placeholder="请输入验证码" />
       </view>
-      <view class="password-wrapper">
-        <input class="input" type="number" value="{{id}}" bindinput="idInput" placeholder="点击输入准考证号" />
+      <view class="weui-cell__ft">
+          <image bindtap="changeCaptcha" class="weui-vcode-img" src="{{cetCaptchaSrc}}" style="width: 108px"></image>
       </view>
+    </view>
+
   </view>
-  <view class="container">
-    <button class="button" bindtap="confirm">查询</button>
+  <view class="info-wrapper">
+    <view class="info">*注1：四六级查询接口8月22日9时开始查询，在这之前无法查询。</view>
+    <view class="info">*注2：无准考证查询目前不可用，待学校公布准考证号后，无准考证号查询将第一时间上线</view>
   </view>
+  <button disabled="{{disable}}" wx:if="{{!showCaptcha}}" class="weui-btn" type="primary" bindtap="confirm">查询</button>
+  <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button>
 </block>
 <block wx:else>
     <view class="wrapper" wx:if="{{cetData.id}}">
@@ -43,7 +68,7 @@
       </view>
     </view>
     <view wx:else class="loadingText text">
-      今年你未参加四六级考试，明年加油!
+      没有查到您今年的四六级考试成绩~
     </view>
     <navigator wx:if="{{doNotRefresh}}" url="../home/home">
       <view class="common-button-wrapper">
@@ -53,11 +78,11 @@
       </view>
     </navigator>
 </block>
-<block wx:if="{{showCaptcha}}">
+<!-- <block wx:if="{{showCaptcha}}">
   <view class="captcha-wrapper">
     <view class="title">看不清?点击图片更换验证码</view>
     <image bindtap="changeCaptcha" class="captcha-image" src="{{ cetCaptchaSrc }}"></image>
     <input class="input captcha-input" focus="{{!showCaptcha}}" value="{{yzm}}" bindinput="captchaInput" placeholder="请输入验证码" />
     <button class="button" bindtap="submit">查询</button>
   </view>
-</block>
+</block> -->

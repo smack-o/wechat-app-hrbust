@@ -1,6 +1,6 @@
-// const dev = 'http://127.0.0.1:4001/api';
+const dev = 'http://127.0.0.1:4001/api';
 // const production = 'https://test.gebilaowu.cn/api';
-const dev = 'https://hrbust.smackgg.cn/api';
+// const dev = 'https://hrbust.smackgg.cn/api';
 const production = 'https://hrbust.smackgg.cn/api';
 
 let url = null;

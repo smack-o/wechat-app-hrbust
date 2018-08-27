@@ -8,7 +8,7 @@
     "dev-es5": "cross-env NODE_ENV=dev gulp dev:es5",
     "build": "cross-env NODE_ENV=production gulp build",
     "build-es5": "cross-env NODE_ENV=production gulp build:es5",
-    "lint": "eslint src"
+    "lint": "eslint --fix src"
   },
   "pre-commit": [
     "lint"

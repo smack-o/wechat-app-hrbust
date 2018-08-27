@@ -1,0 +1,4 @@
+<view>
+  <button disabled="{{disable}}" class="weui-btn" type="primary" bindtap="confirm1">教务成绩查询</button>
+  <button disabled="{{disable}}" wx:if="{{show}}" class="weui-btn" type="primary" bindtap="confirm2">四六级成绩查询</button>
+</view>

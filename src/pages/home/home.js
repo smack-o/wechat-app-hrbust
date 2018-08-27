@@ -12,7 +12,7 @@ Page({
     }, {
       image: '../../images/grade_icon.png',
       text: '成绩',
-      url: '../grade/grade',
+      url: '../exam1/exam',
       needLogin: true,
     }, {
       image: '../../images/exam_icon.png',
@@ -28,20 +28,20 @@ Page({
       text: '教务公告',
       url: '../news/news',
     },
-    // {
-    //   image: '../../images/job_icon.png',
-    //   text: '校招信息',
-    //   url: '../job/job',
-    // },
     {
-      image: '../../images/cet4_icon.png',
-      text: '四六级成绩',
-      url: '../cet4/cet4',
-      needLogin: true,
-      // image: '../../images/search_icon.png',
-      // text: '新生速查',
-      // url: '../info/info',
+      image: '../../images/job_icon.png',
+      text: '校招信息',
+      url: '../job/job',
     },
+    // {
+    //   image: '../../images/cet4_icon.png',
+    //   text: '四六级成绩',
+    //   url: '../cet4/cet4',
+    //   needLogin: true,
+    //   // image: '../../images/search_icon.png',
+    //   // text: '新生速查',
+    //   // url: '../info/info',
+    // },
     {
       image: '../../images/search_icon.png',
       text: '新生速查',

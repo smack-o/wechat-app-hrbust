@@ -15,7 +15,8 @@
     "pages/about/about",
     "pages/exam/exam",
     "pages/gaokaoluqu/gaokaoluqu",
-    "pages/gaokaoluqu/gaokaoluqu-detail"
+    "pages/gaokaoluqu/gaokaoluqu-detail",
+    "pages/exam1/exam"
   ],
   "window":{
     "backgroundTextStyle": "white",

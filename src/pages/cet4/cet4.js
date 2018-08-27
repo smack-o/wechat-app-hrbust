@@ -13,6 +13,17 @@ Page({
     showCaptcha: false,
     disable: false,
   },
+  onSwitchChange() {
+    if (this.data.type === 'noid') {
+      this.setData({
+        type: '',
+      });
+    } else {
+      this.setData({
+        type: 'noid',
+      });
+    }
+  },
   getCetCaptcha() {
     const that = this;
     return new Promise((resolve) => {
@@ -34,7 +45,7 @@ Page({
       });
     });
   },
-  getCet(name, id, username) {
+  getCet(name, id, username, yzm, cookie) {
     wx.showToast({
       title: '加载中...',
       icon: 'loading',
@@ -43,19 +54,24 @@ Page({
     const that = this;
     const promise = new Promise((resolve, reject) => {
       let url = `${requestUrl}/getCet?name=${name}&id=${id}`;
+      let sendData = {};
       if (username) {
         url = `${requestUrl}/getCet?username=${username}`;
+        sendData.username = username;
+      } else {
+        sendData = {
+          id,
+          name,
+        };
+      }
+      if (yzm) {
+        sendData.yzm = yzm;
+        sendData.cookie = cookie;
       }
       wx.request({
         url,
         method: 'POST',
-        data: {
-          id,
-          name,
-          username,
-          yzm: that.data.yzm,
-          cookie: that.data.cookie,
-        },
+        data: sendData,
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -63,6 +79,20 @@ Page({
           wx.hideToast();
           if (res.statusCode === 400) {
             reject(res.data.error);
+            wx.showModal({
+              title: '错误',
+              content: res.data.error,
+              confirmText: '重新输入',
+              showCancel: false,
+            });
+            return;
+          }
+          if (res.data.code === 80001) {
+            that.setData({
+              cookie: res.data.cookie,
+              cetCaptchaSrc: `data:image/png;base64, ${res.data.base64}`,
+              showCaptcha: true,
+            });
             return;
           }
           let cetData = {};
@@ -71,6 +101,7 @@ Page({
           }
           that.setData({
             cetData,
+            showCaptcha: false,
           });
           wx.showToast({
             title: '拉取数据成功',
@@ -155,18 +186,31 @@ Page({
       id: e.detail.value,
     });
   },
+  usernameInput(e) {
+    this.setData({
+      username: e.detail.value,
+    });
+  },
   captchaInput(e) {
     this.setData({
       yzm: e.detail.value,
     });
   },
   changeCaptcha() {
-    this.getCetCaptcha();
+    let params;
+    if (this.data.type === 'noid') {
+      params = [null, null, this.data.username];
+      // this.getCet(null, null, this.data.username, this.data.yzm, this.data.cookie);
+    } else {
+      params = [this.data.name, this.data.id];
+    }
+    // this.getCetCaptcha();
+    this.getCet(...params);
   },
   submit() {
     if (!this.data.yzm) {
       wx.showToast({
-        title: '不能为空',
+        title: '验证码不能为空',
         icon: 'none',
       });
       setTimeout(() => {
@@ -175,7 +219,7 @@ Page({
       return;
     }
 
-    const that = this;
+    // const that = this;
     let params = [];
     if (this.data.type === 'noid') {
       params = [null, null, this.data.username, this.data.yzm, this.data.cookie];
@@ -196,42 +240,51 @@ Page({
         showCancel: false,
         success(data) {
           if (data.confirm) {
-            that.getCetCaptcha();
-            that.setData({
-              yzm: '',
-            });
+            // that.getCetCaptcha();
+            // that.setData({
+            //   yzm: '',
+            // });
           }
         },
       });
     });
   },
-  confirm1() {
-    this.getCetCaptcha();
-    // this.getCet(null, null, this.data.username);
-    this.setData({
-      type: 'noid',
-      showCaptcha: true,
-    });
-  },
   confirm() {
     const name = this.data.name;
     const id = this.data.id;
-    if (!name || !id) {
-      wx.showToast({
-        title: '填写错误',
-        icon: 'none',
-      });
-      setTimeout(() => {
-        wx.hideToast();
-      }, 1000);
-      return;
+    const username = this.data.username;
+    let params;
+    if (this.data.type === 'noid') {
+      if (!username) {
+        wx.showToast({
+          title: '请输入学号',
+          icon: 'none',
+        });
+        setTimeout(() => {
+          wx.hideToast();
+        }, 1000);
+        return;
+      }
+      params = [null, null, username];
+      // this.getCet(null, null, this.data.username, this.data.yzm, this.data.cookie);
+    } else {
+      if (!name || !id) {
+        wx.showToast({
+          title: '不能为空',
+          icon: 'none',
+        });
+        setTimeout(() => {
+          wx.hideToast();
+        }, 1000);
+        return;
+      }
+      params = [name, id, null];
     }
-    this.getCetCaptcha();
-    // this.getCet(name, id);
-    this.setData({
-      type: 'haveid',
-      showCaptcha: true,
-    });
+    // this.getCetCaptcha();
+    this.getCet(...params);
+    // this.setData({
+    //   showCaptcha: true,
+    // });
   },
   onShareAppMessage() {
     let shareName = '';

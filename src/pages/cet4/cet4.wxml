@@ -1,11 +1,18 @@
 
 <block wx:if="{{!cetData}}">
-  <!-- <button class="button button1" bindtap="confirm1">本人无准考证查询</button> -->
+  <view class="weui-cells weui-cells_after-title noid-button">
+      <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">无准考证查询</view>
+          <view class="weui-cell__ft">
+              <switch checked="{{type === 'noid'}}" bindchange="onSwitchChange"/>
+          </view>
+      </view>
+  </view>
   <view class="weui-cells weui-cells_after-title">
     <view class="check-username">
       {{displayUsername}}
     </view>
-    <view class="weui-cell weui-cell_input">
+    <view wx:if="{{type !== 'noid'}}" class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
             <view class="weui-label">姓名：</view>
         </view>
@@ -13,12 +20,20 @@
             <input class="weui-input" focus="true" placeholder="请输入输入姓名" value="{{name}}" bindinput="nameInput" />
         </view>
     </view>
-    <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view wx:if="{{type !== 'noid'}}" class="weui-cell weui-cell_input weui-cell_vcode">
         <view class="weui-cell__hd">
             <view class="weui-label">准考证号</view>
         </view>
         <view class="weui-cell__bd">
             <input class="weui-input" type="number" value="{{id}}" bindinput="idInput" placeholder="请输入准考证号" />
+        </view>
+    </view>
+    <view wx:if="{{type === 'noid'}}" class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+            <view class="weui-label">学号</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" type="number" value="{{username}}" bindinput="usernameInput" placeholder="请输入学号" />
         </view>
     </view>
     <view wx:if="{{showCaptcha}}" class="weui-cell weui-cell_input weui-cell_vcode">
@@ -35,10 +50,10 @@
 
   </view>
   <view class="info-wrapper">
-    <view class="info">*注1：四六级查询接口8月22日9时开始查询，在这之前无法查询。</view>
-    <view class="info">*注2：无准考证查询目前不可用，待学校公布准考证号后，无准考证号查询将第一时间上线</view>
+    <view class="info">*注1：看不清验证码，请点击验证码切换。</view>
+    <view class="info">*注2：可选择无准考证查询，无准考证查询需要输入学号</view>
   </view>
-  <button disabled="{{disable}}" wx:if="{{!showCaptcha}}" class="weui-btn" type="primary" bindtap="confirm">查询</button>
+  <button wx:if="{{!showCaptcha}}" class="weui-btn" type="primary" bindtap="confirm">查询</button>
   <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button>
 </block>
 <block wx:else>

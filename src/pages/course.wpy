@@ -1,0 +1,643 @@
+<template>
+  <block>
+    <!-- Loading -->
+    <!-- <loading wx:if="{{loading}}"></loading> -->
+
+    <!-- <block wx:else> -->
+    <block>
+      <view class="wrap" >
+        <view class="refresh">更新课表请下拉刷新</view>
+        <view wx:if="{{!doNotRefresh}}" class="picker-wrapper">
+          <picker mode="multiSelector" bindchange="changeCourse" value="{{slectedData}}" range="{{termsAndWeekList}}">
+            <view>
+              <view>
+                第<text class="num"> {{weeks.length > 0 ? weeks[slectedWeek] : 0}} </text>周
+                <block wx-if="{{weeks[slectedWeek] == thisWeekNum}}">
+                  (当前)
+                </block>
+              </view>
+              <view>{{terms[slectedTerm]}}</view>
+            </view>
+          </picker>
+        </view>
+        <view class="course-header">
+          <view class="item">
+            {{month}}月
+          </view>
+          <block wx:key="day" wx:for="{{dayNum}}" wx:for-item="dayItem" wx:for-index="dayIndex">
+            <view class="item {{dayIndex + 1 === nowDayIndex ? 'now-day' : ''}}">
+              <view>{{dayItem}}</view>
+              <view>{{currentWeekList[dayIndex]}}日</view>
+            </view>
+          </block>
+        </view>
+        <view class="course-body">
+        <view class="line-item" wx:key="time" wx:for="{{time}}" wx:for-index="timeIndex" wx:for-item="timeItem">
+          <block wx:key="course-content" wx:for="{{[0,1,2,3,4,5,6,7]}}" wx:for-index="dayIndex">
+              <block wx:if="{{dayIndex === 0}}">
+                <!-- 左侧时间列表 -->
+                <view class="item">
+                  <view class="time-item">
+                    <view>{{timeNum[timeIndex][0]}}</view>
+                    <view class="num">{{timeItem[0]}}</view>
+                  </view>
+                  <view class="time-item">
+                    <view>{{timeNum[timeIndex][1]}}</view>
+                    <view class="num">{{timeItem[1]}}</view>
+                  </view>
+                </view>
+              </block>
+              <block wx:else>
+                <!-- 课表内容 -->
+                <view class="item" bindtap="detailHandler" data-dayIndex="{{dayIndex}}" data-timeIndex="{{timeItem[0]}}">
+                  <view class="item-content">
+                    <block wx:key="course" wx:for="{{courseData[timeItem[0]]}}">
+                      <block wx:if="{{item.day == dayIndex}}">
+                        <view class="this-week {{item.class}}" wx:if="{{item.startWeek <= thisWeek && item.endWeek >= thisWeek && (item.cycle == 2 || thisWeek % 2 == item.cycle)}}">
+                          《{{item.name}}》@{{item.locale}}
+                        </view>
+                        <view class="no-this-week" wx:else>
+                          《{{item.name}}》@{{item.locale}}
+                        </view>
+                      </block>
+                    </block>
+                  </view>
+                </view>
+              </block>
+            </block>
+        </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- Detail -->
+    <view class="detial" wx:if="{{detailOpen}}" bindtap="closeDetail">
+      <block wx:for="{{detailData}}" wx:for-item="detailItem">
+        <view class="{{detailItem.startWeek <= thisWeek && detailItem.endWeek >= thisWeek && (detailItem.cycle == 2 || thisWeek % 2 == detailItem.cycle) ? 'detial-current-week' : 'detail-not-current-week'}}">
+          <view class="course-name">《{{detailItem.name}}》</view>
+          <view>教室：{{detailItem.locale}}</view>
+          <view>周数：{{detailItem.period}}</view>
+          <view>节数：{{dayNum[detailItem.day - 1]}}{{detailItem.sectionstart}} ～ {{detailItem.sectionend}}节</view>
+          <view>教师：{{detailItem.teacher}}</view>
+        </view>
+      </block>
+    </view>
+  </block>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // import Loading from '../components/loading'
+  // import requestUrl from '../utils/get-request-url'
+  let requestUrl = 'http://127.0.0.1:4001/api'
+
+  export default class Course extends wepy.page {
+    data = {
+      terms: [],
+      weeks: [],
+      slectedTerm: 0,
+      slectedWeek: 0,
+      thisWeek: 1,
+      thisWeekNum: 1,
+      nowDayIndex: new Date().getDay(),
+      dayNum: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      time: [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']],
+      timeNum: [['08:10', '09:05'], ['10:10', '11:05'], ['13:30', '14:25'], ['15:20', '16:15'], ['18:00', '18:55']],
+      loading: true,
+      month: new Date().getMonth() + 1,
+      courseData: [],
+      detailData: [],
+      termsAndWeekList: [],
+      detailOpen: false
+    }
+
+    config = {
+      navigationBarTitleText: '课程表',
+      enablePullDownRefresh: true
+    }
+
+    computed = {
+      currentWeekList () {
+        const dateOfToday = Date.now()
+        const dayOfToday = (new Date().getDay() + 7 - 1) % 7
+        const daysOfThisWeek = Array.from(new Array(7))
+        .map((_, i) => {
+          const date = new Date(dateOfToday + (i - dayOfToday) * 1000 * 60 * 60 * 24)
+          return date.getDate()
+        })
+        return daysOfThisWeek
+      }
+    }
+
+    methods = {
+      changeCourse (e) {
+        if (this.doNotRefresh) {
+          return
+        }
+
+        const term = this.termsAndWeekList[0][e.detail.value[0]]
+        const week = parseInt(this.termsAndWeekList[1][e.detail.value[1]])
+
+        this.slectedWeek = e.detail.value[1]
+        this.thisWeek = week
+        if (this.slectedTerm !== e.detail.value[0]) {
+          this.slectedTerm = e.detail.value[0]
+          const formatTerms = this.formatTerm(term)
+          wx.showLoading({
+            title: '正在加载数据'
+          })
+          this.getCourse(formatTerms.term, formatTerms.year).then(() => {
+            wx.hideLoading()
+          })
+        }
+      },
+
+      detailHandler (event) {
+        const dayIndex = event.currentTarget.dataset.dayindex
+        const timeIndex = event.currentTarget.dataset.timeindex
+        const detailData = this.courseData[timeIndex]
+
+        if (detailData.length > 0) {
+          let result = []
+          detailData.forEach((item) => {
+            if (item.day === dayIndex) {
+              result.push(item)
+            }
+          })
+          if (result.length > 0) {
+            this.detailOpen = true
+            this.detailData = result
+          }
+        }
+      },
+
+      closeDetail () {
+        this.detailOpen = false
+      }
+    }
+
+    getCourse(term, year) {
+      const userInfo = this.userInfo
+      let selectUsername, password, cookie
+      if (userInfo) {
+        selectUsername = this.selectUsername
+        password = userInfo[selectUsername].password
+        cookie = userInfo[selectUsername].cookie
+      } else {
+        // selectUsername = '1234'
+        // password = '1234'
+        // cookie = ''
+        wx.showModal({
+          content: '没登陆吧你？',
+          showCancel: false,
+          success () {
+            wx.switchTab({
+              url: '/pages/index'
+            })
+          }
+        })
+        return
+      }
+
+      const that = this
+      return new Promise((resolve) => {
+        wx.request({
+          url: `${requestUrl}/getCourse`,
+          data: {
+            username: selectUsername,
+            password,
+            cookie,
+            term: term || that.term,
+            year: year || that.year
+          },
+          header: {
+            'Content-Type': 'application/json'
+          },
+          fail() {
+            wx.showModal({
+              content: '拉取数据失败，请检查你的网络',
+              showCancel: false
+            })
+          },
+          success(res) {
+            if (res.statusCode === 400) {
+              wx.showModal({
+                content: `拉取数据失败。${res.data.error}`,
+                showCancel: false
+              })
+              return
+            }
+
+            let data = res.data.data.lessonList
+            let lessonList = []
+            let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow']
+            let courseIdList = {}
+            for (let i = 0; i < 10; i++) {
+              lessonList[i] = []
+            }
+            data.forEach((item, index) => {
+              if (item.sectionstart < 10) {
+                if (item.period.indexOf('双周') >= 0) {
+                  item.cycle = 0
+                } else if (item.period.indexOf('单周') >= 0) {
+                  item.cycle = 1
+                } else {
+                  item.cycle = 2
+                }
+
+                if (!courseIdList[String(item.courseId)]) {
+                  courseIdList[String(item.courseId)] = classList[index % 5]
+                  item.class = classList[index % 5]
+                } else {
+                  item.class = courseIdList[String(item.courseId)]
+                }
+
+                let smartPeriod = item.smartPeriod.split(' ')
+                item.startWeek = parseInt(smartPeriod[0])
+                item.endWeek = parseInt(smartPeriod[smartPeriod.length - 1])
+                lessonList[item.sectionstart].push(item)
+              }
+            })
+            that.courseData = lessonList
+
+            if (userInfo) {
+              userInfo[selectUsername].courseData = lessonList
+              userInfo[selectUsername].cookie = res.data.cookie
+              wx.setStorage({
+                key: 'userInfo',
+                data: userInfo
+              })
+            }
+
+            that.loading = false
+            wx.showToast({
+              title: '拉取数据成功',
+              icon: 'success',
+              duration: 1000
+            })
+            resolve()
+          }
+        })
+      })
+    }
+
+    setNowCourse (thisDay, thisHours, thisMinutes) {
+      let nowTimeIndex = 0
+      const nowDayIndex = thisDay
+      const timeArr = this.timeNum
+      timeArr.forEach((item, index) => {
+        const start = item[0].split(':')
+        const end = item[1].split(':')
+        const startM = (parseInt(start[0]) * 60) + parseInt(start[1])
+        const endM = (parseInt(end[0]) * 60) + parseInt(end[1])
+        const nowM = (thisHours * 60) + thisMinutes
+        if (nowM >= startM && nowM <= endM) {
+          nowTimeIndex = index + 1
+        }
+      })
+      this.nowTimeIndex = nowTimeIndex
+      this.nowDayIndex = nowDayIndex
+    }
+
+    getWeek () {
+      return new Promise((resolve, reject) => {
+        const that = this
+        const nowDate = new Date()
+        const terms = []
+        const weeks = Array.from(new Array(30), (val, index) => index + 1)
+        for (let i = nowDate.getFullYear(); i >= nowDate.getFullYear() - 5; i -= 1) {
+          terms.push(`${i} 秋`)
+          terms.push(`${i} 春`)
+        }
+
+        wx.request({
+          url: `${requestUrl}/getWeek`,
+          header: {
+            'Content-Type': 'application/json'
+          },
+          success(res) {
+            let slectedTerm = 0
+            let slectedWeek = 0
+            const tTerms = terms.map((item, index) => {
+              if (that.sameTerm(item, res.data.term, res.data.year)) {
+                slectedTerm = index
+                return `${item} (当前)`
+              }
+              return item
+            })
+            const tWeeks = weeks.map((item, index) => {
+              if (res.data.week === item) {
+                slectedWeek = index
+                return `${item}`
+              }
+              return item
+            })
+
+            that.thisWeek = res.data.week
+            that.thisWeekNum = res.data.week
+            that.term = res.data.term
+            that.year = res.data.year
+            that.terms = tTerms
+            that.weeks = tWeeks
+            that.termsAndWeekList = [tTerms, tWeeks]
+            that.slectedTerm = slectedTerm
+            that.slectedWeek = slectedWeek
+            resolve()
+          },
+          fail() {
+            wx.showModal({
+              content: '请求当前周数失败，请检查网络重试',
+              showCancel: false,
+              success () {
+                wx.switchTab({
+                  url: '/pages/index'
+                })
+              }
+            })
+            reject(new Error())
+          }
+        })
+      })
+    }
+
+    onLoad (options) {
+      let date = new Date()
+      let thisDay = date.getDay()
+      let thisHours = date.getHours()
+      let thisMinutes = date.getMinutes()
+      this.setNowCourse(thisDay, thisHours, thisMinutes)
+
+      if (options.shareData) {
+        // 通过分享进入页面
+        const shareData = JSON.parse(options.shareData)
+        wx.setNavigationBarTitle({
+          title: `${shareData.shareName}的课程表`
+        })
+        Object.keys(shareData).forEach((key) => {
+          this[key] = shareData[key]
+        })
+        this.doNotRefresh = true
+        return
+      }
+
+      const that = this
+
+      that.getWeek().then(() => {
+        // 先从缓存中拿数据
+        const userInfo = wx.getStorageSync('userInfo')
+        const selectUsername = wx.getStorageSync('selectUsername')
+        if (userInfo && selectUsername) {
+          const shareName = userInfo[selectUsername] ? userInfo[selectUsername].name.split('(')[0] : ''
+          that.shareName = shareName
+          that.userInfo = userInfo
+          that.selectUsername = selectUsername
+        }
+        const courseData = userInfo[selectUsername] ? userInfo[selectUsername].courseData : []
+        if (courseData.length) {
+          that.courseData = courseData
+          that.loading = false
+        } else {
+          // 缓存中没有数据，需要请求
+          that.getCourse().then(() => {
+            that.$apply()
+            that.loading = false
+          })
+        }
+      })
+    }
+
+    onPullDownRefresh() {
+      if (this.doNotRefresh) {
+        wx.stopPullDownRefresh()
+        return
+      }
+      let that = this
+      this.getWeek().then(() => {
+        that.getCourse().then(() => {
+          wx.stopPullDownRefresh()
+          that.$apply()
+        })
+      })
+    }
+
+    onShareAppMessage() {
+      const courseData = Object.assign({}, this.courseData, {
+        cookie: ''
+      })
+      const shareData = {
+        terms: this.terms,
+        titles: this.titles,
+        courseData,
+        shareName: this.shareName,
+        thisWeek: this.thisWeek,
+        thisWeekNum: this.thisWeekNum
+      }
+      return {
+        title: `${this.shareName}的课程表`,
+        path: `pages/course/course?shareData=${JSON.stringify(shareData)}`
+      }
+    }
+
+    formatTerm(strTerm) {
+      const thisYear = strTerm.split(' ')[0] - 1980
+      const termsObj = {
+        春: 1,
+        秋: 2
+      }
+      const thisTerm = termsObj[strTerm.split(' ')[1]]
+      return {
+        year: thisYear,
+        term: thisTerm
+      }
+    }
+
+    sameTerm (thisWeek, term, year) {
+      const thisYear = thisWeek.split(' ')[0] - 1980
+      const termsObj = {
+        春: 1,
+        秋: 2
+      }
+      const thisTerm = termsObj[thisWeek.split(' ')[1]]
+      return thisYear === year && thisTerm === term
+    }
+  }
+</script>
+
+<style lang="less">
+.this-week.pink {
+  background-color: #f39dd7!important;
+}
+.this-week.cyan {
+  background-color: #75e9eb!important;
+}
+.this-week.purple {
+  background-color: #aa8fff!important;
+}
+.this-week.green {
+  background-color: #65f0a3!important;
+}
+.this-week.blue {
+  background-color: #57b6fc!important;
+}
+.this-week.yellow {
+  background-color: #f4c44f!important;
+}
+
+.wrap {
+  width: 100%;
+  font-size: 10px;
+  color: #3f627e;
+
+  .refresh {
+    font-size: 8px;
+    width: 100%;
+    text-align: center;
+    color: #999;
+    opacity: .8;
+  }
+
+  .picker-wrapper {
+    text-align: center;
+    margin: 8rpx 0;
+    .num {
+      font-size: 14px;
+      font-weight: 900;
+    }
+    button {
+      width: 200rpx;
+      margin-bottom: 4rpx;
+      color: #fff;
+      font-size: 10px;
+      background-color: transparent;
+      box-shadow: 0 0 5px #000;
+    }
+  }
+
+  .course-header {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid #ecf3f3;
+    .item {
+      background-color: #f4f8f8;
+    }
+    .now-day {
+      font-size: 12px;
+      font-weight: 700;
+      background-color: #b7f6f3;
+    }
+  }
+
+  .course-body {
+    width: 100%;
+    .line-item {
+      display: flex;
+      width: 100%;
+      .item {
+        height: 180rpx;
+        position: relative;
+        .item-content {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+        }
+      }
+      .item:first-child {
+        background-color: #f4f8f8;
+      }
+    }
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2px 4px;
+  flex: 1;
+  width: 1%;
+  overflow:hidden;
+}
+
+.no-this-week {
+  position: absolute;
+  top:0px;
+  bottom: 0px;
+  height: 88%;
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  font-size: 8px;
+  color: #999;
+  background-color: #eaeff4;
+  border-radius: 10px;
+}
+.this-week {
+  position: absolute;
+  top:0px;
+  bottom: 0px;
+  height: 88%;
+  width: 75%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  font-size: 8px;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.time-item {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}
+.time-item .num {
+  font-size: 12px;
+}
+
+.detial {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding-top: 20px;
+  z-index: 100;
+  background-color: #f4f7f9;
+  view {
+    margin-bottom: 5px;
+  }
+  .course-name {
+    font-size: 15px;
+  }
+  .detial-current-week, .detail-not-current-week {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-size: 12px;
+    background-color: #fff;
+  }
+  .detial-current-week {
+    order: 1;
+    color: #3f627e;
+    font-weight: 700;
+  }
+  .detail-not-current-week {
+    order: 5;
+    color: #ccc;
+  }
+}
+</style>

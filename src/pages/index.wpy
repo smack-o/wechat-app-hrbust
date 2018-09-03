@@ -1,8 +1,19 @@
 <style lang="less">
+.slide-image {
+  width: 100%;
+}
 </style>
 <template>
   <view class="container">
-    11111
+    <swiper indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" mode="widthFix"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    11
   </view>
 </template>
 
@@ -17,6 +28,15 @@
       navigationBarTitleText: 'test'
     }
     data = {
+      imgUrls: [
+        'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
+        'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
+        'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2'
+      ],
+      indicatorDots: false,
+      autoplay: false,
+      interval: 5000,
+      duration: 1000
     }
 
     computed = {

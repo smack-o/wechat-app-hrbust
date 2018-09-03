@@ -1,13 +1,5 @@
 <style lang="less">
 @import './style/weui.less';
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
 </style>
 
 <script>
@@ -16,6 +8,7 @@ import 'wepy-async-function'
 
 import { setStore } from 'wepy-redux'
 import configStore from './store'
+import { host } from './utils'
 
 const store = configStore()
 setStore(store)
@@ -72,23 +65,44 @@ export default class extends wepy.app {
   constructor () {
     super()
     this.use('requestfix')
-  }
-
-  onLaunch() {
-    this.testAsync()
-  }
-
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
+    this.intercept('request', {
+      config (p) {
+        // p.timestamp = +new Date()
+        p.url = host + p.url
+        return p
+      },
+      success (p) {
+        // console.log('request success: ', p)
+        return p
+      },
+      fail (p) {
+        // console.log('request fail: ', p)
+        return p
+      },
+      complete (p) {
+        // console.log('request complete: ', p)
+      }
     })
   }
 
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
+  onLaunch() {
+    wepy.login({
+      success: function(res) {
+        if (res.code) {
+          console.log(res)
+          // 发起网络请求
+          // this.getUserInfo()
+          wepy.request({
+            url: '/api/wx-login',
+            data: {
+              code: res.code
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
   }
 
   getUserInfo(cb) {
@@ -103,5 +117,22 @@ export default class extends wepy.app {
       }
     })
   }
+
+  // getUserInfo() {
+  //   const that = this
+  //   if (this.globalData.userInfo) {
+  //     console.log(this.globalData.userInfo)
+  //     return Promise.resolve(this.globalData.userInfo)
+  //   }
+  //   return new Promise((resolve) => {
+  //     wepy.getUserInfo({
+  //       success (res) {
+  //         that.globalData.userInfo = res.userInfo
+  //         console.log(res.userInfo)
+  //         resolve(res.userInfo)
+  //       }
+  //     })
+  //   })
+  // }
 }
 </script>

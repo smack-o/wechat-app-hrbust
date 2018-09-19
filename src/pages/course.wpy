@@ -87,6 +87,7 @@
 
 <script>
   import wepy from 'wepy'
+  import { request } from 'utils'
   // import Loading from '../components/loading'
   // import requestUrl from '../utils/get-request-url'
   let requestUrl = 'http://127.0.0.1:4001/api'
@@ -143,11 +144,11 @@
         if (this.slectedTerm !== e.detail.value[0]) {
           this.slectedTerm = e.detail.value[0]
           const formatTerms = this.formatTerm(term)
-          wx.showLoading({
+          wepy.showLoading({
             title: '正在加载数据'
           })
           this.getCourse(formatTerms.term, formatTerms.year).then(() => {
-            wx.hideLoading()
+            wepy.hideLoading()
           })
         }
       },
@@ -179,104 +180,81 @@
     getCourse(term, year) {
       const userInfo = this.userInfo
       let selectUsername, password, cookie
-      if (userInfo) {
-        selectUsername = this.selectUsername
-        password = userInfo[selectUsername].password
-        cookie = userInfo[selectUsername].cookie
-      } else {
-        // selectUsername = '1234'
-        // password = '1234'
-        // cookie = ''
-        wx.showModal({
-          content: '没登陆吧你？',
-          showCancel: false,
-          success () {
-            wx.switchTab({
-              url: '/pages/index'
-            })
-          }
-        })
-        return
-      }
+      // if (userInfo) {
+      //   selectUsername = this.selectUsername
+      //   password = userInfo[selectUsername].password
+      //   cookie = userInfo[selectUsername].cookie
+      // } else {
+      //   // selectUsername = '1234'
+      //   // password = '1234'
+      //   // cookie = ''
+      //   wepy.showModal({
+      //     content: '没登陆吧你？',
+      //     showCancel: false,
+      //     success () {
+      //       wepy.switchTab({
+      //         url: '/pages/index'
+      //       })
+      //     }
+      //   })
+      //   return
+      // }
 
       const that = this
-      return new Promise((resolve) => {
-        wx.request({
-          url: `${requestUrl}/getCourse`,
-          data: {
-            username: selectUsername,
-            password,
-            cookie,
-            term: term || that.term,
-            year: year || that.year
-          },
-          header: {
-            'Content-Type': 'application/json'
-          },
-          fail() {
-            wx.showModal({
-              content: '拉取数据失败，请检查你的网络',
-              showCancel: false
-            })
-          },
-          success(res) {
-            if (res.statusCode === 400) {
-              wx.showModal({
-                content: `拉取数据失败。${res.data.error}`,
-                showCancel: false
-              })
-              return
+      return request({
+        url: '/api/hrbust/course',
+        data: {
+          term: term || that.term,
+          year: year || that.year
+        }
+      })
+      .then((res) => {
+        let data = res.data.data.lessonList
+        let lessonList = []
+        let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow']
+        let courseIdList = {}
+        for (let i = 0; i < 10; i++) {
+          lessonList[i] = []
+        }
+        data.forEach((item, index) => {
+          if (item.sectionstart < 10) {
+            if (item.period.indexOf('双周') >= 0) {
+              item.cycle = 0
+            } else if (item.period.indexOf('单周') >= 0) {
+              item.cycle = 1
+            } else {
+              item.cycle = 2
             }
 
-            let data = res.data.data.lessonList
-            let lessonList = []
-            let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow']
-            let courseIdList = {}
-            for (let i = 0; i < 10; i++) {
-              lessonList[i] = []
-            }
-            data.forEach((item, index) => {
-              if (item.sectionstart < 10) {
-                if (item.period.indexOf('双周') >= 0) {
-                  item.cycle = 0
-                } else if (item.period.indexOf('单周') >= 0) {
-                  item.cycle = 1
-                } else {
-                  item.cycle = 2
-                }
-
-                if (!courseIdList[String(item.courseId)]) {
-                  courseIdList[String(item.courseId)] = classList[index % 5]
-                  item.class = classList[index % 5]
-                } else {
-                  item.class = courseIdList[String(item.courseId)]
-                }
-
-                let smartPeriod = item.smartPeriod.split(' ')
-                item.startWeek = parseInt(smartPeriod[0])
-                item.endWeek = parseInt(smartPeriod[smartPeriod.length - 1])
-                lessonList[item.sectionstart].push(item)
-              }
-            })
-            that.courseData = lessonList
-
-            if (userInfo) {
-              userInfo[selectUsername].courseData = lessonList
-              userInfo[selectUsername].cookie = res.data.cookie
-              wx.setStorage({
-                key: 'userInfo',
-                data: userInfo
-              })
+            if (!courseIdList[String(item.courseId)]) {
+              courseIdList[String(item.courseId)] = classList[index % 5]
+              item.class = classList[index % 5]
+            } else {
+              item.class = courseIdList[String(item.courseId)]
             }
 
-            that.loading = false
-            wx.showToast({
-              title: '拉取数据成功',
-              icon: 'success',
-              duration: 1000
-            })
-            resolve()
+            let smartPeriod = item.smartPeriod.split(' ')
+            item.startWeek = parseInt(smartPeriod[0])
+            item.endWeek = parseInt(smartPeriod[smartPeriod.length - 1])
+            lessonList[item.sectionstart].push(item)
           }
+        })
+        that.courseData = lessonList
+
+        if (userInfo) {
+          userInfo[selectUsername].courseData = lessonList
+          userInfo[selectUsername].cookie = res.data.cookie
+          wepy.setStorage({
+            key: 'userInfo',
+            data: userInfo
+          })
+        }
+
+        that.loading = false
+        wepy.showToast({
+          title: '拉取数据成功',
+          icon: 'success',
+          duration: 1000
         })
       })
     }
@@ -300,8 +278,13 @@
     }
 
     getWeek () {
-      return new Promise((resolve, reject) => {
-        const that = this
+      let slectedTerm = 0
+      let slectedWeek = 0
+      const that = this
+      return request({
+        url: '/api/hrbust/week'
+      }).then((res) => {
+        const data = res.data.data
         const nowDate = new Date()
         const terms = []
         const weeks = Array.from(new Array(30), (val, index) => index + 1)
@@ -310,82 +293,67 @@
           terms.push(`${i} 春`)
         }
 
-        wx.request({
-          url: `${requestUrl}/getWeek`,
-          header: {
-            'Content-Type': 'application/json'
-          },
-          success(res) {
-            let slectedTerm = 0
-            let slectedWeek = 0
-            const tTerms = terms.map((item, index) => {
-              if (that.sameTerm(item, res.data.term, res.data.year)) {
-                slectedTerm = index
-                return `${item} (当前)`
-              }
-              return item
-            })
-            const tWeeks = weeks.map((item, index) => {
-              if (res.data.week === item) {
-                slectedWeek = index
-                return `${item}`
-              }
-              return item
-            })
-
-            that.thisWeek = res.data.week
-            that.thisWeekNum = res.data.week
-            that.term = res.data.term
-            that.year = res.data.year
-            that.terms = tTerms
-            that.weeks = tWeeks
-            that.termsAndWeekList = [tTerms, tWeeks]
-            that.slectedTerm = slectedTerm
-            that.slectedWeek = slectedWeek
-            resolve()
-          },
-          fail() {
-            wx.showModal({
-              content: '请求当前周数失败，请检查网络重试',
-              showCancel: false,
-              success () {
-                wx.switchTab({
-                  url: '/pages/index'
-                })
-              }
-            })
-            reject(new Error())
+        const tTerms = terms.map((item, index) => {
+          if (that.sameTerm(item, data.term, data.year)) {
+            slectedTerm = index
+            return `${item} (当前)`
           }
+          return item
         })
+        const tWeeks = weeks.map((item, index) => {
+          if (data.week === item) {
+            slectedWeek = index
+            return `${item}`
+          }
+          return item
+        })
+
+        that.thisWeek = data.week
+        that.thisWeekNum = data.week
+        that.term = data.term
+        that.year = data.year
+        that.terms = tTerms
+        that.weeks = tWeeks
+        that.termsAndWeekList = [tTerms, tWeeks]
+        that.slectedTerm = slectedTerm
+        that.slectedWeek = slectedWeek
+        that.$apply()
+      })
+      .catch(() => {
+        wepy.showModal({
+          content: '服务器获取当前周数错误，请稍候重试',
+          showCancel: false
+        })
+        return Promise.reject(new Error('服务器获取当前周数错误，请稍候重试'))
       })
     }
 
-    onLoad (options) {
+    async onLoad (options) {
       let date = new Date()
       let thisDay = date.getDay()
       let thisHours = date.getHours()
       let thisMinutes = date.getMinutes()
       this.setNowCourse(thisDay, thisHours, thisMinutes)
-
-      if (options.shareData) {
-        // 通过分享进入页面
-        const shareData = JSON.parse(options.shareData)
-        wx.setNavigationBarTitle({
-          title: `${shareData.shareName}的课程表`
-        })
-        Object.keys(shareData).forEach((key) => {
-          this[key] = shareData[key]
-        })
-        this.doNotRefresh = true
-        return
-      }
+      // if (options.shareData) {
+      //   // 通过分享进入页面
+      //   const shareData = JSON.parse(options.shareData)
+      //   wepy.setNavigationBarTitle({
+      //     title: `${shareData.shareName}的课程表`
+      //   })
+      //   Object.keys(shareData).forEach((key) => {
+      //     this[key] = shareData[key]
+      //   })
+      //   this.doNotRefresh = true
+      //   return
+      // }
 
       const that = this
+      await this.$parent.globalData.initPromise
 
       that.getWeek().then(() => {
         // 先从缓存中拿数据
-        const userInfo = wx.getStorageSync('userInfo')
-        const selectUsername = wx.getStorageSync('selectUsername')
+        const userInfo = wepy.getStorageSync('userInfo')
+        const selectUsername = wepy.getStorageSync('selectUsername')
         if (userInfo && selectUsername) {
           const shareName = userInfo[selectUsername] ? userInfo[selectUsername].name.split('(')[0] : ''
           that.shareName = shareName
@@ -393,7 +361,7 @@
           that.selectUsername = selectUsername
         }
         const courseData = userInfo[selectUsername] ? userInfo[selectUsername].courseData : []
-        if (courseData.length) {
+        if (courseData && courseData.length) {
           that.courseData = courseData
           that.loading = false
         } else {
@@ -408,35 +376,35 @@
 
     onPullDownRefresh() {
       if (this.doNotRefresh) {
-        wx.stopPullDownRefresh()
+        wepy.stopPullDownRefresh()
         return
       }
       let that = this
       this.getWeek().then(() => {
         that.getCourse().then(() => {
-          wx.stopPullDownRefresh()
+          wepy.stopPullDownRefresh()
           that.$apply()
         })
       })
     }
 
-    onShareAppMessage() {
-      const courseData = Object.assign({}, this.courseData, {
-        cookie: ''
-      })
-      const shareData = {
-        terms: this.terms,
-        titles: this.titles,
-        courseData,
-        shareName: this.shareName,
-        thisWeek: this.thisWeek,
-        thisWeekNum: this.thisWeekNum
-      }
-      return {
-        title: `${this.shareName}的课程表`,
-        path: `pages/course/course?shareData=${JSON.stringify(shareData)}`
-      }
-    }
+    // onShareAppMessage() {
+    //   const courseData = Object.assign({}, this.courseData, {
+    //     cookie: ''
+    //   })
+    //   const shareData = {
+    //     terms: this.terms,
+    //     titles: this.titles,
+    //     courseData,
+    //     shareName: this.shareName,
+    //     thisWeek: this.thisWeek,
+    //     thisWeekNum: this.thisWeekNum
+    //   }
+    //   return {
+    //     title: `${this.shareName}的课程表`,
+    //     path: `pages/course/course?shareData=${JSON.stringify(shareData)}`
+    //   }
+    // }
 
     formatTerm(strTerm) {
       const thisYear = strTerm.split(' ')[0] - 1980

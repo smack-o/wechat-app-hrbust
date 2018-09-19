@@ -1,3 +1,5 @@
+import wepy from 'wepy'
+
 // 判定现在的环境
 const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 
@@ -33,8 +35,25 @@ const dateFormat = function (date, format) {
   return format
 }
 
+const request = requestOption => new Promise((resolve, reject) => {
+  wepy.request({
+    ...requestOption,
+    success (res) {
+      if (res.statusCode === 200) {
+        resolve(res)
+        return
+      }
+      reject(res.data)
+    },
+    fail (error) {
+      reject(error)
+    }
+  })
+})
+
 module.exports = {
   env,
   host: hosts[env],
-  dateFormat
+  dateFormat,
+  request
 }

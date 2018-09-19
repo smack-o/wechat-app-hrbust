@@ -347,31 +347,11 @@
       //   return
       // }
 
-      const that = this
       await this.$parent.globalData.initPromise
-
-      that.getWeek().then(() => {
-        // 先从缓存中拿数据
-        const userInfo = wepy.getStorageSync('userInfo')
-        const selectUsername = wepy.getStorageSync('selectUsername')
-        if (userInfo && selectUsername) {
-          const shareName = userInfo[selectUsername] ? userInfo[selectUsername].name.split('(')[0] : ''
-          that.shareName = shareName
-          that.userInfo = userInfo
-          that.selectUsername = selectUsername
-        }
-        const courseData = userInfo[selectUsername] ? userInfo[selectUsername].courseData : []
-        if (courseData && courseData.length) {
-          that.courseData = courseData
-          that.loading = false
-        } else {
-          // 缓存中没有数据，需要请求
-          that.getCourse().then(() => {
-            that.$apply()
-            that.loading = false
-          })
-        }
-      })
+      await this.getWeek()
+      await this.getCourse()
+      this.$apply()
+      this.loading = false
     }
 
     onPullDownRefresh() {

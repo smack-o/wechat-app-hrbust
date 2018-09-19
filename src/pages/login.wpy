@@ -109,7 +109,7 @@
           }
         })
         .then((res) => {
-          wepy.redirectTo({
+          wepy.switchTab({
             url: './index'
           })
         })

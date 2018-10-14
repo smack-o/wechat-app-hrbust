@@ -1,0 +1,2 @@
+export const SET_CURRENT_TERM = 'SET_CURRENT_TERM'
+export const SET_TEMP_TERM = 'SET_TEMP_TERM'

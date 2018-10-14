@@ -19,7 +19,8 @@ export default class extends wepy.app {
       'pages/index',
       'pages/test',
       'pages/login',
-      'pages/course'
+      'pages/course',
+      'pages/choiceTrem'
     ],
     window: {
       backgroundTextStyle: 'light',

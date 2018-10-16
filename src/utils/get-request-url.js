@@ -6,7 +6,7 @@ const production = 'https://hrbust.smackgg.cn/api';
 let url = null;
 // es6 版本
 if (NODE_ENV === 'dev') {
-    url = dev;
+    url = production;
 } else if (NODE_ENV === 'production') {
     url = production;
 }

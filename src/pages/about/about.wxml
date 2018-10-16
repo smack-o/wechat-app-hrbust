@@ -16,7 +16,7 @@
           </view>
           <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.viewUrl || item.src}}">
             <view class="picture">
-              <image class="content__image" src="{{item.src}}"></image>
+              <image class="content__image" mode="widthFix" src="{{item.src}}"></image>
             </view>
           </view>
           <view wx:else class="content content-text">
@@ -45,5 +45,5 @@
     </view>
     <image class="bottom__image" src="../../images/wechat_bottom.jpeg"></image>
   </view>
-  <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="http://7xl432.com1.z0.glb.clouddn.com/weixin.mp3" id="myAudio"></audio>
+  <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="http://my-home-static.smackgg.cn/weixin.mp3" id="myAudio"></audio>
 </view>

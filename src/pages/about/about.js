@@ -18,8 +18,8 @@ Page({
       {
         position: 'left',
         type: 'image',
-        src: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?imageView/1/w/150/h/225&timestamps=${Date.now()}`,
-        viewUrl: `http://7xl432.com1.z0.glb.clouddn.com/hrbust_about.jpg?timestamps=${Date.now()}`,
+        src: `http://my-home-static.smackgg.cn/hrbust_about.jpg?imageView/1/w/150/h/225&timestamps=${Date.now()}`,
+        viewUrl: `http://my-home-static.smackgg.cn/hrbust_about.jpg?timestamps=${Date.now()}`,
       },
       {
         position: 'left',
@@ -56,7 +56,7 @@ Page({
       {
         position: 'left',
         type: 'image',
-        src: 'http://7xl432.com1.z0.glb.clouddn.com/payment.jpeg',
+        src: 'http://my-home-static.smackgg.cn/payment.jpeg',
       },
       {
         position: 'right',

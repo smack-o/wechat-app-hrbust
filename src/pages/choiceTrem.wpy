@@ -86,7 +86,7 @@
 
     getHasCourseTerms () {
       return request({
-        url: host + '/api/hrbust/getHasCourseTerms'
+        url: '/api/hrbust/getHasCourseTerms'
       })
         .then((res) => {
           this.hasCourseTerms = res.data.data

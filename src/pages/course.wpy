@@ -115,7 +115,7 @@
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
-  import { request, host } from 'utils'
+  import { request } from 'utils'
   import courseMixin from '../mixins/course'
   import { setCurrentTerm } from '../store/actions'
 
@@ -228,11 +228,11 @@
         term = this.term
       }
       return request({
-        url: host + '/api/hrbust/course',
-        data: {
-          term
-        }
-      })
+          url: '/api/hrbust/course',
+          data: {
+            term
+          }
+        })
         .then((res) => {
           let data = res.data.data
           if (!data) {
@@ -289,8 +289,8 @@
     getWeek () {
       let slectedWeek = 0
       return request({
-        url: host + '/api/hrbust/week'
-      })
+          url: '/api/hrbust/week'
+        })
         .then((res) => {
           const data = res.data.data
           const weeks = Array.from(new Array(30), (val, index) => index + 1)

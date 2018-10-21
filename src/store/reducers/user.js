@@ -3,6 +3,11 @@ import { INIT, SET_LOADING, LOGIN_SUCCESS } from '../types/user'
 
 export default handleActions({
   [INIT](state, actions) {
+    if (!actions.payload) {
+      return {
+        ...state
+      }
+    }
     const {
       isLogin,
       studentInfo,
@@ -16,7 +21,6 @@ export default handleActions({
     }
   },
   [SET_LOADING](state, actions) {
-    console.log(actions)
     return {
       ...state,
       loading: actions.payload

@@ -6,7 +6,7 @@ import { createAction } from 'redux-actions'
 import { request } from '../../utils'
 import wepy from 'wepy'
 import { store } from '../'
-console.log(store, 'store')
+
 // 检查session_key是否失效
 const checkSession = () => {
   return new Promise((resolve, reject) => {
@@ -60,22 +60,22 @@ const login = () => {
 }
 
 // 获取用户信息处理
-const getUserInfo = (cb) => {
-  // if (this.globalData.userInfo) {
-  //   return Promise.resolve(this.globalData.userInfo)
-  // }
-  return new Promise((resolve, reject) => {
-    wepy.getUserInfo({
-      withCredentials: true,
-      success(res) {
-        resolve(res)
-      },
-      fail(e) {
-        reject(e)
-      }
-    })
-  })
-}
+// const getUserInfo = (cb) => {
+//   // if (this.globalData.userInfo) {
+//   //   return Promise.resolve(this.globalData.userInfo)
+//   // }
+//   return new Promise((resolve, reject) => {
+//     wepy.getUserInfo({
+//       withCredentials: true,
+//       success(res) {
+//         resolve(res)
+//       },
+//       fail(e) {
+//         reject(e)
+//       }
+//     })
+//   })
+// }
 
 const setLoading = createAction(SET_LOADING, loading => loading)
 
@@ -102,17 +102,17 @@ export const init = createAction(INIT, async () => {
       studentInfo = res.data.data.studentInfo
     }
     // 获取用户头像等信息
-    const userInfo = await getUserInfo()
+    // const userInfo = await getUserInfo()
     // this.globalData.userInfo = userInfo
-    console.log(userInfo, 1111)
     store.dispatch(setLoading(false))
     return Promise.resolve({
       isLogin,
-      studentInfo,
-      userInfo
+      studentInfo
+      // userInfo
     })
     // this.updateUserInfo(userInfo)
   } catch (e) {
+    // console.log(e)
     store.dispatch(setLoading(false))
     return Promise.resolve()
   }

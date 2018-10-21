@@ -32,36 +32,37 @@
 }
 </style>
 <template>
-  <loading wx:if="{{isLoading}}">
-  </loading>
-  <view wx:else class="container">
-    <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}" wx:key="index">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image" mode="widthFix"/>
-        </swiper-item>
-      </block>
-    </swiper>
-    <navigator class="login" wx:if="{{!hrbustLogin}}" url="./login">
-      部分功能未登录不可用，请点击<text class="login-text">登录</text>
-    </navigator>
-    <view class="modules">
-      <block class="module" wx:for="{{modules}}" wx:key="index">
-        <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
-          <view class="module">
+  <view>
+    <loading wx:if="{{loading}}" />
+    <view wx:else class="container">
+      <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrls}}" wx:key="index">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image" mode="widthFix"/>
+          </swiper-item>
+        </block>
+      </swiper>
+      <navigator class="login" wx:if="{{!hrbustLogin}}" url="./login">
+        部分功能未登录不可用，请点击<text class="login-text">登录</text>
+      </navigator>
+      <view class="modules">
+        <block class="module" wx:for="{{modules}}" wx:key="index">
+          <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
+            <view class="module">
+              <image class="modules__image" src="{{item.image}}" mode="widthFix"/>
+              <text>{{item.text}}</text>
+            </view>
+          </navigator>
+          <view wx:else class="module--disable module">
             <image class="modules__image" src="{{item.image}}" mode="widthFix"/>
             <text>{{item.text}}</text>
           </view>
-        </navigator>
-        <view wx:else class="module--disable module">
-          <image class="modules__image" src="{{item.image}}" mode="widthFix"/>
-          <text>{{item.text}}</text>
+        </block>
         </view>
-      </block>
       </view>
+      <!-- <button open-type="getUserInfo">login</button> -->
     </view>
-    <!-- <button open-type="getUserInfo">login</button> -->
   </view>
 </template>
 
@@ -69,7 +70,20 @@
   import wepy from 'wepy'
   import Loading from '../components/loading'
   import { connect } from 'wepy-redux'
+
   @connect({
+    loading (state) {
+      return state.user.loading
+    },
+    initPromise(state) {
+      return state.user.initPromise
+    },
+    isLogin(state) {
+      return state.user.initPromise
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
+    }
   })
 
   export default class Index extends wepy.page {
@@ -148,11 +162,11 @@
     }
 
     async onLoad() {
-      const globalData = this.$parent.globalData
-      await globalData.initPromise
-      this.isLogin = globalData.isLogin
-      this.studentInfo = globalData.studentInfo
-      this.isLoading = false
+      // const globalData = this.$parent.globalData
+      // await globalData.initPromise
+      // this.isLogin = globalData.isLogin
+      // this.studentInfo = globalData.studentInfo
+      // this.isLoading = false
       this.$apply()
     }
   }

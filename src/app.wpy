@@ -24,6 +24,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+      'pages/home',
       'pages/test',
       'pages/login',
       'pages/course',
@@ -42,25 +43,25 @@ export default class extends wepy.app {
       list: [
         {
           pagePath: 'pages/index',
-          text: '首页',
+          // text: '首页',
           iconPath: './assets/icon/home.png',
           selectedIconPath: './assets/icon/home_selected.png'
         },
         {
           pagePath: 'pages/test',
-          text: '校园',
+          // text: '校园',
           iconPath: './assets/icon/campus.png',
           selectedIconPath: './assets/icon/campus_selected.png'
         },
         {
-          pagePath: 'pages/index',
-          text: '发现',
+          pagePath: 'pages/home',
+          // text: '发现',
           iconPath: './assets/icon/find.png',
           selectedIconPath: './assets/icon/find_selected.png'
         },
         {
-          pagePath: 'pages/index',
-          text: '我',
+          pagePath: 'pages/home',
+          // text: '我',
           iconPath: './assets/icon/account.png',
           selectedIconPath: './assets/icon/account_selected.png'
         }

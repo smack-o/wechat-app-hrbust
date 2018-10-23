@@ -22,7 +22,6 @@
     height: 260rpx;
     border-radius: 16rpx;
     box-shadow: 0 15rpx 30rpx 0 rgba(0, 0, 0, 0.2);
-
   }
 }
 .modules {
@@ -107,7 +106,7 @@
         </block>
         </view>
       </view>
-      
+
       <navigator class="login" wx:if="{{!hrbustLogin}}" url="./login">
         部分功能未登录不可用，请点击<text class="login-text">登录</text>
       </navigator>
@@ -138,7 +137,7 @@
 
   export default class Home extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '理工喵'
     }
     components = {
       loading: Loading
@@ -162,7 +161,7 @@
       }, {
         image: '../assets/icon/affiche.png',
         text: '教务公告',
-        url: '.news',
+        url: './news/news',
         needLogin: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
       }, {

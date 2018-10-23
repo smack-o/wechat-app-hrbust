@@ -18,7 +18,8 @@
   import { request } from 'utils'
   export default class News extends wepy.page {
     config = {
-      enablePullDownRefresh: true
+      enablePullDownRefresh: true,
+      navigationBarTitleText: '教务在线'
     }
     data = {
       list: [],

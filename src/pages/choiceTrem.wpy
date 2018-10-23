@@ -25,7 +25,7 @@
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
-  import { request, host } from 'utils'
+  import { request } from 'utils'
   import courseMixin from '../mixins/course'
   import { setTempTerm } from '../store/actions'
 

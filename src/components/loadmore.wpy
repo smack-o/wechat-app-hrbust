@@ -11,7 +11,7 @@
     <view class="list">
       <slot></slot>
     </view>
-    <view class="loading" wx:if="true">加载中...</view>
+    <view class="loading" wx:if="loading">加载中...</view>
   </view>
 </template>
 <script>

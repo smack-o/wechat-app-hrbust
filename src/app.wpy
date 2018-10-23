@@ -31,7 +31,9 @@ export default class extends wepy.app {
       'pages/course',
       'pages/choiceTrem',
       'pages/news/news',
-      'pages/news/newsDetail'
+      'pages/news/newsDetail',
+      'pages/grade',
+      'pages/exam'
     ],
     window: {
       backgroundTextStyle: 'light',

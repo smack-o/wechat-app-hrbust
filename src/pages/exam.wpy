@@ -26,7 +26,7 @@
 <script>
   import wepy from 'wepy'
   import { request } from 'utils'
-  import LoadMore from '../components/loadmore'
+  import LoadMore from 'components/loadmore'
   // import moment from 'moment'
   // moment.locale('zh-cn')
 
@@ -46,10 +46,10 @@
 
     onLoad () {
       // this.getHasCourseTerms()
-      this.getExam()
+      this.getList()
     }
     onPullDownRefresh() {
-      this.getExam().then(() => {
+      this.getList().then(() => {
         wepy.stopPullDownRefresh()
         wepy.showToast({
           title: '拉取数据成功',
@@ -62,13 +62,13 @@
       if (!this.loading) {
         this.page += 1
         this.loading = true
-        this.getExam(this.page, true).then(() => {
+        this.getList(this.page, true).then(() => {
           this.loading = false
           this.$apply()
         })
       }
     }
-    getExam(page = 1, needConcat) {
+    getList(page = 1, needConcat) {
       return request({
         url: `/api/hrbust/exam?page=${page}`
       }).then((res) => {
@@ -92,6 +92,8 @@
             duration: 2000
           })
           this.page -= 1
+          this.loading = false
+          this.$apply()
         } else {
           if (needConcat) {
             this.list = [...this.list, ...list]
@@ -114,7 +116,7 @@
         confirmText: '请重新加载',
         success(res) {
           if (res.confirm) {
-            that.getExam()
+            that.getList()
           }
         }
       })

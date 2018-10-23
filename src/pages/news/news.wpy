@@ -1,21 +1,25 @@
 <template>
   <view class="news">
-    <view class="news-item" wx:key="news" wx:for="{{list}}" wx:for-item="newsItem" wx:for-index="index">
-      <view @tap="viewDetail" data-id="{{newsItem.id}}">
-        <view class="padding-wrapper">
-          <view class="news-message">
-            <view class="news-title"> <text class="top">{{newsItem.top ? "(置顶)" : ""}}</text> {{newsItem.title}} </view>
-            <view class="text-small"> 发布时间：{{newsItem.date}}</view>
+    <loadmore :list.sync="list" :loading.sync="loading">
+      <view class="news-item" wx:key="news" wx:for="{{list}}" wx:for-item="newsItem" wx:for-index="index">
+        <view @tap="viewDetail" data-id="{{newsItem.id}}">
+          <view class="padding-wrapper">
+            <view class="news-message">
+              <view class="news-title"> <text class="top">{{newsItem.top ? "(置顶)" : ""}}</text> {{newsItem.title}} </view>
+              <view class="text-small"> 发布时间：{{newsItem.date}}</view>
+            </view>
           </view>
         </view>
       </view>
-    </view>
+    </loadmore>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import { request } from 'utils'
+  import LoadMore from 'components/loadmore'
+
   export default class News extends wepy.page {
     config = {
       enablePullDownRefresh: true,
@@ -27,12 +31,16 @@
       loading: false
     }
 
+    components = {
+      loadmore: LoadMore
+    }
+
     onLoad () {
       // this.getHasCourseTerms()
-      this.getNews()
+      this.getList()
     }
     onPullDownRefresh() {
-      this.getNews().then(() => {
+      this.getList().then(() => {
         wepy.stopPullDownRefresh()
         wepy.showToast({
           title: '拉取数据成功',
@@ -42,12 +50,16 @@
       })
     }
     onReachBottom() {
-      if (!this.data.loading) {
+      if (!this.loading) {
         this.page += 1
-        this.getNews(this.page, true)
+        this.loading = true
+        this.getList(this.page, true).then(() => {
+          this.loading = false
+          this.$apply()
+        })
       }
     }
-    getNews(page = 1, needConcat) {
+    getList(page = 1, needConcat) {
       return request({
         url: `/api/hrbust/news?page=${page}`
       }).then((res) => {
@@ -70,6 +82,8 @@
             duration: 2000
           })
           this.page -= 1
+          this.loading = false
+          this.$apply()
         } else {
           if (needConcat) {
             this.list = [...this.list, ...list]
@@ -92,7 +106,7 @@
         confirmText: '请重新加载',
         success(res) {
           if (res.confirm) {
-            that.getNews()
+            that.getList()
           }
         }
       })

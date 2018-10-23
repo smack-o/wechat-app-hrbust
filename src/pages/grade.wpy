@@ -35,10 +35,10 @@
 
     onLoad () {
       // this.getHasCourseTerms()
-      this.getNews()
+      this.getList()
     }
     onPullDownRefresh() {
-      this.getNews().then(() => {
+      this.getList().then(() => {
         wepy.stopPullDownRefresh()
         wepy.showToast({
           title: '拉取数据成功',
@@ -51,13 +51,13 @@
       if (!this.loading) {
         this.page += 1
         this.loading = true
-        this.getNews(this.page, true).then(() => {
+        this.getList(this.page, true).then(() => {
           this.loading = false
           this.$apply()
         })
       }
     }
-    getNews(page = 1, needConcat) {
+    getList(page = 1, needConcat) {
       return request({
         url: `/api/hrbust/news?page=${page}`
       }).then((res) => {
@@ -104,7 +104,7 @@
         confirmText: '请重新加载',
         success(res) {
           if (res.confirm) {
-            that.getNews()
+            that.getList()
           }
         }
       })

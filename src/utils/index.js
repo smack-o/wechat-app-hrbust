@@ -7,7 +7,6 @@ const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 const hosts = {
   // dev: 'http://118.89.247.29:8791',
   dev: 'http://localhost:8791',
-  // dev: 'http://localhost:8793',
   prod: 'https://hrbust.smackgg.cn'
 }
 

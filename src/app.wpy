@@ -1,5 +1,6 @@
 <style lang="less">
 @import './style/weui.less';
+// @import './assets/global.less';
 </style>
 
 <script>
@@ -28,8 +29,11 @@ export default class extends wepy.app {
       'pages/test',
       'pages/login',
       'pages/course',
+      'pages/choiceTrem',
+      'pages/news/news',
+      'pages/news/newsDetail',
       'pages/grade',
-      'pages/choiceTrem'
+      'pages/exam'
     ],
     window: {
       backgroundTextStyle: 'light',

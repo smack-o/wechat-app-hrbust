@@ -85,6 +85,9 @@
     }
   )
   export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '学生登录'
+    }
     data = {
       username: '',
       password: '',

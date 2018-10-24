@@ -1,0 +1,217 @@
+<style lang="less">
+@import "../assets/lib.less";
+.selecter {
+  padding-top: 40rpx;
+  padding-bottom: 20rpx;
+  display: flex;
+  justify-content: center;
+  .select-button {
+      width: 456rpx;
+      height: 72rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+	  box-shadow: 0 5rpx 30rpx 0 rgba(0, 0, 80, 0.07);
+	  border-radius: 16rpx;
+      border-width: 3;
+      .select-text {
+        font-size: 26rpx;
+        color: #cccccc;
+      }
+    }
+}
+.grade-list {
+    display: flex;
+    flex-direction: column;
+    .list-row{
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
+      padding-left: 60rpx;
+      padding-right: 60rpx;
+    }
+    .list-row-even {
+      background-color: #f7f7f7
+    }
+    .list-row-odd {
+      background-color: #fff
+    }
+    .list-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .list-text {
+      font-size: 26rpx;
+    }
+    .gradeName {
+      width: 260rpx;
+    }
+    .mark {
+      width: 60rpx;
+    }
+    .passSign {
+      width: 110rpx;
+    }
+    .credit {
+      width: 60rpx;
+    }
+}
+</style>
+<template>
+  <view>
+    <loading wx:if="{{loading}}"/>
+    <view wx:else class="container">
+      <view class="selecter">
+        <view class="select-button" bindtap="syncCourse">
+            <text class="select-text">学期2017年春(点击切换)</text>
+        </view>
+      </view>
+      <view class="grade-list">
+        <block wx:for="{{gradeData}}" wx:key="index">
+            <view class="list-row {{index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}}"
+                 style="{{index === 0 ? 'color: #999999; background-color: #fff' : 'color: #333333'}}">
+              <view class="list-item gradeName">
+                <text class="list-text" >{{item.gradeName}}</text>
+              </view>
+              <view class="list-item mark">
+                <text class="list-text" >{{item.mark}}</text>
+              </view>
+              <view class="list-item passSign">
+                <text class="list-text" style="{{item.passSign === '不及格' && 'color: #e36363'}}">{{item.passSign}}</text>
+              </view>
+              <view class="list-item credit">
+                <text class="list-text" >{{item.credit}}</text>
+              </view>
+            </view>
+        </block>
+        </view>
+      </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Loading from '../components/loading'
+  import { connect } from 'wepy-redux'
+
+  @connect({
+    loading (state) {
+      return state.user.loading
+    },
+    initPromise(state) {
+      return state.user.initPromise
+    },
+    isLogin(state) {
+      return state.user.initPromise
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
+    }
+  })
+
+  export default class grade extends wepy.page {
+    config = {
+      navigationBarTitleText: '课程表'
+    //   enablePullDownRefresh: true
+    }
+    components = {
+      loading: Loading
+    }
+    data = {
+      isLoading: true,
+      gradeData: [{
+        gradeName: '课程',
+        mark: '成绩',
+        passSign: '及格标志',
+        credit: '学分'
+      }, {
+        gradeName: '计算机辅助工业设计计',
+        mark: '100',
+        passSign: '及格',
+        credit: '3'
+      }, {
+        gradeName: '学术基本要素-专业论文写作(网络)(公共)',
+        mark: '33',
+        passSign: '不及格',
+        credit: '10'
+      }, {
+        gradeName: '计算机辅助工业设计计',
+        mark: '100',
+        passSign: '及格',
+        credit: '3'
+      }, {
+        gradeName: '学术基本要素-专业',
+        mark: '79',
+        passSign: '及格',
+        credit: '10'
+      }, {
+        gradeName: '计算机辅助工业设计计',
+        mark: '10',
+        passSign: '不及格',
+        credit: '3'
+      }, {
+        gradeName: '学(网络)(公共)',
+        mark: '80',
+        passSign: '及格',
+        credit: '10'
+      }, {
+        gradeName: '计算机工业设计计',
+        mark: '100',
+        passSign: '及格',
+        credit: '3'
+      }, {
+        gradeName: '学术基本要素-专业论文写作(网络)(公共)',
+        mark: '优秀',
+        passSign: '及格',
+        credit: '10'
+      }, {
+        gradeName: '计算机辅助工业设计计',
+        mark: '100',
+        passSign: '及格',
+        credit: '3'
+      }, {
+        gradeName: '学术基本要素-专业',
+        mark: '79',
+        passSign: '及格',
+        credit: '10'
+      }, {
+        gradeName: '计算机辅助工业设计计',
+        mark: '10',
+        passSign: '不及格',
+        credit: '3'
+      }]
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      },
+      hrbustLogin () {
+        return this.studentInfo && this.studentInfo.username
+        // return false
+      }
+    }
+    methods = {}
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    async onLoad() {
+      // const globalData = this.$parent.globalData
+      // await globalData.initPromise
+      // this.isLogin = globalData.isLogin
+      // this.studentInfo = globalData.studentInfo
+      // this.isLoading = false
+      this.$apply()
+    }
+  }
+</script>

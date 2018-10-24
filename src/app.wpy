@@ -28,6 +28,7 @@ export default class extends wepy.app {
       'pages/test',
       'pages/login',
       'pages/course',
+      'pages/grade',
       'pages/choiceTrem'
     ],
     window: {

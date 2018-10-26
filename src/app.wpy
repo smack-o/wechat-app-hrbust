@@ -1,6 +1,6 @@
 <style lang="less">
-@import './style/weui.less';
-// @import './assets/global.less';
+@import '../style/weui.less';
+@import './assets/global.less';
 </style>
 
 <script>
@@ -33,7 +33,8 @@ export default class extends wepy.app {
       'pages/news/news',
       'pages/news/newsDetail',
       'pages/grade',
-      'pages/exam'
+      'pages/exam',
+      'pages/webview'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -42,31 +43,33 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     },
     tabBar: {
-      color: '#999999',
-      selectedColor: '#1AAD19',
+      // color: '#999999',
+      // selectedColor: '#1AAD19',
+      color: '#ccc',
+      selectedColor: '#000',
       backgroundColor: '#fff',
       list: [
         {
           pagePath: 'pages/index',
-          // text: '首页',
+          text: '首页',
           iconPath: './assets/icon/home.png',
           selectedIconPath: './assets/icon/home_selected.png'
         },
         {
           pagePath: 'pages/test',
-          // text: '校园',
+          text: '校园',
           iconPath: './assets/icon/campus.png',
           selectedIconPath: './assets/icon/campus_selected.png'
         },
         {
           pagePath: 'pages/home',
-          // text: '发现',
+          text: '发现',
           iconPath: './assets/icon/find.png',
           selectedIconPath: './assets/icon/find_selected.png'
         },
         {
           pagePath: 'pages/home',
-          // text: '我',
+          text: '我',
           iconPath: './assets/icon/account.png',
           selectedIconPath: './assets/icon/account_selected.png'
         }

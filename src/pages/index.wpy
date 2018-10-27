@@ -180,7 +180,7 @@
       <view class="login-wrapper">
         <navigator wx:if="{{!hrbustLogin}}" class="login" url="./login">
           <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
-          <view class="login-button" bindtap="syncCourse">
+          <view class="login-button">
             <text class="login-text">立即登录</text>
           </view>
         </navigator>

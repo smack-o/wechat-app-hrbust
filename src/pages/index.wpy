@@ -2,26 +2,23 @@
 @import "../assets/lib.less";
 .slide-wrapper {
   padding-top: 30rpx;
-  // background: #faa;
   height: 290rpx;
-  // padding-bottom: 30rpx;
-}
-.slide-item {
-  width: 660rpx;
-  // height: 300rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .slide-image {
-    width: 630rpx;
-    height: 260rpx;
-    border-radius: 16rpx;
-  }
-  .slide-curimage {
-    width: 630rpx;
-    height: 260rpx;
-    border-radius: 16rpx;
-    box-shadow: 0 15rpx 30rpx 0 rgba(0, 0, 0, 0.2);
+  .slide-item {
+    width: 660rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .slide-image {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+    }
+    .slide-curimage {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+      box-shadow: 0 15rpx 30rpx 0 rgba(0, 0, 0, 0.2);
+    }
   }
 }
 .modules {
@@ -56,17 +53,91 @@
   .modules_text {
     font-size: 26rpx;
     color: #333333;
-    filter: opacity(20%) saturate(0%);
   }
 }
-.login {
-  font-size: 16px;
-  text-align: center;
-  padding: 10px 0 30px 0;
-  .login-text {
-    color: @color-green;
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  .login {
+    text-align: center;
+    // align-items: center;
+    .login-button {
+      width: 325rpx;
+      height: 70rpx;
+      margin-top: 17rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #6dde9e;
+      box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+      border-radius: 35rpx;
+    }
+    .login-text {
+      font-size: 26rpx;
+      color: #ffffff;
+    }
   }
 }
+.msg-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+  justify-content: center;
+  .msg-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 630rpx;
+    height: 222rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    margin-top: 40rpx;
+    background-color: #ffffff;
+    box-shadow: 0rpx 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+    border-radius: 16px;
+    .msg-img {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50rpx;
+    }
+    .msg-text-card {
+      width: 514rpx;
+      height: 100rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #cccccc;
+      font-size: 24rpx;
+      .msg-text-body {
+        flex: 1;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        .msg-title {
+          font-size: 36rpx;
+          letter-spacing: 2rpx;
+          color: #333333;
+        }
+        .msg-content {
+          color: #999999;
+        }
+      }
+      .msg-text-time {
+        width: 130rpx;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding-top: 8rpx;
+      }
+    }
+  }
+
+}
+
 </style>
 <template>
   <view>
@@ -101,17 +172,73 @@
           </navigator>
           <view wx:else class="module_disable module">
             <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
-            <text class="modules_text" >{{item.text}}</text>
+            <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
           </view>
         </block>
         </view>
       </view>
-
-      <navigator class="login" wx:if="{{!hrbustLogin}}" url="./login">
-        部分功能未登录不可用，请点击<text class="login-text">登录</text>
-      </navigator>
-      <!-- <button open-type="getUserInfo">login</button> -->
-    </view>
+      <view class="login-wrapper">
+        <navigator wx:if="{{!hrbustLogin}}" class="login" url="./login">
+          <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
+          <view class="login-button">
+            <text class="login-text">立即登录</text>
+          </view>
+        </navigator>
+      </view>
+      <view class="msg-list">
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+      </view>
   </view>
 </template>
 
@@ -135,7 +262,7 @@
     }
   })
 
-  export default class Home extends wepy.page {
+  export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '理工喵'
     }
@@ -209,7 +336,8 @@
       interval: 5000,
       duration: 1000,
       swiperItemMargin: '45rpx',
-      currentSlideIdx: 0
+      currentSlideIdx: 0,
+      mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'
     }
 
     computed = {
@@ -224,7 +352,7 @@
 
     methods = {
       slideChange(e) {
-        console.log(e.detail.current)
+        // console.log(e.detail.current)
           // currentSlideIdx: e.detail.current
         this.currentSlideIdx = e.detail.current
         console.log(this.currentSlideIdx)
@@ -235,6 +363,7 @@
         wepy.navigateTo({
           url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
         })
+        // console.log(this.currentSlideIdx)
       }
     }
 

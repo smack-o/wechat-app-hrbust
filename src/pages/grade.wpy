@@ -28,15 +28,26 @@
 .grade-list {
     display: flex;
     flex-direction: column;
-    .list-row{
-      flex: 1;
+    .grade-title-list {
+      position: absolute;
+      z-index: 1000;
+    }
+    .title-row {
+      width: 350rpx;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       align-items: center;
       padding-top: 20rpx;
       padding-bottom: 20rpx;
-      padding-left: 60rpx;
+    }
+    .list-row {
+      width: 1350rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
       padding-right: 60rpx;
     }
     .list-row-even {
@@ -55,15 +66,56 @@
     }
     .gradeName {
       width: 260rpx;
+      min-width:260rpx;
+      margin-right: 30rpx;
+      margin-left:60rpx
     }
     .mark {
       width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
     }
     .passSign {
       width: 110rpx;
+      min-width: 110rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
     }
     .credit {
       width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .gpa {
+      width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseAttribute {
+      width: 110rpx;
+      min-width: 110rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseRemark {
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseCharacter {
+      width: 150rpx;
+      min-width: 150rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
     }
 }
 .empty {
@@ -121,7 +173,7 @@
         <text class="select-text">还没有这学期的成绩</text>
       </view>
       <view wx:else class="grade-list">
-        <view class="total-wrapper">
+        <view wx:if="{{showGDP}}" class="total-wrapper">
           <view class="total-item">
             <text class="num-text">{{AVERAGE_GRADE}}</text>
             <text class="total-text">加权平均分</text>
@@ -135,24 +187,53 @@
             <text class="total-text">平均学分绩点GPA(仅必修)</text>
           </view>
         </view>
-        <block wx:for="{{gradeData}}" wx:key="index">
-          <view
-            class="list-row {{index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}}"
-            style="{{index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40rpx' : 'color: #333333'}}">
-            <view class="list-item gradeName">
-              <text class="list-text" >{{item.gradeName}}</text>
-            </view>
-            <view class="list-item mark">
-              <text class="list-text" >{{item.mark}}</text>
-            </view>
-            <view class="list-item passSign">
-              <text class="list-text" style="{{item.passSign === '不及格' && 'color: #e36363'}}">{{item.passSign}}</text>
-            </view>
-            <view class="list-item credit">
-              <text class="list-text" >{{item.credit}}</text>
-            </view>
+        <view class="grade-list-wrapper">
+          <view class="grade-title-list">
+            <block wx:for="{{gradeData}}" wx:key="index">
+              <view
+                class="title-row {{index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}}"
+                style="{{index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40rpx' : 'color: #333333'}}">
+                <view class="list-item gradeName">
+                  <text class="list-text" >{{item.gradeName}}</text>
+                </view>
+              </view>
+            </block>
           </view>
-        </block>
+          <scroll-view scroll-x="true" class="grade-list">
+            <block wx:for="{{gradeData}}" wx:key="index">
+              <view
+                class="list-row {{index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}}"
+                style="color: {{index === 0 ? '#999999' : '#333333'}};background-color: {{index === 0 && '#fff'}};padding-top:{{index === 0 &&  '40rpx'}};width:  {{maxRemarkLength > 8 ? '1640rpx' : '1390rpx'}};">
+                <view
+                  class="list-item gradeName {{index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}}"
+                  style="{{index === 0 && 'background-color: #fff'}}">
+                  <text class="list-text" >{{item.gradeName}}</text>
+                </view>
+                <view class="list-item mark">
+                  <text class="list-text" >{{item.mark}}</text>
+                </view>
+                <view class="list-item passSign">
+                  <text class="list-text" style="color:{{item.passSign === '及格' || item.passSign === '及格标志' ? '#999999' : '#e36363'}}">{{item.passSign}}</text>
+                </view>
+                <view class="list-item credit">
+                  <text class="list-text" >{{item.credit}}</text>
+                </view>
+                <view class="list-item gpa">
+                  <text class="list-text" >{{item.gpa}}</text>
+                </view>
+                <view class="list-item courseAttribute">
+                  <text class="list-text" >{{item.courseAttribute}}</text>
+                </view>
+                <view class="list-item courseRemark" style="{{maxRemarkLength > 8 ? 'width: 360rpx; min-width: 360rpx' : 'width: 110rpx; min-width: 110rpx'}}">
+                  <text class="list-text" >{{item.courseRemark}}</text>
+                </view>
+                <view class="list-item courseCharacter">
+                  <text class="list-text" >{{item.courseCharacter}}</text>
+                </view>
+              </view>
+            </block>
+          </scroll-view>
+        </view>
       </view>
     </view>
   </view>
@@ -196,15 +277,21 @@
       AVERAGE_GPA: '--',
       AVERAGE_GRADE: '--',
       OBLIGATORY_AVERAGE_GPA: '--',
+      showGDP: true,
       term: '',
       showEmpty: false,
+      maxRemarkLength: 8,
       // doNotRefresh: false,
       gradeData: [
         {
           gradeName: '课程',
           mark: '成绩',
           passSign: '及格标志',
-          credit: '学分'
+          credit: '学分',
+          gpa: 'GPA',
+          courseAttribute: '选课属性',
+          courseRemark: '备注',
+          courseCharacter: '考试性质'
         }
       ]
     }
@@ -278,6 +365,10 @@
         }
         data.term = termsObj[term]
         this.gradeData.length = 1
+        this.AVERAGE_GPA = '--'
+        this.AVERAGE_GRADE = '--'
+        this.OBLIGATORY_AVERAGE_GPA = '--'
+        this.maxRemarkLength = 8
       }
       let reqURL = `/api/hrbust/grade?year=${data.year}&term=${data.term}`
       return request({
@@ -294,17 +385,25 @@
           this.AVERAGE_GPA = `${resData.AVERAGE_GPA}`
           this.AVERAGE_GRADE = `${resData.AVERAGE_GRADE}`
           this.OBLIGATORY_AVERAGE_GPA = `${resData.OBLIGATORY_AVERAGE_GPA}`
+          if (this.AVERAGE_GPA === 'NaN' || this.AVERAGE_GRADE === 'NaN' || this.OBLIGATORY_AVERAGE_GPA === 'NaN') {
+            this.showGDP = false
+          }
           console.log(this.showEmpty)
           list.map((item, index) => {
-            let itemObj = {
-              gradeName: item.courseName,
-              mark: item.grade,
-              passSign: item.passFlag,
-              credit: item.credit
-            }
+            let itemObj = {}
+            itemObj.gradeName = item.courseName ? item.courseName : '--'
+            itemObj.mark = item.grade ? item.grade : '--'
+            itemObj.passSign = item.passFlag ? item.passFlag : '--'
+            itemObj.credit = item.credit ? item.credit : '--'
+            itemObj.gpa = item.gpa ? item.gpa : '--'
+            itemObj.courseAttribute = item.courseAttribute ? item.courseAttribute : '--'
+            itemObj.courseRemark = item.courseRemark ? item.courseRemark : '--'
+            itemObj.courseCharacter = item.courseCharacter ? item.courseCharacter : '--'
+
             this.gradeData.push(itemObj)
+            this.maxRemarkLength = itemObj.courseRemark.length > this.maxRemarkLength ? itemObj.courseRemark.length : this.maxRemarkLength
           })
-          console.log(this.gradeData)
+          console.log(this.maxRemarkLength)
         }
         this.$apply()
         wepy.hideLoading()
@@ -331,152 +430,3 @@
     }
   }
 </script>
-<!-- <template>
-  <view class="news">
-    <loadmore :list.sync="list" :loading.sync="loading">
-      <view class="news-item" wx:key="news" wx:for="{{list}}" wx:for-item="newsItem" wx:for-index="index">
-        <view @tap="viewDetail" data-id="{{newsItem.id}}">
-          <view class="padding-wrapper">
-            <view class="news-message">
-              <view class="news-title"> <text class="top">{{newsItem.top ? "(置顶)" : ""}}</text> {{newsItem.title}} </view>
-              <view class="text-small"> 发布时间：{{newsItem.date}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </loadmore>
-  </view>
-</template>
-
-<script>
-  import wepy from 'wepy'
-
-  import { request } from 'utils'
-  import LoadMore from '../components/loadmore'
-  export default class News extends wepy.page {
-    config = {
-      enablePullDownRefresh: true
-    }
-    data = {
-      list: [],
-      page: 1,
-      loading: false
-    }
-
-    components = {
-      loadmore: LoadMore
-    }
-
-    onLoad () {
-      // this.getHasCourseTerms()
-      this.getList()
-    }
-    onPullDownRefresh() {
-      this.getList().then(() => {
-        wepy.stopPullDownRefresh()
-        wepy.showToast({
-          title: '拉取数据成功',
-          icon: 'success',
-          duration: 1000
-        })
-      })
-    }
-    onReachBottom() {
-      if (!this.loading) {
-        this.page += 1
-        this.loading = true
-        this.getList(this.page, true).then(() => {
-          this.loading = false
-          this.$apply()
-        })
-      }
-    }
-    getList(page = 1, needConcat) {
-      return request({
-        url: `/api/hrbust/news?page=${page}`
-      }).then((res) => {
-        const list = res.data.data
-        if (!needConcat && (!list || list.length === 0)) {
-          // 第一次加载没有数据
-          this.showError(this, '没有拉取到数据~请稍后重试')
-          // that.setData({
-          //   newsData: [],
-          // });
-          this.list = []
-          this.$apply()
-          return Promise.resolve()
-        }
-        if (list.length === 0) {
-          // 没有加载到数据
-          wepy.showToast({
-            title: '哥，真没有了...',
-            icon: 'success',
-            duration: 2000
-          })
-          this.page -= 1
-          this.loading = false
-          this.$apply()
-        } else {
-          if (needConcat) {
-            this.list = [...this.list, ...list]
-          } else {
-            this.list = list
-          }
-        }
-        this.$apply()
-      })
-      .catch((e) => {
-        this.showError(this, e)
-      })
-    }
-    showError(that, error) {
-      if (error) {
-        console.error(error)
-      }
-      wepy.showModal({
-        content: error || '加载失败。',
-        confirmText: '请重新加载',
-        success(res) {
-          if (res.confirm) {
-            that.getList()
-          }
-        }
-      })
-    }
-    methods = {
-      viewDetail(event) {
-        const id = event.currentTarget.dataset.id
-        wepy.navigateTo({
-          url: `/pages/news/newsDetail?id=${id}`
-        })
-      }
-    }
-  }
-</script>
-
-<style lang="less" scop>
-.news-item {
-  margin: 40rpx 60rpx;
-  padding: 40rpx 32rpx;
-  width: 630rpx;
-	// height: 210rpx;
-	background-color: #ffffff;
-	box-shadow: 0px 5rpx 30rpx 0rpx
-		rgba(0, 0, 80, 0.07);
-  border-radius: 16rpx;
-  font-size: 26rpx;
-  box-sizing: border-box;
-  .news-title {
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    .top {
-      color: #6dde9e;
-    }
-  }
-  .text-small {
-    // text-align: right;
-    color: #cccccc;
-  }
-}
-</style> -->

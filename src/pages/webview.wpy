@@ -1,0 +1,30 @@
+<template>
+  <view class="container">
+    <web-view src="{{url}}">
+    </web-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { host } from 'utils'
+
+  export default class NewsDetail extends wepy.page {
+    data = {
+      url: '',
+      id: ''
+    }
+    onLoad(options) {
+      wepy.setNavigationBarTitle({
+        title: options.title
+      })
+      this.url = decodeURIComponent(options.url)
+      // this.url = `${host}/api/hrbust/news/${options.id}`
+      console.log(url)
+      this.$apply()
+    }
+  }
+</script>
+
+<style lang="less">
+</style>

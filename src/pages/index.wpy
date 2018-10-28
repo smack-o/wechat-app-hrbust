@@ -84,8 +84,8 @@
         duration="{{duration}}">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <view class="slide-item">
-              <image src="{{item}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
+            <view class="slide-item" @tap="linkTo({{item.url}})">
+              <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
             </view>
           </swiper-item>
         </block>
@@ -190,9 +190,18 @@
       // }
       ],
       imgUrls: [
-        'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
-        'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
-        'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2'
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        },
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        },
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        },
       ],
       indicatorDots: false,
       autoplay: false,
@@ -219,6 +228,13 @@
           // currentSlideIdx: e.detail.current
         this.currentSlideIdx = e.detail.current
         console.log(this.currentSlideIdx)
+        // wepy.navigateTo(url)
+      },
+      linkTo(url) {
+        console.log(url)
+        wepy.navigateTo({
+          url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
+        })
       }
     }
 

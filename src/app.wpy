@@ -97,6 +97,13 @@ export default class extends wepy.app {
         return p
       },
       success (p) {
+        const { data, header } = p
+        if (data.status === 200) {
+          // this.globalData.sessionId = data.sessionId
+          const cookie = header['Set-Cookie']
+          // resolve(cookie)
+          wepy.setStorageSync('app_cookie', cookie)
+        }
         if (p.statusCode === 401) {
           wepy.showModal({
             content: '网络波动，请刷新重试下~',

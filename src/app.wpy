@@ -34,7 +34,11 @@ export default class extends wepy.app {
       'pages/news/newsDetail',
       'pages/grade',
       'pages/exam',
-      'pages/webview'
+      'pages/webview',
+      'pages/discover',
+      'pages/about',
+      'pages/campus',
+      'pages/account'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -56,19 +60,19 @@ export default class extends wepy.app {
           selectedIconPath: './assets/icon/home_selected.png'
         },
         {
-          pagePath: 'pages/test',
+          pagePath: 'pages/campus',
           text: '校园',
           iconPath: './assets/icon/campus.png',
           selectedIconPath: './assets/icon/campus_selected.png'
         },
         {
-          pagePath: 'pages/home',
+          pagePath: 'pages/discover',
           text: '发现',
           iconPath: './assets/icon/find.png',
           selectedIconPath: './assets/icon/find_selected.png'
         },
         {
-          pagePath: 'pages/home',
+          pagePath: 'pages/account',
           text: '我',
           iconPath: './assets/icon/account.png',
           selectedIconPath: './assets/icon/account_selected.png'

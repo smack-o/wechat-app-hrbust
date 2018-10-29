@@ -7,7 +7,7 @@
 
 <script>
   import wepy from 'wepy'
-  import { host } from 'utils'
+  // import { host } from 'utils'
 
   export default class NewsDetail extends wepy.page {
     data = {
@@ -20,7 +20,7 @@
       })
       this.url = decodeURIComponent(options.url)
       // this.url = `${host}/api/hrbust/news/${options.id}`
-      console.log(url)
+      // console.log(url)
       this.$apply()
     }
   }

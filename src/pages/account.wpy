@@ -2,7 +2,7 @@
   <view class="account">
     <view class="user">
       <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
-      <view wx:if="{{!isLogin}}" class="button">登录</view>
+      <view wx:if="{{!isLogin}}" class="button" @tap="linkTo('./login')">登录</view>
       <view wx:else class="info">
         <view class="name"><open-data type="userNickName" lang="zh_CN"></open-data></view>
         <view class="student">
@@ -10,6 +10,22 @@
           <view>{{studentInfo.name}}</view>
         </view>
       </view>
+    </view>
+    <view class="other">
+      <view class="item">
+        <image class="image" src="../assets/icon/remove_binding.png"/>
+        <view class="info">
+          <view>解除绑定</view>
+          <view>></view>
+        </view>
+      </view>
+      <button class="item button" open-type="contact">
+        <image class="image" src="../assets/icon/contact.png"/>
+        <view class="info">
+          <view>联系阿喵</view>
+          <view>></view>
+        </view>
+      </button>
     </view>
   </view>
 </template>
@@ -33,7 +49,12 @@
     config = {
       navigationBarTitleText: '个人中心'
     }
-    data = {
+    methods = {
+      linkTo(url) {
+        wepy.navigateTo({
+          url
+        })
+      }
     }
   }
 </script>
@@ -93,6 +114,46 @@
         height: 38rpx;
       }
     }
+  }
+}
+.other {
+  margin: 20rpx 0;
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .image {
+      width: 35rpx;
+      height: 35rpx;
+    }
+    .info {
+      box-sizing: border-box;
+      font-size: 26rpx;
+      margin-left: 8rpx;
+      color: #999999;
+      padding: 40rpx 30rpx 40rpx 20rpx;
+      width: 547rpx;
+      border-bottom: 1rpx solid#eeeeee;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+.button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
+  font-smoothing: antialiased;
+  outline: none;
+  &::after {
+    border: none;
   }
 }
 </style>

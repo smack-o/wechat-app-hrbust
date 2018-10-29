@@ -8,8 +8,8 @@
           <view class="wechat animation {{item.position}}">
             <!-- {{index}} -->
             <view class="avatar">
-              <open-data class="avatar__image" type="userAvatarUrl" lang="zh_CN"></open-data>
-              <!-- <image class="avatar__image" src="{{ item.position == 'left' ? '../../images/app_avatar.png' : avatarUrl}}" /> -->
+              <image wx:if="{{item.position === 'left'}}" class="avatar__image" src="../assets/icon/app_avatar.png"/>
+              <open-data  wx:else class="avatar__image" type="userAvatarUrl" lang="zh_CN"></open-data>
             </view>
             <view class="content content-image" wx:if="{{item.type == 'image'}}" bindtap="viewImage" data-src="{{item.viewUrl || item.src}}">
               <view class="picture">
@@ -29,19 +29,9 @@
     </scroll-view>
 
     <!-- </view> -->
-    <view class="bottom">
-      <view class="contact-button">
-        <block wx:key="contactButton" wx:for="{{[0,0,0,0,0,0,0,0,0,0,0,0]}}">
-          <contact-button
-            type="default-light"
-            size="27"
-            session-from="weapp"
-            >
-          </contact-button>
-        </block>
-      </view>
-      <image class="bottom__image" src="../../images/wechat_bottom.jpeg"/>
-    </view>
+    <button class="bottom" open-type="contact">
+      <image class="bottom__image" src="../assets/icon/wechat_bottom.jpeg"/>
+    </button>
     <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="http://my-home-static.smackgg.cn/weixin.mp3" id="myAudio"></audio>
   </view>
 </template>
@@ -204,6 +194,21 @@ page,
   position: fixed;
   bottom: 0;
   z-index: 1000;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
+  font-smoothing: antialiased;
+  outline: none;
+  &::after {
+    border: none;
+  }
   .bottom__image {
     height: 100%;
     display: inline-block;
@@ -346,19 +351,6 @@ page,
 }
 .plain {
   padding: .563rem .625rem;
-}
-
-.contact-button {
-  width: 100%;
-  height:100%;
-  overflow: hidden;
-  display: flex;
-  position: absolute;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  justify-content: space-around;
-  opacity: 0;
 }
 
 </style>

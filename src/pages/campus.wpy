@@ -2,7 +2,7 @@
   <view class="wrapper">
     <view class="modules">
       <block class="module" wx:for="{{modules}}" wx:key="index">
-        <view wx:if="{{hrbustLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
+        <view wx:if="{{isLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
           <view>
             <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
             <text class="modules_text" >{{item.text}}</text>
@@ -23,7 +23,19 @@
 
 <script>
   import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
 
+  @connect({
+    loading (state) {
+      return state.user.loading
+    },
+    isLogin(state) {
+      return state.user.isLogin
+    },
+    studentInfo(state) {
+      return state.user.studentInfo
+    }
+  })
   export default class Exam extends wepy.page {
     config = {
       navigationBarTitleText: '校园'
@@ -57,6 +69,7 @@
     }
     methods = {
       linkTo(url) {
+        console.log(url)
         wepy.navigateTo({
           url
         })
@@ -68,25 +81,36 @@
 <style lang="less">
   .modules {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     padding-top: 30rpx;
-    box-shadow: 0px 5px 30px 0px
-    rgba(0, 0, 80, 0.07);
-    padding: 30rpx 71rpx;
+    padding-bottom: 30rpx;
+    padding-left: 85rpx;
+    padding-right: 85rpx;
     .module {
-      width: 25%;
+      width: 110rpx;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      .modules_image {
-        width: 80rpx;
-      }
-      .modules_text {
-        font-size: 26rpx;
-        color: #333333;
-        margin-top: 30rpx;
-      }
+    }
+    .module_disable {
+    }
+    .modules_image {
+      width: 80rpx;
+      border-radius: 40rpx;
+      margin-bottom: 30rpx;
+    }
+    .modules_dark {
+      filter: opacity(15%) saturate(0%);
+    }
+    .modules_light {
+      filter: opacity(25%) saturate(0%);
+    }
+    .modules_text {
+      font-size: 26rpx;
+      color: #333333;
     }
   }
   .info {

@@ -59,7 +59,7 @@
         </view>
         <view class="weui-cell__ft">
             <i wx:if="{{!captchaImage}}" class="weui-loading weui-icon_toast"></i>
-            <image wx:else bindtap="getCaptcha" class="weui-vcode-img" src="{{captchaImage}}" style="width: 108px"></image>
+            <image wx:else bindtap="getCaptcha" class="weui-vcode-img" src="{{captchaImage}}" style="width: 108px" />
         </view>
       </view>
     </view>
@@ -76,11 +76,18 @@
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
   import { request } from 'utils'
+  import { init } from '../store/actions'
 
-  @connect({
-  })
-
+  @connect(
+    null,
+    {
+      init
+    }
+  )
   export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '学生登录'
+    }
     data = {
       username: '',
       password: '',
@@ -108,8 +115,9 @@
             captcha
           }
         })
-        .then((res) => {
-          wepy.switchTab({
+        .then(async (res) => {
+          this.methods.init()
+          wepy.reLaunch({
             url: './index'
           })
         })
@@ -134,8 +142,6 @@
     }
 
     async onLoad() {
-      await this.$parent.globalData.initPromise
-      // wepy.require()
       this.methods.getCaptcha.bind(this)()
     }
   }

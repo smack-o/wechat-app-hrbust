@@ -1,67 +1,244 @@
 <style lang="less">
 @import "../assets/lib.less";
-.slide-image {
-  width: 100%;
+.slide-wrapper {
+  padding-top: 30rpx;
+  height: 290rpx;
+  .slide-item {
+    width: 660rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .slide-image {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+    }
+    .slide-curimage {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+      box-shadow: 0 15rpx 30rpx 0 rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 .modules {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  padding-left: 85rpx;
+  padding-right: 85rpx;
   .module {
-    width: 25vw;
+    width: 110rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .module--disable {
-    opacity: .3;
+  .module_disable {
   }
-  .modules__image {
-    width: 40px;
+  .modules_image {
+    width: 80rpx;
+    border-radius: 40rpx;
+    margin-bottom: 30rpx;
+  }
+  .modules_dark {
+    filter: opacity(15%) saturate(0%);
+  }
+  .modules_light {
+    filter: opacity(25%) saturate(0%);
+  }
+  .modules_text {
+    font-size: 26rpx;
+    color: #333333;
   }
 }
-.login {
-  font-size: 16px;
-  text-align: center;
-  padding: 10px 0 30px 0;
-  .login-text {
-    color: @color-green;
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  .login {
+    text-align: center;
+    // align-items: center;
+    .login-button {
+      width: 325rpx;
+      height: 70rpx;
+      margin-top: 17rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #6dde9e;
+      box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+      border-radius: 35rpx;
+    }
+    .login-text {
+      font-size: 26rpx;
+      color: #ffffff;
+    }
   }
 }
+.msg-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+  justify-content: center;
+  .msg-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 630rpx;
+    height: 222rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx; 
+    margin-top: 40rpx;
+    background-color: #ffffff;
+    box-shadow: 0rpx 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+    border-radius: 16px;
+    .msg-img {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50rpx;
+    }
+    .msg-text-card {
+      width: 514rpx;
+      height: 100rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #cccccc;
+      font-size: 24rpx;
+      .msg-text-body {
+        flex: 1;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        .msg-title {
+          font-size: 36rpx;
+          letter-spacing: 2rpx;
+          color: #333333;
+        }
+        .msg-content {
+          color: #999999;
+        }
+      }
+      .msg-text-time {
+        width: 130rpx;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding-top: 8rpx;
+      }
+    }
+  }
+  
+}
+
 </style>
 <template>
-  <loading wx:if="{{isLoading}}">
-  </loading>
-  <view wx:else class="container">
-    <swiper indicator-dots="{{indicatorDots}}"
-      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}" wx:key="index">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image" mode="widthFix"/>
-        </swiper-item>
-      </block>
-    </swiper>
-    <navigator class="login" wx:if="{{!hrbustLogin}}" url="./login">
-      部分功能未登录不可用，请点击<text class="login-text">登录</text>
-    </navigator>
-    <view class="modules">
-      <block class="module" wx:for="{{modules}}" wx:key="index">
-        <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
-          <view class="module">
-            <image class="modules__image" src="{{item.image}}" mode="widthFix"/>
-            <text>{{item.text}}</text>
+  <view>
+    <loading wx:if="{{loading}}" />
+    <view wx:else class="container">
+      <swiper
+        bindchange="slideChange"
+        class="slide-wrapper"
+        indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}"
+        interval="{{interval}}"
+        previous-margin="{{swiperItemMargin}}"
+        next-margin="{{swiperItemMargin}}"
+        circular="{{circular}}"
+        duration="{{duration}}">
+        <block wx:for="{{imgUrls}}" wx:key="index">
+          <swiper-item>
+            <view class="slide-item">
+              <image src="{{item}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+
+      <view class="modules">
+        <block class="module" wx:for="{{modules}}" wx:key="index">
+          <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
+            <view class="module">
+              <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
+              <text class="modules_text" >{{item.text}}</text>
+            </view>
+          </navigator>
+          <view wx:else class="module_disable module">
+            <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
+            <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
+          </view>
+        </block>
+        </view>
+      </view>
+      <view class="login-wrapper">
+        <navigator wx:if="{{!hrbustLogin}}" class="login" url="./login">
+          <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
+          <view class="login-button">
+            <text class="login-text">立即登录</text>
           </view>
         </navigator>
-        <view wx:else class="module--disable module">
-          <image class="modules__image" src="{{item.image}}" mode="widthFix"/>
-          <text>{{item.text}}</text>
-        </view>
-      </block>
       </view>
-    </view>
-    <!-- <button open-type="getUserInfo">login</button> -->
+      <view class="msg-list">
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+      </view>
   </view>
 </template>
 
@@ -69,54 +246,76 @@
   import wepy from 'wepy'
   import Loading from '../components/loading'
   import { connect } from 'wepy-redux'
+
   @connect({
+    loading (state) {
+      return state.user.loading
+    },
+    initPromise(state) {
+      return state.user.initPromise
+    },
+    isLogin(state) {
+      return state.user.initPromise
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
+    }
   })
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '理工喵'
     }
     components = {
       loading: Loading
     }
     data = {
+      slideCurimage: 'slide-curimage',
+      slideImage: 'slide-image',
       isLoading: true,
       modules: [{
         image: '../assets/icon/course.png',
         text: '课表',
         url: './course',
-        needLogin: true
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
       }, {
         image: '../assets/icon/grade.png',
-        text: '成绩',
+        text: '成绩查询',
         url: './grade',
-        needLogin: true
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
       }, {
-        image: '../assets/icon/exam.png',
-        text: '考试',
-        url: './exam',
-        needLogin: true
-      }, {
-        image: '../assets/icon/luqu_icon.png',
-        text: '录取查询',
-        url: '.gaokaoluqu'
-      }, {
-        image: '../assets/icon/news_icon.png',
+        image: '../assets/icon/affiche.png',
         text: '教务公告',
-        url: '.news'
+        url: './news/news',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
       }, {
-        image: '../assets/icon/job_icon.png',
-        text: '校招信息',
-        url: './job'
-      },
-      {
-        image: '../assets/icon/search_icon.png',
-        text: '新生速查',
-        url: './info'
-        // image: '../assets/icon/search_icon.png',
-        // text: '新生速查',
-        // url: '../info/info',
-      }],
+        image: '../assets/icon/exam_schedule.png',
+        text: '考试安排',
+        url: './exam',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+      }
+      // {
+      //   image: '../assets/icon/news_icon.png',
+      //   text: '教务公告',
+      //   url: '.news'
+      // }, {
+      //   image: '../assets/icon/job_icon.png',
+      //   text: '校招信息',
+      //   url: './job'
+      // },
+      // {
+      //   image: '../assets/icon/search_icon.png',
+      //   text: '新生速查',
+      //   url: './info'
+      //   // image: '../assets/icon/search_icon.png',
+      //   // text: '新生速查',
+      //   // url: '../info/info',
+      // }
+      ],
       imgUrls: [
         'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
         'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
@@ -124,8 +323,12 @@
       ],
       indicatorDots: false,
       autoplay: false,
+      circular: true,
       interval: 5000,
-      duration: 1000
+      duration: 1000,
+      swiperItemMargin: '45rpx',
+      currentSlideIdx: 0,
+      mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'
     }
 
     computed = {
@@ -134,10 +337,17 @@
       },
       hrbustLogin () {
         return this.studentInfo && this.studentInfo.username
+        // return false
       }
     }
 
     methods = {
+      slideChange(e) {
+        // console.log(e.detail.current)
+          // currentSlideIdx: e.detail.current
+        this.currentSlideIdx = e.detail.current
+        // console.log(this.currentSlideIdx)
+      }
     }
 
     events = {
@@ -148,11 +358,11 @@
     }
 
     async onLoad() {
-      const globalData = this.$parent.globalData
-      await globalData.initPromise
-      this.isLogin = globalData.isLogin
-      this.studentInfo = globalData.studentInfo
-      this.isLoading = false
+      // const globalData = this.$parent.globalData
+      // await globalData.initPromise
+      // this.isLogin = globalData.isLogin
+      // this.studentInfo = globalData.studentInfo
+      // this.isLoading = false
       this.$apply()
     }
   }

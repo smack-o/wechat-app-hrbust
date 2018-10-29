@@ -266,10 +266,7 @@
               }
               lessonList[item.sectionstart].push(item)
             }
-          })
-          this.courseData = lessonList
-          if (flag) {
-            this.methods.setCurrentTerm(this.tempTerm)
+            lessonList[item.sectionstart].push(item)
           }
           if (updatedStorage) {
             wepy.setStorage({
@@ -279,8 +276,8 @@
           }
           wepy.hideLoading()
           wepy.showToast({
-            title: '拉取数据成功',
-            icon: 'success',
+            title: '课表为空',
+            image: '../assets/icon/icon_info.png',
             duration: 1000
           })
         })
@@ -325,36 +322,36 @@
       return request({
         url: '/api/hrbust/week'
       })
-        .then((res) => {
-          const data = res.data.data
-          const weeks = Array.from(new Array(30), (val, index) => index + 1)
-          const tWeeks = weeks.map((item, index) => {
-            if (data.week === item) {
-              slectedWeek = index
-              return `${item}`
-            }
-            return item
-          })
+      .then((res) => {
+        const data = res.data.data
+        const weeks = Array.from(new Array(30), (val, index) => index + 1)
+        const tWeeks = weeks.map((item, index) => {
+          if (data.week === item) {
+            slectedWeek = index
+            return `${item}`
+          }
+          return item
+        })
 
-          this.thisWeek = data.week
-          this.thisWeekNum = data.week
-          this.term = data.term
-          this.weeks = tWeeks
-          this.methods.setCurrentTerm(data.term)
-          this.slectedWeek = slectedWeek
-          this.$apply()
+        this.thisWeek = data.week
+        this.thisWeekNum = data.week
+        this.term = data.term
+        this.weeks = tWeeks
+        this.methods.setCurrentTerm(data.term)
+        this.slectedWeek = slectedWeek
+        this.$apply()
+      })
+      .catch(() => {
+        wepy.showModal({
+          content: '服务器获取当前周数错误，请稍候重试',
+          showCancel: false
         })
-        .catch(() => {
-          wepy.showModal({
-            content: '服务器获取当前周数错误，请稍候重试',
-            showCancel: false
-          })
-          return Promise.reject('获取周数错误')
-        })
+        return Promise.reject('获取周数错误')
+      })
     }
 
     async onLoad () {
-      await this.$parent.globalData.initPromise
+      // await this.$parent.globalData.initPromise
       await this.getWeek()
       const course = wepy.getStorageSync('course')
       if (course) {

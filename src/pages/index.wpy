@@ -328,7 +328,7 @@
         {
           image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
           url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-        },
+        }
       ],
       indicatorDots: false,
       autoplay: false,

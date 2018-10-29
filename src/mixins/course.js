@@ -1,11 +1,11 @@
 import wepy from 'wepy'
-import { request, host } from 'utils'
+import { request } from 'utils'
 
 export default class courseMixin extends wepy.mixin {
   createNewTerm (term) {
     if (term === undefined) return
     return request({
-      url: host + '/api/hrbust/updateCourse',
+      url: '/api/hrbust/updateCourse',
       data: { term }
     })
     .then((res) => {

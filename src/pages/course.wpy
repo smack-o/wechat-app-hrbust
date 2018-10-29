@@ -37,11 +37,11 @@
                 <!-- 左侧时间列表 -->
                 <view class="item">
                   <view class="time-item">
-                    <view>{{timeNum[timeIndex][0]}}</view>
+                    <view>{{timeList[timeIndex][0]}}</view>
                     <view class="num">{{timeItem[0]}}</view>
                   </view>
                   <view class="time-item">
-                    <view>{{timeNum[timeIndex][1]}}</view>
+                    <view>{{timeList[timeIndex][1]}}</view>
                     <view class="num">{{timeItem[1]}}</view>
                   </view>
                 </view>
@@ -115,7 +115,7 @@
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
-  import { request, host } from 'utils'
+  import { request } from 'utils'
   import courseMixin from '../mixins/course'
   import { setCurrentTerm } from '../store/actions'
 
@@ -137,9 +137,9 @@
       thisWeek: 1,
       thisWeekNum: 1,
       nowDayIndex: new Date().getDay(),
+      termId: 0,
       dayNum: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       time: [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']],
-      timeNum: [['08:10', '09:05'], ['10:10', '11:05'], ['13:30', '14:25'], ['15:20', '16:15'], ['18:00', '18:55']],
       month: new Date().getMonth() + 1,
       courseData: [],
       detailData: [],
@@ -164,6 +164,15 @@
           return date.getDate()
         })
         return daysOfThisWeek
+      },
+
+      timeList () {
+        const classNum = parseInt(this.termId / 2)
+        if (classNum === 1 || classNum === 2) {
+          return [['08:10', '09:00'], ['10:05', '10:55'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
+        } else {
+          return [['08:10', '09:00'], ['10:20', '11:10'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
+        }
       }
     }
 
@@ -181,7 +190,7 @@
         this.selectOpen = !this.selectOpen
 
         await this.createNewTerm(this.term)
-        await this.getCourse()
+        await this.getCourse(undefined, undefined, true)
         this.$apply()
       },
 
@@ -216,11 +225,11 @@
 
     watch = {
       tempTerm (newVal, oldVal) {
-        this.getCourse(newVal, true)
+        this.getCourse(newVal, true, true)
       }
     }
 
-    getCourse (term, flag) {
+    getCourse (term, flag, updatedStorage) {
       wepy.showLoading({
         title: '正在加载数据'
       })
@@ -228,16 +237,17 @@
         term = this.term
       }
       return request({
-        url: host + '/api/hrbust/course',
+        url: '/api/hrbust/course',
         data: {
           term
         }
       })
         .then((res) => {
-          let data = res.data.data
+          let data = res.data.data.course
           if (!data) {
             throw new Error('课表为空')
           }
+          this.termId = res.data.data.courseTermId
           let lessonList = []
           let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen']
           let courseIdList = {}
@@ -261,6 +271,12 @@
           if (flag) {
             this.methods.setCurrentTerm(this.tempTerm)
           }
+          if (updatedStorage) {
+            wepy.setStorage({
+              key: 'course',
+              data: lessonList
+            })
+          }
           wepy.hideLoading()
           wepy.showToast({
             title: '拉取数据成功',
@@ -270,26 +286,44 @@
         })
         .catch((e) => {
           if (e.message === '课表为空') {
-            wepy.showToast({
-              title: '课表为空',
-              image: '../assets/icon/icon_info.png',
-              duration: 1000
-            })
+            const notFirst = wepy.getStorageSync('notFirst')
+            if (!notFirst) {
+              wepy.showLoading({
+                title: '课表抓取中'
+              })
+              return this.createNewTerm(this.term)
+                .then(() => {
+                  return this.getCourse(undefined, undefined, true)
+                })
+                .then(() => {
+                  wepy.setStorage({
+                    key: 'notFirst',
+                    data: true
+                  })
+                  this.$apply()
+                })
+            } else {
+              wepy.showToast({
+                title: '课表为空',
+                image: '../assets/icon/icon_info.png',
+                duration: 1000
+              })
+            }
           } else {
             wepy.showToast({
               title: '拉取数据失败',
               image: '../assets/icon/error_icon.png',
               duration: 1000
             })
+            return Promise.reject('获取课表失败')
           }
-          return Promise.reject('获取课表失败')
         })
     }
 
     getWeek () {
       let slectedWeek = 0
       return request({
-        url: host + '/api/hrbust/week'
+        url: '/api/hrbust/week'
       })
         .then((res) => {
           const data = res.data.data
@@ -322,14 +356,19 @@
     async onLoad () {
       await this.$parent.globalData.initPromise
       await this.getWeek()
-      await this.getCourse()
+      const course = wepy.getStorageSync('course')
+      if (course) {
+        this.courseData = course
+      } else {
+        await this.getCourse(undefined, undefined, true)
+      }
       this.$apply()
     }
 
     onPullDownRefresh() {
       this.getWeek()
         .then(() => {
-          return this.getCourse()
+          return this.getCourse(undefined, undefined, true)
         })
         .then(() => {
           wepy.stopPullDownRefresh()

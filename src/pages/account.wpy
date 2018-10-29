@@ -38,9 +38,11 @@
   }
 </script>
 
-<style lang="less" scop>
-.user {
+<style lang="less">
+.account {
   margin-top: 30rpx;
+}
+.user {
   width: 630rpx;
 	height: 230rpx;
 	background-color: #ffffff;

@@ -155,7 +155,7 @@
         duration="{{duration}}">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <view class="slide-item" @tap="linkTo({{item.url}})">
+            <view class="slide-item" @tap="linkToWebView({{item.url}})">
               <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
             </view>
           </swiper-item>
@@ -164,12 +164,12 @@
 
       <view class="modules">
         <block class="module" wx:for="{{modules}}" wx:key="index">
-          <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
+          <view wx:if="{{hrbustLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
             <view class="module">
               <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
               <text class="modules_text" >{{item.text}}</text>
             </view>
-          </navigator>
+          </view>
           <view wx:else class="module_disable module">
             <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
             <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
@@ -178,12 +178,12 @@
         </view>
       </view>
       <view class="login-wrapper">
-        <navigator wx:if="{{!hrbustLogin}}" class="login" url="./login">
+        <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">
           <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
           <view class="login-button">
             <text class="login-text">立即登录</text>
           </view>
-        </navigator>
+        </view>
       </view>
       <view class="msg-list">
         <view class="msg-item">
@@ -359,7 +359,12 @@
         // wepy.navigateTo(url)
       },
       linkTo(url) {
-        console.log(url)
+        wepy.navigateTo({
+          url
+        })
+      },
+      linkToWebView(url) {
+        // console.log(url)
         wepy.navigateTo({
           url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
         })

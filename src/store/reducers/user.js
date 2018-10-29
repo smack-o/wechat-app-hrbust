@@ -15,7 +15,7 @@ export default handleActions({
     } = actions.payload
     return {
       ...state,
-      isLogin,
+      isLogin: !!(isLogin && studentInfo && studentInfo.username),
       studentInfo,
       userInfo
     }

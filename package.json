@@ -9,8 +9,8 @@
     "dev:web": "wepy build --output web",
     "clean": "find ./dist -maxdepth 1 -not -name 'project.config.json' -not -name 'dist' | xargs rm -rf",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./src/*",
-    "fix-lint": "eslint --fix ./src/*"
+    "lint": "eslint ./src/* --ext .wpy",
+    "fix-lint": "eslint --fix ./src/* --ext .wpy"
   },
   "pre-commit": [
     "lint"

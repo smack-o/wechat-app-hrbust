@@ -2,11 +2,9 @@
   <view class="wrapper">
     <view class="modules">
       <block class="module" wx:for="{{modules}}" wx:key="index">
-        <view wx:if="{{isLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
-          <view>
+        <view class="module" wx:if="{{isLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
             <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
             <text class="modules_text" >{{item.text}}</text>
-          </view>
         </view>
         <view wx:else class="module_disable module">
           <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>

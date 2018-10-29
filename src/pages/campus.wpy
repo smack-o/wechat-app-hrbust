@@ -81,26 +81,25 @@
 <style lang="less">
   .modules {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
     padding-top: 30rpx;
-    padding-bottom: 30rpx;
-    padding-left: 85rpx;
-    padding-right: 85rpx;
+    box-shadow: 0px 5px 30px 0px
+    rgba(0, 0, 80, 0.07);
+    padding: 30rpx 71rpx;
     .module {
-      width: 110rpx;
+      width: 25%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    .module_disable {
-    }
-    .modules_image {
-      width: 80rpx;
-      border-radius: 40rpx;
-      margin-bottom: 30rpx;
+      .modules_image {
+        width: 80rpx;
+      }
+      .modules_text {
+        font-size: 26rpx;
+        color: #333333;
+        margin-top: 30rpx;
+      }
     }
     .modules_dark {
       filter: opacity(15%) saturate(0%);

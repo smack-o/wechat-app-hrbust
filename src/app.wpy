@@ -109,15 +109,7 @@ export default class extends wepy.app {
           wepy.setStorageSync('app_cookie', cookie)
         }
         if (p.statusCode === 401) {
-          wepy.showToast({
-            title: '登录状态失效',
-            duration: 1000
-          })
-          setTimeout(() => {
-            wepy.reLaunch({
-              url: '/pages/index'
-            })
-          }, 1000)
+          this.showToast()
           that.methods.init()
         } else {
           return p
@@ -133,7 +125,18 @@ export default class extends wepy.app {
       }
     })
   }
-
+  showToast() {
+    wepy.showToast({
+      title: '登录状态失效',
+      image: '../assets/icon/icon_info.png',
+      duration: 1000
+    })
+    setTimeout(() => {
+      wepy.reLaunch({
+        url: '/pages/index'
+      })
+    }, 1000)
+  }
   onLaunch() {
     this.methods.init()
     // this.globalData.initPromise = this.init()

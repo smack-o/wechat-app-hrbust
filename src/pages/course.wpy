@@ -125,6 +125,9 @@
     },
     tempTerm (state) {
       return state.currentTerm.tempTerm
+    },
+    username (state) {
+      return state.user.studentInfo.username
     }
   }, {
     setCurrentTerm
@@ -144,7 +147,8 @@
       courseData: [],
       detailData: [],
       detailOpen: false,
-      selectOpen: false
+      selectOpen: false,
+      userInfo: {}
     }
 
     config = {
@@ -268,10 +272,15 @@
           }
           lessonList[item.sectionstart].push(item)
         })
+        this.courseData = lessonList
+        if (flag) {
+          this.methods.setCurrentTerm(this.tempTerm)
+        }
         if (updatedStorage) {
+          this.userInfo.course = lessonList
           wepy.setStorage({
-            key: 'course',
-            data: lessonList
+            key: this.username,
+            data: this.userInfo
           })
         }
         wepy.hideLoading()
@@ -283,14 +292,15 @@
       })
       .catch((e) => {
         if (e.message === '课表为空') {
-          const notFirst = wepy.getStorageSync('notFirst')
-          if (!notFirst) {
+          const userInfo = wepy.getStorageSync(this.username)
+          if (!userInfo.notFirst) {
             wepy.showLoading({
               title: '课表抓取中'
             })
+            this.userInfo.notFirst = true
             wepy.setStorage({
-              key: 'notFirst',
-              data: true
+              key: this.username,
+              data: this.userInfo
             })
             return this.createNewTerm(this.term)
               .then(() => {
@@ -305,6 +315,7 @@
               image: '../assets/icon/icon_info.png',
               duration: 1000
             })
+            wepy.hideLoading()
           }
         } else {
           wepy.showToast({
@@ -351,9 +362,17 @@
     }
 
     async onLoad () {
+      if (!this.username) {
+        wepy.reLaunch({
+          url: '/pages/index'
+        })
+        return
+      }
       // await this.$parent.globalData.initPromise
       await this.getWeek()
-      const course = wepy.getStorageSync('course')
+      const userInfo = wepy.getStorageSync(this.username)
+      if (userInfo) this.userInfo = userInfo
+      const course = this.userInfo.course
       if (course) {
         this.courseData = course
       } else {

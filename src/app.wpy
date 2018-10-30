@@ -109,10 +109,15 @@ export default class extends wepy.app {
           wepy.setStorageSync('app_cookie', cookie)
         }
         if (p.statusCode === 401) {
-          wepy.showModal({
-            content: '网络波动，请刷新重试下~',
-            showCancel: false
+          wepy.showToast({
+            title: '登录状态失效',
+            duration: 1000
           })
+          setTimeout(() => {
+            wepy.reLaunch({
+              url: '/pages/index'
+            })
+          }, 1000)
           that.methods.init()
         } else {
           return p

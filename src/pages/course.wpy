@@ -242,79 +242,79 @@
           term
         }
       })
-        .then((res) => {
-          let data = res.data.data.course
-          if (!data) {
-            throw new Error('课表为空')
-          }
-          this.termId = res.data.data.courseTermId
-          let lessonList = []
-          let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen']
-          let courseIdList = {}
-          for (let i = 0; i < 10; i++) {
-            lessonList[i] = []
-          }
-          let classIndex = 0
-          data.forEach((item, index) => {
-            if (item.sectionstart < 10) {
-              if (!courseIdList[item.courseId]) {
-                courseIdList[item.courseId] = classList[classIndex % 8]
-                item.class = classList[classIndex % 8]
-                classIndex++
-              } else {
-                item.class = courseIdList[item.courseId]
-              }
-              lessonList[item.sectionstart].push(item)
+      .then((res) => {
+        let data = res.data.data.course
+        if (!data) {
+          throw new Error('课表为空')
+        }
+        this.termId = res.data.data.courseTermId
+        let lessonList = []
+        let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen']
+        let courseIdList = {}
+        for (let i = 0; i < 10; i++) {
+          lessonList[i] = []
+        }
+        let classIndex = 0
+        data.forEach((item, index) => {
+          if (item.sectionstart < 10) {
+            if (!courseIdList[item.courseId]) {
+              courseIdList[item.courseId] = classList[classIndex % 8]
+              item.class = classList[classIndex % 8]
+              classIndex++
+            } else {
+              item.class = courseIdList[item.courseId]
             }
             lessonList[item.sectionstart].push(item)
           }
-          if (updatedStorage) {
-            wepy.setStorage({
-              key: 'course',
-              data: lessonList
-            })
-          }
-          wepy.hideLoading()
-          wepy.showToast({
-            title: '课表为空',
-            image: '../assets/icon/icon_info.png',
-            duration: 1000
-          })
+          lessonList[item.sectionstart].push(item)
         })
-        .catch((e) => {
-          if (e.message === '课表为空') {
-            const notFirst = wepy.getStorageSync('notFirst')
-            if (!notFirst) {
-              wepy.showLoading({
-                title: '课表抓取中'
+        if (updatedStorage) {
+          wepy.setStorage({
+            key: 'course',
+            data: lessonList
+          })
+        }
+        wepy.hideLoading()
+        wepy.showToast({
+          title: '拉取数据成功',
+          icon: 'success',
+          duration: 1000
+        })
+      })
+      .catch((e) => {
+        if (e.message === '课表为空') {
+          const notFirst = wepy.getStorageSync('notFirst')
+          if (!notFirst) {
+            wepy.showLoading({
+              title: '课表抓取中'
+            })
+            wepy.setStorage({
+              key: 'notFirst',
+              data: true
+            })
+            return this.createNewTerm(this.term)
+              .then(() => {
+                return this.getCourse(undefined, undefined, true)
               })
-              wepy.setStorage({
-                key: 'notFirst',
-                data: true
+              .then(() => {
+                this.$apply()
               })
-              return this.createNewTerm(this.term)
-                .then(() => {
-                  return this.getCourse(undefined, undefined, true)
-                })
-                .then(() => {
-                  this.$apply()
-                })
-            } else {
-              wepy.showToast({
-                title: '课表为空',
-                image: '../assets/icon/icon_info.png',
-                duration: 1000
-              })
-            }
           } else {
             wepy.showToast({
-              title: '拉取数据失败',
-              image: '../assets/icon/error_icon.png',
+              title: '课表为空',
+              image: '../assets/icon/icon_info.png',
               duration: 1000
             })
-            return Promise.reject('获取课表失败')
           }
-        })
+        } else {
+          wepy.showToast({
+            title: '拉取数据失败',
+            image: '../assets/icon/error_icon.png',
+            duration: 1000
+          })
+          return Promise.reject('获取课表失败')
+        }
+      })
     }
 
     getWeek () {

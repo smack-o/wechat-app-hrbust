@@ -86,11 +86,11 @@
   .msg-item {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
     width: 630rpx;
     height: 222rpx;
     padding-left: 30rpx;
-    padding-right: 30rpx; 
+    padding-right: 30rpx;
     margin-top: 40rpx;
     background-color: #ffffff;
     box-shadow: 0rpx 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
@@ -135,7 +135,7 @@
       }
     }
   }
-  
+
 }
 
 </style>
@@ -155,8 +155,8 @@
         duration="{{duration}}">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <view class="slide-item">
-              <image src="{{item}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
+            <view class="slide-item" @tap="linkToWebView({{item.url}})">
+              <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
             </view>
           </swiper-item>
         </block>
@@ -164,12 +164,12 @@
 
       <view class="modules">
         <block class="module" wx:for="{{modules}}" wx:key="index">
-          <navigator wx:if="{{hrbustLogin || !item.needLogin}}" url="{{item.url}}">
+          <view wx:if="{{hrbustLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
             <view class="module">
               <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
               <text class="modules_text" >{{item.text}}</text>
             </view>
-          </navigator>
+          </view>
           <view wx:else class="module_disable module">
             <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
             <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
@@ -178,12 +178,12 @@
         </view>
       </view>
       <view class="login-wrapper">
-        <navigator wx:if="{{!hrbustLogin}}" class="login" url="./login">
+        <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">
           <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
           <view class="login-button">
             <text class="login-text">立即登录</text>
           </view>
-        </navigator>
+        </view>
       </view>
       <view class="msg-list">
         <view class="msg-item">
@@ -317,9 +317,18 @@
       // }
       ],
       imgUrls: [
-        'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
-        'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
-        'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2'
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        },
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        },
+        {
+          image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
+          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+        }
       ],
       indicatorDots: false,
       autoplay: false,
@@ -346,6 +355,19 @@
         // console.log(e.detail.current)
           // currentSlideIdx: e.detail.current
         this.currentSlideIdx = e.detail.current
+        console.log(this.currentSlideIdx)
+        // wepy.navigateTo(url)
+      },
+      linkTo(url) {
+        wepy.navigateTo({
+          url
+        })
+      },
+      linkToWebView(url) {
+        // console.log(url)
+        wepy.navigateTo({
+          url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
+        })
         // console.log(this.currentSlideIdx)
       }
     }

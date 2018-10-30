@@ -1,0 +1,125 @@
+<template>
+  <view class="wrapper">
+    <view class="modules">
+      <block class="module" wx:for="{{modules}}" wx:key="index">
+        <view class="module" wx:if="{{isLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
+            <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
+            <text class="modules_text" >{{item.text}}</text>
+        </view>
+        <view wx:else class="module_disable module">
+          <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
+          <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+    <view class="info">
+      更多功能敬请期待~
+    </view>
+    <image class="discover-image" src="http://hrbust-static.smackgg.cn/campus.png" mode="widthFix"/>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+  @connect({
+    loading (state) {
+      return state.user.loading
+    },
+    isLogin(state) {
+      return state.user.isLogin
+    },
+    studentInfo(state) {
+      return state.user.studentInfo
+    }
+  })
+  export default class Exam extends wepy.page {
+    config = {
+      navigationBarTitleText: '校园'
+    }
+    data = {
+      modules: [{
+        image: '../assets/icon/course.png',
+        text: '课表',
+        url: './course',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
+      }, {
+        image: '../assets/icon/grade.png',
+        text: '成绩查询',
+        url: './grade',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
+      }, {
+        image: '../assets/icon/affiche.png',
+        text: '教务公告',
+        url: './news/news',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+      }, {
+        image: '../assets/icon/exam_schedule.png',
+        text: '考试安排',
+        url: './exam',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+      }]
+    }
+    methods = {
+      linkTo(url) {
+        console.log(url)
+        wepy.navigateTo({
+          url
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="less">
+  .modules {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 30rpx;
+    box-shadow: 0px 5px 30px 0px
+    rgba(0, 0, 80, 0.07);
+    padding: 30rpx 71rpx;
+    .module {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .modules_image {
+        width: 80rpx;
+      }
+      .modules_text {
+        font-size: 26rpx;
+        color: #333333;
+        margin-top: 30rpx;
+      }
+    }
+    .modules_dark {
+      filter: opacity(15%) saturate(0%);
+    }
+    .modules_light {
+      filter: opacity(25%) saturate(0%);
+    }
+    .modules_text {
+      font-size: 26rpx;
+      color: #333333;
+    }
+  }
+  .info {
+    padding: 118rpx 0 76rpx;
+    text-align: center;
+    font-size: 26rpx;
+    line-height: 41rpx;
+    color: #999999;
+  }
+  .discover-image {
+    width: 532rpx;
+    margin: 0 auto;
+    display: block;
+  }
+</style>

@@ -1,6 +1,6 @@
 <style lang="less">
-@import './style/weui.less';
-// @import './assets/global.less';
+@import '../style/weui.less';
+@import './assets/global.less';
 </style>
 
 <script>
@@ -33,7 +33,12 @@ export default class extends wepy.app {
       'pages/news/news',
       'pages/news/newsDetail',
       'pages/grade',
-      'pages/exam'
+      'pages/exam',
+      'pages/webview',
+      'pages/discover',
+      'pages/about',
+      'pages/campus',
+      'pages/account'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -42,31 +47,33 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     },
     tabBar: {
-      color: '#999999',
-      selectedColor: '#1AAD19',
+      // color: '#999999',
+      // selectedColor: '#1AAD19',
+      color: '#ccc',
+      selectedColor: '#000',
       backgroundColor: '#fff',
       list: [
         {
           pagePath: 'pages/index',
-          // text: '首页',
+          text: '首页',
           iconPath: './assets/icon/home.png',
           selectedIconPath: './assets/icon/home_selected.png'
         },
         {
-          pagePath: 'pages/test',
-          // text: '校园',
+          pagePath: 'pages/campus',
+          text: '校园',
           iconPath: './assets/icon/campus.png',
           selectedIconPath: './assets/icon/campus_selected.png'
         },
         {
-          pagePath: 'pages/home',
-          // text: '发现',
+          pagePath: 'pages/discover',
+          text: '发现',
           iconPath: './assets/icon/find.png',
           selectedIconPath: './assets/icon/find_selected.png'
         },
         {
-          pagePath: 'pages/home',
-          // text: '我',
+          pagePath: 'pages/account',
+          text: '我',
           iconPath: './assets/icon/account.png',
           selectedIconPath: './assets/icon/account_selected.png'
         }
@@ -94,6 +101,13 @@ export default class extends wepy.app {
         return p
       },
       success (p) {
+        const { data, header } = p
+        if (data.status === 200) {
+          // this.globalData.sessionId = data.sessionId
+          const cookie = header['Set-Cookie']
+          // resolve(cookie)
+          wepy.setStorageSync('app_cookie', cookie)
+        }
         if (p.statusCode === 401) {
           wepy.showModal({
             content: '网络波动，请刷新重试下~',

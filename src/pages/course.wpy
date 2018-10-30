@@ -288,15 +288,15 @@
               wepy.showLoading({
                 title: '课表抓取中'
               })
+              wepy.setStorage({
+                key: 'notFirst',
+                data: true
+              })
               return this.createNewTerm(this.term)
                 .then(() => {
                   return this.getCourse(undefined, undefined, true)
                 })
                 .then(() => {
-                  wepy.setStorage({
-                    key: 'notFirst',
-                    data: true
-                  })
                   this.$apply()
                 })
             } else {

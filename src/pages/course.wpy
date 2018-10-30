@@ -272,6 +272,7 @@
           }
           lessonList[item.sectionstart].push(item)
         })
+        this.courseData = lessonList
         if (flag) {
           this.methods.setCurrentTerm(this.tempTerm)
         }
@@ -365,10 +366,12 @@
         wepy.reLaunch({
           url: '/pages/index'
         })
+        return
       }
       // await this.$parent.globalData.initPromise
       await this.getWeek()
-      this.userInfo = wepy.getStorageSync(this.username)
+      const userInfo = wepy.getStorageSync(this.username)
+      if (userInfo) this.userInfo = userInfo
       const course = this.userInfo.course
       if (course) {
         this.courseData = course

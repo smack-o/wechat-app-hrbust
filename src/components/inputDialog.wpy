@@ -104,7 +104,7 @@
       init
     }
   )
-  export default class InputDialog extends wepy.page {
+  export default class InputDialog extends wepy.component {
     data = {
       captcha: '',
       captchaImage: this.captchaImageProps
@@ -113,7 +113,10 @@
       submitfunc: {
         type: Function
       },
-      captchaImageProps: ''
+      captchaImageProps: {
+        type: String,
+        default: 50
+      }
     }
     computed = {
       canSubmit () {
@@ -125,8 +128,9 @@
       onInputChange (key, event) {
         this[key] = event.detail.value
       },
-      onSubmit: function () {
-        this.submitfunc(this.captcha)
+      onSubmit () {
+        // this.submitfunc(this.captchaImageProps)
+        console.log(this.captchaImageProps, 'this.captchaImageProps')
         // const { username, password, captcha } = this
         // request({
         //   url: '/api/hrbust/login',

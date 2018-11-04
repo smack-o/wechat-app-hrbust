@@ -122,7 +122,7 @@
   padding-top: 200rpx;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .total-wrapper {
   // height: 170rpx;
@@ -235,7 +235,7 @@
           </scroll-view>
         </view>
       </view>
-    <inputdialog wx:if="{{popDialog}}" :submitfunc="onSubmit" :captchaImage="captchaImage"/>
+    <inputdialog wx:if="{{popDialog}}" :submitfunc.sync="onSubmit" captchaImageProps="captchaImage"/>
     </view>
   </view>
 </template>

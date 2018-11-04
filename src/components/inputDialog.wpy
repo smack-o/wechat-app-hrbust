@@ -8,6 +8,7 @@
     right: 0;
     padding: 0 60rpx;
     background: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
   }
   .wraper {
     position: absolute;
@@ -72,16 +73,16 @@
   }
 </style>
 <template>
-  <view class="dialogBox">
-    <view class="wraper">
+  <view class="dialogBox" bindtap="onClose">
+    <view class="wraper" catchtap="onReturn">
       <text class="dialog-title">请输入验证码</text>
       <view class="dialog-body">
           <view class="input-wrapper">
             <input class="input-box" value="{{captcha}}" @input="onInputChange('captcha')" placeholder="请输入图片中的字符" placeholder-class="placeholder"/>
           </view>
           <view style="width: 160rpx; height: 50rpx">
-              <i wx:if="{{!captchaImage}}" class="weui-loading"></i>
-              <image wx:else bindtap="getCaptcha" src="{{captchaImage}}" style="width: 160rpx; height: 50rpx"/>
+              <i wx:if="{{!captchaimageprops}}" class="weui-loading"></i>
+              <image wx:else bindtap="getCaptcha" src="{{captchaimageprops}}" style="width: 160rpx; height: 50rpx"/>
           </view>
       </view>
       <!--<button disabled="{{canSubmit}}" class="weui-btn login-button" type="primary" bindtap="onSubmit">登录</button>-->
@@ -94,26 +95,20 @@
 
 <script>
   import wepy from 'wepy'
-  import { connect } from 'wepy-redux'
+  // import { connect } from 'wepy-redux'
   import { request } from 'utils'
-  import { init } from '../store/actions'
+  // import { init } from '../store/actions'
 
-  @connect(
-    null,
-    {
-      init
-    }
-  )
-  export default class InputDialog extends wepy.page {
+  export default class InputDialog extends wepy.component {
     data = {
       captcha: '',
-      captchaImage: this.captchaImageProps
+      captchaImage: this.captchaimageprops || ''
     }
     props = {
-      submitfunc: {
-        type: Function
-      },
-      captchaImageProps: ''
+      captchaimageprops: {
+        type: String,
+        default: 50
+      }
     }
     computed = {
       canSubmit () {
@@ -126,44 +121,27 @@
         this[key] = event.detail.value
       },
       onSubmit: function () {
-        this.submitfunc(this.captcha)
-        // const { username, password, captcha } = this
-        // request({
-        //   url: '/api/hrbust/login',
-        //   data: {
-        //     username,
-        //     password,
-        //     captcha
-        //   }
-        // })
-        // .then(async (res) => {
-        //   this.methods.init()
-        //   wepy.reLaunch({
-        //     url: './index'
-        //   })
-        // })
-        // .catch((error) => {
-        //   wepy.showModal({
-        //     content: error.message,
-        //     showCancel: false
-        //   })
-        //   // this.getCaptcha()
-        //   this.methods.getCaptcha.bind(this)()
-        // })
+        console.log(this.captchaimageprops)
+        this.$emit('submit-emit', this.captcha)
+      },
+      onClose: function () {
+        this.$emit('closedialog-emit')
+      },
+      onReturn: function () {
+        return false
       },
       getCaptcha () {
-        this.captchaImage = ''
+        this.captchaimageprops = ''
         request({
           url: '/api/hrbust/captcha'
         }).then((res) => {
-          this.captchaImage = res.data.data.captcha
+          this.captchaimageprops = res.data.data.captcha
           this.$apply()
         })
       }
     }
 
     async onLoad() {
-      console.log(this.submitfunc)
       // this.methods.getCaptcha.bind(this)()
     }
   }

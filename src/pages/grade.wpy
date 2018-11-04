@@ -213,7 +213,7 @@
                   <text class="list-text" >{{item.mark}}</text>
                 </view>
                 <view class="list-item passSign">
-                  <text class="list-text" style="color:{{item.passSign === '及格' || item.passSign === '及格标志' ? '#999999' : '#e36363'}}">{{item.passSign}}</text>
+                  <text class="list-text" style="color:{{passSignStyle[item.passSign]}}">{{item.passSign}}</text>
                 </view>
                 <view class="list-item credit">
                   <text class="list-text" >{{item.credit}}</text>
@@ -235,6 +235,7 @@
           </scroll-view>
         </view>
       </view>
+    <inputdialog wx:if="{{popDialog}}" :submitfunc="onSubmit" :captchaImage="captchaImage"/>
     </view>
   </view>
 </template>
@@ -242,6 +243,7 @@
 <script>
   import wepy from 'wepy'
   import Loading from '../components/loading'
+  import InputDialog from '../components/inputDialog'
   import { request, dateFormat } from 'utils'
   import { connect } from 'wepy-redux'
 
@@ -257,12 +259,6 @@
     },
     studentInfo (state) {
       return state.user.studentInfo
-    },
-    currentTerm (state) {
-      return state.currentTerm.currentTerm
-    },
-    tempTerm (state) {
-      return state.currentTerm.tempTerm
     }
   })
   export default class grade extends wepy.page {
@@ -271,7 +267,8 @@
     //   enablePullDownRefresh: true
     }
     components = {
-      loading: Loading
+      loading: Loading,
+      inputdialog: InputDialog
     }
     data = {
       AVERAGE_GPA: '--',
@@ -280,7 +277,10 @@
       showGDP: true,
       term: '',
       showEmpty: false,
+      popDialog: false,
       maxRemarkLength: 8,
+      reqYear: null,
+      reqTerm: null,
       // doNotRefresh: false,
       gradeData: [
         {
@@ -293,7 +293,13 @@
           courseRemark: '备注',
           courseCharacter: '考试性质'
         }
-      ]
+      ],
+      passSignStyle: {
+        '及格': '#cccccc',
+        '及格标志': '#999999',
+        '无成绩': '#e36363',
+        '不及格': '#e36363'
+      }
     }
     computed = {
       now () {
@@ -322,6 +328,9 @@
         const term = this.terms[e.detail.value]
         this.term = term
         this.getGrade(this.term.split(' ')[0], this.term.split(' ')[1])
+      },
+      onSubmit(captcha) {
+        this.getGrade(this.reqYear, this.reqTerm, captcha)
       }
     }
 
@@ -350,8 +359,9 @@
       await this.getGrade(academicYear, academicTerm)
       this.$apply()
     }
-
-    getGrade(year, term) {
+    getGrade (year, term, captcha = '') {
+      this.reqYear = year
+      this.reqTerm = term
       this.showEmpty = false
       wepy.showLoading({
         title: '正在加载数据'
@@ -370,6 +380,9 @@
         this.OBLIGATORY_AVERAGE_GPA = '--'
         this.maxRemarkLength = 8
       }
+      if (captcha !== '') {
+        data.captcha = captcha
+      }
       let reqURL = `/api/hrbust/grade?year=${data.year}&term=${data.term}`
       return request({
         url: reqURL
@@ -377,7 +390,6 @@
         const resData = res.data.data
         const list = resData.grades
         if (list.length === 0) {
-          console.log('kong')
           this.showEmpty = true
           console.log(this.showEmpty)
         } else {
@@ -407,6 +419,7 @@
         }
         this.$apply()
         wepy.hideLoading()
+        this.popDialog = true
       })
       .catch((e) => {
         this.showError(this, e)

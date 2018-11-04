@@ -17,7 +17,7 @@
       width: 630rpx;
       height: 260rpx;
       border-radius: 16rpx;
-      box-shadow: 0 15rpx 30rpx 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 15rpx 16rpx 0 rgba(20, 20, 20, 0.1);
     }
   }
 }
@@ -142,7 +142,8 @@
 <template>
   <view>
     <loading wx:if="{{loading}}" />
-    <view wx:else class="container">
+    <view wx:else 
+      class="container">
       <swiper
         bindchange="slideChange"
         class="slide-wrapper"
@@ -239,6 +240,7 @@
           </view>
         </view>
       </view>
+    </view>
   </view>
 </template>
 
@@ -278,25 +280,25 @@
         text: '课表',
         url: './course',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
       }, {
         image: '../assets/icon/grade.png',
         text: '成绩查询',
         url: './grade',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
       }, {
         image: '../assets/icon/affiche.png',
         text: '教务公告',
         url: './news/news',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
       }, {
         image: '../assets/icon/exam_schedule.png',
         text: '考试安排',
         url: './exam',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
       }
       // {
       //   image: '../assets/icon/news_icon.png',
@@ -345,6 +347,7 @@
         return +new Date()
       },
       hrbustLogin () {
+        console.log(this.studentInfo)
         return this.studentInfo && this.studentInfo.username
         // return false
       }

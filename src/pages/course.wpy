@@ -184,7 +184,7 @@
       changeWeek (event) {
         this.slectedWeek = event.detail.value
         this.thisWeek = parseInt(this.weeks[event.detail.value])
-        this.selectOpen = !this.selectOpen
+        this.selectOpen = false
       },
 
       async syncCourse () {
@@ -253,7 +253,7 @@
         }
         this.termId = res.data.data.courseTermId
         let lessonList = []
-        let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen']
+        let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen', 'deepgreen-1', 'deepgreen-2', 'deepgreen-3']
         let courseIdList = {}
         for (let i = 0; i < 10; i++) {
           lessonList[i] = []
@@ -262,13 +262,12 @@
         data.forEach((item, index) => {
           if (item.sectionstart < 10) {
             if (!courseIdList[item.courseId]) {
-              courseIdList[item.courseId] = classList[classIndex % 8]
-              item.class = classList[classIndex % 8]
+              courseIdList[item.courseId] = classList[classIndex % 11]
+              item.class = classList[classIndex % 11]
               classIndex++
             } else {
               item.class = courseIdList[item.courseId]
             }
-            lessonList[item.sectionstart].push(item)
           }
           lessonList[item.sectionstart].push(item)
         })
@@ -426,6 +425,15 @@
 }
 .this-week.deepgreen {
   background-color: #70ec54!important;
+}
+.this-week.deepgreen-1 {
+  background-color: #898800!important;
+}
+.this-week.deepgreen-2 {
+  background-color: #A569BD!important;
+}
+.this-week.deepgreen-3 {
+  background-color: #EC7063!important;
 }
 
 .wrap {

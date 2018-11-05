@@ -122,7 +122,7 @@
   padding-top: 200rpx;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .total-wrapper {
   // height: 170rpx;
@@ -235,7 +235,7 @@
           </scroll-view>
         </view>
       </view>
-    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage"/>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg"/>
     </view>
   </view>
 </template>
@@ -279,6 +279,7 @@
       showEmpty: false,
       popDialog: false,
       captchaImage: '',
+      errormsg: '',
       maxRemarkLength: 8,
       reqYear: null,
       reqTerm: null,
@@ -367,6 +368,7 @@
       this.$apply()
     }
     getGrade (year, term, captcha = '') {
+      this.errormsg = ''
       this.reqYear = year
       this.reqTerm = term
       this.showEmpty = false
@@ -397,7 +399,10 @@
       }).then((res) => {
         const resData = res.data.data
         console.log(res)
-        if (res.data.status === 400005 || res.data.status === 400002) {
+        if (res.data.status === 400001) {
+          this.errormsg = '您输入的验证码错误'
+        }
+        if (res.data.status === 400005 || res.data.status === 400001) {
           this.captchaImage = resData.captcha
           console.log(this.captchaImage)
           this.popDialog = true

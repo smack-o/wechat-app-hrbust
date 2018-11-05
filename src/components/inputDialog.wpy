@@ -71,6 +71,12 @@
     color: #999999;
     text-align: center;
   }
+  .placeholderErr {
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #e36363;
+    text-align: center;
+  }
 </style>
 <template>
   <view class="dialogBox" bindtap="onClose">
@@ -78,7 +84,7 @@
       <text class="dialog-title">请输入验证码</text>
       <view class="dialog-body">
           <view class="input-wrapper">
-            <input class="input-box" value="{{captcha}}" @input="onInputChange('captcha')" placeholder="请输入图片中的字符" placeholder-class="placeholder"/>
+            <input class="input-box" value="{{captcha}}" @input="onInputChange('captcha')" placeholder="{{errormsg ? errormsg :'请输入图片中的字符'}}" placeholder-class="{{errormsg ? 'placeholderErr' : 'placeholder'}}"/>
           </view>
           <view style="width: 160rpx; height: 50rpx">
               <i wx:if="{{!captchaimageprops}}" class="weui-loading"></i>
@@ -101,13 +107,16 @@
 
   export default class InputDialog extends wepy.component {
     data = {
-      captcha: '',
-      captchaImage: this.captchaimageprops || ''
+      captcha: ''
     }
     props = {
       captchaimageprops: {
         type: String,
-        default: 50
+        default: ''
+      },
+      errormsg: {
+        type: String,
+        default: ''
       }
     }
     computed = {
@@ -123,9 +132,12 @@
       onSubmit: function () {
         console.log(this.captchaimageprops)
         this.$emit('submit-emit', this.captcha)
+        this.captcha = ''
+        this.$emit('closedialog-emit')
       },
       onClose: function () {
         this.$emit('closedialog-emit')
+        this.captcha = ''
       },
       onReturn: function () {
         return false

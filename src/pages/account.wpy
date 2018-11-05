@@ -12,7 +12,7 @@
       </view>
     </view>
     <view class="other">
-      <view class="item">
+      <view wx:if="{{isLogin}}" class="item" @tap="logout">
         <image class="image" src="../assets/icon/remove_binding.png"/>
         <view class="info">
           <view>解除绑定</view>
@@ -33,7 +33,8 @@
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
-
+  import { init } from '../store/actions'
+  import { request } from 'utils'
   @connect({
     loading (state) {
       return state.user.loading
@@ -44,15 +45,41 @@
     studentInfo(state) {
       return state.user.studentInfo
     }
+  }, {
+    init
   })
   export default class Account extends wepy.page {
     config = {
       navigationBarTitleText: '个人中心'
     }
+    logoutHander () {
+      request({
+        url: '/api/hrbust/logout'
+      })
+      .then(async (res) => {
+        this.methods.init().then(() => {
+          wepy.reLaunch({
+            url: './index'
+          })
+        })
+      })
+    }
     methods = {
       linkTo(url) {
         wepy.navigateTo({
           url
+        })
+      },
+      logout() {
+        const that = this
+        wepy.showModal({
+          title: '确定要解绑学号？',
+          content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
+          success (res) {
+            if (res.confirm) {
+              that.logoutHander.bind(that)()
+            }
+          }
         })
       }
     }

@@ -16,14 +16,14 @@
         <image class="image" src="../assets/icon/remove_binding.png"/>
         <view class="info">
           <view>解除绑定</view>
-          <view>></view>
+          <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
         </view>
       </view>
       <button class="item button" open-type="contact">
         <image class="image" src="../assets/icon/contact.png"/>
         <view class="info">
           <view>联系阿喵</view>
-          <view>></view>
+          <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
         </view>
       </button>
     </view>
@@ -127,6 +127,7 @@
       height: 35rpx;
     }
     .info {
+      height: 120rpx;
       box-sizing: border-box;
       font-size: 26rpx;
       margin-left: 8rpx;
@@ -136,6 +137,7 @@
       border-bottom: 1rpx solid#eeeeee;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
   }
 }
@@ -155,5 +157,9 @@
   &::after {
     border: none;
   }
+}
+.arrow-right {
+  width: 12rpx;
+  height: 20rpx;
 }
 </style>

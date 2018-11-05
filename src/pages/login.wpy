@@ -116,9 +116,10 @@
           }
         })
         .then(async (res) => {
-          this.methods.init()
-          wepy.reLaunch({
-            url: './index'
+          this.methods.init().then(() => {
+            wepy.reLaunch({
+              url: './index'
+            })
           })
         })
         .catch((error) => {

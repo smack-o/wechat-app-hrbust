@@ -20,6 +20,7 @@
         </view>
       </view>
     </loadmore>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="exam"/>
   </view>
 </template>
 
@@ -27,6 +28,7 @@
   import wepy from 'wepy'
   import { request } from 'utils'
   import LoadMore from 'components/loadmore'
+  import InputDialog from '../components/inputDialog'
   // import moment from 'moment'
   // moment.locale('zh-cn')
 
@@ -37,11 +39,14 @@
     data = {
       list: [],
       page: 1,
-      loading: false
+      loading: false,
+      popDialog: false,
+      captchaImage: ''
     }
 
     components = {
-      loadmore: LoadMore
+      loadmore: LoadMore,
+      inputdialog: InputDialog
     }
 
     onLoad () {
@@ -68,12 +73,25 @@
         })
       }
     }
-    getList(page = 1, needConcat) {
+    getList(page = 1, needConcat, captcha = '') {
+      let reqURL = `/api/hrbust/exam?page=${page}`
+      if (captcha !== '') {
+        reqURL = `/api/hrbust/exam?page=${page}&captcha=${captcha}`
+      }
       return request({
-        url: `/api/hrbust/exam?page=${page}`
+        url: reqURL
       }).then((res) => {
         let list = res.data.data || []
-
+        if (res.data.status === 400001) {
+          this.errormsg = '您输入的验证码错误'
+        }
+        if (res.data.status === 400005 || res.data.status === 400001) {
+          this.captchaImage = res.data.data.captcha
+          this.popDialog = true
+          this.$apply()
+          wepy.hideLoading()
+          return
+        }
         if (!needConcat && (!list || list.length === 0)) {
           // 第一次加载没有数据
           this.showError(this, '没有拉取到数据~请稍后重试')
@@ -120,6 +138,18 @@
           }
         }
       })
+    }
+    events = {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'exam') {
+          return
+        }
+        this.page = 1
+        this.getList(this.page, null, captcha)
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
+      }
     }
   }
 </script>

@@ -122,7 +122,7 @@
   padding-top: 200rpx;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .total-wrapper {
   // height: 170rpx;
@@ -235,7 +235,7 @@
           </scroll-view>
         </view>
       </view>
-    <inputdialog wx:if="{{popDialog}}" :submitfunc="onSubmit" :captchaImage="captchaImage"/>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg"/>
     </view>
   </view>
 </template>
@@ -278,6 +278,8 @@
       term: '',
       showEmpty: false,
       popDialog: false,
+      captchaImage: '',
+      errormsg: '',
       maxRemarkLength: 8,
       reqYear: null,
       reqTerm: null,
@@ -328,9 +330,15 @@
         const term = this.terms[e.detail.value]
         this.term = term
         this.getGrade(this.term.split(' ')[0], this.term.split(' ')[1])
-      },
-      onSubmit(captcha) {
+      }
+    }
+    events = {
+      'submit-emit': (captcha) => {
         this.getGrade(this.reqYear, this.reqTerm, captcha)
+        console.log('it is ok', captcha)
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
       }
     }
 
@@ -360,6 +368,7 @@
       this.$apply()
     }
     getGrade (year, term, captcha = '') {
+      this.errormsg = ''
       this.reqYear = year
       this.reqTerm = term
       this.showEmpty = false
@@ -380,14 +389,27 @@
         this.OBLIGATORY_AVERAGE_GPA = '--'
         this.maxRemarkLength = 8
       }
+      let reqURL = `/api/hrbust/grade?year=${data.year}&term=${data.term}`
       if (captcha !== '') {
         data.captcha = captcha
+        reqURL = `/api/hrbust/grade?year=${data.year}&term=${data.term}&captcha=${data.captcha}`
       }
-      let reqURL = `/api/hrbust/grade?year=${data.year}&term=${data.term}`
       return request({
         url: reqURL
       }).then((res) => {
         const resData = res.data.data
+        console.log(res)
+        if (res.data.status === 400001) {
+          this.errormsg = '您输入的验证码错误'
+        }
+        if (res.data.status === 400005 || res.data.status === 400001) {
+          this.captchaImage = resData.captcha
+          console.log(this.captchaImage)
+          this.popDialog = true
+          this.$apply()
+          wepy.hideLoading()
+          return
+        }
         const list = resData.grades
         if (list.length === 0) {
           this.showEmpty = true
@@ -419,7 +441,6 @@
         }
         this.$apply()
         wepy.hideLoading()
-        this.popDialog = true
       })
       .catch((e) => {
         this.showError(this, e)

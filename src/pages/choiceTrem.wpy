@@ -102,8 +102,7 @@
     }
 
     async onLoad () {
-      const [getHasCourseTermsError] = await this.to(this.getHasCourseTerms())
-      if (getHasCourseTermsError) return
+      await this.to(this.getHasCourseTerms())
     }
   }
 </script>

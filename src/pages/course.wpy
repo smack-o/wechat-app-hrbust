@@ -193,9 +193,10 @@
         })
         this.selectOpen = !this.selectOpen
 
-        await this.createNewTerm(this.term)
-        await this.getCourse(undefined, undefined, true)
-        this.$apply()
+        const [createNewTermError] = await this.to(this.createNewTerm(this.term))
+        if (createNewTermError) return
+
+        this.getCourseHandel(undefined, undefined, true)
       },
 
       detailHandler (event) {
@@ -228,136 +229,139 @@
     }
 
     watch = {
-      tempTerm (newVal, oldVal) {
-        this.getCourse(newVal, true, true)
+      async tempTerm (newVal, oldVal) {
+        this.getCourseHandel(newVal, true, true)
       }
     }
 
-    getCourse (term, flag, updatedStorage) {
-      wepy.showLoading({
-        title: '正在加载数据'
+    async getWeek () {
+      const [err, res] = await this.to(request({
+        url: '/api/hrbust/week'
+      }))
+      if (err) {
+        return Promise.reject('获取周数错误')
+      }
+
+      const getWeekData = res.data.data
+
+      let slectedWeek = 0
+      const weeks = Array.from(new Array(30), (val, index) => index + 1)
+      const tWeeks = weeks.map((item, index) => {
+        if (getWeekData.week === item) {
+          slectedWeek = index
+          return `${item}`
+        }
+        return item
       })
+      this.thisWeek = getWeekData.week
+      this.thisWeekNum = getWeekData.week
+      this.term = getWeekData.term
+      this.weeks = tWeeks
+      this.methods.setCurrentTerm(getWeekData.term)
+      this.slectedWeek = slectedWeek
+      this.$apply()
+
+      return Promise.resolve()
+    }
+
+    async getCourse (term, flag, updatedStorage) {
+      wepy.showLoading({
+        title: '正在加载课表'
+      })
+
       if (term === undefined) {
         term = this.term
       }
-      return request({
+
+      const [err, res] = await this.to(request({
         url: '/api/hrbust/course',
-        data: {
-          term
-        }
-      })
-      .then((res) => {
-        let data = res.data.data.course
-        if (!data) {
-          throw new Error('课表为空')
-        }
-        this.termId = res.data.data.courseTermId
-        let lessonList = []
-        let classList = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen', 'deepgreen-1', 'deepgreen-2', 'deepgreen-3']
-        let courseIdList = {}
-        for (let i = 0; i < 10; i++) {
-          lessonList[i] = []
-        }
-        let classIndex = 0
-        data.forEach((item, index) => {
-          if (item.sectionstart < 10) {
-            if (!courseIdList[item.courseId]) {
-              courseIdList[item.courseId] = classList[classIndex % 11]
-              item.class = classList[classIndex % 11]
-              classIndex++
-            } else {
-              item.class = courseIdList[item.courseId]
-            }
-          }
-          lessonList[item.sectionstart].push(item)
-        })
-        this.courseData = lessonList
-        if (flag) {
-          this.methods.setCurrentTerm(this.tempTerm)
-        }
-        if (updatedStorage) {
-          this.userInfo.course = lessonList
-          wepy.setStorage({
-            key: this.username,
-            data: this.userInfo
-          })
-        }
-        wepy.hideLoading()
+        data: { term }
+      }))
+      if (err) {
         wepy.showToast({
-          title: '拉取数据成功',
-          icon: 'success',
+          title: '拉取数据失败',
+          image: '../assets/icon/error_icon.png',
           duration: 1000
         })
+        return Promise.reject('获取课表失败')
+      }
+
+      const getCourseData = res.data.data.course
+      this.termId = res.data.data.courseTermId
+
+      if (!getCourseData) return Promise.reject('课表为空')
+
+      let courseList = []
+      let courseIdList = {}
+      let courseCardStyleMap = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen', 'deepgreen-1', 'deepgreen-2', 'deepgreen-3']
+      let courseCardStyleIndex = 0
+
+      for (let i = 0; i < 10; i++) {
+        courseList[i] = []
+      }
+
+      getCourseData.forEach((courseItem, index) => {
+        if (!courseIdList[courseItem.courseId]) {
+          let cardClassName = courseCardStyleMap[courseCardStyleIndex % 11]
+          courseIdList[courseItem.courseId] = cardClassName
+          courseItem.class = cardClassName
+          courseCardStyleIndex++
+        } else {
+          courseItem.class = courseIdList[courseItem.courseId]
+        }
+        courseList[courseItem.sectionstart].push(courseItem)
       })
-      .catch((e) => {
-        if (e.message === '课表为空') {
-          const userInfo = wepy.getStorageSync(this.username)
+
+      this.courseData = courseList
+      this.$apply()
+
+      if (flag) {
+        this.methods.setCurrentTerm(this.tempTerm)
+      }
+
+      if (updatedStorage) {
+        this.userInfo.course = courseList
+        wepy.setStorage({
+          key: this.username,
+          data: this.userInfo
+        })
+      }
+
+      wepy.hideLoading()
+      wepy.showToast({
+        title: '拉取数据成功',
+        icon: 'success',
+        duration: 1000
+      })
+      return Promise.resolve()
+    }
+
+    async getCourseHandel (term, flag, updatedStorage) {
+      const [getCourseError] = await this.to(this.getCourse(term, flag, updatedStorage))
+      if (getCourseError) {
+        if (getCourseError === '课表为空') {
+          const userInfo = wepy.getStorageSync(this.username) || {}
+
           if (!userInfo.notFirst) {
-            wepy.showLoading({
-              title: '课表抓取中'
-            })
+            const [createNewTermError] = await this.to(this.createNewTerm(this.term))
+            if (createNewTermError) return
+
             this.userInfo.notFirst = true
             wepy.setStorage({
               key: this.username,
               data: this.userInfo
             })
-            return this.createNewTerm(this.term)
-              .then(() => {
-                return this.getCourse(undefined, undefined, true)
-              })
-              .then(() => {
-                this.$apply()
-              })
+
+            this.getCourseHandel(undefined, undefined, true)
           } else {
             wepy.showToast({
               title: '课表为空',
               image: '../assets/icon/icon_info.png',
               duration: 1000
             })
-            wepy.hideLoading()
           }
-        } else {
-          wepy.showToast({
-            title: '拉取数据失败',
-            image: '../assets/icon/error_icon.png',
-            duration: 1000
-          })
-          return Promise.reject('获取课表失败')
         }
-      })
-    }
-
-    getWeek () {
-      let slectedWeek = 0
-      return request({
-        url: '/api/hrbust/week'
-      })
-      .then((res) => {
-        const data = res.data.data
-        const weeks = Array.from(new Array(30), (val, index) => index + 1)
-        const tWeeks = weeks.map((item, index) => {
-          if (data.week === item) {
-            slectedWeek = index
-            return `${item}`
-          }
-          return item
-        })
-
-        this.thisWeek = data.week
-        this.thisWeekNum = data.week
-        this.term = data.term
-        this.weeks = tWeeks
-        this.methods.setCurrentTerm(data.term)
-        this.slectedWeek = slectedWeek
-        this.$apply()
-      })
-      .catch(() => {
-        wepy.showModal({
-          content: '服务器获取当前周数错误，请稍候重试',
-          showCancel: false
-        })
-        return Promise.reject('获取周数错误')
-      })
+      }
     }
 
     async onLoad () {
@@ -367,31 +371,39 @@
         })
         return
       }
-      // await this.$parent.globalData.initPromise
-      await this.getWeek()
+
+      const [getWeekError] = await this.to(this.getWeek())
+      if (getWeekError) {
+        return wepy.showModal({
+          content: '服务器获取当前周数错误，请稍候重试',
+          showCancel: false
+        })
+      }
+
       const userInfo = wepy.getStorageSync(this.username)
       if (userInfo) this.userInfo = userInfo
       const course = this.userInfo.course
+
       if (course) {
         this.courseData = course
+        this.$apply()
       } else {
-        await this.getCourse(undefined, undefined, true)
+        this.getCourseHandel(undefined, undefined, true)
       }
-      this.$apply()
     }
 
-    onPullDownRefresh() {
-      this.getWeek()
-        .then(() => {
-          return this.getCourse(undefined, undefined, true)
+    async onPullDownRefresh() {
+      const [getWeekError] = await this.to(this.getWeek())
+      if (getWeekError) {
+        wepy.stopPullDownRefresh()
+        return wepy.showModal({
+          content: '服务器获取当前周数错误，请稍候重试',
+          showCancel: false
         })
-        .then(() => {
-          wepy.stopPullDownRefresh()
-          this.$apply()
-        })
-        .catch(() => {
-          wepy.stopPullDownRefresh()
-        })
+      }
+
+      this.getCourseHandel(undefined, undefined, true)
+      wepy.stopPullDownRefresh()
     }
 
     onHide () {

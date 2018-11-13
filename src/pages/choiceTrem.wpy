@@ -59,24 +59,24 @@
     mixins = [courseMixin]
 
     methods = {
-      changeTrem (event) {
+      async changeTrem (event) {
         wepy.showLoading({
           title: '课表抓取中'
         })
 
-        this.createNewTerm(event.detail.value)
-          .then(() => {
-            return this.getHasCourseTerms()
-          })
-          .then(() => {
-            this.methods.setTempTerm(event.detail.value)
+        const [createNewTermError] = await this.to(this.createNewTerm(event.detail.value))
+        if (createNewTermError) return
 
-            wepy.showToast({
-              title: '成功创建学期',
-              icon: 'success',
-              duration: 1000
-            })
-          })
+        const [getHasCourseTermsError] = await this.to(this.getHasCourseTerms())
+        if (getHasCourseTermsError) return
+
+        this.methods.setTempTerm(event.detail.value)
+
+        wepy.showToast({
+          title: '成功创建学期',
+          icon: 'success',
+          duration: 1000
+        })
       },
 
       setTerm (event) {
@@ -84,26 +84,25 @@
       }
     }
 
-    getHasCourseTerms () {
-      return request({
+    async getHasCourseTerms () {
+      const [err, res] = await this.to(request({
         url: '/api/hrbust/getHasCourseTerms'
-      })
-        .then((res) => {
-          this.hasCourseTerms = res.data.data
-          this.$apply()
+      }))
+      if (err) {
+        wepy.showToast({
+          title: '获取学期列表失败',
+          image: '../assets/icon/error_icon.png',
+          duration: 1000
         })
-        .catch(() => {
-          wepy.showToast({
-            title: '获取列表失败',
-            image: '../assets/icon/error_icon.png',
-            duration: 1000
-          })
-          return Promise.reject('获取学期列表失败')
-        })
+        return Promise.reject('获取学期列表失败')
+      }
+
+      this.hasCourseTerms = res.data.data
+      this.$apply()
     }
 
-    onLoad () {
-      this.getHasCourseTerms()
+    async onLoad () {
+      await this.to(this.getHasCourseTerms())
     }
   }
 </script>

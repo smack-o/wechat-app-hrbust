@@ -117,6 +117,10 @@
       errormsg: {
         type: String,
         default: ''
+      },
+      pagetag: {
+        type: String,
+        default: ''
       }
     }
     computed = {
@@ -130,8 +134,7 @@
         this[key] = event.detail.value
       },
       onSubmit: function () {
-        console.log(this.captchaimageprops)
-        this.$emit('submit-emit', this.captcha)
+        this.$emit('submit-emit', this.captcha, this.pagetag)
         this.captcha = ''
         this.$emit('closedialog-emit')
       },

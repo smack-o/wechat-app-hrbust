@@ -235,7 +235,7 @@
           </scroll-view>
         </view>
       </view>
-    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg"/>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="grade"/>
     </view>
   </view>
 </template>
@@ -333,9 +333,11 @@
       }
     }
     events = {
-      'submit-emit': (captcha) => {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'grade') {
+          return
+        }
         this.getGrade(this.reqYear, this.reqTerm, captcha)
-        console.log('it is ok', captcha)
       },
       'closedialog-emit': () => {
         this.popDialog = false
@@ -349,17 +351,13 @@
       const computedDate = dateFormat(time, 'Mdd')
       let academicYear
       let academicTerm
-      console.log(computedDate)
       if (computedDate <= 220) {
-        console.log('上一年下学期')
         academicYear = natureYear - 1
         academicTerm = '秋'
       } else if (computedDate > 220 && computedDate <= 820) {
-        console.log('本年上学期')
         academicYear = natureYear
         academicTerm = '春'
       } else if (computedDate > 820) {
-        console.log('本年下学期')
         academicYear = natureYear
         academicTerm = '秋'
       }
@@ -398,13 +396,11 @@
         url: reqURL
       }).then((res) => {
         const resData = res.data.data
-        console.log(res)
         if (res.data.status === 400001) {
           this.errormsg = '您输入的验证码错误'
         }
         if (res.data.status === 400005 || res.data.status === 400001) {
           this.captchaImage = resData.captcha
-          console.log(this.captchaImage)
           this.popDialog = true
           this.$apply()
           wepy.hideLoading()
@@ -413,7 +409,6 @@
         const list = resData.grades
         if (list.length === 0) {
           this.showEmpty = true
-          console.log(this.showEmpty)
         } else {
           this.showEmpty = false
           this.AVERAGE_GPA = `${resData.AVERAGE_GPA}`
@@ -422,7 +417,6 @@
           if (this.AVERAGE_GPA === 'NaN' || this.AVERAGE_GRADE === 'NaN' || this.OBLIGATORY_AVERAGE_GPA === 'NaN') {
             this.showGDP = false
           }
-          console.log(this.showEmpty)
           list.map((item, index) => {
             let itemObj = {}
             itemObj.gradeName = item.courseName ? item.courseName : '--'
@@ -437,7 +431,6 @@
             this.gradeData.push(itemObj)
             this.maxRemarkLength = itemObj.courseRemark.length > this.maxRemarkLength ? itemObj.courseRemark.length : this.maxRemarkLength
           })
-          console.log(this.maxRemarkLength)
         }
         this.$apply()
         wepy.hideLoading()

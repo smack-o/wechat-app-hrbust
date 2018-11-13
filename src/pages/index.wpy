@@ -354,11 +354,7 @@
 
     methods = {
       slideChange(e) {
-        // console.log(e.detail.current)
-          // currentSlideIdx: e.detail.current
         this.currentSlideIdx = e.detail.current
-        // console.log(this.currentSlideIdx)
-        // wepy.navigateTo(url)
       },
       linkTo(url) {
         wepy.navigateTo({
@@ -366,11 +362,9 @@
         })
       },
       linkToWebView(url) {
-        // console.log(url)
         wepy.navigateTo({
           url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
         })
-        // console.log(this.currentSlideIdx)
       }
     }
 

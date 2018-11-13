@@ -49,6 +49,7 @@
       this.getList()
     }
     onPullDownRefresh() {
+      this.page = 1
       this.getList().then(() => {
         wepy.stopPullDownRefresh()
         wepy.showToast({

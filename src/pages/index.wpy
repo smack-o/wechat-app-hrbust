@@ -142,7 +142,7 @@
 <template>
   <view>
     <loading wx:if="{{loading}}" />
-    <view wx:else 
+    <view wx:else
       class="container">
       <swiper
         bindchange="slideChange"
@@ -347,7 +347,6 @@
         return +new Date()
       },
       hrbustLogin () {
-        console.log(this.studentInfo)
         return this.studentInfo && this.studentInfo.username
         // return false
       }
@@ -358,7 +357,7 @@
         // console.log(e.detail.current)
           // currentSlideIdx: e.detail.current
         this.currentSlideIdx = e.detail.current
-        console.log(this.currentSlideIdx)
+        // console.log(this.currentSlideIdx)
         // wepy.navigateTo(url)
       },
       linkTo(url) {

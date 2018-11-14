@@ -62,7 +62,7 @@
     }
     getList(page = 1, needConcat) {
       return request({
-        url: `/api/hrbust/news?page=${page}`
+        url: `/api/news?page=${page}`
       }).then((res) => {
         const list = res.data.data
         if (!needConcat && (!list || list.length === 0)) {
@@ -115,7 +115,7 @@
     methods = {
       viewDetail(event) {
         const id = event.currentTarget.dataset.id
-        const url = `${host}/api/hrbust/news/${id}`
+        const url = `${host}/api/news/${id}`
         wepy.navigateTo({
           url: `../webview?url=${encodeURIComponent(url)}`
           // url: `/pages/news/newsDetail?id=${id}`

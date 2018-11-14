@@ -9,7 +9,7 @@
   justify-content: center;
   flex-direction: column;
   background: rgba(0, 0, 0, 0);
-  // background-color: #f5f; 
+  // background-color: #f5f;
   // height: 300rpx;
   .image {
     width: 200rpx;
@@ -29,7 +29,7 @@
   height: 100%;
 }
 .loadingPadding {
-  // background-color: #f5f; 
+  // background-color: #f5f;
   height: 300rpx;
 }
 </style>
@@ -69,7 +69,7 @@
     methods = {
       tap () {
         // this.num = this.num + 1
-        console.log(this.$name + ' tap')
+        // console.log(this.$name + ' tap')
       },
       add () {
         let len = this.list.length
@@ -78,8 +78,8 @@
     }
 
     onLoad () {
-      console.log(this.loadingStyle, this.loadingStyle === 'padding')
-      console.log(this.loadingStyleData)
+      // console.log(this.loadingStyle, this.loadingStyle === 'padding')
+      // console.log(this.loadingStyleData)
     }
   }
 </script>

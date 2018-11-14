@@ -1,7 +1,9 @@
 <template>
   <view class="account">
     <view class="user">
-      <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
+      <div class="avatar-wrapper">
+        <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
+      </div>
       <view wx:if="{{!isLogin}}" class="button" @tap="linkTo('./login')">登录</view>
       <view wx:else class="info">
         <view class="name"><open-data type="userNickName" lang="zh_CN"></open-data></view>
@@ -105,6 +107,12 @@
     width: 150rpx;
     height: 150rpx;
     border-radius: 50%;
+  }
+  .avatar-wrapper {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 50%;
+    overflow: hidden;
     margin-right: 60rpx;
   }
   .button {

@@ -277,7 +277,7 @@
       isLoading: true,
       modules: [{
         image: '../assets/icon/course.png',
-        text: '课表',
+        text: '课程表',
         url: './course',
         needLogin: true,
         shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'

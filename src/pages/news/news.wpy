@@ -17,7 +17,7 @@
 
 <script>
   import wepy from 'wepy'
-  import { request } from 'utils'
+  import { request, host } from 'utils'
   import LoadMore from 'components/loadmore'
 
   export default class News extends wepy.page {
@@ -115,8 +115,10 @@
     methods = {
       viewDetail(event) {
         const id = event.currentTarget.dataset.id
+        const url = `${host}/api/hrbust/news/${id}`
         wepy.navigateTo({
-          url: `/pages/news/newsDetail?id=${id}`
+          url: `../webview?url=${encodeURIComponent(url)}`
+          // url: `/pages/news/newsDetail?id=${id}`
         })
       }
     }

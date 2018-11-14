@@ -42,7 +42,7 @@ export default class extends wepy.app {
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#fafafa',
       navigationBarTitleText: '理工喵',
       navigationBarTextStyle: 'black'
     },
@@ -138,7 +138,7 @@ export default class extends wepy.app {
       })
     }, 1000)
   }
-  onLaunch() {
+  onShow() {
     this.methods.init()
     // this.globalData.initPromise = this.init()
     // this.globalData.getUserInfo = this.getUserInfo.bind(this)

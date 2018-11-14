@@ -1,6 +1,6 @@
 <template>
   <view class="news">
-    <loading wx:if="{{loading}}" />
+    <!-- <loading wx:if="{{loading}}" /> -->
     <loadmore :list.sync="list" :loading.sync="loading">
       <view class="news-item {{item.ending && 'ending'}}" wx:key="news" wx:for="{{list}}" wx:for-index="index">
         <view class="news-wrapper">
@@ -91,7 +91,7 @@
           this.captchaImage = res.data.data.captcha
           this.popDialog = true
           this.$apply()
-          wepy.hideLoading()
+          // wepy.hideLoading()
           return
         }
         if (!needConcat && (!list || list.length === 0)) {

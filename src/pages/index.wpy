@@ -336,7 +336,7 @@
       autoplay: false,
       circular: true,
       interval: 5000,
-      duration: 1000,
+      duration: 400,
       swiperItemMargin: '45rpx',
       currentSlideIdx: 0,
       mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'

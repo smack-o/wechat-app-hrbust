@@ -1,26 +1,24 @@
 <template>
   <view class="news">
-    <loading wx:if="{{loading}}" />
-    <loadmore :list.sync="list" :loading.sync="loading">
-      <view class="news-item {{item.ending && 'ending'}}" wx:key="news" wx:for="{{list}}" wx:for-index="index">
-        <view class="news-wrapper">
-          <view class="news-message">
-            <view class="flex-box">
-              <view class="date">{{item.date}}</view>
-              <view class="time">{{item.time}}</view>
-            </view>
-            <view class="flex-box">
-              <view class="course">{{item.course}}</view>
-              <view class="dateExtend">{{item.dateExtend}}</view>
-            </view>
-            <view class="flex-box align-right">
-              <view class="position">{{item.position}}</view>
-              <view class="info {{item.info === '重考' ? 'text-red' : ''}}">{{item.info}}</view>
-            </view>
+    <loading wx:if="{{loading}}" :loadingStyle="{{loadingStyle}}"/>
+    <view class="news-item {{item.ending && 'ending'}}" wx:key="news" wx:for="{{list}}" wx:for-index="index">
+      <view class="news-wrapper">
+        <view class="news-message">
+          <view class="flex-box">
+            <view class="date">{{item.date}}</view>
+            <view class="time">{{item.time}}</view>
+          </view>
+          <view class="flex-box">
+            <view class="course">{{item.course}}</view>
+            <view class="dateExtend">{{item.dateExtend}}</view>
+          </view>
+          <view class="flex-box align-right">
+            <view class="position">{{item.position}}</view>
+            <view class="info {{item.info === '重考' ? 'text-red' : ''}}">{{item.info}}</view>
           </view>
         </view>
       </view>
-    </loadmore>
+    </view>
     <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="exam"/>
   </view>
 </template>
@@ -28,11 +26,19 @@
 <script>
   import wepy from 'wepy'
   import { request } from 'utils'
-  import LoadMore from 'components/loadmore'
+  import Loading from '../components/loading'
   import InputDialog from '../components/inputDialog'
+  import { setLoading } from '../store/actions'
+  import { connect } from 'wepy-redux'
   // import moment from 'moment'
   // moment.locale('zh-cn')
-
+  @connect({
+    loading (state) {
+      return state.user.loading
+    }
+  }, {
+    setLoading
+  })
   export default class Exam extends wepy.page {
     config = {
       enablePullDownRefresh: true
@@ -40,13 +46,14 @@
     data = {
       list: [],
       page: 1,
-      loading: false,
+      // loading: false,
+      loadingStyle: 'screen',
       popDialog: false,
       captchaImage: ''
     }
 
     components = {
-      loadmore: LoadMore,
+      loading: Loading,
       inputdialog: InputDialog
     }
 
@@ -55,6 +62,7 @@
       this.getList()
     }
     onPullDownRefresh() {
+      this.loadingStyle = 'padding'
       this.page = 1
       this.getList().then(() => {
         wepy.stopPullDownRefresh()
@@ -66,16 +74,20 @@
       })
     }
     onReachBottom() {
+      this.loadingStyle = 'padding'
       if (!this.loading) {
         this.page += 1
-        this.loading = true
+        // this.loading = true
+        this.methods.setLoading(true)
         this.getList(this.page, true).then(() => {
-          this.loading = false
+          // this.loading = false
+          this.methods.setLoading(false)
           this.$apply()
         })
       }
     }
     getList(page = 1, needConcat, captcha = '') {
+      this.methods.setLoading(true)
       let reqURL = `/api/hrbust/exam?page=${page}`
       if (captcha !== '') {
         reqURL = `/api/hrbust/exam?page=${page}&captcha=${captcha}`
@@ -91,7 +103,8 @@
           this.captchaImage = res.data.data.captcha
           this.popDialog = true
           this.$apply()
-          wepy.hideLoading()
+          // wepy.hideLoading()
+          this.methods.setLoading(false)
           return
         }
         if (!needConcat && (!list || list.length === 0)) {
@@ -102,6 +115,7 @@
           // });
           this.list = []
           this.$apply()
+          this.methods.setLoading(false)
           return Promise.resolve()
         }
         if (list.length === 0) {
@@ -112,7 +126,8 @@
             duration: 2000
           })
           this.page -= 1
-          this.loading = false
+          // this.loading = false
+          this.methods.setLoading(false)
           this.$apply()
         } else {
           if (needConcat) {
@@ -120,6 +135,7 @@
           } else {
             this.list = list
           }
+          this.methods.setLoading(false)
         }
         this.$apply()
       })

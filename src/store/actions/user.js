@@ -77,7 +77,7 @@ const login = () => {
 //   })
 // }
 
-const setLoading = createAction(SET_LOADING, loading => loading)
+export const setLoading = createAction(SET_LOADING, loading => loading)
 
 export const init = createAction(INIT, async () => {
   store.dispatch(setLoading(true))

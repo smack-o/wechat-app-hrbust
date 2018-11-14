@@ -1,6 +1,7 @@
 import wepy from 'wepy'
 import { request } from 'utils'
-
+import { store } from '../store/index'
+import { setLoading } from '../store/actions'
 export default class courseMixin extends wepy.mixin {
   async createNewTerm (term) {
     if (term === undefined) return
@@ -10,6 +11,7 @@ export default class courseMixin extends wepy.mixin {
       data: { term }
     }))
     if (err) {
+      store.dispatch(setLoading(false))
       wepy.showToast({
         title: '抓取课表失败',
         image: '../assets/icon/error_icon.png',
@@ -19,6 +21,7 @@ export default class courseMixin extends wepy.mixin {
     }
 
     if (res.data.status === 404) {
+      store.dispatch(setLoading(false))
       wepy.showToast({
         title: '课表为空',
         image: '../assets/icon/icon_info.png',

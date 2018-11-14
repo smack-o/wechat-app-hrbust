@@ -1,25 +1,28 @@
 <template>
-  <view class="container">
-    <block wx:for="{{hasCourseTerms}}" wx:for-item="item" wx:for-index="index">
-      <view class="grade">
-        <view class="term-card" wx:if="{{item.first == 1}}" data-termid="{{index * 2}}" @tap="setTerm">
-          <view class="text" wx:if="{{item.first == 1}}">{{termMap[index]}}第1学期</view>
-          <view class="icon">
-            <image class="check" src="../assets/icon/check.png" wx:if="{{currentTerm == index * 2}}"></image>
+  <block>
+    <loading wx:if="{{loading}}"/>
+    <view class="container">
+      <block wx:for="{{hasCourseTerms}}" wx:for-item="item" wx:for-index="index">
+        <view class="grade">
+          <view class="term-card" wx:if="{{item.first == 1}}" data-termid="{{index * 2}}" @tap="setTerm">
+            <view class="text" wx:if="{{item.first == 1}}">{{termMap[index]}}第1学期</view>
+            <view class="icon">
+              <image class="check" src="../assets/icon/check.png" wx:if="{{currentTerm == index * 2}}"></image>
+            </view>
+          </view>
+          <view class="term-card" wx:if="{{item.second == 1}}" data-termid="{{index * 2 + 1}}" @tap="setTerm">
+            <view class="text" wx:if="{{item.second == 1}}">{{termMap[index]}}第2学期</view>
+            <view class="icon">
+              <image class="check" src="../assets/icon/check.png" wx:if="{{currentTerm == index * 2 + 1}}"></image>
+            </view>
           </view>
         </view>
-        <view class="term-card" wx:if="{{item.second == 1}}" data-termid="{{index * 2 + 1}}" @tap="setTerm">
-          <view class="text" wx:if="{{item.second == 1}}">{{termMap[index]}}第2学期</view>
-          <view class="icon">
-            <image class="check" src="../assets/icon/check.png" wx:if="{{currentTerm == index * 2 + 1}}"></image>
-          </view>
-        </view>
-      </view>
-    </block>
-    <picker mode="selector" range-key="label" bindchange="changeTrem" value="{{}}" range="{{terms}}">
-      <view class="button">+ 创建新学期</view>
-    </picker>
-  </view>
+      </block>
+      <picker mode="selector" range-key="label" bindchange="changeTrem" value="{{}}" range="{{terms}}">
+        <view class="button">+ 创建新学期</view>
+      </picker>
+    </view>
+  </block>
 </template>
 
 <script>
@@ -27,14 +30,19 @@
   import { connect } from 'wepy-redux'
   import { request } from 'utils'
   import courseMixin from '../mixins/course'
-  import { setTempTerm } from '../store/actions'
+  import { setTempTerm, setLoading } from '../store/actions'
+  import Loading from '../components/loading'
 
   @connect({
+    loading (state) {
+      return state.user.loading
+    },
     currentTerm (state) {
       return state.currentTerm.currentTerm
     }
   }, {
-    setTempTerm
+    setTempTerm,
+    setLoading
   })
   export default class ChoiceTrem extends wepy.page {
     config = {
@@ -55,14 +63,17 @@
       ],
       termMap: ['大一', '大二', '大三', '大四']
     }
-
+    components = {
+      loading: Loading
+    }
     mixins = [courseMixin]
 
     methods = {
       async changeTrem (event) {
-        wepy.showLoading({
-          title: '课表抓取中'
-        })
+        // wepy.showLoading({
+        //   title: '课表抓取中'
+        // })
+        this.methods.setLoading(true)
 
         const [createNewTermError] = await this.to(this.createNewTerm(event.detail.value))
         if (createNewTermError) return
@@ -72,6 +83,7 @@
 
         this.methods.setTempTerm(event.detail.value)
 
+        this.methods.setLoading(false)
         wepy.showToast({
           title: '成功创建学期',
           icon: 'success',
@@ -89,6 +101,7 @@
         url: '/api/hrbust/getHasCourseTerms'
       }))
       if (err) {
+        this.methods.setLoading(false)
         wepy.showToast({
           title: '获取学期列表失败',
           image: '../assets/icon/error_icon.png',

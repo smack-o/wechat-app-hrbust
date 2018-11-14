@@ -1,6 +1,7 @@
 <template>
   <block>
     <block>
+      <loading wx:if="{{loading}}"/>
       <view class="wrap">
         <view class="refresh">更新课表请下拉刷新</view>
         <view wx:if="{{!doNotRefresh}}" class="picker-wrapper">
@@ -115,11 +116,15 @@
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
+  import Loading from '../components/loading'
   import { request } from 'utils'
   import courseMixin from '../mixins/course'
-  import { setCurrentTerm } from '../store/actions'
+  import { setCurrentTerm, setLoading } from '../store/actions'
 
   @connect({
+    loading (state) {
+      return state.user.loading
+    },
     currentTerm (state) {
       return state.currentTerm.currentTerm
     },
@@ -130,7 +135,8 @@
       return state.user.studentInfo.username
     }
   }, {
-    setCurrentTerm
+    setCurrentTerm,
+    setLoading
   })
   export default class Course extends wepy.page {
     data = {
@@ -150,7 +156,9 @@
       selectOpen: false,
       userInfo: {}
     }
-
+    components = {
+      loading: Loading
+    }
     config = {
       navigationBarTitleText: '课程表',
       enablePullDownRefresh: true
@@ -188,9 +196,10 @@
       },
 
       async syncCourse () {
-        wepy.showLoading({
-          title: '课表抓取中'
-        })
+        // wepy.showLoading({
+        //   title: '课表抓取中'
+        // })
+        this.methods.setLoading(true)
         this.selectOpen = !this.selectOpen
 
         const [createNewTermError] = await this.to(this.createNewTerm(this.term))
@@ -265,10 +274,10 @@
     }
 
     async getCourse (term, flag, updatedStorage) {
-      wepy.showLoading({
-        title: '正在加载课表'
-      })
-
+      // wepy.showLoading({
+      //   title: '正在加载课表'
+      // })
+      this.methods.setLoading(true)
       if (term === undefined) {
         term = this.term
       }
@@ -283,13 +292,17 @@
           image: '../assets/icon/error_icon.png',
           duration: 1000
         })
+        this.methods.setLoading(false)
         return Promise.reject('获取课表失败')
       }
 
       const getCourseData = res.data.data.course
       this.termId = res.data.data.courseTermId
 
-      if (!getCourseData) return Promise.reject('课表为空')
+      if (!getCourseData) {
+        this.methods.setLoading(false)
+        return Promise.reject('课表为空')
+      }
 
       let courseList = []
       let courseIdList = {}
@@ -327,7 +340,8 @@
         })
       }
 
-      wepy.hideLoading()
+      // wepy.hideLoading()
+      this.methods.setLoading(false)
       wepy.showToast({
         title: '拉取数据成功',
         icon: 'success',
@@ -354,6 +368,7 @@
 
             this.getCourseHandel(undefined, undefined, true)
           } else {
+            this.methods.setLoading(false)
             wepy.showToast({
               title: '课表为空',
               image: '../assets/icon/icon_info.png',
@@ -374,6 +389,7 @@
 
       const [getWeekError] = await this.to(this.getWeek())
       if (getWeekError) {
+        this.methods.setLoading(false)
         return wepy.showModal({
           content: '服务器获取当前周数错误，请稍候重试',
           showCancel: false

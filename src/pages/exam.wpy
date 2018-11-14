@@ -104,10 +104,7 @@
           this.popDialog = true
           this.$apply()
           // wepy.hideLoading()
-<<<<<<< HEAD
-=======
           this.methods.setLoading(false)
->>>>>>> origin/featureDaFang
           return
         }
         if (!needConcat && (!list || list.length === 0)) {

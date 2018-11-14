@@ -156,7 +156,7 @@
         duration="{{duration}}">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <view class="slide-item" @tap="linkToWebView({{item.url}})">
+            <view class="slide-item" @tap="linkToWebView({{item.link}})">
               <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
             </view>
           </swiper-item>
@@ -248,7 +248,7 @@
   import wepy from 'wepy'
   import Loading from '../components/loading'
   import { connect } from 'wepy-redux'
-
+  import { request } from 'utils'
   @connect({
     loading (state) {
       return state.user.loading
@@ -318,20 +318,21 @@
       //   // url: '../info/info',
       // }
       ],
-      imgUrls: [
-        {
-          image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
-          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-        },
-        {
-          image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
-          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-        },
-        {
-          image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
-          url: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-        }
-      ],
+      imgUrls: [],
+      // imgUrls: [
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   },
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   },
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   }
+      // ],
       indicatorDots: false,
       autoplay: false,
       circular: true,
@@ -375,13 +376,14 @@
       }
     }
 
-    async onLoad() {
-      // const globalData = this.$parent.globalData
-      // await globalData.initPromise
-      // this.isLogin = globalData.isLogin
-      // this.studentInfo = globalData.studentInfo
-      // this.isLoading = false
-      this.$apply()
+    async onShow() {
+      // banner
+      request({
+        url: '/api/banner'
+      }).then(res => {
+        this.imgUrls = res.data.data || []
+        this.$apply()
+      })
     }
   }
 </script>

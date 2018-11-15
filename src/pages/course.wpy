@@ -36,7 +36,7 @@
           <block wx:key="course-content" wx:for="{{[0,1,2,3,4,5,6,7]}}" wx:for-index="dayIndex">
               <block wx:if="{{dayIndex === 0}}">
                 <!-- 左侧时间列表 -->
-                <view class="item">
+                <view class="item {{currentPart == timeIndex ? 'now-time' : ''}}">
                   <view class="time-item">
                     <view>{{timeList[timeIndex][0]}}</view>
                     <view class="num">{{timeItem[0]}}</view>
@@ -198,6 +198,27 @@
           return [['08:10', '09:00'], ['10:05', '10:55'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
         } else {
           return [['08:10', '09:00'], ['10:20', '11:10'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
+        }
+      },
+
+      currentPart () {
+        const date = new Date()
+        const hour = date.getHours()
+        const minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+        const dateNum = parseInt('' + hour + minute)
+
+        if (dateNum >= 600 && dateNum <= 950) {
+          return 0
+        } else if (dateNum > 950 && dateNum <= 1230) {
+          return 1
+        } else if (dateNum > 1230 && dateNum <= 1520) {
+          return 2
+        } else if (dateNum > 1520 && dateNum <= 1730) {
+          return 3
+        } else if (dateNum > 1730 && dateNum <= 1850) {
+          return 4
+        } else {
+          return false
         }
       }
     }
@@ -557,6 +578,11 @@
         background-color: #f4f8f8;
       }
     }
+    .now-time {
+      font-size: 12px;
+      font-weight: 700;
+      background-color: #b7f6f3!important;
+    }
   }
 }
 
@@ -571,7 +597,7 @@
     box-sizing: border-box;
     align-items: center;
     text-align: center;
-    padding: 20rpx;
+    padding: 24rpx;
     background-color: #f4f8f8;
   }
   .content {
@@ -603,6 +629,7 @@
         text-align: center;
         text-overflow: ellipsis;
         overflow: hidden;
+        color: #fff;
         &:nth-child(3) {
           display: -webkit-box;
           -webkit-box-pack: center;
@@ -612,10 +639,10 @@
         }
       }
       &:nth-child(even) {
-        background-color: #f09b77;
+        background-color: #f19a75;
       }
       &:nth-child(odd) {
-        background-color: #7dcef4;
+        background-color: #7ecef3;
       }
     }
   }

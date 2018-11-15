@@ -186,7 +186,7 @@
           </view>
         </view>
       </view>
-      <view class="msg-list">
+      <!-- <view class="msg-list">
         <view class="msg-item">
           <image src="{{mockImg}}" class="msg-img"/>
           <view class="msg-text-card">
@@ -239,7 +239,7 @@
             </view>
           </view>
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
 </template>

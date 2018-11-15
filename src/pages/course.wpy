@@ -70,6 +70,18 @@
       </view>
     </block>
 
+    <view class="unplan-course" wx:if="{{unplanCourse.length > 0}}">
+      <view class="title">没有具体上课时间或地点的课程</view>
+      <view class="content">
+        <view class="content-header">
+          <view wx:for="{{unplanCourseTitle}}" wx:for-item="item">{{item}}</view>
+        </view>
+        <view class="unplan-item" wx:for="{{unplanCourse}}" wx:for-item="unplanCourseObj">
+          <view wx:for="{{unplanCourseObj}}" wx:for-item="unplanCourseItem">{{unplanCourseItem}}</view>
+        </view>
+      </view>
+    </view>
+
     <!-- SelectList -->
     <view class="select-list" wx:if="{{selectOpen}}">
       <view class="empty-top" bindtap="selectListSwitch">
@@ -150,8 +162,10 @@
       dayNum: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       time: [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']],
       month: new Date().getMonth() + 1,
+      unplanCourseTitle: ['课程名称', '任课教师', '合班', '上课周次', '上课时间', '上课地点'],
       courseData: [],
       detailData: [],
+      unplanCourse: [],
       detailOpen: false,
       selectOpen: false,
       userInfo: {}
@@ -298,6 +312,7 @@
 
       const getCourseData = res.data.data.course
       this.termId = res.data.data.courseTermId
+      this.unplanCourse = res.data.data.unplanCourse
 
       if (!getCourseData) {
         this.methods.setLoading(false)
@@ -334,6 +349,7 @@
 
       if (updatedStorage) {
         this.userInfo.course = courseList
+        this.userInfo.unplanCourse = this.unplanCourse
         wepy.setStorage({
           key: this.username,
           data: this.userInfo
@@ -399,9 +415,11 @@
       const userInfo = wepy.getStorageSync(this.username)
       if (userInfo) this.userInfo = userInfo
       const course = this.userInfo.course
+      const unplanCourse = this.userInfo.unplanCourse
 
       if (course) {
         this.courseData = course
+        this.unplanCourse = unplanCourse
         this.$apply()
       } else {
         this.getCourseHandel(undefined, undefined, true)
@@ -532,11 +550,72 @@
           flex: 1;
           justify-content: center;
           align-items: center;
-          border-radius: 10px;
+          border-radius: 20rpx;
         }
       }
       .item:first-child {
         background-color: #f4f8f8;
+      }
+    }
+  }
+}
+
+.unplan-course {
+  display: flex;
+  width: 100%;
+  font-size: 10px;
+  color: #3f627e;
+  .title {
+    width: 12.5%;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    padding: 20rpx;
+    background-color: #f4f8f8;
+  }
+  .content {
+    width: 87.5%;
+    .content-header {
+      display: flex;
+      margin-bottom: 8rpx;
+      background-color: #f4f8f8;
+      view {
+        height: 70rpx;
+        line-height: 70rpx;
+        text-align: center;
+        flex: 1;
+      }
+    }
+    .unplan-item {
+      display: flex;
+      margin-left: 4rpx;
+      margin-right: 4rpx;
+      margin-bottom: 8rpx;
+      border-radius: 20px;
+      padding: 10rpx;
+      view {
+        display: flex;
+        height: 105rpx;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        &:nth-child(3) {
+          display: -webkit-box;
+          -webkit-box-pack: center;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+      }
+      &:nth-child(even) {
+        background-color: #f09b77;
+      }
+      &:nth-child(odd) {
+        background-color: #7dcef4;
       }
     }
   }
@@ -647,7 +726,7 @@
       }
   }
   .empty-top {
-    height: 58px;
+    height: 52px;
   }
   .empty-bottom {
     flex: 1;

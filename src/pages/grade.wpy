@@ -140,8 +140,6 @@
     align-items: center;
     text-align: center;
     width: 140rpx;
-    // height: 170rpx;
-    // background: #9a9;
     .num-text {
       font-size: 28rpx;
       color: #333333;
@@ -156,6 +154,56 @@
 .select-text {
   font-size: 26rpx;
   color: #cccccc;
+}
+.tip-modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: rgba(0, 0, 0, .75);
+  .tip-logo {
+    width: 302rpx;
+    position: absolute;
+    left: 116rpx;
+    top: 415rpx;
+  }
+  .tip-arrow {
+    width: 227rpx;
+    position: absolute;
+    right: 31rpx;
+    top: 466rpx;
+    animation: spin 1s ease-in-out infinite;
+  }
+  .tip-button {
+    width: 350rpx;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 288rpx;
+  }
+  @keyframes spin {
+        0% {
+          opacity: .5;
+          width: 227rpx;
+          right: 31rpx
+        }
+        50% {
+          opacity: 1;
+          width: 227rpx;
+          right: 50rpx
+        }
+        100% {
+          opacity: .5;
+          width: 227rpx;
+          right: 31rpx
+        }
+      }
 }
 </style>
 <template>
@@ -235,7 +283,12 @@
           </scroll-view>
         </view>
       </view>
-    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="grade"/>
+      <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="grade"/>
+    </view>
+    <view class="tip-modal" wx:if="{{isFirstFull}}" bindtap="closeModal">
+      <image class="tip-logo" src="../assets/icon/tip_logo.png" mode="widthFix"/>
+      <image class="tip-arrow" src="../assets/icon/tip_arrow.png" mode="widthFix"/>
+      <image class="tip-button" src="../assets/icon/tip_button_icon.png" mode="widthFix"/>
     </view>
   </view>
 </template>
@@ -283,6 +336,8 @@
       maxRemarkLength: 8,
       reqYear: null,
       reqTerm: null,
+      isFirstFull: false,
+      hasFullGrade: 'hasFullGrade',
       // doNotRefresh: false,
       gradeData: [
         {
@@ -330,6 +385,10 @@
         const term = this.terms[e.detail.value]
         this.term = term
         this.getGrade(this.term.split(' ')[0], this.term.split(' ')[1])
+      },
+
+      closeModal() {
+        this.isFirstFull = false
       }
     }
     events = {
@@ -343,7 +402,6 @@
         this.popDialog = false
       }
     }
-
     async onLoad () {
       let time = new Date()
       // time.setFullYear(2008,1,9);
@@ -431,6 +489,15 @@
             this.gradeData.push(itemObj)
             this.maxRemarkLength = itemObj.courseRemark.length > this.maxRemarkLength ? itemObj.courseRemark.length : this.maxRemarkLength
           })
+          console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
+          if (!wepy.getStorageSync(this.hasFullGrade)) {
+            console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
+            wepy.setStorageSync(this.hasFullGrade, true)
+            this.isFirstFull = true
+            console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
+          } else {
+            this.isFirstFull = false
+          }
         }
         this.$apply()
         wepy.hideLoading()

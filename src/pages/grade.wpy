@@ -209,7 +209,7 @@
 <template>
   <view>
     <loading wx:if="{{loading}}"/>
-    <view wx:else class="container">
+    <view class="container">
       <view class="selecter">
         <picker class="picker-year" bindchange="changeTerm" value="{{selected_term}}" range="{{terms}}">
           <view class="select-button">
@@ -299,6 +299,7 @@
   import InputDialog from '../components/inputDialog'
   import { request, dateFormat } from 'utils'
   import { connect } from 'wepy-redux'
+  import { setLoading } from '../store/actions'
 
   @connect({
     loading (state) {
@@ -313,6 +314,8 @@
     studentInfo (state) {
       return state.user.studentInfo
     }
+  }, {
+    setLoading
   })
   export default class grade extends wepy.page {
     config = {
@@ -428,9 +431,10 @@
       this.reqYear = year
       this.reqTerm = term
       this.showEmpty = false
-      wepy.showLoading({
-        title: '正在加载数据'
-      })
+      // wepy.showLoading({
+      //   title: '正在加载数据'
+      // })
+      this.methods.setLoading(true)
       const data = {}
       if (year && term) {
         data.year = parseInt(year) - 1980
@@ -461,7 +465,8 @@
           this.captchaImage = resData.captcha
           this.popDialog = true
           this.$apply()
-          wepy.hideLoading()
+          // wepy.hideLoading()
+          this.methods.setLoading(false)
           return
         }
         const list = resData.grades
@@ -500,11 +505,13 @@
           }
         }
         this.$apply()
-        wepy.hideLoading()
+        // wepy.hideLoading()
+        this.methods.setLoading(false)
       })
       .catch((e) => {
         this.showError(this, e)
-        wepy.hideLoading()
+        // wepy.hideLoading()
+        this.methods.setLoading(false)
       })
     }
 

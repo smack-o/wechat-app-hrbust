@@ -494,12 +494,9 @@
             this.gradeData.push(itemObj)
             this.maxRemarkLength = itemObj.courseRemark.length > this.maxRemarkLength ? itemObj.courseRemark.length : this.maxRemarkLength
           })
-          console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
           if (!wepy.getStorageSync(this.hasFullGrade)) {
-            console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
             wepy.setStorageSync(this.hasFullGrade, true)
             this.isFirstFull = true
-            console.log('hasFullGrade', wepy.getStorageSync(this.hasFullGrade))
           } else {
             this.isFirstFull = false
           }

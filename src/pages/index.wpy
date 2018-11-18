@@ -1,5 +1,18 @@
 <style lang="less">
 @import "../assets/lib.less";
+  .info {
+    padding: 40rpx 0 76rpx;
+    text-align: center;
+    font-size: 26rpx;
+    line-height: 41rpx;
+    color: #999999;
+  }
+  .discover-image {
+    width: 532rpx;
+    margin: 0 auto;
+    display: block;
+    padding: 80rpx 0;
+  }
 .slide-wrapper {
   padding-top: 30rpx;
   height: 290rpx;
@@ -240,6 +253,11 @@
           </view>
         </view>
       </view> -->
+
+    <!-- <view class="info">
+      更多功能敬请期待~
+    </view> -->
+    <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
     </view>
   </view>
 </template>

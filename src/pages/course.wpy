@@ -11,7 +11,7 @@
             <view>
               <view>
                 第<text class="num"> {{weeks.length > 0 ? weeks[slectedWeek] : 0}} </text>周
-                <block wx-if="{{weeks[slectedWeek] == thisWeekNum}}">
+                <block wx-if="{{weeks[slectedWeek - 1] == thisWeekNum}}">
                   (当前)
                 </block>
               </view>
@@ -22,12 +22,12 @@
         </view>
         <view class="course-header">
           <view class="item">
-            {{month}}月
+            {{currentWeekList.month}}月
           </view>
           <block wx:key="day" wx:for="{{dayNum}}" wx:for-item="dayItem" wx:for-index="dayIndex">
             <view class="item {{dayIndex + 1 === nowDayIndex ? 'now-day' : ''}}">
               <view>{{dayItem}}</view>
-              <view>{{currentWeekList[dayIndex]}}日</view>
+              <view>{{currentWeekList.days[dayIndex]}}日</view>
             </view>
           </block>
         </view>
@@ -36,7 +36,7 @@
           <block wx:key="course-content" wx:for="{{[0,1,2,3,4,5,6,7]}}" wx:for-index="dayIndex">
               <block wx:if="{{dayIndex === 0}}">
                 <!-- 左侧时间列表 -->
-                <view class="item {{currentPart == timeIndex ? 'now-time' : ''}}">
+                <view class="item {{currentPart === timeIndex ? 'now-time' : ''}}">
                   <view class="time-item">
                     <view>{{timeList[timeIndex][0]}}</view>
                     <view class="num">{{timeItem[0]}}</view>
@@ -53,11 +53,11 @@
                   <view class="item-content">
                     <block wx:key="course" wx:for="{{courseData[timeItem[0]]}}">
                       <block wx:if="{{item.day == dayIndex}}">
-                        <view class="this-week {{item.class}}" wx:if="{{item.period[thisWeek] == 1}}">
-                          《{{item.name}}》@{{item.locale}}
+                        <view class="this-week {{item.class}} {{item.day === nowDayIndex && (currentPart + 1) * 2 === item.sectionend ? 'use-border' : ''}}" wx:if="{{item.period[thisWeek] == 1}}">
+                          <text>《{{item.name}}》@{{item.locale}}</text>
                         </view>
                         <view class="no-this-week" wx:else>
-                          《{{item.name}}》@{{item.locale}}
+                          <text>《{{item.name}}》@{{item.locale}}</text>
                         </view>
                       </block>
                     </block>
@@ -77,7 +77,9 @@
           <view wx:for="{{unplanCourseTitle}}" wx:for-item="item">{{item}}</view>
         </view>
         <view class="unplan-item" wx:for="{{unplanCourse}}" wx:for-item="unplanCourseObj">
-          <view wx:for="{{unplanCourseObj}}" wx:for-item="unplanCourseItem">{{unplanCourseItem}}</view>
+          <view wx:for="{{unplanCourseObj}}" wx:for-item="unplanCourseItem">
+            <text>{{unplanCourseItem}}</text>
+          </view>
         </view>
       </view>
     </view>
@@ -154,7 +156,7 @@
     data = {
       terms: ['大一 第1学期', '大一 第2学期', '大二 第1学期', '大二 第2学期', '大三 第1学期', '大三 第2学期', '大四 第1学期', '大四 第2学期'],
       weeks: [],
-      slectedWeek: 0,
+      slectedWeek: 1,
       thisWeek: 1,
       thisWeekNum: 1,
       nowDayIndex: new Date().getDay(),
@@ -168,7 +170,10 @@
       unplanCourse: [],
       detailOpen: false,
       selectOpen: false,
-      userInfo: {}
+      userInfo: {},
+      courseCardStyleMap: Array.from(new Array(14)).map((_, index) => {
+        return 'class' + (index + 1)
+      })
     }
     components = {
       loading: Loading
@@ -182,14 +187,21 @@
 
     computed = {
       currentWeekList () {
-        const dateOfToday = Date.now()
-        const dayOfToday = (new Date().getDay() + 7 - 1) % 7
-        const daysOfThisWeek = Array.from(new Array(7))
-        .map((_, i) => {
-          const date = new Date(dateOfToday + (i - dayOfToday) * 1000 * 60 * 60 * 24)
-          return date.getDate()
+        const week = this.slectedWeek - this.thisWeekNum
+        const aDayTimeStamp = 24 * 60 * 60 * 1000
+        const aWeekTimeStamp = 7 * aDayTimeStamp
+        const timeStamp = Date.now() + week * aWeekTimeStamp
+        const currentDay = new Date(timeStamp).getDay()
+        const month = new Date(timeStamp + aDayTimeStamp * (currentDay + 6) % 7).getMonth() + 1
+
+        const days = Array.from(new Array(7)).map((_, i) => {
+          return new Date(timeStamp + aDayTimeStamp * (i - (currentDay + 6) % 7)).getDate()
         })
-        return daysOfThisWeek
+
+        return {
+          days,
+          month
+        }
       },
 
       timeList () {
@@ -288,21 +300,14 @@
 
       const getWeekData = res.data.data
 
-      let slectedWeek = 0
-      const weeks = Array.from(new Array(30), (val, index) => index + 1)
-      const tWeeks = weeks.map((item, index) => {
-        if (getWeekData.week === item) {
-          slectedWeek = index
-          return `${item}`
-        }
-        return item
-      })
+      const weeks = Array.from(new Array(25), (val, index) => index + 1)
+      const tWeeks = weeks.map(item => item)
       this.thisWeek = getWeekData.week
       this.thisWeekNum = getWeekData.week
       this.term = getWeekData.term
       this.weeks = tWeeks
       this.methods.setCurrentTerm(getWeekData.term)
-      this.slectedWeek = slectedWeek
+      this.slectedWeek = getWeekData.week
       this.$apply()
 
       return Promise.resolve()
@@ -342,7 +347,6 @@
 
       let courseList = []
       let courseIdList = {}
-      let courseCardStyleMap = ['pink', 'cyan', 'purple', 'green', 'blue', 'yellow', 'orange', 'deepgreen', 'deepgreen-1', 'deepgreen-2', 'deepgreen-3']
       let courseCardStyleIndex = 0
 
       for (let i = 0; i < 10; i++) {
@@ -351,7 +355,7 @@
 
       getCourseData.forEach((courseItem, index) => {
         if (!courseIdList[courseItem.courseId]) {
-          let cardClassName = courseCardStyleMap[courseCardStyleIndex % 11]
+          let cardClassName = this.courseCardStyleMap[courseCardStyleIndex % this.courseCardStyleMap.length]
           courseIdList[courseItem.courseId] = cardClassName
           courseItem.class = cardClassName
           courseCardStyleIndex++
@@ -394,6 +398,7 @@
           const userInfo = wepy.getStorageSync(this.username) || {}
 
           if (!userInfo.notFirst) {
+            await this.getWeek()
             const [createNewTermError] = await this.to(this.createNewTerm(this.term))
             if (createNewTermError) return
 
@@ -469,40 +474,6 @@
 </script>
 
 <style lang="less">
-.this-week.pink {
-  background-color: #f39dd7!important;
-}
-.this-week.cyan {
-  background-color: #75e9eb!important;
-}
-.this-week.purple {
-  background-color: #aa8fff!important;
-}
-.this-week.green {
-  background-color: #65f0a3!important;
-}
-.this-week.blue {
-  background-color: #57b6fc!important;
-}
-.this-week.yellow {
-  background-color: #f4c44f!important;
-}
-.this-week.orange {
-  background-color: #ff9292!important;
-}
-.this-week.deepgreen {
-  background-color: #70ec54!important;
-}
-.this-week.deepgreen-1 {
-  background-color: #898800!important;
-}
-.this-week.deepgreen-2 {
-  background-color: #A569BD!important;
-}
-.this-week.deepgreen-3 {
-  background-color: #EC7063!important;
-}
-
 .wrap {
   width: 100%;
   font-size: 10px;
@@ -567,7 +538,8 @@
         position: relative;
         .item-content {
           display: flex;
-          flex-direction: column;
+          // 好像是这里7P容易出问题
+          // flex-direction: column;
           flex: 1;
           justify-content: center;
           align-items: center;
@@ -618,7 +590,7 @@
       margin-left: 4rpx;
       margin-right: 4rpx;
       margin-bottom: 8rpx;
-      border-radius: 20px;
+      border-radius: 10px;
       padding: 10rpx;
       view {
         display: flex;
@@ -630,19 +602,27 @@
         text-overflow: ellipsis;
         overflow: hidden;
         color: #fff;
-        &:nth-child(3) {
+        text {
           display: -webkit-box;
+          vertical-align:middle;
           -webkit-box-pack: center;
           text-overflow: ellipsis;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       }
-      &:nth-child(even) {
-        background-color: #f19a75;
+      &:nth-child(4n) {
+        background-color: #4fb5a9;
       }
-      &:nth-child(odd) {
-        background-color: #7ecef3;
+      &:nth-child(4n+1) {
+        background-color: #fade8b;
+      }
+      &:nth-child(4n+2) {
+        background-color: #e4516e;
+      }
+      &:nth-child(4n+3) {
+        background-color: #8fccf0;
       }
     }
   }
@@ -654,41 +634,47 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 2px 4px;
+  padding: 2px 2px;
   flex: 1;
   width: 1%;
   overflow:hidden;
+  text {
+    display: -webkit-box;
+    vertical-align:middle;
+    -webkit-box-pack: center;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
-.no-this-week {
+.this-week, .no-this-week {
   position: absolute;
   top:0px;
   bottom: 0px;
-  height: 88%;
-  width: 75%;
+  height: 98%;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   padding: 4px;
   font-size: 8px;
-  color: #999;
-  background-color: #eaeff4;
   border-radius: 10px;
 }
+.no-this-week {
+  color: #999;
+  background-color: #eaeff4;
+}
 .this-week {
-  position: absolute;
-  top:0px;
-  bottom: 0px;
-  height: 88%;
-  width: 75%;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  font-size: 8px;
   color: #fff;
-  border-radius: 10px;
+  border-width: 6rpx;
+  border-style: none;
+}
+.this-week.use-border {
+  border-style: solid!important;
 }
 
 .time-item {
@@ -794,5 +780,63 @@
     order: 5;
     color: #ccc;
   }
+}
+
+// 不同颜的课程，不同颜色
+.this-week.class1 {
+  background-color: #f3a481!important;
+  border-color: #da7548;
+}
+.this-week.class2 {
+  background-color: #ee74b2!important;
+  border-color: #d03483;
+}
+.this-week.class3 {
+  background-color: #cd77d1!important;
+  border-color: #ae29b4;
+}
+.this-week.class4 {
+  background-color: #52afa9!important;
+  border-color: #0c7c75;
+}
+.this-week.class5 {
+  background-color: #6d95e6!important;
+  border-color: #2495c4;
+}
+.this-week.class6 {
+  background-color: #5381b0!important;
+  border-color: #205c99;
+}
+.this-week.class7 {
+  background-color: #f9d749!important;
+  border-color: #d7ad00;
+}
+.this-week.class8 {
+  background-color: #ec8677!important;
+  border-color: #dd4e39;
+}
+.this-week.class9 {
+  background-color: #4290f7!important;
+  border-color: #0162e2;
+}
+.this-week.class10 {
+  background-color: #f3a83b!important;
+  border-color: #de8300;
+}
+.this-week.class11 {
+  background-color: #ce7692!important;
+  border-color: #cc406d;
+}
+.this-week.class12 {
+  background-color: #66a45d!important;
+  border-color: #207b13;
+}
+.this-week.class13 {
+  background-color: #a9a9a9!important;
+  border-color: #8a8a8a;
+}
+.this-week.class14 {
+  background-color: #a7ddfb!important;
+  border-color: #6db8e2;
 }
 </style>

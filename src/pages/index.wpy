@@ -154,8 +154,8 @@
 </style>
 <template>
   <view>
-    <loading wx:if="{{loading}}" />
-    <view wx:else
+    <loading wx:if="{{loading}}"/>
+    <view wx:if="{{!loading}}"
       class="container">
       <swiper
         bindchange="slideChange"
@@ -189,16 +189,17 @@
             <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
           </view>
         </block>
+      </view>  
+      <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
+    </view>
+    <view class="login-wrapper" wx:if="{{!loading}}">
+      <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">
+        <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
+        <view class="login-button">
+          <text class="login-text">立即登录</text>
         </view>
       </view>
-      <view class="login-wrapper">
-        <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">
-          <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
-          <view class="login-button">
-            <text class="login-text">立即登录</text>
-          </view>
-        </view>
-      </view>
+    </view>
       <!-- <view class="msg-list">
         <view class="msg-item">
           <image src="{{mockImg}}" class="msg-img"/>
@@ -251,14 +252,12 @@
               <text class="msg-hour">09:20</text>
             </view>
           </view>
-        </view>
-      </view> -->
+        </view>-->
+    
 
     <!-- <view class="info">
       更多功能敬请期待~
     </view> -->
-    <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
-    </view>
   </view>
 </template>
 
@@ -270,6 +269,7 @@
   @connect({
     loading (state) {
       return state.user.loading
+      // return true
     },
     initPromise(state) {
       return state.user.initPromise

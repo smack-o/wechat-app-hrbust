@@ -1,0 +1,153 @@
+<template>
+  <view class="news">
+    <loadmore :list.sync="list" :loading.sync="loading">
+      <view class="news-item" wx:key="news" wx:for="{{list}}" wx:for-item="newsItem" wx:for-index="index">
+        <view @tap="viewDetail" data-id="{{newsItem.id}}">
+          <view class="padding-wrapper">
+            <view class="news-message">
+              <view class="news-title"> <text class="top">{{newsItem.top ? "(置顶)" : ""}}</text> {{newsItem.title}} </view>
+              <view class="text-small"> 发布时间：{{newsItem.date}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </loadmore>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { request, host } from 'utils'
+  import LoadMore from 'components/loadmore'
+
+  export default class News extends wepy.page {
+    config = {
+      enablePullDownRefresh: true,
+      navigationBarTitleText: '教务在线'
+    }
+    data = {
+      list: [],
+      page: 1,
+      loading: false
+    }
+
+    components = {
+      loadmore: LoadMore
+    }
+
+    onLoad () {
+      // this.getHasCourseTerms()
+      this.getList()
+    }
+    onPullDownRefresh() {
+      this.page = 1
+      this.getList().then(() => {
+        wepy.stopPullDownRefresh()
+        wepy.showToast({
+          title: '拉取数据成功',
+          icon: 'success',
+          duration: 1000
+        })
+      })
+    }
+    onReachBottom() {
+      if (!this.loading) {
+        this.page += 1
+        this.loading = true
+        this.getList(this.page, true).then(() => {
+          this.loading = false
+          this.$apply()
+        })
+      }
+    }
+    getList(page = 1, needConcat) {
+      return request({
+        url: `/api/news?page=${page}`
+      }).then((res) => {
+        const list = res.data.data
+        if (!needConcat && (!list || list.length === 0)) {
+          // 第一次加载没有数据
+          this.showError(this, '没有拉取到数据~请稍后重试')
+          // that.setData({
+          //   newsData: [],
+          // });
+          this.list = []
+          this.$apply()
+          return Promise.resolve()
+        }
+        if (list.length === 0) {
+          // 没有加载到数据
+          wepy.showToast({
+            title: '哥，真没有了...',
+            icon: 'success',
+            duration: 2000
+          })
+          this.page -= 1
+          this.loading = false
+          this.$apply()
+        } else {
+          if (needConcat) {
+            this.list = [...this.list, ...list]
+          } else {
+            this.list = list
+          }
+        }
+        this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    showError(that, error) {
+      if (error) {
+        console.error(error)
+      }
+      wepy.showModal({
+        content: error || '加载失败。',
+        confirmText: '请重新加载',
+        success(res) {
+          if (res.confirm) {
+            that.getList()
+          }
+        }
+      })
+    }
+    methods = {
+      viewDetail(event) {
+        const id = event.currentTarget.dataset.id
+        const url = `${host}/api/news/${id}`
+        wepy.navigateTo({
+          url: `../webview?url=${encodeURIComponent(url)}`
+          // url: `/pages/news/newsDetail?id=${id}`
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="less" scop>
+.news-item {
+  margin: 40rpx 60rpx;
+  padding: 40rpx 32rpx;
+  width: 630rpx;
+	// height: 210rpx;
+	background-color: #ffffff;
+	box-shadow: 0px 5rpx 30rpx 0rpx
+		rgba(0, 0, 80, 0.07);
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+  .news-title {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    .top {
+      color: #6dde9e;
+    }
+  }
+  .text-small {
+    // text-align: right;
+    color: #cccccc;
+  }
+}
+</style>

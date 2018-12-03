@@ -1,228 +1,389 @@
 <style lang="less">
-  .userinfo {
+@import "../assets/lib.less";
+  .info {
+    padding: 40rpx 0 76rpx;
+    text-align: center;
+    font-size: 26rpx;
+    line-height: 41rpx;
+    color: #999999;
+  }
+  .discover-image {
+    width: 532rpx;
+    margin: 0 auto;
+    display: block;
+    padding: 80rpx 0;
+  }
+.slide-wrapper {
+  padding-top: 30rpx;
+  height: 290rpx;
+  .slide-item {
+    width: 660rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .slide-image {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+    }
+    .slide-curimage {
+      width: 630rpx;
+      height: 260rpx;
+      border-radius: 16rpx;
+      box-shadow: 0 15rpx 16rpx 0 rgba(20, 20, 20, 0.1);
+    }
+  }
+}
+.modules {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  padding-left: 85rpx;
+  padding-right: 85rpx;
+  .module {
+    width: 110rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
-
-  .userinfo-avatar {
+  .module_disable {
+  }
+  .modules_image {
     width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
+    border-radius: 40rpx;
+    margin-bottom: 30rpx;
+  }
+  .modules_dark {
+    filter: opacity(15%) saturate(0%);
+  }
+  .modules_light {
+    filter: opacity(25%) saturate(0%);
+  }
+  .modules_text {
+    font-size: 26rpx;
+    color: #333333;
+  }
+}
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  .login {
+    text-align: center;
+    // align-items: center;
+    .login-button {
+      width: 325rpx;
+      height: 70rpx;
+      margin-top: 17rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #6dde9e;
+      box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+      border-radius: 35rpx;
+    }
+    .login-text {
+      font-size: 26rpx;
+      color: #ffffff;
+    }
+  }
+}
+.msg-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+  justify-content: center;
+  .msg-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 630rpx;
+    height: 222rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    margin-top: 40rpx;
+    background-color: #ffffff;
+    box-shadow: 0rpx 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+    border-radius: 16px;
+    .msg-img {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50rpx;
+    }
+    .msg-text-card {
+      width: 514rpx;
+      height: 100rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #cccccc;
+      font-size: 24rpx;
+      .msg-text-body {
+        flex: 1;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        .msg-title {
+          font-size: 36rpx;
+          letter-spacing: 2rpx;
+          color: #333333;
+        }
+        .msg-content {
+          color: #999999;
+        }
+      }
+      .msg-text-time {
+        width: 130rpx;
+        height: 100rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding-top: 8rpx;
+      }
+    }
   }
 
-  .userinfo-nickname {
-    color: #aaa;
-  }
+}
+
 </style>
 <template>
-  <view class="container">
-    <view class="userinfo" @tap="handleViewTap">
-      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+  <view>
+    <loading wx:if="{{loading}}"/>
+    <view wx:if="{{!loading}}"
+      class="container">
+      <swiper
+        bindchange="slideChange"
+        class="slide-wrapper"
+        indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}"
+        interval="{{interval}}"
+        previous-margin="{{swiperItemMargin}}"
+        next-margin="{{swiperItemMargin}}"
+        circular="{{circular}}"
+        duration="{{duration}}">
+        <block wx:for="{{imgUrls}}" wx:key="index">
+          <swiper-item>
+            <view class="slide-item" @tap="linkToWebView({{item.link}})">
+              <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+
+      <view class="modules">
+        <block class="module" wx:for="{{modules}}" wx:key="index">
+          <view wx:if="{{hrbustLogin || !item.needLogin}}" @tap="linkTo({{item.url}})">
+            <view class="module">
+              <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
+              <text class="modules_text" >{{item.text}}</text>
+            </view>
+          </view>
+          <view wx:else class="module_disable module">
+            <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
+            <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
+          </view>
+        </block>
+      </view>  
+      <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
     </view>
-
-    <panel>
-      <view class="title" slot="title">测试数据绑定</view>
-
-      <text class="info">{{normalTitle}}</text>
-      <text class="info">{{setTimeoutTitle}}</text>
-      <text class="info">{{mixin}}</text>
-      <text class="info">{{mynum}}</text>
-      <text class="info">{{now}}</text>
-      <text class="info">{{num}}</text>
-      <text class="info">{{asyncNum}}</text>
-      <text class="info">{{sumNum}}</text>
-      <button @tap="plus('a')" size="mini">  +  </button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">其它测试</view>
-      <button @tap="toast" size="mini">第三方组件</button>
-      <button @tap="communicate" size="mini">组件通信</button>
-      <button @tap="tap" size="mini">混合TAP事件</button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试并发网络请求</view>
-      <view>返回结果: <text>{{netrst}}</text></view>
-      <button @tap="request" size="mini"> 点我发起10个请求 </button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试组件</view>
-
-      <text class="testcounter">计数组件1: </text>
-      <view class="counterview">
-        <counter1 @index-emit.user="counterEmit" />
+    <view class="login-wrapper" wx:if="{{!loading}}">
+      <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">
+        <text class="login-text" style="color: #999999">校园功能仅对登录用户开放</text>
+        <view class="login-button">
+          <text class="login-text">立即登录</text>
+        </view>
       </view>
+    </view>
+      <!-- <view class="msg-list">
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>
+        <view class="msg-item">
+          <image src="{{mockImg}}" class="msg-img"/>
+          <view class="msg-text-card">
+            <view class="msg-text-body">
+              <text class="msg-title">理工喵通知</text>
+              <text class="msg-content">理工喵将天天更新</text>
+            </view>
+            <view class="msg-text-time">
+              <text class="msg-date">2018-10-22</text>
+              <text class="msg-hour">09:20</text>
+            </view>
+          </view>
+        </view>-->
+    
 
-      <text class="testcounter">计数组件2: </text>
-
-      <view class="counterview">
-        <counter2 :num.sync="mynum"></counter2>
-      </view>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试组件Repeat</view>
-      <repeat for="" index="index" item="item" key="key">
-        <group :grouplist="item" :indexa="index"></group>
-      </repeat>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试列表</view>
-      <list></list>
-    </panel>
-
-    <toast />
+    <!-- <view class="info">
+      更多功能敬请期待~
+    </view> -->
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import Loading from '../components/loading'
   import { connect } from 'wepy-redux'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import List from '../components/list' // aliasFields example
-  import moduleA from 'module-a' // aliasFields ignore module example
-  import Group from '../components/group'
-  import Toast from 'wepy-com-toast'
-  import testMixin from '../mixins/test'
-
-  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
-
+  import { request } from 'utils'
   @connect({
-    num (state) {
-      return state.counter.num
+    loading (state) {
+      return state.user.loading
+      // return true
     },
-    asyncNum (state) {
-      return state.counter.asyncNum
+    initPromise(state) {
+      return state.user.initPromise
     },
-    sumNum (state) {
-      return state.counter.num + state.counter.asyncNum
+    isLogin(state) {
+      return state.user.initPromise
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
     }
   })
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '理工喵'
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
-      group: Group,
-      toast: Toast
+      loading: Loading
     }
-
-    mixins = [testMixin]
-
     data = {
-      mynum: 20,
-      userInfo: {
-        nickName: '加载中...'
-      },
-      normalTitle: '原始标题',
-      setTimeoutTitle: '标题三秒后会被修改',
-      count: 0,
-      netrst: '',
-      groupList: [
-        {
-          id: 1,
-          name: '点击改变',
-          list: [
-            {
-              childid: '1.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: '点击改变',
-          list: [
-            {
-              childid: '2.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: '点击改变',
-          list: [
-            {
-              childid: '3.1',
-              childname: '子项，点我改变'
-            }
-          ]
-        }
-      ]
+      slideCurimage: 'slide-curimage',
+      slideImage: 'slide-image',
+      isLoading: true,
+      modules: [{
+        image: '../assets/icon/course.png',
+        text: '课表',
+        url: './course',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
+      }, {
+        image: '../assets/icon/grade.png',
+        text: '成绩查询',
+        url: './grade',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
+      }, {
+        image: '../assets/icon/affiche.png',
+        text: '教务公告',
+        url: './news/news',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+      }, {
+        image: '../assets/icon/exam_schedule.png',
+        text: '考试安排',
+        url: './exam',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
+      }
+      // {
+      //   image: '../assets/icon/news_icon.png',
+      //   text: '教务公告',
+      //   url: '.news'
+      // }, {
+      //   image: '../assets/icon/job_icon.png',
+      //   text: '校招信息',
+      //   url: './job'
+      // },
+      // {
+      //   image: '../assets/icon/search_icon.png',
+      //   text: '新生速查',
+      //   url: './info'
+      //   // image: '../assets/icon/search_icon.png',
+      //   // text: '新生速查',
+      //   // url: '../info/info',
+      // }
+      ],
+      imgUrls: [],
+      // imgUrls: [
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   },
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   },
+      //   {
+      //     image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
+      //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
+      //   }
+      // ],
+      indicatorDots: false,
+      autoplay: false,
+      circular: true,
+      interval: 5000,
+      duration: 400,
+      swiperItemMargin: '45rpx',
+      currentSlideIdx: 0,
+      mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'
     }
 
     computed = {
       now () {
         return +new Date()
+      },
+      hrbustLogin () {
+        return this.studentInfo && this.studentInfo.username
+        // return false
       }
     }
 
     methods = {
-      plus () {
-        this.mynum++
+      slideChange(e) {
+        this.currentSlideIdx = e.detail.current
       },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-        })
-
-        promise.then((d) => {
-          console.log('toast done')
+      linkTo(url) {
+        wepy.navigateTo({
+          url
         })
       },
-      tap () {
-        console.log('do noting from ' + this.$name)
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
-        let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
-            }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      linkToWebView(url) {
+        wepy.navigateTo({
+          url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
+        })
       }
     }
 
@@ -233,21 +394,13 @@
       }
     }
 
-    onLoad() {
-      let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
-        }
-        self.normalTitle = '标题已被修改'
-
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
-          self.$apply()
-        }, 3000)
-
-        self.$apply()
+    async onShow() {
+      // banner
+      request({
+        url: '/api/banner'
+      }).then(res => {
+        this.imgUrls = res.data.data || []
+        this.$apply()
       })
     }
   }

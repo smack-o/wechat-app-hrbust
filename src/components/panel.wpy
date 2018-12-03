@@ -7,7 +7,7 @@
     padding-top: 20rpx;
     padding-left: 50rpx;
     padding-bottom: 20rpx;
-    border: 1px solid #ccc;
+    border: 1rpx solid #ccc;
 
     .title {
       padding-bottom: 20rpx;

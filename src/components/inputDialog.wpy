@@ -1,0 +1,163 @@
+<style lang="less">
+  @import "../assets/lib.less";
+  .dialogBox {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 60rpx;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  .wraper {
+    position: absolute;
+    top: 0;
+    bottom: 700rpx;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 630rpx;
+    height: 400rpx;
+    background: #fff;
+	  border-radius: 16rpx;
+    .dialog-title {
+      font-size: 36rpx;
+      color: #333333;
+      margin-bottom: 69rpx;
+    }
+    .dialog-body {
+      width: 510rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .login-button {
+      width: 510rpx;
+      height: 70rpx;
+      margin-top: 33rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #6dde9e;
+      box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+      border-radius: 35rpx;
+      .login-text {
+        font-size: 26rpx;
+        color: #ffffff;
+      }
+    }
+  }
+  .input-wrapper {
+    width: 320rpx;
+    height: 65rpx;
+    border-radius: 33rpx;
+    border: solid 1rpx #eeeeee;
+  }
+  .input-box {
+    height: 65rpx;
+    font-size: 24rpx;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
+  }
+  .placeholder {
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #999999;
+    text-align: center;
+  }
+  .placeholderErr {
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #e36363;
+    text-align: center;
+  }
+</style>
+<template>
+  <view class="dialogBox" bindtap="onClose">
+    <view class="wraper" catchtap="onReturn">
+      <text class="dialog-title">请输入验证码</text>
+      <view class="dialog-body">
+          <view class="input-wrapper">
+            <input class="input-box" value="{{captcha}}" @input="onInputChange('captcha')" placeholder="{{errormsg ? errormsg :'请输入图片中的字符'}}" placeholder-class="{{errormsg ? 'placeholderErr' : 'placeholder'}}"/>
+          </view>
+          <view style="width: 160rpx; height: 50rpx">
+              <i wx:if="{{!captchaimageprops}}" class="weui-loading"></i>
+              <image wx:else bindtap="getCaptcha" src="{{captchaimageprops}}" style="width: 160rpx; height: 50rpx"/>
+          </view>
+      </view>
+      <!--<button disabled="{{canSubmit}}" class="weui-btn login-button" type="primary" bindtap="onSubmit">登录</button>-->
+      <view class="login-button" disabled="{{canSubmit}}" bindtap="onSubmit">
+        <text class="login-text">确定</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // import { connect } from 'wepy-redux'
+  import { request } from 'utils'
+  // import { init } from '../store/actions'
+
+  export default class InputDialog extends wepy.component {
+    data = {
+      captcha: ''
+    }
+    props = {
+      captchaimageprops: {
+        type: String,
+        default: ''
+      },
+      errormsg: {
+        type: String,
+        default: ''
+      },
+      pagetag: {
+        type: String,
+        default: ''
+      }
+    }
+    computed = {
+      canSubmit () {
+        return !this.captcha
+      }
+    }
+
+    methods = {
+      onInputChange (key, event) {
+        this[key] = event.detail.value
+      },
+      onSubmit: function () {
+        this.$emit('submit-emit', this.captcha, this.pagetag)
+        this.captcha = ''
+        this.$emit('closedialog-emit')
+      },
+      onClose: function () {
+        this.$emit('closedialog-emit')
+        this.captcha = ''
+      },
+      onReturn: function () {
+        return false
+      },
+      getCaptcha () {
+        this.captchaimageprops = ''
+        request({
+          url: '/api/hrbust/captcha'
+        }).then((res) => {
+          this.captchaimageprops = res.data.data.captcha
+          this.$apply()
+        })
+      }
+    }
+
+    async onLoad() {
+      // this.methods.getCaptcha.bind(this)()
+    }
+  }
+</script>

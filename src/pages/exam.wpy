@@ -1,0 +1,253 @@
+<template>
+  <view class="news">
+    <loading wx:if="{{loading}}" :loadingStyle="{{loadingStyle}}"/>
+    <view class="news-item {{item.ending && 'ending'}}" wx:key="news" wx:for="{{list}}" wx:for-index="index">
+      <view class="news-wrapper">
+        <view class="news-message">
+          <view class="flex-box">
+            <view class="date">{{item.date}}</view>
+            <view class="time">{{item.time}}</view>
+          </view>
+          <view class="flex-box">
+            <view class="course">{{item.course}}</view>
+            <view class="dateExtend">{{item.dateExtend}}</view>
+          </view>
+          <view class="flex-box align-right">
+            <view class="position">{{item.position}}</view>
+            <view class="info {{item.info === '重考' ? 'text-red' : ''}}">{{item.info}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="exam"/>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { request } from 'utils'
+  import Loading from '../components/loading'
+  import InputDialog from '../components/inputDialog'
+  import { setLoading } from '../store/actions'
+  import { connect } from 'wepy-redux'
+  // import moment from 'moment'
+  // moment.locale('zh-cn')
+  @connect({
+    loading (state) {
+      return state.user.loading
+    }
+  }, {
+    setLoading
+  })
+  export default class Exam extends wepy.page {
+    config = {
+      enablePullDownRefresh: true
+    }
+    data = {
+      list: [],
+      page: 1,
+      // loading: false,
+      loadingStyle: 'screen',
+      popDialog: false,
+      captchaImage: ''
+    }
+
+    components = {
+      loading: Loading,
+      inputdialog: InputDialog
+    }
+
+    onLoad () {
+      // this.getHasCourseTerms()
+      this.getList()
+    }
+    onPullDownRefresh() {
+      this.loadingStyle = 'padding'
+      this.page = 1
+      this.getList().then(() => {
+        wepy.stopPullDownRefresh()
+        wepy.showToast({
+          title: '拉取数据成功',
+          icon: 'success',
+          duration: 1000
+        })
+      })
+    }
+    onReachBottom() {
+      this.loadingStyle = 'padding'
+      if (!this.loading) {
+        this.page += 1
+        // this.loading = true
+        this.methods.setLoading(true)
+        this.getList(this.page, true).then(() => {
+          // this.loading = false
+          this.methods.setLoading(false)
+          this.$apply()
+        })
+      }
+    }
+    getList(page = 1, needConcat, captcha = '') {
+      this.methods.setLoading(true)
+      let reqURL = `/api/hrbust/exam?page=${page}`
+      if (captcha !== '') {
+        reqURL = `/api/hrbust/exam?page=${page}&captcha=${captcha}`
+      }
+      return request({
+        url: reqURL
+      }).then((res) => {
+        let list = res.data.data || []
+        if (res.data.status === 400001) {
+          this.errormsg = '您输入的验证码错误'
+        }
+        if (res.data.status === 400005 || res.data.status === 400001) {
+          this.captchaImage = res.data.data.captcha
+          this.popDialog = true
+          this.$apply()
+          // wepy.hideLoading()
+          this.methods.setLoading(false)
+          return
+        }
+        if (!needConcat && (!list || list.length === 0)) {
+          // 第一次加载没有数据
+          this.showError(this, '没有拉取到数据~请稍后重试')
+          // that.setData({
+          //   newsData: [],
+          // });
+          this.list = []
+          this.$apply()
+          this.methods.setLoading(false)
+          return Promise.resolve()
+        }
+        if (list.length === 0) {
+          // 没有加载到数据
+          wepy.showToast({
+            title: '哥，真没有了...',
+            icon: 'success',
+            duration: 2000
+          })
+          this.page -= 1
+          // this.loading = false
+          this.methods.setLoading(false)
+          this.$apply()
+        } else {
+          if (needConcat) {
+            this.list = [...this.list, ...list]
+          } else {
+            this.list = list
+          }
+          this.methods.setLoading(false)
+        }
+        this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    showError(that, error) {
+      if (error) {
+        console.error(error)
+      }
+      wepy.showModal({
+        content: error || '加载失败。',
+        confirmText: '请重新加载',
+        success(res) {
+          if (res.confirm) {
+            that.getList()
+          }
+        }
+      })
+    }
+    events = {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'exam') {
+          return
+        }
+        this.page = 1
+        this.getList(this.page, null, captcha)
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
+      }
+    }
+  }
+</script>
+
+<style lang="less" scop>
+.news-item {
+  margin: 40rpx 60rpx;
+  padding: 40rpx 32rpx 13rpx;
+  width: 630rpx;
+	// height: 210rpx;
+	background-color: #ffffff;
+	box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+  &.ending {
+    opacity: .8;
+    box-shadow: none;
+    border: solid 1rpx #f6f6f6;
+    // background-color: #cccccc;
+    color: #cccccc !important;
+    .news-message {
+      color: #cccccc !important;
+
+      .time {
+        // font-family: PingFangSC-Medium;
+        font-weight: bolder;
+      }
+      .dateExtend {
+        color: #cccccc;
+      }
+      .position {
+        color: #cccccc !important;
+      }
+      .info {
+        color: #cccccc !important;
+        &.text-red {
+          color: #cccccc !important;
+        }
+      }
+    }
+  }
+  .news-title {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    .top {
+      color: #6dde9e;
+    }
+  }
+  .text-small {
+    // text-align: right;
+    color: #cccccc;
+  }
+  .flex-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 27rpx;
+  }
+  .news-message {
+    font-size: 26rpx;
+    line-height: 22rpx;
+    color: #333333;
+
+    .time {
+      // font-family: PingFangSC-Medium;
+      font-weight: bolder;
+    }
+    .dateExtend {
+      color: #cccccc;
+    }
+    .position {
+      color: #999999;
+    }
+    .info {
+      color: #6dde9e;
+      &.text-red {
+        color: #f47aa9;
+      }
+    }
+  }
+}
+</style>

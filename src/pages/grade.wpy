@@ -517,14 +517,10 @@
       if (error) {
         console.error(error)
       }
-      wepy.showModal({
-        content: error || '加载失败。',
-        confirmText: '重新加载',
-        success(res) {
-          if (res.confirm) {
-            that.getList()
-          }
-        }
+      wepy.showToast({
+        title: '加载失败',
+        image: '../assets/icon/icon_info.png',
+        duration: 1000
       })
     }
   }

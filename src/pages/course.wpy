@@ -375,6 +375,8 @@
       if (updatedStorage) {
         this.userInfo.course = courseList
         this.userInfo.unplanCourse = this.unplanCourse
+        // 新版本代码，下一版本删除
+        this.userInfo.notFirstLogin = true
         wepy.setStorage({
           key: this.username,
           data: this.userInfo
@@ -443,7 +445,11 @@
       const course = this.userInfo.course
       const unplanCourse = this.userInfo.unplanCourse
 
-      if (course) {
+      // 此处因为新版本卡片的类名改了，而用户现在storage里存的都是原来的类名
+      // 所以用户首次进入新版本后，不通过storage，直接查库
+      const notFirstLogin = this.userInfo.notFirstLogin
+
+      if (course && notFirstLogin) {
         this.courseData = course
         this.unplanCourse = unplanCourse
         this.$apply()

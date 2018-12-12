@@ -11,7 +11,7 @@
             <view>
               <view>
                 第<text class="num"> {{weeks.length > 0 ? weeks[slectedWeek] : 0}} </text>周
-                <block wx-if="{{weeks[slectedWeek - 1] == thisWeekNum}}">
+                <block wx-if="{{weeks[slectedWeek] == thisWeekNum}}">
                   (当前)
                 </block>
               </view>
@@ -156,7 +156,7 @@
     data = {
       terms: ['大一 第1学期', '大一 第2学期', '大二 第1学期', '大二 第2学期', '大三 第1学期', '大三 第2学期', '大四 第1学期', '大四 第2学期'],
       weeks: [],
-      slectedWeek: 1,
+      slectedWeek: 0,
       thisWeek: 1,
       thisWeekNum: 1,
       nowDayIndex: new Date().getDay(),
@@ -307,7 +307,7 @@
       this.term = getWeekData.term
       this.weeks = tWeeks
       this.methods.setCurrentTerm(getWeekData.term)
-      this.slectedWeek = getWeekData.week
+      this.slectedWeek = getWeekData.week - 1
       this.$apply()
 
       return Promise.resolve()

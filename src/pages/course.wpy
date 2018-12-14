@@ -187,7 +187,7 @@
 
     computed = {
       currentWeekList () {
-        const week = this.slectedWeek - this.thisWeekNum
+        const week = this.slectedWeek - this.thisWeekNum + 1
         const aDayTimeStamp = 24 * 60 * 60 * 1000
         const aWeekTimeStamp = 7 * aDayTimeStamp
         const timeStamp = Date.now() + week * aWeekTimeStamp

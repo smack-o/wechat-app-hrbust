@@ -1,0 +1,304 @@
+<style lang="less">
+  @import "../assets/lib.less";
+  .wraper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #3f3d94;
+    .dialog-title {
+      // font-size: 36rpx;
+      // color: #333333;
+      // margin-bottom: 69rpx;
+      margin: 20rpx 0 30rpx 0;
+      font-size: 26rpx;
+      color: #ffffff;
+    }
+    .dialog-body {
+      width: 510rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .login-button {
+      // margin-top: 33rpx;
+      margin: 20rpx 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 630rpx;
+      height: 80rpx;
+      background-color: #ee6f85;
+      border-radius: 40rpx;
+      .login-text {
+        font-size: 26rpx;
+        color: #ffffff;
+      }
+    }
+    .input-name {
+      font-size: 24rpx;
+      color: #999999;
+    }
+    .input-name-space {
+      display: flex;
+      justify-content: flex-end;
+      width: 125rpx;
+      text-align: right;
+    }
+    .auto-matic {
+      width: 36rpx;
+      height: 28rpx;
+    }
+    .tip-text-wrapper {
+      margin: 20rpx 0;
+      flex-direction: column;
+      display: flex;
+      justify-content: flex-start; // width: 125rpx;
+      text-align: left;
+      .tip-text {
+        margin: 0 0 4rpx 0;
+        font-size: 24rpx;
+        color: #ffffff;
+      }
+    }
+    .button-wrapper {
+      margin: 16rpx 0;
+      width: 630rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .share-button {
+      display: flex;
+      flex-direction: row;
+      width: 300rpx;
+      height: 75rpx;
+      background-color: rgba(256, 256, 256, 0.2);
+      border-radius: 38rpx;
+      align-items: center;
+      justify-content: center;
+      .share-text {
+        font-size: 26rpx;
+        color: #ffffff;
+      }
+      .share-icon1 {
+        width: 46rpx;
+        height: 38rpx;
+        margin-right: 20rpx;
+      }
+      .share-icon2 {
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 20rpx;
+      }
+    }
+  }
+  .input-wrapper {
+    width: 630rpx;
+    height: 75rpx;
+    background-color: #ffffff;
+    border-radius: 38rpx;
+    border: solid 1rpx #dcdcdc;
+    align-items: center; // justify-content: center;
+    margin: 20rpx 0;
+    display: flex;
+    flex-direction: row;
+  }
+  .input-wrapper-error {
+    box-shadow: 0px 0px 25px 4px rgba(243, 70, 66, 0.8);
+  }
+  .input-box {
+    height: 65rpx;
+    width: 410rpx;
+    font-size: 24rpx;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
+  }
+  .placeholder {
+    margin-left: 20rpx;
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #cccccc;
+    text-align: left;
+  }
+  .placeholderErr {
+    margin-left: 20rpx;
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #e36363;
+    text-align: left;
+  }
+</style>
+
+<template>
+  <view class="wraper">
+    <view class="input-wrapper {{user_registration_num_err && 'input-wrapper-error'}}" style="margin-top: 120rpx">
+      <view class="input-name-space">
+        <text class="input-name">准考证号</text>
+      </view>
+      <input name="input1" class="input-box" value="{{user_registration_num_err ? '' : user_registration_num}}" @input="onInputChange('user_registration_num','user_registration_num_err')" placeholder="{{user_registration_num_err ? user_registration_num_err :'请输入您的15位准考证号'}}"
+        placeholder-class="{{user_registration_num_err ? 'placeholderErr' : 'placeholder'}}" />
+      <image class="auto-matic" src="{{'../assets/icon/camera.png'}}" mode="scaleToFill" lazy-load="false"></image>
+    </view>
+    <view class="input-wrapper {{user_name_err && 'input-wrapper-error'}}">
+      <view class="input-name-space">
+        <text class="input-name">姓名</text>
+      </view>
+      <input class="input-box" value="{{user_name_err ? '' : user_name}}" @input="onInputChange('user_name','user_name_err')" placeholder="{{user_name_err ? user_name_err :'请输入您的姓名'}}" placeholder-class="{{user_name_err ? 'placeholderErr' : 'placeholder'}}"
+      />
+    </view>
+    <text class="dialog-title">成绩发布后，我们会以邮件的形式发送给您</text>
+    <view class="input-wrapper {{user_email_err && 'input-wrapper-error'}}">
+      <view class="input-name-space">
+        <text class="input-name">邮箱</text>
+      </view>
+      <input class="input-box" value="{{user_email_err ? '' : user_email}}" @input="onInputChange('user_email','user_email_err')" placeholder="{{user_email_err ? user_email_err :'请输入接收成绩信息的邮箱'}}" placeholder-class="{{user_email_err ? 'placeholderErr' : 'placeholder'}}"
+      />
+    </view>
+    <!--<button  class="weui-btn login-button" type="primary" bindtap="onSubmit">登录</button>-->
+    <view class="login-button" bindtap="onSubmit">
+      <text class="login-text">预约查分</text>
+    </view>
+    <view class="tip-text-wrapper">
+      <text class="tip-text">温馨提示</text>
+      <text class="tip-text">1.仅限查询2018年12月CET4/6考试</text>
+      <text class="tip-text">2.请填写准确的姓名和准考证号，以便第一时间接收通知</text>
+      <text class="tip-text">3.成绩将通过邮件发送，请保持关注</text>
+    </view>
+    <view class="button-wrapper">
+      <view class="share-button" bindtap="onSubmit">
+        <image class="share-icon1" src="{{'../assets/icon/wechat.png'}}" mode="scaleToFill" lazy-load="false"></image>
+        <text class="share-text">邀请微信好友</text>
+      </view>
+      <view class="share-button" bindtap="onSubmit">
+        <image class="share-icon2" src="{{'../assets/icon/Moments.png'}}" mode="scaleToFill" lazy-load="false"></image>
+        <text class="share-text">生成海报</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // import { connect } from 'wepy-redux'
+  import {
+    request
+  } from 'utils'
+  // import { init } from '../store/actions'
+  export default class CetPage extends wepy.page {
+    config = {
+      enablePullDownRefresh: false
+    }
+    data = {
+      user_registration_num: '',
+      user_name: '',
+      user_email: '',
+      user_registration_num_err: '',
+      user_name_err: '',
+      user_email_err: ''
+    }
+    props = {
+      captchaimageprops: {
+        type: String,
+        default: ''
+      },
+      errormsg: {
+        type: String,
+        default: ''
+      },
+      pagetag: {
+        type: String,
+        default: ''
+      }
+    }
+    computed = {
+      canSubmit() {
+        // return (!this.user_registration_num) || (!this.user_name) || (!this.user_email)
+        return true
+      }
+    }
+    methods = {
+      onInputChange(key, keyErr, event) {
+        console.log(event)
+        this[keyErr] = ''
+        this[key] = event.detail.value
+      }
+    }
+    isNull(text) {
+      if (text.length === 0) {
+        return {
+          msg: '不能为空',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    isLegalRegistrationNum(registrationnum) {
+      if (!/^\d{15}$/.test(registrationnum)) {
+        return {
+          msg: '请输入正确的准考证号',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    isLegalEmail(email) {
+      const reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$')
+      // 正则表达式
+      if (!reg.test(email)) {
+        return {
+          msg: '请输入正确的邮箱',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    onSubmit() {
+      let userRegistrationObj = this.isNull(this.user_registration_num)
+      let userEmailObj = this.isNull(this.user_email)
+      if (userRegistrationObj.isLegal) {
+        this.user_registration_num_err = this.isLegalRegistrationNum(this.user_registration_num).msg
+      } else {
+        this.user_registration_num_err = userRegistrationObj.msg
+      }
+      if (userEmailObj.isLegal) {
+        this.user_email_err = this.isLegalEmail(this.user_email).msg
+      } else {
+        this.user_email_err = userEmailObj.msg
+      }
+      this.user_name_err = this.isNull(this.user_name).msg
+      // }
+      console.log(this.user_registration_num, this.user_name, this.user_email)
+      console.log(this.user_registration_num_err, this.user_name_err, this.user_email_err)
+    }
+    getCaptcha() {
+      this.captchaimageprops = ''
+      request({
+        url: '/api/hrbust/captcha'
+      }).then((res) => {
+        this.captchaimageprops = res.data.data.captcha
+        this.$apply()
+      })
+    }
+    // }
+    async onLoad() {
+      // this.methods.getCaptcha.bind(this)()
+    }
+  }
+</script>

@@ -142,7 +142,7 @@
       </view>
       <input name="input1" class="input-box" value="{{user_registration_num_err ? '' : user_registration_num}}" @input="onInputChange('user_registration_num','user_registration_num_err')" placeholder="{{user_registration_num_err ? user_registration_num_err :'请输入您的15位准考证号'}}"
         placeholder-class="{{user_registration_num_err ? 'placeholderErr' : 'placeholder'}}" />
-      <image class="auto-matic" src="{{'../assets/icon/camera.png'}}" mode="scaleToFill" lazy-load="false"></image>
+      <!--<image class="auto-matic" src="{{'../assets/icon/camera.png'}}" mode="scaleToFill" lazy-load="false"></image> -->
     </view>
     <view class="input-wrapper {{user_name_err && 'input-wrapper-error'}}">
       <view class="input-name-space">
@@ -160,8 +160,8 @@
       />
     </view>
     <!--<button  class="weui-btn login-button" type="primary" bindtap="onSubmit">登录</button>-->
-    <view class="login-button" bindtap="onSubmit">
-      <text class="login-text">预约查分</text>
+    <view class="login-button" bindtap="onSubmit" style="{{isOrdered ? 'background-color: #996596' : 'background-color: #ee6f85'}}">
+      <text class="login-text">{{isOrdered ? '已预约' : '预约查分'}}</text>
     </view>
     <view class="tip-text-wrapper">
       <text class="tip-text">温馨提示</text>
@@ -184,11 +184,19 @@
 
 <script>
   import wepy from 'wepy'
+  import {
+    connect
+  } from 'wepy-redux'
   // import { connect } from 'wepy-redux'
   import {
     request
   } from 'utils'
   // import { init } from '../store/actions'
+  @connect({
+    username(state) {
+      return state.user.studentInfo.username
+    }
+  })
   export default class CetPage extends wepy.page {
     config = {
       enablePullDownRefresh: false
@@ -199,7 +207,12 @@
       user_email: '',
       user_registration_num_err: '',
       user_name_err: '',
-      user_email_err: ''
+      user_email_err: '',
+      isOrdered: false
+    }
+    onLoad() {
+      this.getOrderInfo()
+      this.$apply()
     }
     props = {
       captchaimageprops: {
@@ -226,6 +239,28 @@
         console.log(event)
         this[keyErr] = ''
         this[key] = event.detail.value
+      },
+      onSubmit() {
+        if (this.isOrdered) {
+          // return
+        }
+        let userRegistrationObj = this.isNull(this.user_registration_num)
+        let userEmailObj = this.isNull(this.user_email)
+        if (userRegistrationObj.isLegal) {
+          this.user_registration_num_err = this.isLegalRegistrationNum(this.user_registration_num).msg
+        } else {
+          this.user_registration_num_err = userRegistrationObj.msg
+        }
+        if (userEmailObj.isLegal) {
+          this.user_email_err = this.isLegalEmail(this.user_email).msg
+        } else {
+          this.user_email_err = userEmailObj.msg
+        }
+        this.user_name_err = this.isNull(this.user_name).msg
+        // }
+        console.log(this.user_registration_num, this.user_name, this.user_email)
+        console.log(this.user_registration_num_err, this.user_name_err, this.user_email_err)
+        if (!this.user_registration_num_err && !this.user_name_err && !this.user_email_err) this.postForm()
       }
     }
     isNull(text) {
@@ -269,36 +304,74 @@
         }
       }
     }
-    onSubmit() {
-      let userRegistrationObj = this.isNull(this.user_registration_num)
-      let userEmailObj = this.isNull(this.user_email)
-      if (userRegistrationObj.isLegal) {
-        this.user_registration_num_err = this.isLegalRegistrationNum(this.user_registration_num).msg
-      } else {
-        this.user_registration_num_err = userRegistrationObj.msg
+    getOrderInfo() {
+      let retData = {
+        studentId: this.username
       }
-      if (userEmailObj.isLegal) {
-        this.user_email_err = this.isLegalEmail(this.user_email).msg
-      } else {
-        this.user_email_err = userEmailObj.msg
-      }
-      this.user_name_err = this.isNull(this.user_name).msg
-      // }
-      console.log(this.user_registration_num, this.user_name, this.user_email)
-      console.log(this.user_registration_num_err, this.user_name_err, this.user_email_err)
-    }
-    getCaptcha() {
-      this.captchaimageprops = ''
       request({
-        url: '/api/hrbust/captcha'
-      }).then((res) => {
-        this.captchaimageprops = res.data.data.captcha
+        url: '/api/order-info',
+        data: retData
+      })
+      .then((res) => {
+        console.log(res.data)
+        if (res.data.status !== 200) {
+          return
+        }
+        let rData = res.data.data
+        if (rData.isOrdered === 1) {
+          this.isOrdered = true
+          this.user_name = rData.name
+          this.user_registration_num = rData.ticketNumber
+          this.user_email = rData.email
+        } else {
+          this.isOrdered = false
+        }
         this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    postForm() {
+      let retData = {
+        studentId: this.username,
+        name: this.user_name,
+        ticketNumber: this.user_registration_num,
+        email: this.user_email
+      }
+      // console.log(retData)
+      request({
+        url: '/api/cet-order',
+        data: retData,
+        method: 'POST'
+      }).then((res) => {
+        if (res.data.status !== 200) {
+          this.showError(this, res.data.data.errmsg)
+          return
+        } else {
+          this.isOrdered = true
+          wepy.showToast({
+            title: '预约成功',
+            icon: 'success',
+            duration: 1000
+          })
+        }
+        this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    showError(that, error) {
+      if (error) {
+        console.error(error)
+      }
+      wepy.showToast({
+        title: '请求发送失败',
+        image: '../assets/icon/icon_info.png',
+        duration: 1000
       })
     }
     // }
-    async onLoad() {
-      // this.methods.getCaptcha.bind(this)()
-    }
   }
 </script>

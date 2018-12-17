@@ -855,4 +855,7 @@
   transform-origin: center bottom;
   transform: scale(0.8) !important;
 }
+page {
+  padding-bottom: 35rpx;
+}
 </style>

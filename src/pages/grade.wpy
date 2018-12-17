@@ -1,5 +1,17 @@
 <style lang="less">
 @import "../assets/lib.less";
+page {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: calc(126px + 35px);
+  box-sizing: border-box;
+}
+.advertising {
+  position: absolute;
+  bottom: 35px;
+  transform-origin: center bottom;
+  transform: scale(0.8) !important;
+}
 .selecter {
   padding-top: 40rpx;
   padding-bottom: 20rpx;
@@ -290,6 +302,8 @@
       <image class="tip-arrow" src="../assets/icon/tip_arrow.png" mode="widthFix"/>
       <image class="tip-button" src="../assets/icon/tip_button_icon.png" mode="widthFix"/>
     </view>
+    <ad class="advertising" unit-id="adunit-764ee39c0d27492c"></ad>
+
   </view>
 </template>
 

@@ -124,6 +124,7 @@
         </view>
       </block>
     </view>
+    <ad class="advertising" unit-id="adunit-f1ef7db925a525a8"></ad>
   </block>
 </template>
 
@@ -847,5 +848,11 @@
 .this-week.class14 {
   background-color: #a7ddfb!important;
   border-color: #6db8e2;
+}
+.advertising {
+  margin-top: 10rpx;
+  position: relative;
+  transform-origin: center bottom;
+  transform: scale(0.8) !important;
 }
 </style>

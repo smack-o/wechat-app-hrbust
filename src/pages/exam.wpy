@@ -58,6 +58,9 @@
     }
 
     onLoad () {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       // this.getHasCourseTerms()
       this.getList()
     }

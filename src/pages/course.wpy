@@ -424,6 +424,9 @@
     }
 
     async onLoad () {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       if (!this.username) {
         wepy.reLaunch({
           url: '/pages/index'

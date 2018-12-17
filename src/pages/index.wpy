@@ -189,7 +189,7 @@
             <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
           </view>
         </block>
-      </view>  
+      </view>
       <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
     </view>
     <view class="login-wrapper" wx:if="{{!loading}}">
@@ -253,7 +253,7 @@
             </view>
           </view>
         </view>-->
-    
+
 
     <!-- <view class="info">
       更多功能敬请期待~
@@ -395,6 +395,9 @@
     }
 
     async onShow() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       // banner
       request({
         url: '/api/banner'

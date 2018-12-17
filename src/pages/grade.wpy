@@ -406,6 +406,9 @@
       }
     }
     async onLoad () {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       let time = new Date()
       // time.setFullYear(2008,1,9);
       const natureYear = dateFormat(time, 'yyyy')

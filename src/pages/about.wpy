@@ -154,6 +154,9 @@
       }
     }
     onLoad() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       // const that = this;
       this.audioCtx = wepy.createAudioContext('myAudio')
 

@@ -132,6 +132,32 @@
     color: #e36363;
     text-align: left;
   }
+  .canvas-box.hide{
+    display: none;
+  }
+  .canvas-box.show{
+    display: block;
+  }
+  .canvas-box {
+    position: fixed;
+    top: 0;
+    bottom: 92rpx;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .save-button {
+      height: 91rpx;
+      color: #fff;
+      font-size: 36rpx;
+      line-height: 91rpx;
+      text-align: center;
+      background: #fe6582;
+    }
+  }
 </style>
 
 <template>
@@ -140,7 +166,7 @@
       <view class="input-name-space">
         <text class="input-name">准考证号</text>
       </view>
-      <input name="input1" class="input-box" value="{{user_registration_num_err ? '' : user_registration_num}}" @input="onInputChange('user_registration_num','user_registration_num_err')" placeholder="{{user_registration_num_err ? user_registration_num_err :'请输入您的15位准考证号'}}"
+      <input disabled="{{isOrdered}}" name="input1" class="input-box" value="{{user_registration_num_err ? '' : user_registration_num}}" @input="onInputChange('user_registration_num','user_registration_num_err')" placeholder="{{user_registration_num_err ? user_registration_num_err :'请输入您的15位准考证号'}}"
         placeholder-class="{{user_registration_num_err ? 'placeholderErr' : 'placeholder'}}" />
       <!--<image class="auto-matic" src="{{'../assets/icon/camera.png'}}" mode="scaleToFill" lazy-load="false"></image> -->
     </view>
@@ -148,7 +174,7 @@
       <view class="input-name-space">
         <text class="input-name">姓名</text>
       </view>
-      <input class="input-box" value="{{user_name_err ? '' : user_name}}" @input="onInputChange('user_name','user_name_err')" placeholder="{{user_name_err ? user_name_err :'请输入您的姓名'}}" placeholder-class="{{user_name_err ? 'placeholderErr' : 'placeholder'}}"
+      <input disabled="{{isOrdered}}" class="input-box" value="{{user_name_err ? '' : user_name}}" @input="onInputChange('user_name','user_name_err')" placeholder="{{user_name_err ? user_name_err :'请输入您的姓名'}}" placeholder-class="{{user_name_err ? 'placeholderErr' : 'placeholder'}}"
       />
     </view>
     <text class="dialog-title">成绩发布后，我们会以邮件的形式发送给您</text>
@@ -156,7 +182,7 @@
       <view class="input-name-space">
         <text class="input-name">邮箱</text>
       </view>
-      <input class="input-box" value="{{user_email_err ? '' : user_email}}" @input="onInputChange('user_email','user_email_err')" placeholder="{{user_email_err ? user_email_err :'请输入接收成绩信息的邮箱'}}" placeholder-class="{{user_email_err ? 'placeholderErr' : 'placeholder'}}"
+      <input disabled="{{isOrdered}}" class="input-box" value="{{user_email_err ? '' : user_email}}" @input="onInputChange('user_email','user_email_err')" placeholder="{{user_email_err ? user_email_err :'请输入接收成绩信息的邮箱'}}" placeholder-class="{{user_email_err ? 'placeholderErr' : 'placeholder'}}"
       />
     </view>
     <!--<button  class="weui-btn login-button" type="primary" bindtap="onSubmit">登录</button>-->
@@ -170,14 +196,18 @@
       <text class="tip-text">3.成绩将通过邮件发送，请保持关注</text>
     </view>
     <view class="button-wrapper">
-      <view class="share-button" bindtap="onSubmit">
+      <button class="share-button" open-type="share">
         <image class="share-icon1" src="{{'../assets/icon/wechat.png'}}" mode="scaleToFill" lazy-load="false"></image>
         <text class="share-text">邀请微信好友</text>
-      </view>
-      <view class="share-button" bindtap="onSubmit">
+      </button>
+      <view class="share-button" bindtap="createNewImg">
         <image class="share-icon2" src="{{'../assets/icon/Moments.png'}}" mode="scaleToFill" lazy-load="false"></image>
         <text class="share-text">生成海报</text>
       </view>
+    </view>
+    <view class="canvas-box {{showPost ? 'show' : 'hide'}}">
+      <canvas canvas-id="mycanvas"/>
+      <view class="save-button" bindtap="saveImg">保存图片</view>
     </view>
   </view>
 </template>
@@ -208,7 +238,8 @@
       user_registration_num_err: '',
       user_name_err: '',
       user_email_err: '',
-      isOrdered: false
+      isOrdered: false,
+      showPost: false
     }
     onLoad() {
       this.getOrderInfo()
@@ -228,21 +259,16 @@
         default: ''
       }
     }
-    computed = {
-      canSubmit() {
-        // return (!this.user_registration_num) || (!this.user_name) || (!this.user_email)
-        return true
-      }
-    }
+
     methods = {
       onInputChange(key, keyErr, event) {
-        console.log(event)
         this[keyErr] = ''
         this[key] = event.detail.value
       },
+
       onSubmit() {
         if (this.isOrdered) {
-          // return
+          return
         }
         let userRegistrationObj = this.isNull(this.user_registration_num)
         let userEmailObj = this.isNull(this.user_email)
@@ -257,10 +283,58 @@
           this.user_email_err = userEmailObj.msg
         }
         this.user_name_err = this.isNull(this.user_name).msg
-        // }
-        console.log(this.user_registration_num, this.user_name, this.user_email)
-        console.log(this.user_registration_num_err, this.user_name_err, this.user_email_err)
         if (!this.user_registration_num_err && !this.user_name_err && !this.user_email_err) this.postForm()
+      },
+
+      createNewImg () {
+        const context = wepy.createCanvasContext('mycanvas')
+
+        const width = wepy.getSystemInfoSync().windowWidth
+        const height = wepy.getSystemInfoSync().windowHeight
+
+        const num = Math.floor(Math.random() * 2 + 1)
+        const path = `../assets/img/cet-post-${num}@2x.png`
+        this.path = path
+
+        context.setFillStyle('#fff')
+        context.fillRect(0, 0, width, height)
+        context.drawImage(path, 10, 10, width - 20, height - 20)
+        context.draw()
+
+        wepy.hideTabBar()
+        this.showPost = true
+
+        setTimeout(() => {
+          const that = this
+          wepy.canvasToTempFilePath({
+            canvasId: 'mycanvas',
+            success: function (res) {
+              that.shareImgSrc = res.tempFilePath
+            }
+          })
+        }, 200)
+      },
+
+      saveImg () {
+        const that = this
+        wepy.saveImageToPhotosAlbum({
+          filePath: that.shareImgSrc,
+          success (res) {
+            wepy.showModal({
+              title: '保存成功',
+              content: '图片成功保存到相册',
+              showCancel: false,
+              confirmText: '确认',
+              success (res) {
+                if (res.confirm) {
+                  wepy.showTabBar()
+                  that.showPost = false
+                  that.$apply()
+                }
+              }
+            })
+          }
+        })
       }
     }
     isNull(text) {
@@ -313,7 +387,6 @@
         data: retData
       })
       .then((res) => {
-        console.log(res.data)
         if (res.data.status !== 200) {
           return
         }
@@ -339,7 +412,6 @@
         ticketNumber: this.user_registration_num,
         email: this.user_email
       }
-      // console.log(retData)
       request({
         url: '/api/cet-order',
         data: retData,
@@ -372,6 +444,13 @@
         duration: 1000
       })
     }
-    // }
+    onShareAppMessage (options) {
+      const that = this
+      const shareObj = {
+        title: '预约四六级查询，再也不忘准考号',
+        imageUrl: that.path || '../assets/img/cet-post-1@2x.png'
+      }
+      return shareObj
+    }
   }
 </script>

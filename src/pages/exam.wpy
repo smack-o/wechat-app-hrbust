@@ -1,24 +1,29 @@
 <template>
   <view class="news">
     <loading wx:if="{{loading}}" :loadingStyle="{{loadingStyle}}"/>
-    <view class="news-item {{item.ending && 'ending'}}" wx:key="news" wx:for="{{list}}" wx:for-index="index">
-      <view class="news-wrapper">
-        <view class="news-message">
-          <view class="flex-box">
-            <view class="date">{{item.date}}</view>
-            <view class="time">{{item.time}}</view>
-          </view>
-          <view class="flex-box">
-            <view class="course">{{item.course}}</view>
-            <view class="dateExtend">{{item.dateExtend}}</view>
-          </view>
-          <view class="flex-box align-right">
-            <view class="position">{{item.position}}</view>
-            <view class="info {{item.info === '重考' ? 'text-red' : ''}}">{{item.info}}</view>
+
+    <block wx:key="news" wx:for="{{list}}" wx:for-index="index">
+      <ad class="advertising" unit-id="adunit-20521f8411ad8419" wx:if="{{index > 0 && list[index - 1].ending !== list[index].ending}}">
+      </ad>
+      <view class="news-item {{item.ending && 'ending'}}">
+        <view class="news-wrapper">
+          <view class="news-message">
+            <view class="flex-box">
+              <view class="date">{{item.date}}</view>
+              <view class="time">{{item.time}}</view>
+            </view>
+            <view class="flex-box">
+              <view class="course">{{item.course}}</view>
+              <view class="dateExtend">{{item.dateExtend}}</view>
+            </view>
+            <view class="flex-box align-right">
+              <view class="position">{{item.position}}</view>
+              <view class="info {{item.info === '重考' ? 'text-red' : ''}}">{{item.info}}</view>
+            </view>
           </view>
         </view>
       </view>
-    </view>
+    </block>
     <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="exam"/>
   </view>
 </template>
@@ -252,5 +257,20 @@
       }
     }
   }
+}
+.advertising {
+  transform-origin: center bottom;
+  transform: scale(0.84) !important;
+  // margin: 40rpx 0;
+  margin-top: -40rpx;
+  margin-bottom: 40rpx;
+  // padding: 40rpx 32rpx 13rpx;
+  // width: 630rpx;
+	// height: 210rpx;
+	background-color: #ffffff;
+	box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
 }
 </style>

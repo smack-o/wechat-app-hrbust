@@ -168,7 +168,7 @@
         duration="{{duration}}">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <view class="slide-item" @tap="linkToWebView({{item.link}})">
+            <view class="slide-item" @tap="linkToWebView({{item.link}}, {{item.type}})">
               <image src="{{item.image}}" class="{{currentSlideIdx === index  ? slideCurimage : slideImage}}" mode="cover"/>
             </view>
           </swiper-item>
@@ -379,10 +379,16 @@
           url
         })
       },
-      linkToWebView(url) {
-        wepy.navigateTo({
-          url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
-        })
+      linkToWebView(url, type) {
+        if (type === 1) {
+          wepy.navigateTo({
+            url
+          })
+        } else {
+          wepy.navigateTo({
+            url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
+          })
+        }
       }
     }
 

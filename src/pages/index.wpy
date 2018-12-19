@@ -394,6 +394,9 @@
     }
 
     async onShow() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       // banner
       request({
         url: '/api/banner'

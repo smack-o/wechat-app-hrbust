@@ -85,6 +85,11 @@
         })
       }
     }
+    onLoad() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
+    }
   }
 </script>
 

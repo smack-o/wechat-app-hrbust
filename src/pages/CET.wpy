@@ -8,11 +8,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #3f3d94;
+    background-image: url('http://hrbust-media.smackgg.cn/99ca85d4-6a4c-4062-99c9-4915bcfe2e29');
+    background-size:80rpx 60rpx;
+    z-index: -2;
     .dialog-title {
-      // font-size: 36rpx;
-      // color: #333333;
-      // margin-bottom: 69rpx;
       margin: 20rpx 0 30rpx 0;
       font-size: 26rpx;
       color: #ffffff;
@@ -150,18 +149,25 @@
       height: 100%;
     }
     .save-button {
-      height: 91rpx;
+      height: 92rpx;
       color: #fff;
       font-size: 36rpx;
-      line-height: 91rpx;
+      line-height: 92rpx;
       text-align: center;
       background: #fe6582;
     }
+  }
+  .bg-fish {
+    height: 140px;
+    position: absolute;
+    top: 20rpx;
+    z-index: -1;
   }
 </style>
 
 <template>
   <view class="wraper">
+    <image class="bg-fish" src="http://hrbust-media.smackgg.cn/6b500362-5ffc-4071-9d9c-b562558b74bc"/>
     <view class="input-wrapper {{user_registration_num_err && 'input-wrapper-error'}}" style="margin-top: 120rpx">
       <view class="input-name-space">
         <text class="input-name">准考证号</text>
@@ -287,22 +293,25 @@
       },
 
       createNewImg () {
+        this.showPost = true
+        this.$apply()
+
         const context = wepy.createCanvasContext('mycanvas')
 
-        const width = wepy.getSystemInfoSync().windowWidth
-        const height = wepy.getSystemInfoSync().windowHeight
+        const query = wepy.createSelectorQuery()
+        query.selectAll('.save-button').boundingClientRect(rect => {
+          const width = wepy.getSystemInfoSync().windowWidth
+          const height = wepy.getSystemInfoSync().windowHeight - rect[0].height
 
-        const num = Math.floor(Math.random() * 2 + 1)
-        const path = `../assets/img/cet-post-${num}@2x.png`
-        this.path = path
+          const num = Math.floor(Math.random() * 2 + 1)
+          const path = `../assets/img/cet-post-${num}@2x.png`
+          this.path = path
 
-        context.setFillStyle('#fff')
-        context.fillRect(0, 0, width, height)
-        context.drawImage(path, 10, 10, width - 20, height - 20)
-        context.draw()
-
-        wepy.hideTabBar()
-        this.showPost = true
+          context.setFillStyle('#fff')
+          context.fillRect(0, 0, width, height)
+          context.drawImage(path, 10, 10, width - 20, height - 20)
+          context.draw()
+        }).exec()
 
         setTimeout(() => {
           const that = this
@@ -327,7 +336,6 @@
               confirmText: '确认',
               success (res) {
                 if (res.confirm) {
-                  wepy.showTabBar()
                   that.showPost = false
                   that.$apply()
                 }

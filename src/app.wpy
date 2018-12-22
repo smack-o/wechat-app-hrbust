@@ -39,7 +39,11 @@ export default class extends wepy.app {
       'pages/about',
       'pages/campus',
       'pages/account',
-      'pages/CET'
+      'pages/CET',
+      'pages/christmas/christmasIndex',
+      'pages/christmas/imageeditor',
+      'pages/christmas/combine'
+      // 'pages/combine/combine'
     ],
     window: {
       backgroundTextStyle: 'light',

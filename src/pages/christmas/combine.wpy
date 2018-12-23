@@ -1,0 +1,93 @@
+
+<template>
+  <view>
+    <canvas class="myCanvas" canvas-id="myCanvas" style="height:300px;;width:100%;" />
+    <button bind:tap="savePic">保存至相册</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    connect
+  } from 'wepy-redux'
+  @connect({
+    bgPic(state) {
+      return state.christmasHat.bgPic
+    },
+    scale(state) {
+      return state.christmasHat.scale
+    },
+    rotate(state) {
+      return state.christmasHat.rotate
+    },
+    hatCenterX(state) {
+      return state.christmasHat.hatCenterX
+    },
+    hatCenterY(state) {
+      return state.christmasHat.hatCenterY
+    },
+    currentHatId(state) {
+      return state.christmasHat.currentHatId
+    }
+  })
+  export default class Combine extends wepy.page {
+    data = {
+    }
+    onLoad() {
+      wepy.getImageInfo({
+        src: this.bgPic,
+        success: res => {
+          this.bgPic = res.path
+          this.draw()
+        }
+      })
+    }
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    draw() {
+      let scale = this.scale
+      let rotate = this.rotate
+      let hatCenterX = this.hatCenterX
+      let hatCenterY = this.hatCenterY
+      let currentHatId = this.currentHatId
+      const pc = wepy.createCanvasContext('myCanvas')
+      const windowWidth = wepy.getSystemInfoSync().windowWidth
+      const hatSize = 100 * scale
+      pc.clearRect(0, 0, windowWidth, 300)
+      pc.drawImage(this.bgPic, windowWidth / 2 - 150, 0, 300, 300)
+      pc.translate(hatCenterX, hatCenterY)
+      pc.rotate(rotate * Math.PI / 180)
+      pc.drawImage('../../assets/interim/' + currentHatId + '.png', -hatSize / 2, -hatSize / 2, hatSize, hatSize)
+      pc.draw()
+    }
+    savePic() {
+      const windowWidth = wepy.getSystemInfoSync().windowWidth
+      wepy.canvasToTempFilePath({
+        x: windowWidth / 2 - 150,
+        y: 0,
+        height: 300,
+        width: 300,
+        canvasId: 'myCanvas',
+        success: (res) => {
+          wepy.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: (res) => {
+              wepy.navigateTo({
+                url: '../index/index',
+                success: function(res) {},
+                fail: function(res) {},
+                complete: function(res) {}
+              })
+              console.log('success:' + res)
+            },
+            fail(e) {
+              console.log('err:' + e)
+            }
+          })
+        }
+      })
+    }
+  }
+</script>

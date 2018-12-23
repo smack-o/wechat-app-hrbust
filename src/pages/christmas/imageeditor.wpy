@@ -1,0 +1,205 @@
+<style lang="less">
+  .container {
+    height: 300px;
+    width: 100%;
+  }
+  .bg {
+    position: absolute;
+    z-index: 0;
+    height: 300px;
+    width: 300px;
+  }
+  button {
+    margin-top: 10px;
+  }
+  .hat {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    border: dashed 2px yellow;
+    top: 100px;
+  }
+  .handle,
+  .cancel {
+    position: absolute;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+  }
+  .scrollView {
+    width: 100%;
+    position: absolute;
+    bottom: 5px;
+    white-space: nowrap;
+  }
+  .imgList {
+    height: 70px;
+    width: 70px;
+    border: 2px solid;
+    margin: 5px;
+  }
+</style>
+
+<template>
+  <view wx:if="{{!combine}}">
+    <view class="container" id="container" bind:touchstart="touchStart" bind:touchend="touchEnd" bind:touchmove="touchMove">
+      <image class="bg" src="{{bgPic}}"></image>
+      <!--<icon type="cancel" class="cancel" id="cancel" style="top:{{cancelCenterY-10+'px'}};left:{{cancelCenterX-10+'px'}}"></icon>-->
+      <icon type="waiting" class="handle" id="handle" color="green" style="top:{{handleCenterY-10+'px'}};left:{{handleCenterX-10+'px'}}"></icon>
+      <image class="hat" id="hat" 
+        src="../../assets/interim/{{currentHatId}}.png"
+        style="top:{{hatCenterY-hatSize/2-2+'px'}};left:{{hatCenterX-hatSize/2-2+'px'}};transform:rotate({{rotate+'deg'}}) scale({{scale}})"></image>
+    </view>
+    <button bind:tap="combinePic">确定</button>
+    <scroll-view class="scrollView" scroll-x="true">
+      <image class="imgList" wx:for="...imgList" wx:key="{{index+1}}" src="../../assets/interim/{{index+1}}.png" data-hat-id="{{index+1}}" bind:tap="chooseImg"></image>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    setBackgroundPic,
+    setScale,
+    setRotate,
+    setHatCenterX,
+    setHatCenterY,
+    setCurrentHatId
+  } from '../../store/actions'
+  import {
+    connect
+  } from 'wepy-redux'
+  @connect({
+    bgPic(state) {
+      return state.christmasHat.bgPic
+    }
+  }, {
+    setBackgroundPic,
+    setScale,
+    setRotate,
+    setHatCenterX,
+    setHatCenterY,
+    setCurrentHatId
+  })
+  export default class imageeditor extends wepy.page {
+    config = {
+      enablePullDownRefresh: false
+    }
+    data = {
+      imgList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      currentHatId: 1,
+      hatCenterX: wepy.getSystemInfoSync().windowWidth / 2,
+      hatCenterY: 150,
+      cancelCenterX: wepy.getSystemInfoSync().windowWidth / 2 - 50 - 2,
+      cancelCenterY: 100,
+      handleCenterX: wepy.getSystemInfoSync().windowWidth / 2 + 50 - 2,
+      handleCenterY: 200,
+      hatSize: 100,
+      scale: 1,
+      rotate: 0,
+      touchTarget: '',
+      startX: 0,
+      startY: 0
+    }
+    onLoad() {
+      // this.bgPic = app.globalData.bgPic
+      this.hatCenterXBefore = this.hatCenterX
+      this.hatCenterYBefore = this.hatCenterY
+      this.handleCenterXBefore = this.handleCenterX
+      this.handleCenterYBefore = this.handleCenterY
+      this.cancelCenterXBefore = this.cancelCenterX
+      this.cancelCenterYBefore = this.cancelCenterY
+      this.scaleBefore = this.scale
+      this.rotateBefore = this.rotate
+    //   this.touchTarget = ''
+    //   this.startX = 0
+    //   this.startY = 0
+    }
+    onReady() {
+      // this.scale = this.scale
+    //   this.rotate = this.rotate
+    //   this.touchTarget = ''
+    //   this.startX = 0
+    //   this.startY = 0
+    }
+    props = {}
+    methods = {
+      touchStart(e) {
+        if (e.target.id === 'hat') {
+          this.touchTarget = 'hat'
+        } else if (e.target.id === 'handle') {
+          this.touchTarget = 'handle'
+        } else {
+          this.touchTarget = ''
+        }
+        if (this.touchTarget !== '') {
+          this.startX = e.touches[0].clientX
+          this.startY = e.touches[0].clientY
+        }
+      },
+      touchEnd(e) {
+        this.hatCenterXBefore = this.hatCenterX
+        this.hatCenterYBefore = this.hatCenterY
+        this.cancelCenterXBefore = this.cancelCenterX
+        this.cancelCenterYBefore = this.cancelCenterY
+        this.handleCenterXBefore = this.handleCenterX
+        this.handleCenterYBefore = this.handleCenterY
+        // }
+        this.touchTarget = ''
+        this.scaleBefore = this.scale
+        this.rotateBefore = this.rotate
+      },
+      touchMove(e) {
+        var currentX = e.touches[0].clientX
+        var currentY = e.touches[0].clientY
+        var movedX = currentX - this.startX
+        var movedY = currentY - this.startY
+        if (this.touchTarget === 'hat') {
+          // this.setData({
+          this.hatCenterX = this.hatCenterX + movedX
+          this.hatCenterY = this.hatCenterY + movedY
+          this.cancelCenterX = this.cancelCenterX + movedX
+          this.cancelCenterY = this.cancelCenterY + movedY
+          this.handleCenterX = this.handleCenterX + movedX
+          this.handleCenterY = this.handleCenterY + movedY
+          // })
+        }
+        if (this.touchTarget === 'handle') {
+          // this.setData({
+          this.handleCenterX = this.handleCenterX + movedX
+          this.handleCenterY = this.handleCenterY + movedY
+          this.cancelCenterX = 2 * this.hatCenterX - this.handleCenterX
+          this.cancelCenterY = 2 * this.hatCenterY - this.handleCenterY
+          // });
+          let diffXBefore = this.handleCenterXBefore - this.hatCenterXBefore
+          let diffYBefore = this.handleCenterYBefore - this.hatCenterYBefore
+          let diffXAfter = this.handleCenterX - this.hatCenterXBefore
+          let diffYAfter = this.handleCenterY - this.hatCenterYBefore
+          let distanceBefore = Math.sqrt(diffXBefore * diffXBefore + diffYBefore * diffYBefore)
+          let distanceAfter = Math.sqrt(diffXAfter * diffXAfter + diffYAfter * diffYAfter)
+          let angleBefore = Math.atan2(diffYBefore, diffXBefore) / Math.PI * 180
+          let angleAfter = Math.atan2(diffYAfter, diffXAfter) / Math.PI * 180
+          this.scale = distanceAfter / distanceBefore * this.scaleBefore
+          this.rotate = angleAfter - angleBefore + this.rotateBefore
+        }
+        this.startX = currentX
+        this.startY = currentY
+      },
+      chooseImg(e) {
+        console.log(e)
+        this.currentHatId = e.target.dataset.hatId
+      },
+      combinePic() {
+        this.methods.setScale(this.scale)
+        this.methods.setRotate(this.rotate)
+        this.methods.setHatCenterX(this.hatCenterX)
+        this.methods.setHatCenterY(this.hatCenterY)
+        this.methods.setCurrentHatId(this.currentHatId)
+        wepy.navigateTo({
+          url: '../christmas/combine'
+        })
+      }
+    }
+  }
+</script>

@@ -1,0 +1,117 @@
+<style lang="less">
+  /* pages/index/index.wxss */
+  .btnZoom {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+  button {
+    margin: 10px 20px 0px 20px;
+  }
+  .container {
+    width: 100%;
+    height: 300px;
+  }
+  .bgPic,
+  .emptyBg {
+    height: 300px;
+    width: 300px;
+  }
+  .emptyBg {
+    border: 2px solid;
+  }
+</style>
+
+<template>
+  <view class="container">
+    <image class="bgPic" wx:if="{{bgPic}}" src="https://wx.qlogo.cn/mmopen/vi_32/PiaNO5mJicxpLVq1o3FZxmp1mKYUBiaQqyNyheZrT4npGDsgQHicJ6ELdmB5ibvOHpz9vv0a7PibjtYYu6OCWaEP70NA/132"></image>
+    <view class="emptyBg" wx:else></view>
+  </view>
+  <view class="btnContainer">
+    <button data-way="avatar" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">使用头像</button>
+    <button data-way="camera" bind:tap="chooseImage">使用相机</button>
+    <button data-way="album" bind:tap="chooseImage">相册选择</button>
+    <button bind:tap="nextPage" disabled="{{!picChoosed}}">下一步</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    setBackgroundPic
+  } from '../../store/actions'
+  import {
+    connect
+  } from 'wepy-redux'
+  @connect({
+    bgPic(state) {
+      return state.christmasHat.bgPic
+    }
+  }, {
+    setBackgroundPic
+  })
+  export default class christmasIndex extends wepy.page {
+    config = {
+      navigationBarTitleText: '圣诞'
+      //   enablePullDownRefresh: true
+    }
+    data = {
+      // bgPic:null,
+      picChoosed: false,
+      userInfo: {}
+    }
+    computed = {}
+    methods = {
+      userInfoHandler(data) {
+        console.log(JSON.parse(data.detail.rawData))
+        let userInfo = JSON.parse(data.detail.rawData)
+        if (userInfo) {
+          this.methods.setBackgroundPic(userInfo.avatarUrl)
+          this.userInfo = userInfo
+          this.assignPicChoosed()
+        } else {
+          // 在没有 open-type=getUserInfo 版本的兼容处理
+          wepy.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              this.methods.setBackgroundPic(res.userInfo.avatarUrl)
+              this.assignPicChoosed()
+            }
+          })
+        }
+      },
+      chooseImage(from) {
+        wepy.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: [from.target.dataset.way],
+          success: (res) => {
+            // var tempFilePaths = res.tempFilePaths
+            this.methods.setBackgroundPic(res.tempFilePaths[0])
+            // this.bgPic = res.tempFilePaths[0]
+            this.assignPicChoosed()
+          },
+          fail: (res) => {
+            this.assignPicChoosed()
+          },
+          complete: (res) => {
+            this.assignPicChoosed()
+          }
+        })
+      },
+      nextPage() {
+        // app.globalData.bgPic=this.bgPic;
+        wepy.navigateTo({
+          url: '../christmas/imageeditor'
+        })
+      }
+    }
+    assignPicChoosed() {
+      if (this.bgPic) {
+        this.picChoosed = true
+      } else {
+        this.picChoosed = false
+      }
+    }
+  }
+</script>

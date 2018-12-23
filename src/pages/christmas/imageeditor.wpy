@@ -1,23 +1,41 @@
 <style lang="less">
   .container {
-    height: 300px;
-    width: 100%;
+    width: 650rpx;
+    height: 650rpx;
+    margin: 30rpx auto 60rpx;
   }
   .bg {
-    position: absolute;
+    // position: absolute;
+    margin: auto;
     z-index: 0;
-    height: 300px;
-    width: 300px;
+    height: 630rpx;
+    width: 630rpx;
+    border: 10rpx solid #ffffff;
+  }
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-top: 20rpx;
+    background: #be3535;
   }
   button {
-    margin-top: 10px;
+    width: 630rpx;
+    height: 98rpx;
+    margin: 40rpx auto 20rpx;
+    background: #be3535;
+    border: 5rpx solid #ffffff;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
   }
   .hat {
     height: 100px;
     width: 100px;
     position: absolute;
-    border: dashed 2px yellow;
-    top: 100px;
+    border: dashed 4rpx yellow;
+    top: 200rpx;
   }
   .handle,
   .cancel {
@@ -27,21 +45,26 @@
     height: 20px;
   }
   .scrollView {
-    width: 100%;
+    margin: 30rpx auto;
+    width: 650rpx;
     position: absolute;
-    bottom: 5px;
+    left: 0;
+    right: 0;
+    top: 950rpx;
     white-space: nowrap;
+    background: #ffffff;
   }
   .imgList {
-    height: 70px;
-    width: 70px;
-    border: 2px solid;
-    margin: 5px;
+    width: 140rpx;
+    height: 140rpx;
+    // border: 2px solid;
+    margin: 10rpx 30rpx;
   }
+
 </style>
 
 <template>
-  <view wx:if="{{!combine}}">
+  <view class="wrapper" wx:if="{{!combine}}">
     <view class="container" id="container" bind:touchstart="touchStart" bind:touchend="touchEnd" bind:touchmove="touchMove">
       <image class="bg" src="{{bgPic}}"></image>
       <!--<icon type="cancel" class="cancel" id="cancel" style="top:{{cancelCenterY-10+'px'}};left:{{cancelCenterX-10+'px'}}"></icon>-->
@@ -50,7 +73,7 @@
         src="../../assets/interim/{{currentHatId}}.png"
         style="top:{{hatCenterY-hatSize/2-2+'px'}};left:{{hatCenterX-hatSize/2-2+'px'}};transform:rotate({{rotate+'deg'}}) scale({{scale}})"></image>
     </view>
-    <button bind:tap="combinePic">确定</button>
+    <button bind:tap="combinePic">行了</button>
     <scroll-view class="scrollView" scroll-x="true">
       <image class="imgList" wx:for="...imgList" wx:key="{{index+1}}" src="../../assets/interim/{{index+1}}.png" data-hat-id="{{index+1}}" bind:tap="chooseImg"></image>
     </scroll-view>

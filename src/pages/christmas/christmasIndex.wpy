@@ -15,7 +15,7 @@
   button {
     width: 300rpx;
     height: 98rpx;
-    margin: 10rpx 20rpx 0rpx 20rpx;
+    margin: 10rpx 0;
     background: #be3535;
     border: 5rpx solid #ffffff;
     color: #fff;
@@ -26,7 +26,7 @@
   .container {
     width: 650rpx;
     height: 650rpx;
-    margin: 30rpx auto 120rpx;
+    margin: 30rpx auto 60rpx;
   }
   .bgPic,
   .emptyBg {
@@ -38,11 +38,19 @@
     border: 10rpx solid #ffffff;
   }
   .btnContainer {
+    width: 700rpx;
+    margin: 0 auto;
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    .flex1 {
+      // flex: 1;
+      width: 100%;
+    }
   }
 </style>
 
@@ -53,10 +61,10 @@
       <view class="emptyBg" wx:else></view>
     </view>
     <view class="btnContainer">
-      <button data-way="avatar" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">使用头像</button>
+      <button class="flex1" data-way="avatar" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">使用头像</button>
       <button data-way="camera" bind:tap="chooseImage">使用相机</button>
       <button data-way="album" bind:tap="chooseImage">相册选择</button>
-      <button bind:tap="nextPage" disabled="{{!picChoosed}}">下一步</button>
+      <button class="flex1" bind:tap="nextPage" disabled="{{!picChoosed}}">下一步</button>
     </view>
   </view>
 </template>
@@ -78,7 +86,7 @@
   })
   export default class christmasIndex extends wepy.page {
     config = {
-      navigationBarTitleText: '圣诞'
+      navigationBarTitleText: '头像加圣诞帽啦~'
       //   enablePullDownRefresh: true
     }
     data = {
@@ -86,7 +94,16 @@
       picChoosed: false,
       userInfo: {}
     }
+    onShareAppMessage() {
+      return {
+        title: '圣诞快乐，给头像加圣诞帽啦~',
+        imageUrl: 'http://hrbust-media.smackgg.cn/72e384fa-68ac-4110-982a-e42a4c865bc3'
+      }
+    }
     onLoad() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
       this.methods.setBackgroundPic(null)
     }
     computed = {}

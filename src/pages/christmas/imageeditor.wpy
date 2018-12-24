@@ -111,7 +111,8 @@
   })
   export default class imageeditor extends wepy.page {
     config = {
-      enablePullDownRefresh: false
+      enablePullDownRefresh: false,
+      disableScroll: true
     }
     data = {
       imgList: [1, 2, 3, 4, 5, 6, 7, 8],

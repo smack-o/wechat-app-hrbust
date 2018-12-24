@@ -96,7 +96,12 @@
         let userInfo = JSON.parse(data.detail.rawData)
         if (userInfo) {
           console.log(userInfo.avatarUrl)
-          this.methods.setBackgroundPic(userInfo.avatarUrl)
+          let avatarUrl = userInfo.avatarUrl
+          if (avatarUrl.endsWith('132')) {
+            avatarUrl = avatarUrl.substring(0, avatarUrl.length - 3)
+            avatarUrl = `${avatarUrl}0`
+          }
+          this.methods.setBackgroundPic(avatarUrl)
           this.userInfo = userInfo
           this.assignPicChoosed()
         } else {
@@ -111,6 +116,7 @@
         }
       },
       chooseImage(from) {
+        this.picChoosed = true
         wepy.chooseImage({
           count: 1,
           sizeType: ['original', 'compressed'],
@@ -120,13 +126,12 @@
             this.methods.setBackgroundPic(res.tempFilePaths[0])
             console.log(res.tempFilePaths[0])
             // this.bgPic = res.tempFilePaths[0]
-            this.assignPicChoosed()
+            // console.log(this.bgPic)
+            // this.picChoosed = true
           },
           fail: (res) => {
-            this.assignPicChoosed()
           },
           complete: (res) => {
-            this.assignPicChoosed()
           }
         })
       },

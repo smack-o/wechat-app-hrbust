@@ -1,4 +1,7 @@
 <style lang="less">
+  page {
+    padding-bottom: calc(126px + 35px);
+  }
   .container {
     // width: 650rpx;
     // height: 650rpx;
@@ -19,7 +22,7 @@
   .wrapper {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: calc(100% + 126px + 35px);
     padding-top: 20rpx;
     background: #be3535;
   }
@@ -65,6 +68,13 @@
     margin: 10rpx 30rpx;
   }
 
+  .advertising {
+    position: absolute;
+    bottom: 35px;
+    transform-origin: center bottom;
+    transform: scale(0.8) !important;
+  }
+
 </style>
 
 <template>
@@ -72,7 +82,7 @@
     <view class="container" id="container" bind:touchstart="touchStart" bind:touchend="touchEnd" bind:touchmove="touchMove">
       <image class="bg" src="{{bgPic}}"></image>
       <!--<icon type="cancel" class="cancel" id="cancel" style="top:{{cancelCenterY-10+'px'}};left:{{cancelCenterX-10+'px'}}"></icon>-->
-      <icon type="waiting" class="handle" id="handle" color="green" style="top:{{handleCenterY-10+'px'}};left:{{handleCenterX-10+'px'}}"></icon>
+      <icon type="waiting" class="handle" id="handle" color="green" style="top:{{handleCenterY-10+'px'}};left:{{handleCenterX-10-wtf+'px'}}"></icon>
       <image class="hat" id="hat"
         src="../../assets/interim/{{currentHatId}}.png"
         style="top:{{hatCenterY-hatSize/2-2+'px'}};left:{{hatCenterX-hatSize/2-wtf-2+'px'}};transform:rotate({{rotate+'deg'}}) scale({{scale}})"></image>
@@ -81,6 +91,7 @@
     <scroll-view class="scrollView" scroll-x="true">
       <image class="imgList" wx:for="...imgList" wx:key="{{index+1}}" src="../../assets/interim/{{index+1}}.png" data-hat-id="{{index+1}}" bind:tap="chooseImg"></image>
     </scroll-view>
+    <ad class="advertising" unit-id="adunit-b6dc7dacd63afd2e"></ad>
   </view>
 </template>
 

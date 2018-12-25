@@ -109,13 +109,15 @@
         url: './CET',
         needLogin: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
-      }, {
-        image: '../assets/icon/cetlogo.png',
-        text: '帽子',
-        url: './christmas/christmasIndex',
-        needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
-      }]
+      }
+      // {
+      //   image: '../assets/icon/cetlogo.png',
+      //   text: '帽子',
+      //   url: './christmas/christmasIndex',
+      //   needLogin: true,
+      //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
+      // }
+      ]
     }
     methods = {
       linkTo(url) {

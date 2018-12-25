@@ -1,5 +1,5 @@
 <style lang="less">
-  
+
   .wrapper {
     position: absolute;
     width: 100%;
@@ -18,7 +18,12 @@
     align-items: center;
     justify-content: center;
   }
-  
+  .advertising {
+    margin-top: 10rpx;
+    position: relative;
+    transform-origin: center bottom;
+    transform: scale(0.8) !important;
+  }
 
 </style>
 
@@ -26,6 +31,7 @@
   <view class="wrapper">
     <canvas class="myCanvas" canvas-id="myCanvas" style="height:300px;;width:100%;" />
     <button bind:tap="savePic">保存至相册</button>
+    <ad class="advertising" unit-id="adunit-b6dc7dacd63afd2e"></ad>
   </view>
 </template>
 
@@ -56,6 +62,10 @@
   })
   export default class Combine extends wepy.page {
     data = {
+    }
+    config = {
+      navigationBarTitleText: '头像加圣诞帽啦~'
+      //   enablePullDownRefresh: true
     }
     onLoad() {
       wepy.getImageInfo({

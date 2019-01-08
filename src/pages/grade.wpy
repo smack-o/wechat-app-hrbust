@@ -236,7 +236,7 @@ page {
   <view>
     <loading wx:if="{{loading}}"/>
     <view class="pinggu-wrapper" wx:if="{{errorMessage}}">
-      <view class="pinggu" wx:if="{{!errorMessage}}" @tap="linkToWebView('https://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=2247483740&idx=1&sn=f65b45ddfe6e6429a54864f4f7074d4c&chksm=f90b4e53ce7cc7456f6ec8d3e8c8db309092001f62f51fe1df89610ef86ebbcac543c734ec50&token=2073460005&lang=zh_CN#rd')">
+      <view class="pinggu" @tap="linkToWebView('https://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=2247483740&idx=1&sn=f65b45ddfe6e6429a54864f4f7074d4c&chksm=f90b4e53ce7cc7456f6ec8d3e8c8db309092001f62f51fe1df89610ef86ebbcac543c734ec50&token=2073460005&lang=zh_CN#rd')">
         <image class="pinggu_image" src="http://hrbust-media.smackgg.cn/2450be0f-2483-4386-acaf-c11fdb75974e" mode="widthFix"/>
         <view class="color-blue">查看如何评教</view>
         <view>{{errorMessage}}</view>

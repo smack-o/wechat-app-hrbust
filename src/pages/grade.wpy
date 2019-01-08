@@ -167,6 +167,20 @@ page {
   font-size: 26rpx;
   color: #cccccc;
 }
+.pinggu-wrapper {
+  padding: 20px;
+  font-size: 13px;
+  .pinggu {
+    box-sizing: border-box;
+    .color-blue {
+      color: blue;
+      font-size: 20px;
+    }
+    .pinggu_image {
+      width: 100%;
+    }
+  }
+}
 .tip-modal {
   position: fixed;
   left: 0;
@@ -221,7 +235,16 @@ page {
 <template>
   <view>
     <loading wx:if="{{loading}}"/>
-    <view class="container">
+    <view class="pinggu-wrapper" wx:if="{{errorMessage}}">
+      <view class="pinggu" wx:if="{{!errorMessage}}" @tap="linkToWebView('https://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=2247483740&idx=1&sn=f65b45ddfe6e6429a54864f4f7074d4c&chksm=f90b4e53ce7cc7456f6ec8d3e8c8db309092001f62f51fe1df89610ef86ebbcac543c734ec50&token=2073460005&lang=zh_CN#rd')">
+        <image class="pinggu_image" src="http://hrbust-media.smackgg.cn/2450be0f-2483-4386-acaf-c11fdb75974e" mode="widthFix"/>
+        <view class="color-blue">查看如何评教</view>
+        <view>{{errorMessage}}</view>
+        <view selectable="true" class="pinggu__info">请您去教务在线官网进行评估课程</view>
+      </view>
+      <view><text selectable="true" class="pinggu__info">教务在线地址：http://jwzx.hrbust.edu.cn</text></view>
+    </view>
+    <view wx:else class="container">
       <view class="selecter">
         <picker class="picker-year" bindchange="changeTerm" value="{{selected_term}}" range="{{terms}}">
           <view class="select-button">
@@ -341,6 +364,7 @@ page {
       inputdialog: InputDialog
     }
     data = {
+      errorMessage: '',
       AVERAGE_GPA: '--',
       AVERAGE_GRADE: '--',
       OBLIGATORY_AVERAGE_GPA: '--',
@@ -406,6 +430,12 @@ page {
 
       closeModal() {
         this.isFirstFull = false
+      },
+
+      linkToWebView(url, type) {
+        wepy.navigateTo({
+          url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
+        })
       }
     }
     events = {
@@ -525,8 +555,12 @@ page {
       })
       .catch((e) => {
         this.showError(this, e)
+        if (e.status === 400) {
+          this.errorMessage = e.message
+        }
         // wepy.hideLoading()
         this.methods.setLoading(false)
+        this.$apply()
       })
     }
 

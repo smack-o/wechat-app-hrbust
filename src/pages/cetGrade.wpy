@@ -1,0 +1,261 @@
+<style lang="less">
+  @import "../assets/lib.less";
+  .container {
+    display: block;
+    padding: 0 40rpx;
+    background: #ffffff;
+    .title {
+      margin-top: 80rpx;
+      font-size: 60rpx;
+    }
+    .login-button {
+      margin-top: 100rpx;
+    }
+    .text {
+      color: #47f;
+      font-size: 20px;
+    }
+  }
+  .input-container {
+    margin-top: 80rpx;
+    .longin_input {
+      padding-left: 0;
+      padding-right: 0;
+      border-bottom: 1rpx solid #e5e5e5;
+    }
+    .weui-cell:before {
+      display: none;
+    }
+  }
+  .tips {
+    margin: 20rpx -20rpx 0;
+    .weui-cells__tips {
+      font-size: 11px;
+    }
+  }
+</style>
+
+<template>
+  <view class="container">
+    <view class="title">CET成绩</view>
+    <view class="input-container">
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{name}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">考试类别</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{type}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">总分</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{total}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">听力</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{listen}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">阅读</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{reading}}</text>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input longin_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">写作</view>
+        </view>
+        <view class="weui-cell__bd">
+          <text class="text">{{writing}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    connect
+  } from 'wepy-redux'
+  // import { connect } from 'wepy-redux'
+  import {
+    request
+  } from 'utils'
+  // import { init } from '../store/actions'
+  @connect({
+    username(state) {
+      return state.user.studentInfo.username
+    }
+  })
+  export default class cetGrade extends wepy.page {
+    config = {
+      enablePullDownRefresh: false
+    }
+    data = {
+      isOrdered: false,
+      name: '蓝色的',
+      type: '四级',
+      total: '222',
+      listen: '111',
+      reading: '11',
+      writing: '100'
+    }
+    onLoad() {
+      this.getOrderInfo()
+      this.$apply()
+    }
+    props = {
+      captchaimageprops: {
+        type: String,
+        default: ''
+      },
+      errormsg: {
+        type: String,
+        default: ''
+      },
+      pagetag: {
+        type: String,
+        default: ''
+      }
+    }
+    isNull(text) {
+      if (text.length === 0) {
+        return {
+          msg: '不能为空',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    isLegalRegistrationNum(registrationnum) {
+      if (!/^\d{15}$/.test(registrationnum)) {
+        return {
+          msg: '请输入正确的准考证号',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    isLegalEmail(email) {
+      const reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$')
+      // 正则表达式
+      if (!reg.test(email)) {
+        return {
+          msg: '请输入正确的邮箱',
+          isLegal: false
+        }
+      } else {
+        return {
+          msg: '',
+          isLegal: true
+        }
+      }
+    }
+    getOrderInfo() {
+      let retData = {
+        studentId: this.username
+      }
+      request({
+        url: '/api/order-info',
+        data: retData
+      })
+      .then((res) => {
+        if (res.data.status !== 200) {
+          return
+        }
+        let rData = res.data.data
+        if (rData.isOrdered === 1) {
+          this.isOrdered = true
+          this.name = rData.grade.name
+          this.type = rData.grade.type
+          this.name = '--213'
+          this.type = '43ds3rf32'
+          this.total = rData.grade.total
+          this.listen = rData.grade.listen
+          this.reading = rData.grade.reading
+          this.writing = rData.grade.writing
+        } else {
+          this.isOrdered = false
+        }
+        this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    postForm() {
+      let retData = {
+        studentId: this.username,
+        name: this.user_name,
+        ticketNumber: this.user_registration_num,
+        email: this.user_email
+      }
+      request({
+        url: '/api/cet-order',
+        data: retData,
+        method: 'POST'
+      }).then((res) => {
+        if (res.data.status !== 200) {
+          this.showError(this, res.data.data.errmsg)
+          return
+        } else {
+          this.isOrdered = true
+          wepy.showToast({
+            title: '预约成功',
+            icon: 'success',
+            duration: 1000
+          })
+        }
+        this.$apply()
+      })
+      .catch((e) => {
+        this.showError(this, e)
+      })
+    }
+    showError(that, error) {
+      if (error) {
+        console.error(error)
+      }
+      wepy.showToast({
+        title: '请求发送失败',
+        image: '../assets/icon/icon_info.png',
+        duration: 1000
+      })
+    }
+    onShareAppMessage(options) {
+      const that = this
+      const shareObj = {
+        title: '预约四六级查询，再也不忘准考号',
+        imageUrl: that.path || '../assets/img/cet-post-1@2x.png'
+      }
+      return shareObj
+    }
+  }
+</script>

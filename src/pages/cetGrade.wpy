@@ -1,92 +1,262 @@
 <style lang="less">
   @import "../assets/lib.less";
-  .container {
-    display: block;
-    padding: 0 40rpx;
-    background: #ffffff;
-    .title {
-      margin-top: 80rpx;
-      font-size: 60rpx;
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // background-image: url('http://hrbust-media.smackgg.cn/99ca85d4-6a4c-4062-99c9-4915bcfe2e29');
+    background-size:80rpx 60rpx;
+    z-index: -2;
+    .dialog-title {
+      margin: 20rpx 0 30rpx 0;
+      font-size: 26rpx;
+      color: #ffffff;
+    }
+    .dialog-body {
+      width: 510rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
     }
     .login-button {
-      margin-top: 100rpx;
+      // margin-top: 33rpx;
+      margin: 20rpx 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 630rpx;
+      height: 80rpx;
+      background-color: #996596;
+      border-radius: 40rpx;
+      .login-text {
+        font-size: 26rpx;
+        color: #ffffff;
+      }
     }
-    .text {
-      color: #47f;
-      font-size: 20px;
+    .input-name {
+      font-size: 24rpx;
+      color: #999999;
+    }
+    .input-name-space {
+      display: flex;
+      justify-content: flex-end;
+      width: 170rpx;
+      text-align: right;
+    }
+    .input-value {
+      font-size: 24rpx;
+      color: #333333;
+    }
+    .input-value-space {
+      display: flex;
+      justify-content: center;
+      width: 460rpx;
+      text-align: center;
+      // background-color: #ee6f85;
+    }
+    .auto-matic {
+      width: 36rpx;
+      height: 28rpx;
+    }
+    .tip-text-wrapper {
+      margin: 20rpx 0;
+      flex-direction: column;
+      display: flex;
+      justify-content: flex-start; // width: 125rpx;
+      text-align: left;
+      .tip-text {
+        margin: 0 0 4rpx 0;
+        font-size: 24rpx;
+        color: #ffffff;
+      }
+    }
+    .button-wrapper {
+      margin: 16rpx 0;
+      width: 630rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .share-button {
+      display: flex;
+      flex-direction: row;
+      width: 300rpx;
+      height: 75rpx;
+      background-color: rgba(256, 256, 256, 0.2);
+      border-radius: 38rpx;
+      align-items: center;
+      justify-content: center;
+      .share-text {
+        font-size: 26rpx;
+        color: #ffffff;
+      }
+      .share-icon1 {
+        width: 46rpx;
+        height: 38rpx;
+        margin-right: 20rpx;
+      }
+      .share-icon2 {
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 20rpx;
+      }
     }
   }
-  .input-container {
-    margin-top: 80rpx;
-    .longin_input {
-      padding-left: 0;
-      padding-right: 0;
-      border-bottom: 1rpx solid #e5e5e5;
+  .wrapper-unOrderrd {
+    background-image: url('http://hrbust-media.smackgg.cn/99ca85d4-6a4c-4062-99c9-4915bcfe2e29')
+  }
+  .modules_image {
+    width: 100rpx;
+    height: 100rpx;
+    margin-right: 30rpx;
+  }
+  .title {
+    width: 630rpx;
+    height: 100rpx;
+    background-color: #ffffff;
+    align-items: center;
+    padding-left: 50rpx;
+    justify-content: flex-start;
+    margin: 0 0 50rpx 0;
+    display: flex;
+    flex-direction: row;
+  }
+  .title-text {
+      font-size: 34rpx;
+      color: #333333;
+  }
+  .input-wrapper {
+    width: 630rpx;
+    height: 50rpx;
+    background-color: #ffffff;
+    // border-radius: 38rpx;
+    border-bottom: solid 1rpx #dcdcdc;
+    // border-left: 
+    align-items: center; // justify-content: center;
+    margin: 20rpx 0;
+    display: flex;
+    flex-direction: row;
+  }
+  .input-wrapper-error {
+    box-shadow: 0px 0px 25px 4px rgba(243, 70, 66, 0.8);
+  }
+  .input-box {
+    height: 65rpx;
+    width: 410rpx;
+    font-size: 24rpx;
+    padding-left: 15rpx;
+    padding-right: 15rpx;
+  }
+  .placeholder {
+    margin-left: 20rpx;
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #cccccc;
+    text-align: left;
+  }
+  .placeholderErr {
+    margin-left: 20rpx;
+    font-size: 24rpx;
+    height: 65rpx;
+    color: #e36363;
+    text-align: left;
+  }
+  .canvas-box.hide{
+    display: none;
+  }
+  .canvas-box.show{
+    display: block;
+  }
+  .canvas-box {
+    position: fixed;
+    top: 0;
+    bottom: 92rpx;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    canvas {
+      width: 100%;
+      height: 100%;
     }
-    .weui-cell:before {
-      display: none;
+    .save-button {
+      height: 92rpx;
+      color: #fff;
+      font-size: 36rpx;
+      line-height: 92rpx;
+      text-align: center;
+      background: #fe6582;
     }
   }
-  .tips {
-    margin: 20rpx -20rpx 0;
-    .weui-cells__tips {
-      font-size: 11px;
-    }
+  .bg-fish {
+    height: 140px;
+    position: absolute;
+    top: 20rpx;
+    z-index: -1;
   }
 </style>
 
 <template>
-  <view class="container">
-    <view class="title">CET成绩</view>
-    <view class="input-container">
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">姓名</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{name}}</text>
-        </view>
+  <view class="wrapper {{!isOrdered && 'wrapper-unOrderrd'}}">
+    
+    <view class="title" wx:if="{{isOrdered}}">
+      <image class="modules_image" src="../assets/icon/app_avatar.png" mode="widthFix"/>
+      <text class="title-text">CET成绩</text>
+    </view>
+    <view class="input-wrapper"  wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">姓名 :</text>
       </view>
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">考试类别</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{type}}</text>
-        </view>
+      <view class="input-value-space">
+        <text class="input-value">{{name}}</text>
       </view>
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">总分</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{total}}</text>
-        </view>
+    </view>
+    <view class="input-wrapper" wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">考试类别 :</text>
       </view>
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">听力</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{listen}}</text>
-        </view>
+      <view class="input-value-space">
+        <text class="input-value">{{type}}</text>
       </view>
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">阅读</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{reading}}</text>
-        </view>
+    </view>
+    <view class="input-wrapper" wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">总分 :</text>
       </view>
-      <view class="weui-cell weui-cell_input longin_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">写作</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="text">{{writing}}</text>
-        </view>
+      <view class="input-value-space">
+        <text class="input-value">{{total}}</text>
       </view>
+    </view>
+    <view class="input-wrapper" wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">听力 :</text>
+      </view>
+      <view class="input-value-space">
+        <text class="input-value">{{listen}}</text>
+      </view>
+    </view>
+    <view class="input-wrapper" wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">阅读 :</text>
+      </view>
+      <view class="input-value-space">
+        <text class="input-value">{{reading}}</text>
+      </view>
+    </view>
+    <view class="input-wrapper" style="margin-bottom: 300rpx" wx:if="{{isOrdered}}">
+      <view class="input-name-space">
+        <text class="input-name">写作 :</text>
+      </view>
+      <view class="input-value-space">
+        <text class="input-value">{{writing}}</text>
+      </view>
+    </view>
+    <view  wx:if="{{!isOrdered}}" class="login-button" bindtap="onSubmit">
+      <text class="login-text">预约已结束</text>
     </view>
   </view>
 </template>
@@ -112,12 +282,12 @@
     }
     data = {
       isOrdered: false,
-      name: '蓝色的',
-      type: '四级',
-      total: '222',
-      listen: '111',
-      reading: '11',
-      writing: '100'
+      name: '---',
+      type: '---',
+      total: '---',
+      listen: '---',
+      reading: '---',
+      writing: '---'
     }
     onLoad() {
       this.getOrderInfo()

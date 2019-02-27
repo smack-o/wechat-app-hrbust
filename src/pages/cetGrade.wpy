@@ -59,6 +59,16 @@
       text-align: center;
       // background-color: #ee6f85;
     }
+    .input-tip {
+      font-size: 24rpx;
+      color: rgb(243, 70, 66);
+    }
+    .input-tip-space {
+      display: flex;
+      justify-content: center;
+      width: 630rpx;
+      text-align: center;
+    }
     .auto-matic {
       width: 36rpx;
       height: 28rpx;
@@ -142,62 +152,17 @@
     display: flex;
     flex-direction: row;
   }
-  .input-wrapper-error {
-    box-shadow: 0px 0px 25px 4px rgba(243, 70, 66, 0.8);
+  .input-tip-wrapper {
+    width: 630rpx;
+    height: 50rpx;
+    background-color: #ffffff;
+    align-items: center; // justify-content: center;
+    margin: 20rpx 0;
+    display: flex;
+    flex-direction: row;
+
   }
-  .input-box {
-    height: 65rpx;
-    width: 410rpx;
-    font-size: 24rpx;
-    padding-left: 15rpx;
-    padding-right: 15rpx;
-  }
-  .placeholder {
-    margin-left: 20rpx;
-    font-size: 24rpx;
-    height: 65rpx;
-    color: #cccccc;
-    text-align: left;
-  }
-  .placeholderErr {
-    margin-left: 20rpx;
-    font-size: 24rpx;
-    height: 65rpx;
-    color: #e36363;
-    text-align: left;
-  }
-  .canvas-box.hide{
-    display: none;
-  }
-  .canvas-box.show{
-    display: block;
-  }
-  .canvas-box {
-    position: fixed;
-    top: 0;
-    bottom: 92rpx;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    canvas {
-      width: 100%;
-      height: 100%;
-    }
-    .save-button {
-      height: 92rpx;
-      color: #fff;
-      font-size: 36rpx;
-      line-height: 92rpx;
-      text-align: center;
-      background: #fe6582;
-    }
-  }
-  .bg-fish {
-    height: 140px;
-    position: absolute;
-    top: 20rpx;
-    z-index: -1;
-  }
+  
 </style>
 
 <template>
@@ -247,12 +212,17 @@
         <text class="input-value">{{reading}}</text>
       </view>
     </view>
-    <view class="input-wrapper" style="margin-bottom: 300rpx" wx:if="{{isOrdered}}">
+    <view class="input-wrapper" style="{{!tipWord && 'margin-bottom: 300rpx'}}" wx:if="{{isOrdered}}">
       <view class="input-name-space">
         <text class="input-name">写作 :</text>
       </view>
       <view class="input-value-space">
         <text class="input-value">{{writing}}</text>
+      </view>
+    </view>
+    <view class="input-tip-wrapper" wx:if="{{isOrdered}}">
+      <view class="input-tip-space">
+        <text class="input-tip">{{tipWord}}</text>
       </view>
     </view>
     <view  wx:if="{{!isOrdered}}" class="login-button" bindtap="onSubmit">
@@ -281,13 +251,16 @@
       enablePullDownRefresh: false
     }
     data = {
-      isOrdered: false,
+      isOrdered: true,
       name: '---',
       type: '---',
       total: '---',
       listen: '---',
       reading: '---',
-      writing: '---'
+      writing: '---',
+      ticketNumber: 0,
+      ticketName: '',
+      tipWord: ''
     }
     onLoad() {
       this.getOrderInfo()
@@ -363,14 +336,20 @@
         let rData = res.data.data
         if (rData.isOrdered === 1) {
           this.isOrdered = true
-          this.name = rData.grade.name
-          this.type = rData.grade.type
-          this.name = '--213'
-          this.type = '43ds3rf32'
-          this.total = rData.grade.total
-          this.listen = rData.grade.listen
-          this.reading = rData.grade.reading
-          this.writing = rData.grade.writing
+          if (Object.keys(rData.grade).length === 0) {
+            this.tipWord = '您的成绩还在查询中...'
+          } else if (rData.grade.error) {
+            this.ticketNumber = rData.ticketNumber
+            this.ticketName = rData.name
+            this.tipWord = `您的预约信息（姓名：${this.ticketName}, 准考证号: ${this.ticketNumber}）有误，没有查到成绩`
+          } else {
+            this.name = rData.grade.name
+            this.type = rData.grade.type
+            this.total = rData.grade.total
+            this.listen = rData.grade.listen
+            this.reading = rData.grade.reading
+            this.writing = rData.grade.writing
+          }
         } else {
           this.isOrdered = false
         }

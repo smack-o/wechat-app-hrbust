@@ -188,7 +188,7 @@
 
     computed = {
       currentWeekList () {
-        const week = this.slectedWeek - this.thisWeekNum + 1
+        const week = this.slectedWeek - this.thisWeekNum + 1 > -24 ? this.slectedWeek - this.thisWeekNum + 1 : 1
         const aDayTimeStamp = 24 * 60 * 60 * 1000
         const aWeekTimeStamp = 7 * aDayTimeStamp
         const timeStamp = Date.now() + week * aWeekTimeStamp
@@ -303,12 +303,12 @@
 
       const weeks = Array.from(new Array(25), (val, index) => index + 1)
       const tWeeks = weeks.map(item => item)
-      this.thisWeek = getWeekData.week
-      this.thisWeekNum = getWeekData.week
+      this.thisWeek = getWeekData.week > 25 ? 25 : getWeekData.week
+      this.thisWeekNum = getWeekData.week > 25 ? 25 : getWeekData.week
       this.term = getWeekData.term
       this.weeks = tWeeks
       this.methods.setCurrentTerm(getWeekData.term)
-      this.slectedWeek = getWeekData.week - 1
+      this.slectedWeek = getWeekData.week > 25 ? 24 : getWeekData.week - 1
       this.$apply()
 
       return Promise.resolve()
@@ -463,16 +463,17 @@
     }
 
     async onPullDownRefresh() {
-      const [getWeekError] = await this.to(this.getWeek())
-      if (getWeekError) {
-        wepy.stopPullDownRefresh()
-        return wepy.showModal({
-          content: '服务器获取当前周数错误，请稍候重试',
-          showCancel: false
-        })
-      }
-
-      this.getCourseHandel(undefined, undefined, true)
+      // 此处原来的是下拉刷新当前学期，当前周数的课表
+      // const [getWeekError] = await this.to(this.getWeek())
+      // if (getWeekError) {
+      //   wepy.stopPullDownRefresh()
+      //   return wepy.showModal({
+      //     content: '服务器获取当前周数错误，请稍候重试',
+      //     showCancel: false
+      //   })
+      // }
+      // this.getCourseHandel(undefined, undefined, true)
+      this.getCourseHandel(this.termId, undefined, true)
       wepy.stopPullDownRefresh()
     }
 

@@ -267,7 +267,7 @@
           this.yzm = ''
           this.cookie = ''
           this.$apply()
-        }).catch((error) => {
+        }).catch(() => {
           this.yzm = ''
           this.cookie = ''
           this.$apply()
@@ -298,7 +298,7 @@
           params.push(this.yzm, this.cookie)
         }
         this.methods.getCet.bind(this)(...params)
-      },
+      }
     }
   }
 </script>

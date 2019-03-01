@@ -1,0 +1,304 @@
+<style lang="less">
+  @import "../assets/lib.less";
+  page {
+    background-color: #f8f8f8;
+    color: #363636;
+  }
+  .noid-button {
+    margin-bottom: 20px;
+  }
+  button {
+    margin: 20px;
+  }
+  .text {
+    padding: 20px;
+  }
+  .wrapper {
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #363636;
+  }
+  .item {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .shadow-box {
+    box-shadow: 0 0 10px #000;
+    padding: 5px;
+  }
+  .border-top {
+    border-top: 1rpx solid #999;
+    padding-top: 10px;
+  }
+  .noPass {
+    color: #ff3d00;
+  }
+  .pass {
+    color: #64dd17;
+  }
+  .button {
+    color: #ccc;
+    background-color: transparent;
+    box-shadow: 0 0 10px #000;
+  }
+  .password-wrapper {
+    margin-top: 20px;
+  }
+  .button1 {
+    color: #64dd17;
+  }
+  .captcha-wrapper {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    background: rgb(41, 41, 41);
+    top: 0;
+    left: 0;
+    z-index: 10;
+    .title {
+      margin: 5px 10px;
+      text-align: center;
+    }
+    .subtitle {
+      margin: 5px 10px;
+      font-size: 12px;
+      color: gray;
+    }
+    .captcha-image {
+      width: 200px;
+      height: 100px;
+      display: block;
+      margin: 0 auto;
+    }
+    .captcha-input {
+      padding: 20px;
+    }
+  }
+  .info {
+    color: #E64340;
+    font-size: 9px;
+    padding: 2px 20px;
+  }
+  .info-wrapper {
+    margin-top: 20px;
+  }
+</style>
+
+<template>
+  <view>
+    <block wx:if="{{!cetData}}">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="check-username">
+          {{displayUsername}}
+        </view>
+        <view class="weui-cell weui-cell_input weui-cell_vcode">
+            <view class="weui-cell__hd">
+                <view class="weui-label">学号</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" type="number" value="{{lusername}}" @input="usernameInput" placeholder="请输入学号" />
+            </view>
+        </view>
+        <view wx:if="{{showCaptcha}}" class="weui-cell weui-cell_input weui-cell_vcode">
+          <view class="weui-cell__hd">
+              <view class="weui-label">验证码</view>
+          </view>
+          <view class="weui-cell__bd">
+              <input class="weui-input" value="{{yzm}}" @input="captchaInput" placeholder="请输入验证码" />
+          </view>
+          <view class="weui-cell__ft">
+              <image @tap="getCetCaptcha" class="weui-vcode-img" src="{{cetCaptchaSrc}}" style="width: 108px"></image>
+          </view>
+        </view>
+
+      </view>
+      <view class="info-wrapper">
+        <view class="info">*注1：无准考证查询仅限哈尔滨理工大学本校学生，请使用学号查询。</view>
+        <view class="info">*注2：看不清验证码，请点击验证码切换。</view>
+        <!-- <view class="info">*注2：可选择无准考证查询，无准考证查询需要输入学号</view> -->
+      </view>
+      <button class="weui-btn" type="primary" bindtap="confirm">查询</button>
+      <!-- <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button> -->
+    </block>
+    <block wx:else>
+      <view class="wrapper" wx:if="{{cetData.id}}">
+        <view class="shadow-box">
+          <view class="item center">
+            <view>姓名</view><view>{{cetData.name}}</view>
+          </view>
+          <view class="item center">
+            <view>学校</view><view>{{cetData.school}}</view>
+          </view>
+          <view class="item center">
+            <view>考试</view><view>{{cetData.type}}</view>
+          </view>
+          <view class="item center">
+            <view>听力</view><view>{{cetData.listen}}</view>
+          </view>
+          <view class="item center">
+            <view>阅读</view><view>{{cetData.reading}}</view>
+          </view>
+          <view class="item center">
+            <view>写作</view><view>{{cetData.writing}}</view>
+          </view>
+          <view class="item center border-top {{cetData.total >= 425 ? 'pass' : 'noPass'}}">
+            <view>总分</view><view>{{cetData.total}}</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="loadingText text">
+        没有查到您今年的四六级考试成绩~
+      </view>
+      <navigator wx:if="{{doNotRefresh}}" url="../home/home">
+        <view class="common-button-wrapper">
+          <view class="common-button-flex">
+            <button class="common-button">返回主页</button>
+          </view>
+        </view>
+      </navigator>
+    </block>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    connect
+  } from 'wepy-redux'
+  // import {connect} from 'wepy-redux'
+  import {
+    request
+  } from 'utils'
+  // import {init} from '../store/actions'
+  @connect({
+    username(state) {
+      return state.user.studentInfo.username
+    }
+  })
+  export default class CetPage extends wepy.page {
+    config = {
+      enablePullDownRefresh: false
+    }
+    data = {
+      loading: false,
+      // username: '',
+      name: '',
+      id: '',
+      cetCaptchaSrc: '',
+      cookie: '',
+      type: '',
+      yzm: '',
+      showCaptcha: false,
+      disable: false,
+      cetData: null,
+      lusername: ''
+    }
+    onLoad() {
+      this.lusername = this.username
+      wepy.setNavigationBarTitle({
+        title: '四六级成绩'
+      })
+    }
+    methods = {
+      usernameInput(e) {
+        this.lusername = e.detail.value
+      },
+      captchaInput(e) {
+        this.yzm = e.detail.value
+      },
+      getCetCaptcha() {
+        return request({
+          url: '/api/cet/captcha',
+          data: {
+            username: this.lusername,
+            token: this.token,
+            cookie: this.cookie
+          }
+        }).then((res) => {
+          wepy.hideToast()
+          this.cetCaptchaSrc = `data:image/png;base64, ${res.data.data.base64}`
+          this.$apply()
+        })
+      },
+      async getCet(name, id, username, yzm, cookie) {
+        wepy.showToast({
+          title: '加载中...',
+          icon: 'loading',
+          duration: 10000
+        })
+        let sendData = {}
+        sendData.username = username
+        if (yzm) {
+          sendData.yzm = yzm
+          sendData.cookie = cookie
+        }
+
+        return request({
+          url: '/api/cet',
+          data: sendData
+        }).then((res) => {
+          wepy.hideToast()
+          if (res.data.code === 80001) {
+            const { cookie, base64, token } = res.data
+            this.cookie = cookie
+            this.cetCaptchaSrc = `data:image/png;base64, ${base64}`
+            this.token = token
+            this.showCaptcha = true
+            this.$apply()
+            return
+          }
+          // let rData = res.data.data
+          if (res.statusCode === 400) {
+            wepy.showModal({
+              title: '错误',
+              content: res.data.error,
+              confirmText: '重新输入',
+              showCancel: false
+            })
+            return Promise.reject(res.data.error)
+          }
+
+          this.cetData = res.data.data
+          this.showCaptcha = false
+          this.yzm = ''
+          this.cookie = ''
+          this.$apply()
+        }).catch((error) => {
+          this.yzm = ''
+          this.cookie = ''
+          this.$apply()
+          wepy.hideToast()
+          wepy.showModal({
+            title: '错误',
+            content: '确认您输入的学号或验证码没有问题',
+            confirmText: '重新输入',
+            showCancel: false
+          })
+        })
+      },
+
+      confirm() {
+        let params
+        if (!this.lusername) {
+          wepy.showToast({
+            title: '请输入学号',
+            icon: 'none'
+          })
+          setTimeout(() => {
+            wepy.hideToast()
+          }, 1000)
+          return
+        }
+        params = [null, null, this.lusername]
+        if (this.yzm) {
+          params.push(this.yzm, this.cookie)
+        }
+        this.methods.getCet.bind(this)(...params)
+      },
+    }
+  }
+</script>

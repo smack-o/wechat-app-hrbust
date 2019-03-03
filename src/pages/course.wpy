@@ -188,7 +188,16 @@
 
     computed = {
       currentWeekList () {
-        const week = this.slectedWeek - this.thisWeekNum + 1 > -24 ? this.slectedWeek - this.thisWeekNum + 1 : 1
+        let week
+        if (this.thisWeekNum === 25) {
+          if (this.slectedWeek === 24) {
+            week = 0
+          } else {
+            week = +this.slectedWeek + 1
+          }
+        } else {
+          week = this.slectedWeek - this.thisWeekNum + 1
+        }
         const aDayTimeStamp = 24 * 60 * 60 * 1000
         const aWeekTimeStamp = 7 * aDayTimeStamp
         const timeStamp = Date.now() + week * aWeekTimeStamp
@@ -238,7 +247,7 @@
 
     methods = {
       changeWeek (event) {
-        this.slectedWeek = event.detail.value
+        this.slectedWeek = parseInt(event.detail.value)
         this.thisWeek = parseInt(this.weeks[event.detail.value])
         this.selectOpen = false
       },

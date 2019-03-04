@@ -304,13 +304,22 @@
         url: './grade',
         needLogin: true,
         shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
-      }, {
-        image: '../assets/icon/affiche.png',
-        text: '教务公告',
-        url: './news/news',
+      },
+      {
+        image: '../assets/icon/cetlogo.png',
+        text: '无证查询',
+        url: './cet4',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
-      }, {
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
+      },
+      // {
+      //   image: '../assets/icon/affiche.png',
+      //   text: '教务公告',
+      //   url: './news/news',
+      //   needLogin: true,
+      //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+      // },
+      {
         image: '../assets/icon/exam_schedule.png',
         text: '考试安排',
         url: './exam',

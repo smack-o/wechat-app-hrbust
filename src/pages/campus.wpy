@@ -6,7 +6,7 @@
             <image class="modules_image" style="{{item.shadowColor}}" src="{{item.image}}" mode="widthFix"/>
             <text class="modules_text" >{{item.text}}</text>
         </view>
-        <view wx:else class="module_disable module">
+        <view wx:elif="{{!item.loginShow}}" class="module_disable module">
           <image class="modules_image, {{(index === 1 || index === 2) ? 'modules_dark' : 'modules_light'}}" src="{{item.image}}" mode="widthFix"/>
           <text class="modules_text" style="filter: opacity(20%) saturate(0%)">{{item.text}}</text>
         </view>
@@ -23,7 +23,7 @@
         <image class="image" src="http://hrbust-media.smackgg.cn/ab38afd6-78b6-4bf7-a49e-75364d679d06" mode="widthFix"/>
         <view class="text">
           <view class="title">
-            哈理工2018年放假安排
+            哈理工本学期放假安排
           </view>
           <view class="date">
             发布日期: 2018-10-10
@@ -71,7 +71,7 @@
       navigationBarTitleText: '校园'
     }
     data = {
-      holidayArrange: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000002&idx=1&sn=22e117dfcf8985cc33a316f7070ba583&chksm=790b4e0d4e7cc71ba5cde3f3469a3b70e2b9ecc7e2db62183e1b9b744b81c4b3b458da6994af#rd')}&title=放假安排`,
+      holidayArrange: `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/sEbF3pQzgm9gpwxEFWX2NA')}&title=放假安排`,
       schoolBusArrange: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000001&idx=1&sn=dc97be27c2c55d49023d0dcbdff1f175&chksm=790b4e0e4e7cc71818bc63a07cd1710c7a3cebbc86b6b024d3c067cb5635f22e4b53fba023b4#rd')}&title=校车时间`,
       modules: [{
         image: '../assets/icon/course.png',
@@ -107,13 +107,15 @@
         image: '../assets/icon/cetlogo.png',
         text: '四六级预约',
         url: './cetGrade',
+        loginShow: true,
         needLogin: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
       }, {
         image: '../assets/icon/cetlogo.png',
         text: '无证查询',
-        url: './cet4',
+        url: './page4',
         needLogin: true,
+        loginShow: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
       }
       // {

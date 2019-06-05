@@ -274,39 +274,45 @@
 <template>
   <view class="wrapper">
     <block wx:if="{{!cetData}}">
-      <view class="weui-cells weui-cells_after-title">
-        <view class="check-username">
-          {{displayUsername}}
-        </view>
-        <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <block wx:if="{{!isLogin}}">
+        通知：由于理工喵没有四六级查询资格，四六级查询全面下线
+        敬请谅解
+      </block>
+      <block wx:else>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="check-username">
+            {{displayUsername}}
+          </view>
+          <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                  <view class="weui-label">学号</view>
+              </view>
+              <view class="weui-cell__bd">
+                  <input class="weui-input" type="number" value="{{lusername}}" @input="usernameInput" placeholder="请输入学号" />
+              </view>
+          </view>
+          <view wx:if="{{showCaptcha}}" class="weui-cell weui-cell_input weui-cell_vcode">
             <view class="weui-cell__hd">
-                <view class="weui-label">学号</view>
+                <view class="weui-label">验证码</view>
             </view>
             <view class="weui-cell__bd">
-                <input class="weui-input" type="number" value="{{lusername}}" @input="usernameInput" placeholder="请输入学号" />
+                <input class="weui-input" value="{{yzm}}" @input="captchaInput" placeholder="请输入验证码" />
             </view>
-        </view>
-        <view wx:if="{{showCaptcha}}" class="weui-cell weui-cell_input weui-cell_vcode">
-          <view class="weui-cell__hd">
-              <view class="weui-label">验证码</view>
+            <view class="weui-cell__ft">
+                <image @tap="getCetCaptcha" class="weui-vcode-img" src="{{cetCaptchaSrc}}" style="width: 108px"></image>
+            </view>
           </view>
-          <view class="weui-cell__bd">
-              <input class="weui-input" value="{{yzm}}" @input="captchaInput" placeholder="请输入验证码" />
-          </view>
-          <view class="weui-cell__ft">
-              <image @tap="getCetCaptcha" class="weui-vcode-img" src="{{cetCaptchaSrc}}" style="width: 108px"></image>
-          </view>
-        </view>
 
-      </view>
-      <view class="info-wrapper">
-        <view class="info">*注1：无准考证查询仅限哈尔滨理工大学本校学生，请使用学号查询。</view>
-        <view class="info">*注2：看不清验证码，请点击验证码切换。</view>
-        <!-- <view class="info">*注2：可选择无准考证查询，无准考证查询需要输入学号</view> -->
-      </view>
-      <button class="weui-btn" type="primary" bindtap="confirm">查询</button>
-      <ad class="advertising" unit-id="adunit-2d76930b51ac0dbe"></ad>
-      <!-- <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button> -->
+        </view>
+        <view class="info-wrapper">
+          <view class="info">*注1：无准考证查询仅限哈尔滨理工大学本校学生，请使用学号查询。</view>
+          <view class="info">*注2：看不清验证码，请点击验证码切换。</view>
+          <!-- <view class="info">*注2：可选择无准考证查询，无准考证查询需要输入学号</view> -->
+        </view>
+        <button class="weui-btn" type="primary" bindtap="confirm">查询</button>
+        <ad class="advertising" unit-id="adunit-2d76930b51ac0dbe"></ad>
+        <!-- <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button> -->
+      </block>
     </block>
     <block wx:else>
       <block wx:if="{{cetData.id}}">
@@ -390,6 +396,9 @@
   @connect({
     username(state) {
       return state.user.studentInfo.username
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
     }
   })
   export default class CetPage extends wepy.page {
@@ -415,6 +424,12 @@
       wepy.setNavigationBarTitle({
         title: '四六级成绩'
       })
+    }
+    computed = {
+      isLogin () {
+        return this.studentInfo && this.studentInfo.username
+        // return false
+      }
     }
     methods = {
       usernameInput(e) {

@@ -265,6 +265,9 @@
   import Loading from '../components/loading'
   import { connect } from 'wepy-redux'
   import { request } from 'utils'
+  // 在页面中定义插屏广告
+  let interstitialAd = null
+
   @connect({
     loading (state) {
       return state.user.loading
@@ -452,6 +455,18 @@
       // }
     }
 
+    onLoad() {
+      // 在页面onLoad回调事件中创建插屏广告实例
+      // 插屏广告
+      if (wx.createInterstitialAd) {
+        interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-167f2a17e8f9ecc4'
+        })
+        interstitialAd.onLoad(() => { console.log('adload') })
+        interstitialAd.onError((error) => { console.log('aderror:', error) })
+        interstitialAd.onClose(() => { console.log('adclose') })
+      }
+    }
     async onShow() {
       wepy.showShareMenu({
         withShareTicket: true
@@ -463,6 +478,12 @@
         this.imgUrls = res.data.data || []
         this.$apply()
       })
+      // 在适合的场景显示插屏广告
+      if (interstitialAd) {
+        interstitialAd.show().catch((err) => {
+          console.error(err)
+        })
+      }
     }
   }
 </script>

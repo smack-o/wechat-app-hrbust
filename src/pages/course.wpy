@@ -135,6 +135,8 @@
   import { request } from 'utils'
   import courseMixin from '../mixins/course'
   import { setCurrentTerm, setLoading } from '../store/actions'
+  // 在页面中定义插屏广告
+  let interstitialAd = null
 
   @connect({
     loading (state) {
@@ -432,8 +434,25 @@
         }
       }
     }
-
+    onShow() {
+      // 在适合的场景显示插屏广告
+      if (interstitialAd) {
+        interstitialAd.show().catch((err) => {
+          console.error(err)
+        })
+      }
+    }
     async onLoad () {
+      // 在页面onLoad回调事件中创建插屏广告实例
+      if (wx.createInterstitialAd) {
+        interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-cb0bf7e65af1c5a8'
+        })
+        interstitialAd.onLoad(() => {})
+        interstitialAd.onError(() => {})
+        interstitialAd.onClose(() => {})
+      }
+
       wepy.showShareMenu({
         withShareTicket: true
       })

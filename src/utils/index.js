@@ -6,10 +6,10 @@ const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 // development or production host
 const hosts = {
   // dev: 'http://118.89.247.29:8791',
-  // dev: 'http://localhost:8791',
+  dev: 'http://localhost:8791',
   // dev: 'http://192.168.31.122:8791',
-  dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.cn'
+  // dev: 'https://hrbust-dev.smackgg.cn',
+  // prod: 'https://hrbust-dev.smackgg.cn'
 }
 
 // 日期格式化

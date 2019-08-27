@@ -124,6 +124,7 @@
         </view>
       </block>
     </view>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="course"/>
     <ad class="advertising" unit-id="adunit-f1ef7db925a525a8"></ad>
   </block>
 </template>
@@ -135,6 +136,8 @@
   import { request } from 'utils'
   import courseMixin from '../mixins/course'
   import { setCurrentTerm, setLoading } from '../store/actions'
+  import InputDialog from '../components/inputDialog'
+
   // 在页面中定义插屏广告
   let interstitialAd = null
 
@@ -176,10 +179,14 @@
       userInfo: {},
       courseCardStyleMap: Array.from(new Array(14)).map((_, index) => {
         return 'class' + (index + 1)
-      })
+      }),
+      captchaImage: '',
+      errormsg: '',
+      popDialog: false
     }
     components = {
-      loading: Loading
+      loading: Loading,
+      inputdialog: InputDialog
     }
     config = {
       navigationBarTitleText: '课程表',
@@ -254,14 +261,15 @@
         this.selectOpen = false
       },
 
-      async syncCourse () {
+      async syncCourse (e) {
         // wepy.showLoading({
         //   title: '课表抓取中'
         // })
         this.methods.setLoading(true)
         this.selectOpen = !this.selectOpen
 
-        const [createNewTermError] = await this.to(this.createNewTerm(this.term))
+        const [createNewTermError] = await this.to(this.createNewTerm(this.term, e.captcha))
+
         if (createNewTermError) return
 
         this.getCourseHandel(undefined, undefined, true)
@@ -508,6 +516,18 @@
     onHide () {
       this.selectOpen = false
       this.detailOpen = false
+    }
+
+    events = {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'course') {
+          return
+        }
+        this.methods.syncCourse.bind(this)({ captcha })
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
+      }
     }
   }
 </script>

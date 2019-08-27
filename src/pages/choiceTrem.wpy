@@ -21,6 +21,8 @@
       <picker mode="selector" range-key="label" bindchange="changeTrem" value="{{}}" range="{{terms}}">
         <view class="button">+ 创建新学期</view>
       </picker>
+      <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="courseChoice"/>
+
     </view>
   </block>
 </template>
@@ -32,6 +34,7 @@
   import courseMixin from '../mixins/course'
   import { setTempTerm, setLoading } from '../store/actions'
   import Loading from '../components/loading'
+  import InputDialog from '../components/inputDialog'
 
   @connect({
     loading (state) {
@@ -61,10 +64,14 @@
         {id: 6, label: '大四第一学期'},
         {id: 7, label: '大四第二学期'}
       ],
-      termMap: ['大一', '大二', '大三', '大四']
+      termMap: ['大一', '大二', '大三', '大四'],
+      captchaImage: '',
+      errormsg: '',
+      popDialog: false
     }
     components = {
-      loading: Loading
+      loading: Loading,
+      inputdialog: InputDialog
     }
     mixins = [courseMixin]
 
@@ -74,6 +81,7 @@
         //   title: '课表抓取中'
         // })
         this.methods.setLoading(true)
+        this.choiceTerm = event.detail.value
 
         const [createNewTermError] = await this.to(this.createNewTerm(event.detail.value))
         if (createNewTermError) return
@@ -116,6 +124,18 @@
 
     async onLoad () {
       await this.to(this.getHasCourseTerms())
+    }
+    events = {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'courseChoice') {
+          return
+        }
+        this.methods.setLoading(true)
+        this.createNewTerm.bind(this)(this.choiceTerm, captcha)
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
+      }
     }
   }
 </script>

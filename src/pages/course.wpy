@@ -311,12 +311,9 @@
     }
 
     async getWeek () {
-      const [err, res] = await this.to(request({
-        url: '/api/hrbust/week'
-      }))
-      if (err) {
-        return Promise.reject('获取周数错误')
-      }
+      const [err, res] = await this.to(request({ url: '/api/hrbust/week' }))
+
+      if (err) return Promise.reject('获取周数错误')
 
       const getWeekData = res.data.data
 
@@ -324,10 +321,13 @@
       const tWeeks = weeks.map(item => item)
       this.thisWeek = getWeekData.week > 25 ? 25 : getWeekData.week
       this.thisWeekNum = getWeekData.week > 25 ? 25 : getWeekData.week
-      this.term = getWeekData.term
-      this.weeks = tWeeks
-      this.methods.setCurrentTerm(getWeekData.term)
       this.slectedWeek = getWeekData.week > 25 ? 24 : getWeekData.week - 1
+      this.weeks = tWeeks
+
+      // 学期数优先取storage中的
+      const term = this.userInfo.term || getWeekData.term
+      this.term = term
+      this.methods.setCurrentTerm(term)
       this.$apply()
 
       return Promise.resolve()
@@ -393,10 +393,10 @@
       }
 
       if (updatedStorage) {
+        this.userInfo.term = term // 当前学期存入Storage，获取周数和学期时，先从Storage里取学期数
         this.userInfo.course = courseList
         this.userInfo.unplanCourse = this.unplanCourse
-        // 新版本代码，下一版本删除
-        this.userInfo.notFirstLogin = true
+
         wepy.setStorage({
           key: this.username,
           data: this.userInfo
@@ -464,36 +464,32 @@
       wepy.showShareMenu({
         withShareTicket: true
       })
+
+      // 未登陆跳转
       if (!this.username) {
-        wepy.reLaunch({
-          url: '/pages/index'
-        })
-        return
+        return wepy.reLaunch({url: '/pages/index'})
       }
 
+      // 获取storage数据
+      const userInfo = wepy.getStorageSync(this.username)
+      if (userInfo) this.userInfo = userInfo
+
+      // 获取当前周数、以及学期数
       const [getWeekError] = await this.to(this.getWeek())
       if (getWeekError) {
         this.methods.setLoading(false)
-        return wepy.showModal({
-          content: '服务器获取当前周数错误，请稍候重试',
-          showCancel: false
-        })
+        return wepy.showModal({content: '服务器获取当前周数错误，请稍候重试', showCancel: false})
       }
 
-      const userInfo = wepy.getStorageSync(this.username)
-      if (userInfo) this.userInfo = userInfo
       const course = this.userInfo.course
       const unplanCourse = this.userInfo.unplanCourse
-
-      // 此处因为新版本卡片的类名改了，而用户现在storage里存的都是原来的类名
-      // 所以用户首次进入新版本后，不通过storage，直接查库
-      const notFirstLogin = this.userInfo.notFirstLogin
-
-      if (course && notFirstLogin) {
+      if (course) {
+        // storage存在课程数据，直接渲染，应用$apply方法使视图更新
         this.courseData = course
         this.unplanCourse = unplanCourse
         this.$apply()
       } else {
+        // storage不存在课程数据，发送请求，重新获取，并存入storage
         this.getCourseHandel(undefined, undefined, true)
       }
     }

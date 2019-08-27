@@ -9,9 +9,9 @@ const hosts = {
   dev: 'http://localhost:8791',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  // prod: 'https://hrbust-dev.smackgg.cn'
+  prod: 'https://hrbust-dev.smackgg.cn'
 }
-
+// 511126199801227725
 // 日期格式化
 const dateFormat = function (date, format) {
   date = new Date(date)
@@ -48,6 +48,14 @@ const request = requestOption => new Promise((resolve, reject) => {
       reject(res && res.data)
     },
     fail (error) {
+      // console.log(error, 111)
+      if (error.errMsg === 'request:fail timeout') {
+        wepy.showToast({
+          title: '请求超时，服务器可能开小差了~',
+          icon: 'none',
+          duration: 2000
+        })
+      }
       reject(error)
     }
   })

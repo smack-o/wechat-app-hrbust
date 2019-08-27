@@ -85,9 +85,11 @@ export default class extends wepy.app {
           selectedIconPath: './assets/icon/account_selected.png'
         }
       ]
+    },
+    networkTimeout: {
+      request: 100000
     }
   }
-
   // globalData = {
   //   userInfo: null,
   //   initPromise: null

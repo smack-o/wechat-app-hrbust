@@ -26,7 +26,7 @@
             哈理工本学期放假安排
           </view>
           <view class="date">
-            发布日期: 2018-10-10
+            发布日期: 2019-8-28
           </view>
         </view>
         <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
@@ -35,10 +35,10 @@
         <image class="image" src="http://hrbust-media.smackgg.cn/d641ccb5-f524-4b3d-b8ea-defbba396e33" mode="widthFix"/>
         <view class="text">
           <view class="title">
-            哈理工冬季上课时间及校车首发时间安排
+            哈理工上课时间&校车时间安排
           </view>
           <view class="date">
-            发布日期: 2018-10-10
+            发布日期: 2019-8-28
           </view>
         </view>
         <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
@@ -71,8 +71,8 @@
       navigationBarTitleText: '校园'
     }
     data = {
-      holidayArrange: `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/sEbF3pQzgm9gpwxEFWX2NA')}&title=放假安排`,
-      schoolBusArrange: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000001&idx=1&sn=dc97be27c2c55d49023d0dcbdff1f175&chksm=790b4e0e4e7cc71818bc63a07cd1710c7a3cebbc86b6b024d3c067cb5635f22e4b53fba023b4#rd')}&title=校车时间`,
+      holidayArrange: `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/Tzxzyuzmxbhrge5Fok70GA')}&title=放假安排`,
+      schoolBusArrange: `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/4ccr5NujjKifXgZ1oTO4Kw')}&title=校车时间`,
       modules: [{
         image: '../assets/icon/course.png',
         text: '课表',

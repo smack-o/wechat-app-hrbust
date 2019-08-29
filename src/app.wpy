@@ -43,7 +43,8 @@ export default class extends wepy.app {
       'pages/cetGrade',
       'pages/christmas/christmasIndex',
       'pages/christmas/imageeditor',
-      'pages/christmas/combine'
+      'pages/christmas/combine',
+      'pages/yingxin'
       // 'pages/combine/combine'
     ],
     window: {

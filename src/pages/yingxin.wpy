@@ -106,6 +106,10 @@
             <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.CLASS_NAME}}</text></view>
           </view>
           <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">学号</view>
+            <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.XH}}</text></view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
             <view class="weui-media-box__title weui-media-box__title_in-text">辅导员</view>
             <view class="weui-media-box__desc">
               <text selectable="{{true}}">姓名：{{yingxinData.getStudentInformat.COUN_XM}}</text>
@@ -139,6 +143,7 @@
     request
   } from 'utils'
   // import {init} from '../store/actions'
+
   @connect({
     username(state) {
       return state.user.studentInfo.username

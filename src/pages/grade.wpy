@@ -548,9 +548,7 @@ page {
           this.AVERAGE_GPA = `${AVERAGE_GPA === 'NaN' ? '--' : AVERAGE_GPA}`
           this.AVERAGE_GRADE = `${AVERAGE_GRADE === 'NaN' ? '--' : AVERAGE_GRADE}`
           this.OBLIGATORY_AVERAGE_GPA = `${OBLIGATORY_AVERAGE_GPA === 'NaN' ? '--' : OBLIGATORY_AVERAGE_GPA}`
-          if (this.AVERAGE_GPA === '--' && this.AVERAGE_GRADE === '--' && this.OBLIGATORY_AVERAGE_GPA === '--') {
-            this.showGDP = false
-          }
+          this.showGDP = !(this.AVERAGE_GPA === '--' && this.AVERAGE_GRADE === '--' && this.OBLIGATORY_AVERAGE_GPA === '--')
           list.map((item, index) => {
             let itemObj = {}
             itemObj.gradeName = item.courseName ? item.courseName : '--'

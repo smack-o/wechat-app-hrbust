@@ -339,7 +339,7 @@
         data: { term }
       }))
       if (err) {
-        wepy.showToast({ title: '拉取数据失败', image: '../assets/icon/error_icon.png', duration: 1000 })
+        wepy.showToast({title: '获取课表失败', image: '../assets/icon/error_icon.png', duration: 1000})
         this.methods.setLoading(false)
         return Promise.reject('获取课表失败')
       }
@@ -348,9 +348,18 @@
       this.termId = res.data.data.courseTermId
       this.unplanCourse = res.data.data.unplanCourse
 
+      // 课表为空的话，提示
       if (!getCourseData) {
         this.methods.setLoading(false)
-        return Promise.reject('课表为空')
+        wepy.showModal({
+          content: '该学期未查询到课表，请创建该学期',
+          showCancel: false,
+          success: () => {
+            wepy.navigateTo({url: 'choiceTrem'})
+          }
+        })
+
+        return
       }
 
       // 处理返回数据
@@ -384,7 +393,7 @@
       wepy.setStorage({ key: this.username, data: this.userInfo })
 
       this.methods.setLoading(false)
-      wepy.showToast({ title: '拉取数据成功', icon: 'success', duration: 1000 })
+      wepy.showToast({ title: '获取课表成功', icon: 'success', duration: 1000 })
       return Promise.resolve()
     }
 

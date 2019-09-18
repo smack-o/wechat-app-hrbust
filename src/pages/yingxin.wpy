@@ -1,0 +1,242 @@
+<style lang="less">
+  @import "../assets/lib.less";
+  page {
+    // background-color: #f8f8f8;
+    // color: #363636;
+  }
+  .weui-btn {
+    width: 600rpx;
+  }
+  .noid-button {
+    margin-bottom: 20px;
+  }
+  button {
+    margin: 20px;
+  }
+
+  .wrapper {
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #363636;
+    .input-container {
+      margin: 80rpx auto 0;
+      .longin_input {
+        padding-left: 0;
+        padding-right: 0;
+        border-bottom: 1rpx solid #e5e5e5;
+      }
+      .weui-cell:before {
+        display: none;
+      }
+    }
+  }
+
+  .info {
+    color: #d6b44c;
+    font-size: 12px;
+    padding: 2px 20px;
+  }
+  .info-wrapper {
+    margin-top: 20px;
+  }
+
+  .weui-media-box__desc {
+    text {
+      display: block;
+      margin: 10rpx 0;
+    }
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <block wx:if="{{!yingxinData}}">
+        <view class="input-container">
+        <view class="weui-cell weui-cell_input longin_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">考生号</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" focus="true" placeholder="请输入考生号" value="{{id}}" @input="usernameInput" />
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input longin_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">密码</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input type="password" class="weui-input" value="{{password}}" @input="passwordInput" placeholder="密码(初始身份证后六位)" />
+            </view>
+        </view>
+      </view>
+      <view class="info-wrapper">
+        <view class="info">*注1：登录用户名为14位考生号，14位考生号为(年份(2位)+省份代码(2位)+10位考生号)，例如黑龙江省考生需在10位考生号前加(1923)。</view>
+        <view class="info">*注2：初始密码为身份证号后六位（如最后一位X，需要大写）。</view>
+        <!-- <view class="info">*注2：可选择无准考证查询，无准考证查询需要输入学号</view> -->
+      </view>
+      <button class="weui-btn" type="primary" bindtap="confirm">查询</button>
+      <ad class="advertising" unit-id="adunit-2d76930b51ac0dbe"></ad>
+        <!-- <button wx:if="{{showCaptcha}}" class="weui-btn" type="primary" bindtap="submit">查询</button> -->
+    </block>
+    <block wx:else>
+      <view class="title">新生信息</view>
+      <view class="info-wrapper">
+        <view class="info">更多信息（在线缴费等）请浏览器访问 <text selectable="{{true}}">http://yingxin.hrbust.edu.cn</text> 查看</view>
+      </view>
+      <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">姓名</view>
+            <view class="weui-media-box__desc">{{yingxinData.getStudentInformat.XM}}</view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">专业</view>
+            <view class="weui-media-box__desc">
+              <text selectable="{{true}}">学院：{{yingxinData.getStudentInformat.UNIT_NAME}}</text>
+              <text selectable="{{true}}">专业：{{yingxinData.getStudentInformat.MAJOR_NAME}}</text>
+            </view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">考生号</view>
+            <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.KSH}}</text></view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">班级</view>
+            <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.CLASS_NAME}}</text></view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">学号</view>
+            <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.XH}}</text></view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">辅导员</view>
+            <view class="weui-media-box__desc">
+              <text selectable="{{true}}">姓名：{{yingxinData.getStudentInformat.COUN_XM}}</text>
+              <text selectable="{{true}}">电话：{{yingxinData.getStudentInformat.COUN_TEL}}</text>
+            </view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">寝室</view>
+            <view class="weui-media-box__desc"><text selectable="{{true}}">{{yingxinData.getStudentInformat.ROOM_NAME}}</text></view>
+          </view>
+          <view class="weui-media-box weui-media-box_text">
+            <view class="weui-media-box__title weui-media-box__title_in-text">学费</view>
+            <view class="weui-media-box__desc">
+              <text selectable="{{true}}">学费：{{yingxinData.getPayment[0].PRICE}}元</text>
+              <text selectable="{{true}}">住宿费：{{yingxinData.getPayment[1].PRICE}}元</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    connect
+  } from 'wepy-redux'
+  // import {connect} from 'wepy-redux'
+  import {
+    request
+  } from 'utils'
+  // import {init} from '../store/actions'
+
+  @connect({
+    username(state) {
+      return state.user.studentInfo.username
+    },
+    studentInfo (state) {
+      return state.user.studentInfo
+    }
+  })
+  export default class Yingxin extends wepy.page {
+    config = {
+      enablePullDownRefresh: false
+    }
+    data = {
+      id: '',
+      password: '',
+      yingxinData: null
+    }
+    onLoad() {
+      const storageData = wepy.getStorageSync('yingxin')
+      if (storageData) {
+        const { id, password } = JSON.parse(storageData)
+        this.id = id
+        this.password = password
+      }
+      // wepy.setStorageSync('app_cookie', cookie)
+
+      // this.lusername = this.username
+      wepy.setNavigationBarTitle({
+        title: '智能迎新'
+      })
+    }
+    methods = {
+      usernameInput(e) {
+        this.id = e.detail.value
+      },
+      passwordInput(e) {
+        this.password = e.detail.value
+      },
+      async getYingxin(id, password) {
+        const reqData = {
+          id,
+          password
+        }
+
+        wepy.setStorageSync('yingxin', JSON.stringify(reqData))
+
+        wepy.showToast({
+          title: '加载中...',
+          icon: 'loading',
+          duration: 10000
+        })
+
+        return request({
+          url: '/api/yingxin',
+          data: reqData
+        }).then((res) => {
+          wepy.hideToast()
+          if (res.statusCode === 200 && res.data.data && Object.keys(res.data.data).length > 0) {
+            this.yingxinData = res.data.data
+            this.$apply()
+          } else {
+            wepy.showModal({
+              title: '查询失败',
+              content: '请检查14位考生号和6位身份证尾号是否正确，再重新查询~',
+              showCancel: false
+            })
+          }
+        })
+      },
+
+      confirm() {
+        if (!this.id) {
+          wepy.showToast({
+            title: '请输14位考生号',
+            icon: 'none'
+          })
+          setTimeout(() => {
+            wepy.hideToast()
+          }, 1000)
+          return
+        }
+        if (!this.password) {
+          wepy.showToast({
+            title: '请输入密码',
+            icon: 'none'
+          })
+          setTimeout(() => {
+            wepy.hideToast()
+          }, 1000)
+          return
+        }
+        this.methods.getYingxin.bind(this)(this.id, this.password)
+      }
+    }
+  }
+</script>

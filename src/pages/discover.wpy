@@ -2,8 +2,8 @@
   <view class="wrapper">
     <view class="fn-wrapper">
       <view class="content">
-        <image class="image" src="../assets/icon/new_fn_icon.png" mode="widthFix"/>
-        <view class="text">新功能实验室</view>
+        <image class="image" @tap="linkTo('/pages/yingxin')" src="../assets/icon/new_fn_icon.png" mode="widthFix"/>
+        <view class="text">新生速查</view>
       </view>
       <view class="content" @tap="linkTo('/pages/about')">
         <image class="image" src="../assets/icon/touch_me_icon.png" mode="widthFix"/>

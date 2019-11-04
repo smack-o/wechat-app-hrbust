@@ -1,0 +1,178 @@
+<style lang="less">
+  /* pages/index/index.wxss */
+  .btnZoom {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    padding-top: 20rpx;
+    background: #be3535;
+  }
+  button {
+    width: 300rpx;
+    height: 98rpx;
+    margin: 10rpx 0;
+    background: #be3535;
+    border: 5rpx solid #ffffff;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    width: 650rpx;
+    height: 650rpx;
+    margin: 30rpx auto 60rpx;
+  }
+  .bgPic,
+  .emptyBg {
+    height: 630rpx;
+    width: 630rpx;
+    border: 10rpx solid #ffffff;
+  }
+  .emptyBg {
+    border: 10rpx solid #ffffff;
+  }
+  .btnContainer {
+    width: 700rpx;
+    margin: 0 auto;
+    display: flex;
+    // flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    .flex1 {
+      // flex: 1;
+      width: 100%;
+    }
+  }
+  .advertising {
+    margin-top: 20rpx;
+    position: relative;
+    // transform-origin: center bottom;
+    // transform: scale(0.8) !important;
+  }
+</style>
+
+<template>
+  <view class="wrapper">
+    <view class="container">
+      <image class="bgPic" mode="aspectFill" wx:if="{{bgPic}}" src="{{bgPic}}"></image>
+      <view class="emptyBg" wx:else></view>
+    </view>
+    <view class="btnContainer">
+      <button class="flex1" data-way="avatar" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">使用头像</button>
+      <button data-way="camera" bind:tap="chooseImage">使用相机</button>
+      <button data-way="album" bind:tap="chooseImage">相册选择</button>
+      <button class="flex1" bind:tap="nextPage" disabled="{{!picChoosed}}">下一步</button>
+      <ad class="advertising" unit-id="adunit-840f07802cfaa8a1" ad-type="video" ad-theme="white"></ad>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    setBackgroundPic
+  } from '../../store/actions'
+  import {
+    connect
+  } from 'wepy-redux'
+  @connect({
+    bgPic(state) {
+      return state.christmasHat.bgPic
+    }
+  }, {
+    setBackgroundPic
+  })
+  export default class christmasIndex extends wepy.page {
+    config = {
+      navigationBarTitleText: '给头像加国旗啦~'
+      //   enablePullDownRefresh: true
+    }
+    data = {
+      // bgPic:null,
+      picChoosed: false,
+      userInfo: {}
+    }
+    onShareAppMessage() {
+      return {
+        title: '国庆快乐，给头像加国旗啦~',
+        imageUrl: 'http://hrbust-media.smackgg.cn/e4597d2a-a667-4a69-9a75-50198e9e54be',
+        path: '/pages/guoqi/index'
+      }
+    }
+    onLoad() {
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
+      this.methods.setBackgroundPic(null)
+    }
+    computed = {}
+    methods = {
+      userInfoHandler(data) {
+        console.log(JSON.parse(data.detail.rawData))
+        let userInfo = JSON.parse(data.detail.rawData)
+        if (userInfo) {
+          console.log(userInfo.avatarUrl)
+          let avatarUrl = userInfo.avatarUrl
+          if (avatarUrl.endsWith('132')) {
+            avatarUrl = avatarUrl.substring(0, avatarUrl.length - 3)
+            avatarUrl = `${avatarUrl}0`
+          }
+          this.methods.setBackgroundPic(avatarUrl)
+          this.userInfo = userInfo
+          this.assignPicChoosed()
+        } else {
+          // 在没有 open-type=getUserInfo 版本的兼容处理
+          wepy.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              this.methods.setBackgroundPic(res.userInfo.avatarUrl)
+              this.assignPicChoosed()
+            }
+          })
+        }
+      },
+      chooseImage(from) {
+        this.picChoosed = true
+        wepy.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: [from.target.dataset.way],
+          success: (res) => {
+            // var tempFilePaths = res.tempFilePaths
+            this.methods.setBackgroundPic(res.tempFilePaths[0])
+            console.log(res.tempFilePaths[0])
+            // this.bgPic = res.tempFilePaths[0]
+            // console.log(this.bgPic)
+            // this.picChoosed = true
+          },
+          fail: (res) => {
+          },
+          complete: (res) => {
+          }
+        })
+      },
+      nextPage() {
+        // app.globalData.bgPic=this.bgPic;
+        wepy.navigateTo({
+          url: '../guoqi/imageeditor'
+        })
+      }
+    }
+    assignPicChoosed() {
+      if (this.bgPic) {
+        this.picChoosed = true
+      } else {
+        this.picChoosed = false
+      }
+    }
+  }
+</script>

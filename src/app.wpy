@@ -48,7 +48,9 @@ export default class extends wepy.app {
       'pages/guoqi/combine',
       'pages/guoqi/imageeditor',
       'pages/yingxin',
-      'pages/wifi'
+      'pages/wifi',
+      'pages/room/index',
+      'pages/room/rooms'
       // 'pages/combine/combine'
     ],
     window: {

@@ -36,7 +36,7 @@
         </view>
       </view>
     </picker>
-    <picker mode="selector" range-key="label" bindchange="onChange(rooms)" value="{{choiceRoomsIndex}}" range="{{rooms}}">
+    <!-- <picker mode="selector" range-key="label" bindchange="onChange(rooms)" value="{{choiceRoomsIndex}}" range="{{rooms}}">
       <view class="selector">
         <view class="label">选择教室<text class="small-size">(非必选)</text></view>
         <view class="selector-input">
@@ -44,7 +44,7 @@
           <view wx:else class="selector-placeholder">请选择教室</view>
         </view>
       </view>
-    </picker>
+    </picker> -->
 
     <view class="button" bindtap="onSubmit">
       <text class="button-text">查询空闲教室</text>
@@ -63,17 +63,11 @@
 <script>
   // http://hrbust-media.smackgg.cn/d641ccb5-f524-4b3d-b8ea-defbba396e33
   import wepy from 'wepy'
-  import { connect } from 'wepy-redux'
   import { request } from 'utils'
   import { updateRooms } from '@/store/actions/room'
   import InputDialog from '@/components/inputDialog'
   import { store } from '@/store'
 
-  @connect({
-    rooms (state) {
-      return state.room.list
-    }
-  })
   export default class Room extends wepy.page {
     config = {
       navigationBarTitleText: '空教室查询'

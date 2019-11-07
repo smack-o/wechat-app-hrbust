@@ -104,11 +104,11 @@
         needLogin: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
       }, {
-        image: '../assets/icon/exam_schedule.png',
+        image: '../assets/icon/query_room.png',
         text: '查空教室',
         url: './room/index',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
       }
       // {
       //   image: '../assets/icon/cetlogo.png',
@@ -167,6 +167,7 @@
       margin-bottom: 40rpx;
       .modules_image {
         width: 80rpx;
+        height: 80rpx;
         border-radius: 50%;
       }
       .modules_text {

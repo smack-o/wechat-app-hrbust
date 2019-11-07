@@ -54,6 +54,7 @@
   }
   .modules_image {
     width: 80rpx;
+    height: 80rpx;
     border-radius: 40rpx;
     margin-bottom: 30rpx;
   }
@@ -315,12 +316,19 @@
       //   needLogin: true,
       //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
       // },
+      // {
+      //   image: '../assets/icon/affiche.png',
+      //   text: '教务公告',
+      //   url: './news/news',
+      //   needLogin: true,
+      //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+      // },
       {
-        image: '../assets/icon/affiche.png',
-        text: '教务公告',
-        url: './news/news',
+        image: '../assets/icon/query_room.png',
+        text: '查空教室',
+        url: './room/index',
         needLogin: true,
-        shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
       },
       {
         image: '../assets/icon/exam_schedule.png',
@@ -407,44 +415,44 @@
     watch = {
       hrbustLogin (newVal, oldVal) {
         // this.getCourseHandel(newVal, true, true)
-        if (newVal && newVal !== oldVal) {
-          const modules = [{
-            image: '../assets/icon/course.png',
-            text: '课表',
-            url: './course',
-            needLogin: true,
-            shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
-          }, {
-            image: '../assets/icon/grade.png',
-            text: '成绩查询',
-            url: './grade',
-            needLogin: true,
-            shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
-          },
-          // {
-          //   image: '../assets/icon/cetlogo.png',
-          //   text: '无证查询',
-          //   url: './page4',
-          //   needLogin: true,
-          //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
-          // },
-          {
-            image: '../assets/icon/affiche.png',
-            text: '教务公告',
-            url: './news/news',
-            needLogin: true,
-            shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
-          },
-          {
-            image: '../assets/icon/exam_schedule.png',
-            text: '考试安排',
-            url: './exam',
-            needLogin: true,
-            shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
-          }]
-          this.modules = modules
-          this.$apply()
-        }
+        // if (newVal && newVal !== oldVal) {
+        //   const modules = [{
+        //     image: '../assets/icon/course.png',
+        //     text: '课表',
+        //     url: './course',
+        //     needLogin: true,
+        //     shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
+        //   }, {
+        //     image: '../assets/icon/grade.png',
+        //     text: '成绩查询',
+        //     url: './grade',
+        //     needLogin: true,
+        //     shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
+        //   },
+        //   // {
+        //   //   image: '../assets/icon/cetlogo.png',
+        //   //   text: '无证查询',
+        //   //   url: './page4',
+        //   //   needLogin: true,
+        //   //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
+        //   // },
+        //   {
+        //     image: '../assets/icon/affiche.png',
+        //     text: '教务公告',
+        //     url: './news/news',
+        //     needLogin: true,
+        //     shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+        //   },
+        //   {
+        //     image: '../assets/icon/exam_schedule.png',
+        //     text: '考试安排',
+        //     url: './exam',
+        //     needLogin: true,
+        //     shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
+        //   }]
+        //   this.modules = modules
+        //   this.$apply()
+        // }
       }
     }
 

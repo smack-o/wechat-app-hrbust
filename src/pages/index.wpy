@@ -190,7 +190,7 @@
           </view>
         </block>
       </view>
-      <image class="discover-image" src="http://hrbust-media.smackgg.cn/58ee8645-cdd2-438e-bcb9-e972c5f01514" mode="widthFix"/>
+      <image class="discover-image" src="../assets/img/home-bg.png" mode="widthFix"/>
     </view>
     <view class="login-wrapper" wx:if="{{!loading}}">
       <view wx:if="{{!hrbustLogin}}" class="login" @tap="linkTo('./login')">

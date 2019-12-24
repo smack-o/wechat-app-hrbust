@@ -20,7 +20,7 @@
     </view>
     <view class="info-content">
       <view class="item" @tap="linkTo({{holidayArrange}})">
-        <image class="image" src="http://hrbust-media.smackgg.cn/ab38afd6-78b6-4bf7-a49e-75364d679d06" mode="widthFix"/>
+        <image class="image" src="../assets/img/anpai.jpg" mode="widthFix"/>
         <view class="text">
           <view class="title">
             哈理工本学期放假安排
@@ -32,7 +32,7 @@
         <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
       </view>
       <view class="item" @tap="linkTo({{schoolBusArrange}})">
-        <image class="image" src="http://hrbust-media.smackgg.cn/d641ccb5-f524-4b3d-b8ea-defbba396e33" mode="widthFix"/>
+        <image class="image" src="../assets/img/chidao.png" mode="widthFix"/>
         <view class="text">
           <view class="title">
             哈理工上课时间&校车时间安排

@@ -115,7 +115,7 @@
       // 在适合的场景显示插屏广告
       if (interstitialAd) {
         interstitialAd.show().catch((err) => {
-          console.error(err)
+          console.log(err)
         })
       }
     }

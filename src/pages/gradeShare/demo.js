@@ -1,11 +1,18 @@
 export default function getData() {
   const gradeData = JSON.parse(wx.getStorageSync('grade') || '{}')
-  const { grade = [] } = gradeData
+  const { grade = [], gpa } = gradeData
   console.log(grade)
   let gradeStr = ''
+
+  let notPassCount = 0 // 不通过的数量
+
   grade.forEach((item, index) => {
     if (index === 0) {
       return
+    }
+
+    if (item.passSign !== '及格') {
+      notPassCount += 1
     }
 
     const nameStr = item.gradeName.split('').reduce((pre, name) => {
@@ -23,6 +30,23 @@ export default function getData() {
     `
   })
 
+  console.log(notPassCount, gpa)
+
+  let gradIcon = '00'
+
+  if (notPassCount === 0 && gpa >= 3.50) {
+    // 考神
+    gradIcon = '00'
+  } else if (notPassCount === 0 && (gpa < 3.50 && gpa >= 2.75)) {
+    gradIcon = '01'
+  } else if (notPassCount === 0 && gpa < 2.75) {
+    gradIcon = '02'
+  } else if (notPassCount === 1) {
+    gradIcon = '03'
+  } else if (notPassCount >= 2) {
+    gradIcon = '04'
+  }
+
   const wxml = `
     <view class="container" >
       <image class="bg1" src="../../assets/grade-share/bg.png"></image>
@@ -34,7 +58,8 @@ export default function getData() {
           <text class="grade-title-4">学分</text>
         </view>
         ${gradeStr}
-        <image class="yinzhang" src="../../assets/grade-share/00.png"></image>
+        <text class="gpa">平均学分绩点(GPA): ${gpa}</text>
+        <image class="yinzhang" src="../../assets/grade-share/${gradIcon}.png"></image>
       </view>
 
       <view class="other">
@@ -47,7 +72,7 @@ export default function getData() {
   // marginBottom: 139
   // 139 + 20 + 20 + n * 30
 
-  const contentHeight = 139 + 20 + 20 + (grade.length - 1) * 40
+  const contentHeight = 139 + 20 + 20 + (grade.length - 1) * 40 + 30
 
   const canvasHeight =
     38 + // 顶部 margin
@@ -70,7 +95,7 @@ export default function getData() {
       backgroundColor: '#ffffff',
       marginTop: 38,
       position: 'relative',
-      marginLeft: 24
+      marginLeft: 28
     },
 
     gradeTitle: {
@@ -195,6 +220,15 @@ export default function getData() {
     qr: {
       width: 328,
       height: 96
+    },
+    gpa: {
+      width: 320,
+      height: 20,
+      color: '#000000',
+      // textAlign: 'center',
+      // fontSize: 20,
+      marginTop: 10,
+      marginLeft: 20
     }
   }
 

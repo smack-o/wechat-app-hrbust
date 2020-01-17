@@ -1,9 +1,19 @@
 
+<style type="less">
+  .wrapper {
+    padding: 20rpx 0 40rpx;
+  }
+  .extra-button {
+    margin: 0 auto;
+    width: 375px;
+  }
+</style>
 <template>
-  <view>
+  <view class="wrapper">
+    <button class="weui-btn extra-button" type="primary" bindtap="extraImage">保存海报</button>
     <wxml2canvas height="375" width="800"></wxml2canvas>
-    <button bindtap="renderToCanvas">渲染到canvas</button>
-    <button bindtap="extraImage">导出图片</button>
+    <!-- <button bindtap="renderToCanvas">渲染到canvas</button> -->
+    <!-- <button bindtap="extraImage">导出图片</button> -->
   </view>
 </template>
 
@@ -12,7 +22,6 @@
   import getData from './demo.js'
   import Wxml2canvas from '../../components/wxml2canvas/index'
 
-  const { wxml, style, height } = getData()
   export default class grade extends wepy.page {
     config = {
       navigationBarTitleText: '成绩'
@@ -31,6 +40,7 @@
     }
 
     async onLoad () {
+      const { wxml, style, height } = getData()
       // const widget = this.$wxpage.selectComponent('.widget')
       this.$broadcast('initCanvas', { width: '375px', height: `${height}px` })
       this.$broadcast('render', { wxml, style })

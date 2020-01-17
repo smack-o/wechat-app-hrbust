@@ -274,7 +274,7 @@ page {
           </view>
         </picker>
 
-      <button class="extra-button" bindtap="onGradeShare">生成成绩单</button>
+      <button wx:if="{{AVERAGE_GPA && AVERAGE_GPA !== '--' && gradeData && gradeData.length >= 1}}" class="extra-button" bindtap="onGradeShare">生成成绩单</button>
 
       </view>
       <view wx:if="{{showEmpty}}" class="empty">

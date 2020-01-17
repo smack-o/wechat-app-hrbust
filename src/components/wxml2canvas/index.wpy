@@ -1,0 +1,143 @@
+<style lang="less">
+</style>
+
+<template>
+  <canvas wx:if="{{show}}" id="canvas" type="2d" style="width:{{width}};;height:{{height}};"></canvas>
+</template>
+<script>
+  import wepy from 'wepy'
+  import xmlParse from './utils/xml-parser'
+  import Widget from './utils/widget'
+  import Draw from './utils/draw'
+
+  let initCtxResolve
+  const initCtx = new Promise((resolve) => { initCtxResolve = resolve })
+  export default class Counter extends wepy.component {
+    // props = {
+    //   width: {
+    //     type: Number,
+    //     default: 700
+    //   },
+    //   height: {
+    //     type: Number,
+    //     default: 1500,
+    //   }
+    // }
+
+    data = {
+      width: '100%',
+      height: '1000px',
+      show: false
+    }
+
+    async onLoad() {
+      // this.methods.getCaptcha.bind(this)()
+      setTimeout(() => {
+        this.show = true
+        this.$apply()
+        const dpr = wx.getSystemInfoSync().pixelRatio
+        const query = wx.createSelectorQuery()
+        this.dpr = dpr
+        query.select('#canvas')
+          .fields({ node: true, size: true })
+          .exec(res => {
+            const canvas = res[0].node
+            const ctx = canvas.getContext('2d')
+            canvas.width = res[0].width * dpr
+            canvas.height = res[0].height * dpr
+            console.log(canvas.width, canvas.height, canvas)
+            ctx.scale(dpr, dpr)
+            this.ctx = ctx
+            this.canvas = canvas
+            initCtxResolve()
+          })
+      }, 200)
+    }
+
+    events = {
+      'render': async ({ wxml, style }) => {
+        // console.log('render event', wxml, style)
+        await this.renderToCanvas({ wxml, style })
+      },
+      'saveImage': async () => {
+        // console.log('render event', wxml, style)
+        await this.saveImage()
+      }
+    }
+
+    async renderToCanvas(args) {
+      await initCtx
+
+      const {wxml, style} = args
+
+      // 清空画布
+      const ctx = this.ctx
+      const canvas = this.canvas
+      if (!ctx || !canvas) {
+        return Promise.reject(new Error('renderToCanvas: fail canvas has not been created'))
+      }
+
+      ctx.clearRect(0, 0, 750, 1500)
+      const {root: xom} = xmlParse(wxml)
+
+      const widget = new Widget(xom, style)
+      const container = widget.init()
+      console.log(container)
+      const { top, left, width, height } = container
+      this.boundary = {
+        top,
+        left,
+        width,
+        height
+      }
+      const draw = new Draw(canvas, ctx)
+      await draw.drawNode(container)
+      return Promise.resolve(container)
+    }
+
+    canvasToTempFilePath(args = {}) {
+      return new Promise((resolve, reject) => {
+        const {
+          top, left, width, height
+        } = this.boundary
+        wx.canvasToTempFilePath({
+          x: left,
+          y: top,
+          width,
+          height,
+          destWidth: width * this.dpr,
+          destHeight: height * this.dpr,
+          canvas: this.canvas,
+          fileType: args.fileType || 'png',
+          quality: args.quality || 1,
+          success: resolve,
+          fail: reject
+        })
+      })
+    }
+
+    async saveImage() {
+      const res = await this.canvasToTempFilePath()
+      wepy.saveImageToPhotosAlbum({
+        filePath: res.tempFilePath,
+        success: (res) => {
+          wepy.showModal({
+            title: '保存成功',
+            content: '图片成功保存到相册',
+            showCancel: false,
+            confirmText: '确认',
+            success (result) {
+              if (result.confirm) {
+                this.$apply()
+              }
+            }
+          })
+          console.log('success:' + res)
+        },
+        fail(e) {
+          console.log('err:' + e)
+        }
+      })
+    }
+  }
+</script>

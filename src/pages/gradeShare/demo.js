@@ -49,10 +49,15 @@ export default function getData() {
 
   const contentHeight = 139 + 20 + 20 + (grade.length - 1) * 40
 
+  const canvasHeight =
+    38 + // 顶部 margin
+    contentHeight + // 成绩部分
+    40 + 96 + 60
+
   const style = {
     container: {
       width: 375,
-      height: 800,
+      height: canvasHeight,
       backgroundColor: '#fff000'
     },
 
@@ -195,6 +200,7 @@ export default function getData() {
 
   return {
     wxml,
-    style
+    style,
+    height: canvasHeight
   }
 }

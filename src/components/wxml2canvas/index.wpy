@@ -1,8 +1,12 @@
 <style lang="less">
+.canvas {
+  margin: 20rpx auto 0;
+  box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+}
 </style>
 
 <template>
-  <canvas wx:if="{{show}}" id="canvas" type="2d" style="width:{{width}};;height:{{height}};"></canvas>
+  <canvas class="canvas" wx:if="{{show}}" id="canvas" type="2d" style="width:{{width}};;height:{{height}};"></canvas>
 </template>
 <script>
   import wepy from 'wepy'
@@ -15,7 +19,7 @@
   export default class Counter extends wepy.component {
     // props = {
     //   width: {
-    //     type: Number,
+    //     type: Sgring,
     //     default: 700
     //   },
     //   height: {
@@ -25,36 +29,62 @@
     // }
 
     data = {
-      width: '100%',
+      width: '375px',
       height: '1000px',
       show: false
     }
 
     async onLoad() {
       // this.methods.getCaptcha.bind(this)()
-      setTimeout(() => {
-        this.show = true
-        this.$apply()
-        const dpr = wx.getSystemInfoSync().pixelRatio
-        const query = wx.createSelectorQuery()
-        this.dpr = dpr
-        query.select('#canvas')
-          .fields({ node: true, size: true })
-          .exec(res => {
-            const canvas = res[0].node
-            const ctx = canvas.getContext('2d')
-            canvas.width = res[0].width * dpr
-            canvas.height = res[0].height * dpr
-            console.log(canvas.width, canvas.height, canvas)
-            ctx.scale(dpr, dpr)
-            this.ctx = ctx
-            this.canvas = canvas
-            initCtxResolve()
-          })
-      }, 200)
+      // setTimeout(() => {
+      //   this.show = true
+      //   this.$apply()
+      //   const dpr = wx.getSystemInfoSync().pixelRatio
+      //   const query = wx.createSelectorQuery()
+      //   this.dpr = dpr
+      //   query.select('#canvas')
+      //     .fields({ node: true, size: true })
+      //     .exec(res => {
+      //       const canvas = res[0].node
+      //       const ctx = canvas.getContext('2d')
+      //       canvas.width = res[0].width * dpr
+      //       canvas.height = res[0].height * dpr
+      //       // console.log(canvas.width, canvas.height, canvas)
+      //       ctx.scale(dpr, dpr)
+      //       this.ctx = ctx
+      //       this.canvas = canvas
+      //       initCtxResolve()
+      //     })
+      // }, 200)
     }
 
     events = {
+      'initCanvas': async ({ width, height }) => {
+        this.width = width
+        this.height = height
+        this.$apply()
+
+        setTimeout(() => {
+          this.show = true
+          this.$apply()
+          const dpr = wx.getSystemInfoSync().pixelRatio
+          const query = wx.createSelectorQuery()
+          this.dpr = dpr
+          query.select('#canvas')
+            .fields({ node: true, size: true })
+            .exec(res => {
+              const canvas = res[0].node
+              const ctx = canvas.getContext('2d')
+              canvas.width = res[0].width * dpr
+              canvas.height = res[0].height * dpr
+              // console.log(canvas.width, canvas.height, canvas)
+              ctx.scale(dpr, dpr)
+              this.ctx = ctx
+              this.canvas = canvas
+              initCtxResolve()
+            })
+        }, 300)
+      },
       'render': async ({ wxml, style }) => {
         // console.log('render event', wxml, style)
         await this.renderToCanvas({ wxml, style })
@@ -82,7 +112,7 @@
 
       const widget = new Widget(xom, style)
       const container = widget.init()
-      console.log(container)
+      // console.log(container)
       const { top, left, width, height } = container
       this.boundary = {
         top,

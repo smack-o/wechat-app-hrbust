@@ -28,7 +28,7 @@ export default class Draw {
       borderWidth = 0,
       borderColor,
       color = '#000',
-      backgroundColor = 'transparent',
+      backgroundColor = 'transparent'
     } = style
     ctx.save()
     // 外环
@@ -41,7 +41,7 @@ export default class Draw {
     ctx.fillStyle = backgroundColor
     const innerWidth = w - 2 * borderWidth
     const innerHeight = h - 2 * borderWidth
-    console.log(innerWidth, innerHeight, '----')
+    // console.log(innerWidth, innerHeight, '----')
     const innerRadius = borderRadius - borderWidth >= 0 ? borderRadius - borderWidth : 0
     this.roundRect(x + borderWidth, y + borderWidth, innerWidth, innerHeight, innerRadius)
     ctx.restore()

@@ -571,6 +571,11 @@ page {
           }
         }
         this.$apply()
+
+        wepy.setStorageSync('grade', JSON.stringify({
+          grade: this.gradeData,
+          gpa: this.AVERAGE_GPA
+        }))
         // wepy.hideLoading()
         this.methods.setLoading(false)
       })

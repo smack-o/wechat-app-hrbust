@@ -1,7 +1,7 @@
 <style lang="less">
 .canvas {
   margin: 20rpx auto 0;
-  box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+  box-shadow: 0px 20rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
 }
 </style>
 

@@ -14,8 +14,6 @@
   import Widget from './utils/widget'
   import Draw from './utils/draw'
 
-  let initCtxResolve
-  const initCtx = new Promise((resolve) => { initCtxResolve = resolve })
   export default class Counter extends wepy.component {
     // props = {
     //   width: {
@@ -60,6 +58,8 @@
 
     events = {
       'initCanvas': async ({ width, height }) => {
+        let initCtxResolve
+        this.initCtx = new Promise((resolve) => { initCtxResolve = resolve })
         this.width = width
         this.height = height
         this.$apply()
@@ -75,6 +75,7 @@
             .exec(res => {
               const canvas = res[0].node
               const ctx = canvas.getContext('2d')
+              // const ctx = wx.createCanvasContext('canvas', this)
               canvas.width = res[0].width * dpr
               canvas.height = res[0].height * dpr
               // console.log(canvas.width, canvas.height, canvas)
@@ -96,7 +97,7 @@
     }
 
     async renderToCanvas(args) {
-      await initCtx
+      await this.initCtx
 
       const {wxml, style} = args
 

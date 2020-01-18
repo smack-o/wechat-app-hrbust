@@ -1,7 +1,6 @@
 export default function getData() {
   const gradeData = JSON.parse(wx.getStorageSync('grade') || '{}')
   const { grade = [], gpa } = gradeData
-  console.log(grade)
   let gradeStr = ''
 
   let notPassCount = 0 // 不通过的数量
@@ -29,8 +28,6 @@ export default function getData() {
       </view>
     `
   })
-
-  console.log(notPassCount, gpa)
 
   let gradIcon = '00'
 

@@ -263,7 +263,7 @@
 
       async syncCourse (e) {
         this.methods.setLoading(true)
-        this.selectOpen = !this.selectOpen
+        this.selectOpen = false
 
         const [createNewTermError] = await this.to(this.createNewTerm(this.currentTerm, e.captcha))
         if (createNewTermError) return
@@ -466,7 +466,7 @@
     }
 
     async onPullDownRefresh() {
-      this.getCourseHandel(this.currentTerm)
+      this.methods.syncCourse.bind(this)({ captcha: null })
       wepy.stopPullDownRefresh()
     }
 

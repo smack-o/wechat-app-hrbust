@@ -17,6 +17,8 @@ page {
   padding-bottom: 20rpx;
   display: flex;
   justify-content: center;
+  align-items: center;
+
   .select-button {
     width: 456rpx;
     height: 72rpx;
@@ -37,6 +39,26 @@ page {
     }
   }
 }
+
+.extra-button {
+  box-shadow: 0 5rpx 30rpx 0 rgba(26,173,25, .6);
+  border-radius: 16rpx;
+  border-width: 3;
+  border: none;
+  width: 200rpx;
+  height: 72rpx;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1AAD19;
+  color: #fff;
+
+  &::after {
+    display: none;
+  }
+}
+
 .grade-list {
     display: flex;
     flex-direction: column;
@@ -251,6 +273,9 @@ page {
               <text class="select-text">学期{{term}}(点击切换)</text>
           </view>
         </picker>
+
+      <button wx:if="{{AVERAGE_GPA && AVERAGE_GPA !== '--' && gradeData && gradeData.length >= 1}}" class="extra-button" bindtap="onGradeShare">生成成绩单</button>
+
       </view>
       <view wx:if="{{showEmpty}}" class="empty">
         <text class="select-text">还没有这学期的成绩</text>
@@ -436,6 +461,18 @@ page {
         wepy.navigateTo({
           url: `./webview?url=${encodeURIComponent(url)}&title=理工喵`
         })
+      },
+
+      onGradeShare() {
+        // console.log(this.gradeData, this.AVERAGE_GPA)
+        wepy.setStorageSync('grade', JSON.stringify({
+          grade: this.gradeData,
+          gpa: this.AVERAGE_GPA
+        }))
+
+        wepy.navigateTo({
+          url: `./gradeShare/grade`
+        })
       }
     }
     events = {
@@ -571,6 +608,11 @@ page {
           }
         }
         this.$apply()
+
+        wepy.setStorageSync('grade', JSON.stringify({
+          grade: this.gradeData,
+          gpa: this.AVERAGE_GPA
+        }))
         // wepy.hideLoading()
         this.methods.setLoading(false)
       })

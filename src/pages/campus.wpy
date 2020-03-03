@@ -20,7 +20,7 @@
     </view>
     <view class="info-content">
       <view class="item" @tap="linkTo({{holidayArrange}})">
-        <image class="image" src="http://hrbust-media.smackgg.cn/ab38afd6-78b6-4bf7-a49e-75364d679d06" mode="widthFix"/>
+        <image class="image" src="../assets/img/anpai.jpg" mode="widthFix"/>
         <view class="text">
           <view class="title">
             哈理工本学期放假安排
@@ -32,7 +32,7 @@
         <image class="arrow-right" src="../assets/icon/arrow_right.png"/>
       </view>
       <view class="item" @tap="linkTo({{schoolBusArrange}})">
-        <image class="image" src="http://hrbust-media.smackgg.cn/d641ccb5-f524-4b3d-b8ea-defbba396e33" mode="widthFix"/>
+        <image class="image" src="../assets/img/chidao.png" mode="widthFix"/>
         <view class="text">
           <view class="title">
             哈理工上课时间&校车时间安排
@@ -103,6 +103,12 @@
         url: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rdhttp://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rd')}&title=理工电邮`,
         needLogin: true,
         shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
+      }, {
+        image: '../assets/icon/query_room.png',
+        text: '查空教室',
+        url: './room/index',
+        needLogin: true,
+        shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
       }
       // {
       //   image: '../assets/icon/cetlogo.png',
@@ -161,6 +167,7 @@
       margin-bottom: 40rpx;
       .modules_image {
         width: 80rpx;
+        height: 80rpx;
         border-radius: 50%;
       }
       .modules_text {

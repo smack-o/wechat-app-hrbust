@@ -25,8 +25,8 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/page4',
-      'pages/test',
+      // 'pages/page4',
+      // 'pages/test',
       'pages/login',
       'pages/course',
       'pages/choiceTrem',
@@ -39,12 +39,20 @@ export default class extends wepy.app {
       'pages/about',
       'pages/campus',
       'pages/account',
-      'pages/CET',
-      'pages/cetGrade',
+      // 'pages/CET',
+      // 'pages/cetGrade',
       'pages/christmas/christmasIndex',
       'pages/christmas/imageeditor',
       'pages/christmas/combine',
-      'pages/yingxin'
+      'pages/guoqi/index',
+      'pages/guoqi/combine',
+      'pages/guoqi/imageeditor',
+      'pages/yingxin',
+      // 'pages/wifi',
+      'pages/room/index',
+      'pages/room/rooms',
+      'pages/gradeShare/grade'
+      // 'pages/gradeShare/grade'
       // 'pages/combine/combine'
     ],
     window: {

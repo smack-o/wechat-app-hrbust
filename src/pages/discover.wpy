@@ -13,7 +13,7 @@
     <view class="info">
       更多功能敬请期待~
     </view>
-    <image class="discover-image" src="http://hrbust-static.smackgg.cn/discover.png" mode="widthFix"/>
+    <image class="discover-image" src="../assets/img/discover.png" mode="widthFix"/>
   </view>
 </template>
 

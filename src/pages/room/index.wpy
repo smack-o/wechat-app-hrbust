@@ -1,0 +1,462 @@
+<template>
+  <view class="wrapper">
+    <picker mode="selector" range-key="label" bindchange="onChange(aids)" value="{{choiceAidsIndex}}" range="{{aids}}">
+      <view class="selector">
+        <view class="label">选择校区<text class="color-red">*</text></view>
+        <view class="selector-input">
+          <view wx:if="{{aids[choiceAidsIndex]}}">{{aids[choiceAidsIndex].label}}</view>
+          <view wx:else class="selector-placeholder">请选择校区</view>
+        </view>
+      </view>
+    </picker>
+    <picker mode="selector" range-key="label" bindchange="onChange(buildingids)" value="{{choiceBuildingidsIndex}}" range="{{buildingids}}">
+      <view class="selector">
+        <view class="label">选择教学楼<text class="color-red">*</text></view>
+        <view class="selector-input">
+          <view wx:if="{{buildingids[choiceBuildingidsIndex]}}">{{buildingids[choiceBuildingidsIndex].label}}</view>
+          <view wx:else class="selector-placeholder">请选择教学楼</view>
+        </view>
+      </view>
+    </picker>
+    <picker mode="selector" range-key="label" bindchange="onChange(whichweeks)" value="{{choiceWhichweeksIndex}}" range="{{whichweeks}}">
+      <view class="selector">
+        <view class="label">选择周数<text class="color-red">*</text></view>
+        <view class="selector-input">
+          <view wx:if="{{whichweeks[choiceWhichweeksIndex]}}">{{whichweeks[choiceWhichweeksIndex].label}}</view>
+          <view wx:else class="selector-placeholder">请选择周数</view>
+        </view>
+      </view>
+    </picker>
+    <picker mode="selector" range-key="label" bindchange="onChange(weeks)" value="{{choiceWeeksIndex}}" range="{{weeks}}">
+      <view class="selector">
+        <view class="label">选择日期<text class="color-red">*</text></view>
+        <view class="selector-input">
+          <view wx:if="{{weeks[choiceWeeksIndex]}}">{{weeks[choiceWeeksIndex].label}}</view>
+          <view wx:else class="selector-placeholder">请选择日期</view>
+        </view>
+      </view>
+    </picker>
+    <!-- <picker mode="selector" range-key="label" bindchange="onChange(rooms)" value="{{choiceRoomsIndex}}" range="{{rooms}}">
+      <view class="selector">
+        <view class="label">选择教室<text class="small-size">(非必选)</text></view>
+        <view class="selector-input">
+          <view wx:if="{{rooms[choiceRoomsIndex]}}">{{rooms[choiceRoomsIndex].label}}</view>
+          <view wx:else class="selector-placeholder">请选择教室</view>
+        </view>
+      </view>
+    </picker> -->
+
+    <view class="button" bindtap="onSubmit">
+      <text class="button-text">查询空闲教室</text>
+    </view>
+
+    <view class="infos">
+      <view>*特别说明：</view>
+      <view>1.标有“<text class="color-red">*</text>”的选项为必选项</view>
+      <view>2.理工喵所有教室信息均来自教务在线，部分教室可能会有临时安排，查询结果仅供参考，请以教室实际占用情况为准</view>
+      <view>3.如有其它问题请联系我们的客服哦~</view>
+      <view>4.每天前两次免费使用，第三次开始需要观看广告，观看广告后本日不限次数（理解下哈大家，理工喵已经快没有猫粮了，喵~）~</view>
+    </view>
+    <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="roomquery"/>
+  </view>
+</template>
+<script>
+  // http://hrbust-media.smackgg.cn/d641ccb5-f524-4b3d-b8ea-defbba396e33
+  import wepy from 'wepy'
+  import { request } from 'utils'
+  import { updateRooms } from '@/store/actions/room'
+  import InputDialog from '@/components/inputDialog'
+  import { store } from '@/store'
+
+  export default class Room extends wepy.page {
+    config = {
+      navigationBarTitleText: '空教室查询'
+    }
+    data = {
+      aids: [],
+      buildingids: [],
+      rooms: [],
+      whichweeks: [],
+      weeks: [],
+      choiceAidsIndex: '',
+      choiceBuildingidsIndex: '',
+      choiceRoomsIndex: '',
+      choiceWhichweeksIndex: '',
+      choiceWeeksIndex: '',
+      popDialog: false,
+      captchaImage: '',
+      errormsg: '',
+      thisWeek: ''
+    }
+    components = {
+      inputdialog: InputDialog
+    }
+    events = {
+      'submit-emit': (captcha, pagetag) => {
+        if (pagetag !== 'roomquery') {
+          return
+        }
+        this.roomschedulequery({
+          captcha
+        })
+        // this.page = 1
+        // this.getList(this.page, null, captcha)
+      },
+      'closedialog-emit': () => {
+        this.popDialog = false
+      }
+    }
+
+    computed = {
+      teachingBuildings () {
+        return [
+
+        ]
+      }
+    }
+    methods = {
+      linkTo(url) {
+        wepy.navigateTo({
+          url
+        })
+      },
+      onChange(name, event) {
+        // const index = `choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`;
+        this[`choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`] = event.detail.value
+        // console.log(this.aids[this.choiceAidsIndex].label)
+        if (name === 'aids' || name === 'buildingids' || name === 'rooms') {
+          switch (name) {
+            case 'aids':
+              this.choiceBuildingidsIndex = ''
+              this.choiceRoomsIndex = ''
+              break
+            case 'buildingids':
+              this.choiceRoomsIndex = ''
+              break
+            default:
+              break
+          }
+          this.roomschedulequery({
+            aid: this.aids[this.choiceAidsIndex] ? this.aids[this.choiceAidsIndex].id : -1,
+            buildingid: this.buildingids[this.choiceBuildingidsIndex] ? this.buildingids[this.choiceBuildingidsIndex].id : -1,
+            room: this.rooms[this.choiceRoomsIndex] ? this.aids[this.choiceRoomsIndex].id : -1
+          })
+        }
+      },
+      onSubmit() {
+        this.roomschedule()
+      }
+    }
+
+    async roomschedulequery(data) {
+      wepy.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      const [err, res] = await this.to(request({ url: '/api/hrbust/roomschedulequery', data }))
+      wepy.hideLoading()
+
+      if (res.data.status === 400001) {
+        this.errormsg = '您输入的验证码错误'
+      }
+      if (res.data.status === 400005 || res.data.status === 400001) {
+        this.captchaImage = res.data.data.captcha
+        this.popDialog = true
+        this.$apply()
+        // wepy.hideLoading()
+        // this.methods.setLoading(false)
+        return
+      }
+
+      if (!err) {
+        const { aids, buildingids, rooms, whichweeks, weeks } = res.data.data
+        this.aids = aids
+        this.buildingids = buildingids
+        this.rooms = rooms
+        this.whichweeks = whichweeks.map(week => {
+          if (+week.label === +this.thisWeek) {
+            return {
+              ...week,
+              label: week.label + '(本周)'
+            }
+          }
+          return week
+        })
+        this.weeks = weeks
+
+        this.$apply()
+      }
+    }
+
+    async roomschedule() {
+      if (!this.choiceAidsIndex) {
+        wepy.showToast({
+          title: '请选择校区',
+          icon: 'none'
+        })
+        return
+      }
+      if (!this.choiceBuildingidsIndex) {
+        wepy.showToast({
+          title: '请选择教学楼',
+          icon: 'none'
+        })
+        return
+      }
+      if (!this.choiceWhichweeksIndex) {
+        wepy.showToast({
+          title: '请选择周数',
+          icon: 'none'
+        })
+        return
+      }
+      // console.log(this.choiceWeeksIndex)
+      if (!this.choiceWeeksIndex) {
+        wepy.showToast({
+          title: '请选择日期',
+          icon: 'none'
+        })
+        return
+      }
+
+      // 广告逻辑
+      let thisDayTimeData = wepy.getStorageSync('thisDayTimeData')
+      if (thisDayTimeData) {
+        thisDayTimeData = JSON.parse(thisDayTimeData)
+
+        // 如果缓存时间已经小于当前时间清空缓存
+        if (thisDayTimeData.timestamp < this.thisDayTimestamp) {
+          wepy.removeStorageSync('thisDayTimeData')
+          thisDayTimeData = undefined
+        }
+      }
+
+      // 用户触发广告后，显示激励视频广告
+      console.log(this.videoAd, this.loadAdError, thisDayTimeData, thisDayTimeData.times >= 2)
+      if (this.videoAd && !this.loadAdError && thisDayTimeData && thisDayTimeData.times >= 2) {
+        wx.showModal({
+          title: '是否观看广告',
+          content: '每日前两次免费查询，观看完广告今日不限次数查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
+          success: (res) => {
+            if (res.confirm) {
+              this.videoAd.show().catch(() => {
+              // 失败重试
+                this.videoAd.load().then(() => this.videoAd.show()).catch(() => {
+                  console.log('激励视频 广告显示失败')
+                })
+              })
+            } else if (res.cancel) {
+              // console.log('用户点击取消')
+            }
+          }
+        })
+        return
+      }
+
+      const dataKeys = ['aid', 'buildingid', 'room', 'whichweek', 'week']
+
+      const data = dataKeys.reduce((pre, key) => {
+        const index = this[`choice${key.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}sIndex`]
+        if (index && this[`${key}s`][index]) {
+          pre[key] = this[`${key}s`][index].id
+        }
+        return pre
+      }, {})
+
+      // const data = {
+      //   aid: this.aids[this.choiceAidsIndex] ? this.aids[this.choiceAidsIndex].id : -1,
+      //   buildingid: this.buildingids[this.choiceBuildingidsIndex] ? this.buildingids[this.choiceBuildingidsIndex].id : -1,
+      //   room: this.rooms[this.choiceRoomsIndex] ? this.aids[this.choiceRoomsIndex].id : -1,
+      // }
+      wepy.showLoading({
+        title: '查询中',
+        mask: true
+      })
+      const [err, res] = await this.to(request({ url: '/api/hrbust/roomschedule', data }))
+      wepy.hideLoading()
+      if (!err) {
+        // 如果有计数数据
+        if (thisDayTimeData) {
+          if (thisDayTimeData.times !== -1) {
+            wepy.setStorageSync('thisDayTimeData', JSON.stringify({
+              timestamp: this.thisDayTimestamp,
+              times: thisDayTimeData.times + 1
+            }))
+          }
+        } else {
+          wepy.setStorageSync('thisDayTimeData', JSON.stringify({
+            timestamp: this.thisDayTimestamp,
+            times: 1
+          }))
+        }
+
+        store.dispatch(updateRooms({
+          data: res.data.data.list
+        }))
+        wepy.navigateTo({
+          url: './rooms'
+        })
+      }
+    }
+
+    async getWeekAndTerm () {
+      wepy.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      const [err, res] = await this.to(request({ url: '/api/hrbust/week' }))
+      wepy.hideLoading()
+      if (err) return Promise.reject('获取周数错误')
+
+      const { week: onlineWeek } = res.data.data
+
+      // 设置当前周数，如果教务在线获取的周数超过25周，当前周数设置为25
+      const MAX_WEEK_NUM = 25
+      const isExceed = onlineWeek > MAX_WEEK_NUM
+      this.thisWeek = this.thisWeekNum = isExceed ? MAX_WEEK_NUM : onlineWeek
+
+      // 更新视图
+      this.$apply()
+
+      return Promise.resolve()
+    }
+
+    to (promise) {
+      return promise.then(data => {
+        return [null, data]
+      })
+      .catch(error => [error])
+    }
+
+    async onLoad() {
+      this.videoAd = null
+      if (wepy.createRewardedVideoAd) {
+        console.log('createRewardedVideoAd')
+        const videoAd = wepy.createRewardedVideoAd({
+          adUnitId: 'adunit-edbb9cf449e6b124'
+        })
+        videoAd.onLoad(() => {})
+        videoAd.onError((err) => {
+          console.log('loadAdError', err)
+          this.loadAdError = true
+        })
+        videoAd.onClose((res) => {
+          // 用户点击了【关闭广告】按钮
+          if (res && res.isEnded) {
+            wepy.setStorageSync('thisDayTimeData', JSON.stringify({
+              timestamp: this.thisDayTimestamp,
+              times: -1
+            }))
+              // 正常播放结束，可以下发游戏奖励
+          } else {
+              // 播放中途退出，不下发游戏奖励
+          }
+        })
+        this.videoAd = videoAd
+      }
+
+      this.thisDayTimestamp = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1
+
+      wepy.showShareMenu({
+        withShareTicket: true
+      })
+      await this.getWeekAndTerm()
+      await this.roomschedulequery()
+
+      // 设置学期周数
+      this.choiceWhichweeksIndex = this.thisWeek - 1
+      // 设置当前周几
+      const day = (new Date()).getDay() - 1
+      this.choiceWeeksIndex = day === -1 ? '6' : '' + day
+      this.$apply()
+    }
+}
+</script>
+
+<style lang="less">
+  .wrapper {
+    padding-top: 40rpx;
+  }
+  .selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+    .label {
+      position: relative;
+      width: 200rpx;
+      // line-height: 66rpx;
+      text-align: right;
+      margin-right: 38rpx;
+      font-size: 26rpx;
+      line-height: 30rpx;
+      color: #999999;
+    }
+
+    .color-red {
+      position: absolute;
+      right: -18rpx;
+      margin-top: 2rpx;
+    }
+
+    .small-size {
+      font-size: 20rpx;
+    }
+  }
+
+  .selector-input {
+    position: relative;
+    width: 460rpx;
+    height: 66rpx;
+    border-radius: 38rpx;
+    border: 1rpx solid #DCDCDC;
+    font-size: 24rpx;
+    line-height: 66rpx;
+    padding: 0 50rpx;
+    box-sizing: border-box;
+
+    .selector-placeholder {
+      color: #CCCCCC;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 30rpx;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 14rpx 13rpx 0 13rpx;
+      border-color: #BBBBBB transparent transparent transparent;
+    }
+  }
+
+  .button {
+    width: 630rpx;
+    height: 80rpx;
+    margin: 100rpx auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6dde9e;
+    box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+    border-radius: 40rpx;
+    .button-text {
+      font-size: 26rpx;
+      color: #ffffff;
+    }
+  }
+
+  .infos {
+    width: 604rpx;
+    margin: 60rpx auto 0;
+    font-size: 24rpx;
+    color: #999999;
+  }
+
+  .color-red {
+    font-size: 30rpx;
+    color: #FF0000;
+    margin-top: 6rpx;
+  }
+</style>

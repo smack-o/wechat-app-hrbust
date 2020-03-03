@@ -53,17 +53,17 @@
     }
   }
   .advertising {
-    margin-top: 10rpx;
+    margin-top: 20rpx;
     position: relative;
-    transform-origin: center bottom;
-    transform: scale(0.8) !important;
+    // transform-origin: center bottom;
+    // transform: scale(0.8) !important;
   }
 </style>
 
 <template>
   <view class="wrapper">
     <view class="container">
-      <image class="bgPic" wx:if="{{bgPic}}" src="{{bgPic}}"></image>
+      <image class="bgPic" mode="aspectFill" wx:if="{{bgPic}}" src="{{bgPic}}"></image>
       <view class="emptyBg" wx:else></view>
     </view>
     <view class="btnContainer">
@@ -71,7 +71,7 @@
       <button data-way="camera" bind:tap="chooseImage">使用相机</button>
       <button data-way="album" bind:tap="chooseImage">相册选择</button>
       <button class="flex1" bind:tap="nextPage" disabled="{{!picChoosed}}">下一步</button>
-      <ad class="advertising" unit-id="adunit-b6dc7dacd63afd2e"></ad>
+      <ad class="advertising" unit-id="adunit-840f07802cfaa8a1" ad-type="video" ad-theme="white"></ad>
     </view>
   </view>
 </template>
@@ -84,9 +84,6 @@
   import {
     connect
   } from 'wepy-redux'
-
-  let interstitialAd = null
-
   @connect({
     bgPic(state) {
       return state.christmasHat.bgPic
@@ -96,7 +93,7 @@
   })
   export default class christmasIndex extends wepy.page {
     config = {
-      navigationBarTitleText: '头像加圣诞帽啦~'
+      navigationBarTitleText: '给头像加国旗啦~'
       //   enablePullDownRefresh: true
     }
     data = {
@@ -106,30 +103,12 @@
     }
     onShareAppMessage() {
       return {
-        title: '圣诞快乐，给头像加圣诞帽啦~',
-        imageUrl: 'http://hrbust-media.smackgg.cn/72e384fa-68ac-4110-982a-e42a4c865bc3'
-      }
-    }
-
-    onShow() {
-      // 在适合的场景显示插屏广告
-      if (interstitialAd) {
-        interstitialAd.show().catch((err) => {
-          console.log(err)
-        })
+        title: '国庆快乐，给头像加国旗啦~',
+        imageUrl: 'http://hrbust-media.smackgg.cn/e4597d2a-a667-4a69-9a75-50198e9e54be',
+        path: '/pages/guoqi/index'
       }
     }
     onLoad() {
-      // 在页面onLoad回调事件中创建插屏广告实例
-      if (wx.createInterstitialAd) {
-        interstitialAd = wx.createInterstitialAd({
-          adUnitId: 'adunit-167f2a17e8f9ecc4'
-        })
-        interstitialAd.onLoad(() => {})
-        interstitialAd.onError(() => {})
-        interstitialAd.onClose(() => {})
-      }
-
       wepy.showShareMenu({
         withShareTicket: true
       })
@@ -184,7 +163,7 @@
       nextPage() {
         // app.globalData.bgPic=this.bgPic;
         wepy.navigateTo({
-          url: '../christmas/imageeditor'
+          url: '../guoqi/imageeditor'
         })
       }
     }

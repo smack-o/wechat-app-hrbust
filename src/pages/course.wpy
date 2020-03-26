@@ -111,19 +111,6 @@
       <view class="empty-bottom" bindtap="selectListSwitch">
       </view>
     </view>
-
-    <!-- Detail -->
-    <view class="detial" wx:if="{{detailOpen}}" bindtap="closeDetail">
-      <block wx:for="{{detailData}}" wx:for-item="detailItem">
-        <view class="{{detailItem.period[thisWeek] == 1 ? 'detial-current-week' : 'detail-not-current-week'}}">
-          <view class="course-name">《{{detailItem.name}}》</view>
-          <view>教室：{{detailItem.locale}}</view>
-          <view>周数：{{detailItem.week}}</view>
-          <view>节数：{{dayNum[detailItem.day - 1]}}{{detailItem.sectionstart}} ～ {{detailItem.sectionend}}节</view>
-          <view>教师：{{detailItem.teacher}}</view>
-        </view>
-      </block>
-    </view>
     <inputdialog wx:if="{{popDialog}}" :captchaimageprops.sync="captchaImage" :errormsg.sync="errormsg" pagetag="course"/>
     <ad class="advertising" unit-id="adunit-f1ef7db925a525a8"></ad>
   </block>
@@ -274,21 +261,7 @@
       detailHandler (event) {
         const dayIndex = event.currentTarget.dataset.dayindex
         const timeIndex = event.currentTarget.dataset.timeindex
-        const detailData = this.courseData[timeIndex]
-        if (!detailData) return
-
-        if (detailData.length > 0) {
-          let result = []
-          detailData.forEach((item) => {
-            if (item.day === dayIndex) {
-              result.push(item)
-            }
-          })
-          if (result.length > 0) {
-            this.detailOpen = true
-            this.detailData = result
-          }
-        }
+        wepy.navigateTo({url: `courseDetail?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.thisWeek}`})
       },
 
       selectListSwitch () {
@@ -763,40 +736,6 @@
   }
 }
 
-.detial {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  padding-top: 20px;
-  z-index: 100;
-  background-color: #f4f7f9;
-  view {
-    margin-bottom: 5px;
-  }
-  .course-name {
-    font-size: 15px;
-  }
-  .detial-current-week, .detail-not-current-week {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    padding: 20px;
-    font-size: 12px;
-    background-color: #fff;
-  }
-  .detial-current-week {
-    order: 1;
-    color: #3f627e;
-    font-weight: 700;
-  }
-  .detail-not-current-week {
-    order: 5;
-    color: #ccc;
-  }
-}
 
 // 不同颜的课程，不同颜色
 .this-week.class1 {

@@ -29,6 +29,7 @@ export default class extends wepy.app {
       // 'pages/test',
       'pages/login',
       'pages/course',
+      'pages/courseDetail',
       'pages/choiceTrem',
       'pages/news/news',
       'pages/news/newsDetail',

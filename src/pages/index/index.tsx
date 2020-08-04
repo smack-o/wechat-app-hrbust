@@ -37,6 +37,7 @@ class Index extends Component<IProps, PageState> {
 
   componentDidShow () {
     const a = this.state.a
+    console.log(a)
   }
 
   componentDidHide () { }

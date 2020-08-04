@@ -30,7 +30,11 @@
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
     "lint-fix": "npm run lint -- --fix"
   },
-
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "browserslist": [
     "last 3 versions",
     "Android >= 4.1",
@@ -69,7 +73,6 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "pre-commit": "^1.2.2",
     "stylelint": "9.3.0",
     "typescript": "^3.7.0"
   }

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+
 const config = {
   projectName: 'my',
   date: '2020-8-4',

@@ -44,10 +44,10 @@ class Index extends Component<IProps, PageState> {
   render () {
     console.log(this.props.user)
     return (
-      <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
+      <View className="index">
+        <Button className="add_btn" onClick={this.props.add}>+</Button>
+        <Button className="dec_btn" onClick={this.props.dec}>-</Button>
+        <Button className="dec_btn" onClick={this.props.asyncAdd}>async</Button>
         <View><Text>{this.props.user.num}</Text></View>
         <View><Text>Hello, World</Text></View>
       </View>

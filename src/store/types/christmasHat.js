@@ -1,6 +1,0 @@
-export const SET_BACKGROUND_PIC = 'SET_BACKGROUND_PIC'
-export const SET_SCALE = 'SET_SCALE'
-export const SET_ROTATE = 'SET_ROTATE'
-export const SET_HAT_CENTER_X = 'SET_HAT_CENTER_X'
-export const SET_HAT_CENTER_Y = 'SET_HAT_CENTER_Y'
-export const SET_CURRENT_HAT_ID = 'SET_CURRENT_HAT_ID'

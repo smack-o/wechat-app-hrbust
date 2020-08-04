@@ -1,2 +1,6 @@
-dist/*
-src1_back/*
+node_modules
+dist
+build
+
+src/third-utils
+src/components/WxParse

@@ -1,13 +1,13 @@
 {
-  "description": "A WePY project",
+  "miniprogramRoot": "./dist",
+  "projectname": "wechat-app-hrbust",
+  "description": "",
+  "appid": "wxdfc8b60e215a3da5",
   "setting": {
     "urlCheck": true,
     "es6": false,
     "postcss": false,
     "minified": false
   },
-  "compileType": "miniprogram",
-  "appid": "wxdfc8b60e215a3da5",
-  "projectname": "wechat-app-hrbust",
-  "miniprogramRoot": "./dist"
+  "compileType": "miniprogram"
 }

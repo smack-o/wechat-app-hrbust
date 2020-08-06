@@ -4,7 +4,7 @@ import { GET_USERINFO } from '../actions/user'
 
 export interface UserState {
   isLogin: boolean,
-  studentInfo?: {
+  studentInfo: {
     name: string,
     username: string
   },
@@ -15,7 +15,10 @@ export interface UserState {
 
 const INITIAL_STATE: UserState = {
   isLogin: false,
-  studentInfo: undefined,
+  studentInfo: {
+    name: '',
+    username: '',
+  },
   // userInfo: {
   //   nike,
   // }

@@ -37,7 +37,7 @@ export const router = {
     //   // 'pages/combine/combine'
   },
   pages2: {
-  }
+  },
 }
 
 export const pages = Object.keys(router.pages).map(path => `pages/${router.pages[path]}`)
@@ -61,38 +61,39 @@ export default {
   //   root: 'pages2',
   //   pages: Object.values(router.pages2),
   // }],
-  // tabBar: {
-  //   color: '#333333',
-  //   selectedColor: '#D6B44C',
-  //   borderStyle: 'white',
-  //   backgroundColor: '#fff',
-  //   list: [
-  //     {
-  //       pagePath: 'pages/index/index',
-  //       iconPath: 'assets/icon/home.jpg',
-  //       selectedIconPath: 'assets/icon/home-selected.jpg',
-  //       text: '商城首页',
-  //     },
-  //     {
-  //       pagePath: 'pages/category/index',
-  //       iconPath: 'assets/icon/category.jpg',
-  //       selectedIconPath: 'assets/icon/category-selected.jpg',
-  //       text: '分类',
-  //     },
-  //     {
-  //       pagePath: 'pages/shop-cart/index',
-  //       iconPath: 'assets/icon/shopcart.jpg',
-  //       selectedIconPath: 'assets/icon/shopcart-selected.jpg',
-  //       text: '购物车',
-  //     },
-  //     {
-  //       pagePath: 'pages/account/index',
-  //       iconPath: 'assets/icon/account.jpg',
-  //       selectedIconPath: 'assets/icon/account-selected.jpg',
-  //       text: '我的',
-  //     },
-  //   ],
-  // },
+  tabBar: {
+    borderStyle: 'black',
+    color: '#ccc',
+    selectedColor: '#000',
+    backgroundColor: '#fff',
+    list: [
+      {
+        pagePath: 'pages/index/index',
+        text: '首页',
+        iconPath: 'assets/icon/home.png',
+        selectedIconPath: 'assets/icon/home_selected.png'
+      },
+      {
+        pagePath: 'pages/campus/index',
+        text: '校园',
+        iconPath: 'assets/icon/campus.png',
+        selectedIconPath: 'assets/icon/campus_selected.png'
+      },
+      {
+        pagePath: 'pages/discover/index',
+        text: '发现',
+        iconPath: 'assets/icon/find.png',
+        selectedIconPath: 'assets/icon/find_selected.png'
+      },
+      {
+        pagePath: 'pages/account/index',
+        text: '我',
+        iconPath: 'assets/icon/account.png',
+        selectedIconPath: 'assets/icon/account_selected.png'
+      }
+    ]
+  },
+
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fafafa',

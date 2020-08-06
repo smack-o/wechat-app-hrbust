@@ -1,26 +1,32 @@
 import { AnyAction } from 'redux'
-import { GET_USER_DETAIL } from '../actions/user'
+import { GET_USERINFO } from '../actions/user'
 
-export type UserDetail = {
-  avatarUrl: string
+
+export interface UserState {
+  isLogin: boolean,
+  studentInfo?: {
+    name: string,
+    username: string
+  },
+  // userInfo: {
+  //   nike: string,
+  // }
 }
 
-export type UserState = {
-  userDetail: UserDetail, // 用户信息
-}
-
-var INITIAL_STATE: UserState = {
-  userDetail: {
-    avatarUrl: '',
-  }, // 用户信息
+const INITIAL_STATE: UserState = {
+  isLogin: false,
+  studentInfo: undefined,
+  // userInfo: {
+  //   nike,
+  // }
 }
 
 export default function user(state = INITIAL_STATE, action: AnyAction): UserState {
   switch (action.type) {
-    case GET_USER_DETAIL:
+    case GET_USERINFO:
       return {
         ...state,
-        userDetail: action.data,
+        ...action.data
       }
     default:
       return state

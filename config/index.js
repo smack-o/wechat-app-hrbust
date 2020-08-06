@@ -1,9 +1,13 @@
 /* eslint-disable import/no-commonjs */
+const path = require('path')
 
 const config = {
-  projectName: 'my',
+  projectName: 'wechat-app-hrbust',
   date: '2020-8-4',
   designWidth: 750,
+  alias: {
+    '@': path.resolve(__dirname, '..', 'src'),
+  },
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,

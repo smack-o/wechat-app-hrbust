@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 
 import { store } from './redux/store'
+import { init } from './redux/actions/user'
+
 import './app.less'
 
 class App extends Component {
-  componentDidMount () {}
+  componentDidMount () {
+    store.dispatch(init())
+  }
 
   componentDidShow () {}
 

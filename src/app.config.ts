@@ -1,6 +1,37 @@
 export const router = {
   pages: {
     index: 'index/index',
+    // 'pages/index',
+    //   // 'pages/page4',
+    //   // 'pages/test',
+    //   'pages/login',
+    //   'pages/course',
+    //   'pages/courseDetail',
+    //   'pages/choiceTrem',
+    //   'pages/news/news',
+    //   'pages/news/newsDetail',
+    //   'pages/grade',
+    //   'pages/exam',
+    //   'pages/webview',
+    //   'pages/discover',
+    //   'pages/about',
+    //   'pages/campus',
+    //   'pages/account',
+    //   // 'pages/CET',
+    //   // 'pages/cetGrade',
+    //   'pages/christmas/christmasIndex',
+    //   'pages/christmas/imageeditor',
+    //   'pages/christmas/combine',
+    //   'pages/guoqi/index',
+    //   'pages/guoqi/combine',
+    //   'pages/guoqi/imageeditor',
+    //   'pages/yingxin',
+    //   // 'pages/wifi',
+    //   'pages/room/index',
+    //   'pages/room/rooms',
+    //   'pages/gradeShare/grade'
+    //   // 'pages/gradeShare/grade'
+    //   // 'pages/combine/combine'
   },
   pages2: {
   }
@@ -8,13 +39,13 @@ export const router = {
 
 export const pages = Object.keys(router.pages).map(path => `pages/${router.pages[path]}`)
 
-type Routers = {
+export type Routers = {
   [key in (keyof typeof router['pages'])]: string
 } & {
   [key in (keyof typeof router['pages2'])]: string
 }
 
-export const allroutes: Routers = Object.keys(router).reduce((r, packageName) => {
+export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
   Object.keys(router[packageName]).forEach(routerName => {
     r[routerName] = `/${packageName}/${router[packageName][routerName]}`
   })
@@ -61,8 +92,8 @@ export default {
   // },
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: '',
+    navigationBarBackgroundColor: '#fafafa',
+    navigationBarTitleText: '理工喵',
     navigationBarTextStyle: 'black'
   },
 }

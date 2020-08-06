@@ -1,0 +1,104 @@
+@import '~@/styles/lib.less';
+
+.campus-container {
+  .modules {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-top: 30rpx;
+    box-shadow: 0px 5px 30px 0px rgba(0, 0, 80, 0.07);
+    padding: 30rpx 71rpx 20rpx;
+    .module {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40rpx;
+      .modules_image {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+      }
+      .modules_text {
+        font-size: 26rpx;
+        color: #333333;
+        margin-top: 30rpx;
+      }
+    }
+    .modules_dark {
+      filter: opacity(15%) saturate(0%);
+    }
+    .modules_light {
+      filter: opacity(25%) saturate(0%);
+    }
+    .modules_text {
+      font-size: 26rpx;
+      color: #333333;
+    }
+  }
+  .info {
+    padding: 118rpx 0 76rpx;
+    text-align: center;
+    font-size: 26rpx;
+    line-height: 41rpx;
+    color: #999999;
+  }
+  .discover-image {
+    width: 532rpx;
+    margin: 0 auto;
+    display: block;
+  }
+  .info-title {
+    font-size: 36rpx;
+    width: 100%;
+    position: relative;
+    border-bottom: 1rpx solid #eeeeee;
+    .title {
+      padding: 40rpx 60rpx 30rpx;
+      position: relative;
+      display: inline-block;
+    }
+    .line {
+      position: absolute;
+      bottom: 0;
+      width: 75rpx;
+      height: 5rpx;
+      background: #e36363;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .info-content {
+    .item {
+      padding: 0 60rpx;
+      height: 180rpx;
+      border-bottom: 1rpx solid #eeeeee;
+      display: flex;
+      align-items: center;
+      .text {
+        margin-left: 40rpx;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 465rpx;
+        .title {
+          font-size: 26rpx;
+          margin-bottom: 20rpx;
+        }
+        .date {
+          font-size: 22rpx;
+          color: #cccccc;
+        }
+      }
+      .image {
+        width: 100rpx;
+        height: 100rpx;
+      }
+      .arrow-right {
+        width: 12rpx;
+        height: 20rpx;
+      }
+    }
+  }
+}

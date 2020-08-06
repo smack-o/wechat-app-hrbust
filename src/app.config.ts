@@ -1,6 +1,7 @@
 export const router = {
   pages: {
     index: 'index/index',
+    campus: 'campus/index'
     // 'pages/index',
     //   // 'pages/page4',
     //   // 'pages/test',

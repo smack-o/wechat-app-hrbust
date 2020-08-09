@@ -37,6 +37,7 @@ export const router = {
     //   // 'pages/combine/combine'
   },
   pages2: {
+    webview: 'webview/index'
   },
 }
 
@@ -57,10 +58,10 @@ export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
 
 export default {
   pages,
-  // subPackages: [{
-  //   root: 'pages2',
-  //   pages: Object.values(router.pages2),
-  // }],
+  subPackages: [{
+    root: 'pages2',
+    pages: Object.values(router.pages2),
+  }],
   tabBar: {
     borderStyle: 'black',
     color: '#ccc',

@@ -4,7 +4,7 @@ import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import cn from 'classnames'
-import { goPage } from '@/utils/router'
+import { goPage, routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
 
 // images
@@ -34,8 +34,8 @@ type PageState = {
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
-const HOLIDAY_ARRANGE = `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/Tzxzyuzmxbhrge5Fok70GA')}&title=放假安排`
-const SCHOOL_BUSS_ARRANGE = `./webview?url=${encodeURIComponent('https://mp.weixin.qq.com/s/4ccr5NujjKifXgZ1oTO4Kw')}&title=校车时间`
+const HOLIDAY_ARRANGE = `${routes.webview}?url=${encodeURIComponent('https://mp.weixin.qq.com/s/Tzxzyuzmxbhrge5Fok70GA')}&title=放假安排`
+const SCHOOL_BUSS_ARRANGE = `${routes.webview}?url=${encodeURIComponent('https://mp.weixin.qq.com/s/4ccr5NujjKifXgZ1oTO4Kw')}&title=校车时间`
 
 class Campus extends Component<IProps, PageState> {
   state = {
@@ -75,7 +75,7 @@ class Campus extends Component<IProps, PageState> {
   }, {
     image: phoneBookIcon,
     text: '理工电邮',
-    url: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rdhttp://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rd')}&title=理工电邮`,
+    url: `${routes.webview}?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rdhttp://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rd')}&title=理工电邮`,
     // needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
   }, {

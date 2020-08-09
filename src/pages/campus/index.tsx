@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import cn from 'classnames'
 import { goPage } from '@/utils/router'
@@ -63,7 +64,7 @@ class Campus extends Component<IProps, PageState> {
     image: afficheIcon,
     text: '教务公告',
     url: './news/news',
-    needLogin: true,
+    // needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
   }, {
     image: examIcon,
@@ -75,7 +76,7 @@ class Campus extends Component<IProps, PageState> {
     image: phoneBookIcon,
     text: '理工电邮',
     url: `./webview?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rdhttp://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rd')}&title=理工电邮`,
-    needLogin: true,
+    // needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
   }, {
     image: queryRoomIcon,
@@ -108,6 +109,20 @@ class Campus extends Component<IProps, PageState> {
   // }
   ]
 
+  goPage = (index: number) => {
+    const { user: { isLogin } } = this.props
+    const { needLogin, url } = this.modules[index]
+    if (!isLogin && needLogin) {
+      Taro.showToast({
+        title: '该功能需要登录~请先登录！',
+        icon: 'none'
+      })
+      return
+    }
+
+    goPage(url)
+  }
+
   render () {
     const { user: { isLogin } } = this.props
 
@@ -115,10 +130,10 @@ class Campus extends Component<IProps, PageState> {
       <View className="campus-container">
         <View className="modules">
           {
-            this.modules.filter(item => isLogin || !item.needLogin).map((item, index) => {
+            this.modules.map((item, index) => {
               return <View key={index} className={cn('module', {
                 'disabled': !(isLogin || !item.needLogin)
-              })} onClick={() => goPage(item.url)}
+              })} onClick={() => this.goPage(index)}
               >
                 <Image className="modules_image" style={item.shadowColor} src={item.image} mode="widthFix" />
                 <Text className="modules_text">{item.text}</Text>

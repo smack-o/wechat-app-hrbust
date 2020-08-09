@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { GET_USERINFO } from '../actions/user'
+import { GET_USERINFO, LOGOUT } from '../actions/user'
 
 
 export interface UserState {
@@ -30,6 +30,15 @@ export default function user(state = INITIAL_STATE, action: AnyAction): UserStat
       return {
         ...state,
         ...action.data
+      }
+    case LOGOUT:
+      return {
+        ...state,
+        isLogin: false,
+        studentInfo: {
+          name: '',
+          username: '',
+        }
       }
     default:
       return state

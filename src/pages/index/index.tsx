@@ -174,6 +174,20 @@ class Index extends Component<IProps, PageState> {
     })
   }
 
+  goPage = (index: number) => {
+    const { user: { isLogin } } = this.props
+    const { needLogin, url } = this.modules[index]
+    if (!isLogin && needLogin) {
+      Taro.showToast({
+        title: '该功能需要登录~请先登录！',
+        icon: 'none'
+      })
+      return
+    }
+
+    goPage(url)
+  }
+
   render () {
     const { cIndex } = this.state
     const { banners, user: { isLogin } } = this.props
@@ -202,10 +216,10 @@ class Index extends Component<IProps, PageState> {
 
         <View className="modules">
           {
-            this.modules.filter(item => isLogin || !item.needLogin).map((item, index) => {
+            this.modules.map((item, index) => {
               return <View key={index} className={cn('module', {
                 'disabled': !(isLogin || !item.needLogin)
-              })} onClick={() => goPage(item.url)}
+              })} onClick={() => this.goPage(index)}
               >
                 <Image className="modules_image" style={item.shadowColor} src={item.image} mode="widthFix" />
                 <Text className="modules_text">{item.text}</Text>
@@ -215,10 +229,12 @@ class Index extends Component<IProps, PageState> {
         </View>
         <Image className="discover-image" src={bgImg} mode="widthFix" />
         {
-          !isLogin && <View className="login" onClick={() => goPage('./login')}>
-            <Text className="login-text" style="color: #999999">校园功能仅对登录用户开放</Text>
-            <View className="login-button">
-              <Text className="login-text">立即登录</Text>
+          !isLogin && <View className="login-wrapper">
+            <View className="login" onClick={() => goPage('./login')}>
+              <Text className="login-text" style="color: #999999">校园功能仅对登录用户开放</Text>
+              <View className="login-button">
+                <Text className="login-text">立即登录</Text>
+              </View>
             </View>
           </View>
         }

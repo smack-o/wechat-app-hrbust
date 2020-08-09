@@ -51,8 +51,6 @@
       align-items: center;
       justify-content: center;
     }
-    .module_disable {
-    }
     .modules_image {
       width: 80rpx;
       height: 80rpx;
@@ -60,10 +58,9 @@
       margin-bottom: 30rpx;
     }
 
-    &.disabled {
-      .module {
-        filter: opacity(20%) saturate(0%);
-      }
+    .module.disabled {
+      filter: opacity(20%);
+      // filter: opacity(20%);
     }
     // .modules_dark {
     //   filter: opacity(15%) saturate(0%);
@@ -79,6 +76,7 @@
   .login-wrapper {
     display: flex;
     justify-content: center;
+    margin-bottom: 40rpx;
     .login {
       text-align: center;
       // align-items: center;

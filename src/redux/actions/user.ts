@@ -4,6 +4,7 @@ import { userInfo, wxLogin } from '@/services/user'
 import { Dispatch } from 'redux'
 
 export const GET_USERINFO = 'user/GET_USERINFO'
+export const LOGOUT = 'user/LOGOUT'
 
 // 检查session_key是否失效
 const checkSession = () => {
@@ -113,7 +114,7 @@ export const init = () => async (dispatch: Dispatch) => {
     dispatch({
       type: GET_USERINFO,
       data: {
-        isLogin,
+        isLogin: !!(isLogin && studentInfo && studentInfo.username),
         studentInfo,
       }
     })
@@ -124,3 +125,7 @@ export const init = () => async (dispatch: Dispatch) => {
     return Promise.resolve()
   }
 }
+
+export const logout = () => ({
+  type: LOGOUT
+})

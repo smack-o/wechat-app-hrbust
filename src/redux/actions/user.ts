@@ -134,10 +134,11 @@ export const logout = () => ({
 
 export const getExams = (...data: Parameters<typeof exams>): any => async (dispatch: Dispatch) => {
   const res = await exams(...data)
-  const list = res?.data?.data || []
+  const list = res?.data || []
 
   dispatch({
     type: GET_EXAMS,
-    data: list
+    data: list,
+    page: data[0] || 1,
   })
 }

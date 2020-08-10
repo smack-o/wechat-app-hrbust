@@ -7,6 +7,7 @@ import { UserState } from '@/redux/reducers/user'
 import cn from 'classnames'
 import { Dispatch } from 'redux'
 import { getExams } from '@/redux/actions/user'
+import './index.less'
 
 type PropsFromState = {
   user: UserState
@@ -19,15 +20,17 @@ type PropsFromDispatch = {
 type PageOwnProps = {}
 
 type PageState = {
-  list: any[]
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Exam extends Component<IProps, PageState> {
   state: Readonly<PageState> = {
-    list: []
   }
+
+  loading = false
+
+  pageNo = 1
 
   componentDidShow () {
   }
@@ -35,18 +38,28 @@ class Exam extends Component<IProps, PageState> {
   onLoad(e) {
     this.getList()
   }
-  getList = () => {
-    this.props.getExams()
+  getList = async () => {
+    this.loading = true
+    console.log(this.pageNo)
+    await this.props.getExams(this.pageNo)
+    this.loading = false
+  }
+
+  onReachBottom() {
+    if (!this.loading) {
+      this.pageNo += 1
+      this.getList()
+    }
   }
 
   render () {
-    const { list } = this.state
+    const { user: { exams } } = this.props
     return (
       <View className="exam-page">
         {
-          list.map((item, index) => {
-            return <Fragment key={item._id}>
-              {index > 0 && list[index - 1].ending !== list[index].ending
+          exams.map((item, index) => {
+            return <Fragment key={item.date + item.course}>
+              {index > 0 && exams[index - 1].ending !== exams[index].ending
                 && <Ad className="advertising" unitId="adunit-20521f8411ad8419"></Ad>}
               <View className={cn('news-item', { ending: item.ending })}>
                 <View className="news-wrapper">
@@ -80,7 +93,7 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getExams: () => dispatch(getExams()),
+  getExams: (...args) => dispatch(getExams(...args)),
 })
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Exam)

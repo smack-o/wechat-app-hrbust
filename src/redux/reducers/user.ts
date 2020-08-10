@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { GET_USERINFO, LOGOUT } from '../actions/user'
+import { GET_USERINFO, LOGOUT, GET_EXAMS } from '../actions/user'
 
 
 export interface UserState {
@@ -8,6 +8,15 @@ export interface UserState {
     name: string,
     username: string
   },
+  exams: {
+    course: string
+    date: string
+    dateExtend: string
+    ending: number
+    info: string
+    position: string
+    time: string
+  }[]
   // userInfo: {
   //   nike: string,
   // }
@@ -19,6 +28,7 @@ const INITIAL_STATE: UserState = {
     name: '',
     username: '',
   },
+  exams: []
   // userInfo: {
   //   nike,
   // }
@@ -39,6 +49,11 @@ export default function user(state = INITIAL_STATE, action: AnyAction): UserStat
           name: '',
           username: '',
         }
+      }
+    case GET_EXAMS:
+      return {
+        ...state,
+        exams: action.page === 1 ? action.data : [...state.exams, ...action.data]
       }
     default:
       return state

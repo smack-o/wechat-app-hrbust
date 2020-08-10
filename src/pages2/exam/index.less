@@ -1,0 +1,94 @@
+.exam-page {
+  .news-item {
+    margin: 40rpx 60rpx;
+    padding: 40rpx 32rpx 13rpx;
+    width: 630rpx;
+    // height: 210rpx;
+    background-color: #ffffff;
+    box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+    border-radius: 16rpx;
+    font-size: 26rpx;
+    box-sizing: border-box;
+    &.ending {
+      opacity: 0.8;
+      box-shadow: none;
+      border: solid 1rpx #f6f6f6;
+      // background-color: #cccccc;
+      color: #cccccc !important;
+      .news-message {
+        color: #cccccc !important;
+
+        .time {
+          // font-family: PingFangSC-Medium;
+          font-weight: bolder;
+        }
+        .dateExtend {
+          color: #cccccc;
+        }
+        .position {
+          color: #cccccc !important;
+        }
+        .info {
+          color: #cccccc !important;
+          &.text-red {
+            color: #cccccc !important;
+          }
+        }
+      }
+    }
+    .news-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      .top {
+        color: #6dde9e;
+      }
+    }
+    .text-small {
+      // text-align: right;
+      color: #cccccc;
+    }
+    .flex-box {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 27rpx;
+    }
+    .news-message {
+      font-size: 26rpx;
+      line-height: 22rpx;
+      color: #333333;
+
+      .time {
+        // font-family: PingFangSC-Medium;
+        font-weight: bolder;
+      }
+      .dateExtend {
+        color: #cccccc;
+      }
+      .position {
+        color: #999999;
+      }
+      .info {
+        color: #6dde9e;
+        &.text-red {
+          color: #f47aa9;
+        }
+      }
+    }
+  }
+  .advertising {
+    transform-origin: center bottom;
+    transform: scale(0.84) !important;
+    // margin: 40rpx 0;
+    margin-top: -40rpx;
+    margin-bottom: 40rpx;
+    // padding: 40rpx 32rpx 13rpx;
+    // width: 630rpx;
+    // height: 210rpx;
+    background-color: #ffffff;
+    box-shadow: 0px 5rpx 30rpx 0rpx rgba(0, 0, 80, 0.07);
+    border-radius: 16rpx;
+    font-size: 26rpx;
+    box-sizing: border-box;
+  }
+}

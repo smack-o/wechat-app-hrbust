@@ -1,9 +1,10 @@
 export const router = {
+  // 分包，pages 主包目前只放 tab 签的四个主页面，其它功能页面都放入 subPackages 中
   pages: {
-    index: 'index/index',
-    campus: 'campus/index',
-    discover: 'discover/index',
-    account: 'account/index'
+    index: 'index/index', // 首页
+    campus: 'campus/index', // 校园
+    discover: 'discover/index', // 发现
+    account: 'account/index', // 个人中心
     // 'pages/index',
     //   // 'pages/page4',
     //   // 'pages/test',
@@ -37,7 +38,9 @@ export const router = {
     //   // 'pages/combine/combine'
   },
   pages2: {
-    webview: 'webview/index'
+    login: 'login/index', // 登录页面
+    webview: 'webview/index', // 公共 webview 承载页面
+    exam: 'exam/index', // 考试查询
   },
 }
 

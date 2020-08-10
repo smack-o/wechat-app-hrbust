@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import 'taro-ui/dist/style/index.scss'
 
 import { store } from './redux/store'
 import { init } from './redux/actions/user'

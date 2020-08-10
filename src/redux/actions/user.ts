@@ -1,10 +1,11 @@
 
 import Taro from '@tarojs/taro'
-import { userInfo, wxLogin } from '@/services/user'
+import { userInfo, wxLogin, exams } from '@/services/user'
 import { Dispatch } from 'redux'
 
 export const GET_USERINFO = 'user/GET_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
+export const GET_EXAMS = 'user/GET_EXAMS'
 
 // 检查session_key是否失效
 const checkSession = () => {
@@ -93,7 +94,7 @@ const login = () => {
 
 
 
-export const init = () => async (dispatch: Dispatch) => {
+export const init = (): any => async (dispatch: Dispatch) => {
   try {
     // 检查微信登录 session
     let res = await userInfo()
@@ -129,3 +130,14 @@ export const init = () => async (dispatch: Dispatch) => {
 export const logout = () => ({
   type: LOGOUT
 })
+
+
+export const getExams = (...data: Parameters<typeof exams>): any => async (dispatch: Dispatch) => {
+  const res = await exams(...data)
+  const list = res?.data?.data || []
+
+  dispatch({
+    type: GET_EXAMS,
+    data: list
+  })
+}

@@ -141,4 +141,6 @@ export const getExams = (...data: Parameters<typeof exams>): any => async (dispa
     data: list,
     page: data[0] || 1,
   })
+
+  return res
 }

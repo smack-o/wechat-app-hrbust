@@ -1,0 +1,33 @@
+.global-loading {
+  z-index: 1000;
+  width: 100%;
+  // height: 100%;
+  // background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0);
+  // background-color: #f5f;
+  // height: 300rpx;
+  .image {
+    width: 200rpx;
+    height: 200rpx;
+    border-radius: 100rpx;
+  }
+  .text {
+    text-align: center;
+    font-size: 26rpx;
+    margin-top: 30rpx;
+  }
+  &.loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  &.loadingPadding {
+    // background-color: #f5f;
+    height: 300rpx;
+  }
+}

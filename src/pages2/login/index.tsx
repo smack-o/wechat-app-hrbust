@@ -43,9 +43,11 @@ class Login extends Component<IProps, PageState> {
   }
 
   componentDidShow () {
+    const loginInfo = JSON.parse(Taro.getStorageSync('user:loginInfo') || '{}')
+    this.setState(loginInfo)
   }
 
-  onLoad(e) {
+  onLoad() {
     this.getCaptcha()
   }
 
@@ -75,6 +77,11 @@ class Login extends Component<IProps, PageState> {
       Taro.setStorageSync('userInfo', e.detail.userInfo)
     }
     const { username, password, captcha } = this.state
+
+    Taro.setStorageSync('loginInfo', JSON.stringify({
+      username,
+      password,
+    }))
 
     const [err] = await cError(login({ username, password, captcha }))
     if (err) {

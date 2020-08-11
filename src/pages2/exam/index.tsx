@@ -34,16 +34,13 @@ type PageState = {
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Exam extends Component<IProps, PageState> {
-  pageNo = 1
-
   state: Readonly<PageState> = {
     loading: false,
     captchaImage: '',
     isShowCaptchaModal: false,
   }
 
-  componentDidShow () {
-  }
+  pageNo = 1
 
   async onLoad(e) {
     await this.getList()
@@ -59,7 +56,7 @@ class Exam extends Component<IProps, PageState> {
   getList = async (captcha = '') => {
     // this.loading = true
     this.setLoading(true)
-    const [err, res] = await cError(this.props.getExams(this.pageNo, captcha))
+    const [, res] = await cError(this.props.getExams(this.pageNo, captcha))
     this.setLoading(false)
 
     // 登录失效，需要输入验证码

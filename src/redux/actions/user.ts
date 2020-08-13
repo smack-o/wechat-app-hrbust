@@ -33,37 +33,13 @@ const login = () => {
             console.log(res)
             const { data } = res
             if (data.status === 200) {
-              // this.globalData.sessionId = data.sessionId
-              // const cookie = header['Set-Cookie']
-              // resolve(cookie)
-              // Taro.setStorageSync('app_cookie', cookie)
+              resolve()
             } else {
-              // reject(new Error('理工喵登录失败！', data.message))
+              reject(new Error('理工喵登录失败！'))
             }
           })
-          // 获取我们自己服务器的登录 session
-          // Taro.request({
-          //   url: '/api/user/wx-login',
-          //   data: {
-          //     code: res.code
-          //   },
-          //   success: (res) => {
-          //     const { data, header } = res
-          //     if (data.status === 200) {
-          //       // this.globalData.sessionId = data.sessionId
-          //       const cookie = header['Set-Cookie']
-          //       resolve(cookie)
-          //       Taro.setStorageSync('app_cookie', cookie)
-          //     } else {
-          //       reject(new Error('理工喵登录失败！', data.message))
-          //     }
-          //   },
-          //   fail: function () {
-          //     reject(new Error('理工喵登录失败！'))
-          //   }
-          // })
         } else {
-          // reject(new Error('登录失败！' + res.errMsg))
+          reject(new Error('登录失败！' + loginRes.errMsg))
         }
       },
       fail: function () {
@@ -122,8 +98,6 @@ export const init = (): any => async (dispatch: Dispatch) => {
     })
     // this.updateUserInfo(userInfo)
   } catch (e) {
-    // console.log(e)
-    // store.dispatch(setLoading(false))
     return Promise.resolve()
   }
 }

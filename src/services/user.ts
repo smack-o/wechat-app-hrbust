@@ -35,6 +35,15 @@ export const exams = (page = 1, captcha = '') => request({
   }
 })
 
+export const grades = (year: number, term: number, captcha?: string) => request({
+  url: '/api/hrbust/grade',
+  data: {
+    year,
+    term,
+    captcha,
+  }
+})
+
 export const getCaptcha = () => request({
   url: '/api/hrbust/captcha',
 })

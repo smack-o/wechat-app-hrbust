@@ -41,6 +41,7 @@ export const router = {
     login: 'login/index', // 登录页面
     webview: 'webview/index', // 公共 webview 承载页面
     exam: 'exam/index', // 考试查询
+    grade: 'grade/index', // 成绩查询
   },
 }
 

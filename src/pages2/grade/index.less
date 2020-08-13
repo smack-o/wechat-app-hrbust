@@ -1,0 +1,256 @@
+@import '~@/styles/lib.less';
+
+.grade-page {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: calc(232rpx + 70rpx);
+  box-sizing: border-box;
+
+  .advertising {
+    position: absolute;
+    bottom: 35px;
+    transform-origin: center bottom;
+    transform: scale(0.8) !important;
+  }
+  .selecter {
+    padding-top: 40rpx;
+    padding-bottom: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .select-button {
+      width: 456rpx;
+      height: 72rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      box-shadow: 0 5rpx 30rpx 0 rgba(0, 0, 80, 0.07);
+      border-radius: 16rpx;
+      border-width: 3;
+    }
+    .picker-year {
+      padding: 10px 20px;
+
+      .flex-box {
+        width: 100%;
+        display: flex;
+      }
+    }
+  }
+
+  .extra-button {
+    box-shadow: 0 5rpx 30rpx 0 rgba(26, 173, 25, 0.6);
+    border-radius: 16rpx;
+    border-width: 3;
+    border: none;
+    width: 200rpx;
+    height: 72rpx;
+    font-size: 24rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1aad19;
+    color: #fff;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .grade-list {
+    display: flex;
+    flex-direction: column;
+    .grade-title-list {
+      position: absolute;
+      z-index: 10;
+    }
+    .title-row {
+      width: 350rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
+    }
+    .list-row {
+      width: 1350rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
+      padding-right: 60rpx;
+    }
+    .list-row-even {
+      background-color: #f7f7f7;
+    }
+    .list-row-odd {
+      background-color: #fff;
+    }
+    .list-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .list-text {
+      font-size: 26rpx;
+    }
+    .gradeName {
+      width: 260rpx;
+      min-width: 260rpx;
+      margin-right: 30rpx;
+      margin-left: 60rpx;
+    }
+    .mark {
+      width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .passSign {
+      width: 110rpx;
+      min-width: 110rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .credit {
+      width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .gpa {
+      width: 60rpx;
+      min-width: 60rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseAttribute {
+      width: 110rpx;
+      min-width: 110rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseRemark {
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+    .courseCharacter {
+      width: 150rpx;
+      min-width: 150rpx;
+      max-height: 40rpx;
+      margin-left: 30rpx;
+      margin-right: 30rpx;
+    }
+  }
+  .empty {
+    padding-top: 200rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .total-wrapper {
+    // height: 170rpx;
+    display: flex;
+    justify-content: space-between;
+    // background: #fa9;
+    padding-left: 60rpx;
+    padding-right: 60rpx;
+    padding-bottom: 30rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    .total-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      width: 140rpx;
+      .num-text {
+        font-size: 28rpx;
+        color: #333333;
+        margin-bottom: 10rpx;
+      }
+      .total-text {
+        font-size: 22rpx;
+        color: #cccccc;
+      }
+    }
+  }
+  .select-text {
+    font-size: 26rpx;
+    color: #cccccc;
+  }
+  .pinggu-wrapper {
+    padding: 40rpx;
+    font-size: 26rpx;
+    .pinggu {
+      box-sizing: border-box;
+      .color-blue {
+        color: blue;
+        font-size: 40rpx;
+      }
+      .pinggu_image {
+        width: 100%;
+      }
+    }
+  }
+  .tip-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 11;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: rgba(0, 0, 0, 0.75);
+    .tip-logo {
+      width: 302rpx;
+      position: absolute;
+      left: 116rpx;
+      top: 415rpx;
+    }
+    .tip-arrow {
+      width: 227rpx;
+      position: absolute;
+      right: 31rpx;
+      top: 466rpx;
+      animation: spin 1s ease-in-out infinite;
+    }
+    .tip-button {
+      width: 350rpx;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      bottom: 288rpx;
+    }
+    @keyframes spin {
+      0% {
+        opacity: 0.5;
+        width: 227rpx;
+        right: 31rpx;
+      }
+      50% {
+        opacity: 1;
+        width: 227rpx;
+        right: 50rpx;
+      }
+      100% {
+        opacity: 0.5;
+        width: 227rpx;
+        right: 31rpx;
+      }
+    }
+  }
+}

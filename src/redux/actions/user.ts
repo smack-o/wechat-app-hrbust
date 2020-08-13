@@ -1,11 +1,12 @@
 
 import Taro from '@tarojs/taro'
-import { userInfo, wxLogin, exams } from '@/services/user'
+import { userInfo, wxLogin, exams, grades } from '@/services/user'
 import { Dispatch } from 'redux'
 
 export const GET_USERINFO = 'user/GET_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
 export const GET_EXAMS = 'user/GET_EXAMS'
+export const GET_GRADES = 'user/GET_GRADES'
 
 // 检查session_key是否失效
 const checkSession = () => {
@@ -140,6 +141,19 @@ export const getExams = (...data: Parameters<typeof exams>): any => async (dispa
     type: GET_EXAMS,
     data: list,
     page: data[0] || 1,
+  })
+
+  return res
+}
+
+export const getGrades = (...data: Parameters<typeof grades>): any => async (dispatch: Dispatch) => {
+  const res = await grades(...data)
+  console.log(res)
+  // const list = res?.data || []
+
+  dispatch({
+    type: GET_GRADES,
+    data: res.data,
   })
 
   return res

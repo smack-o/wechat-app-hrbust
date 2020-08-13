@@ -45,6 +45,9 @@ export const router = {
     gradeShare: 'grade/share/index', // 成绩查询
     yingxin: 'yingxin/index', // 新生查询
   },
+  pages3: {
+    aboutme: 'aboutme/index', // 关于我们
+  }
 }
 
 export const pages = Object.keys(router.pages).map(path => `pages/${router.pages[path]}`)
@@ -53,6 +56,8 @@ export type Routers = {
   [key in (keyof typeof router['pages'])]: string
 } & {
   [key in (keyof typeof router['pages2'])]: string
+} & {
+  [key in (keyof typeof router['pages3'])]: string
 }
 
 export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
@@ -67,6 +72,9 @@ export default {
   subPackages: [{
     root: 'pages2',
     pages: Object.values(router.pages2),
+  }, {
+    root: 'pages3',
+    pages: Object.values(router.pages3),
   }],
   tabBar: {
     borderStyle: 'black',

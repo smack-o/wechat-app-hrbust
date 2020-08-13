@@ -114,8 +114,8 @@ class AboutMe extends Component<IProps, PageState> {
 
     const audioCtx = this.audioCtx = Taro.createInnerAudioContext()
 
-    // audioCtx.autoplay = false
-    // audioCtx.src = 'http://my-home-static.smackgg.cn/weixin.mp3'
+    audioCtx.autoplay = false
+    audioCtx.src = 'http://my-home-static.smackgg.cn/weixin.mp3'
     // audioCtx.onPlay(() => {
     //   console.log('开始播放')
     // })

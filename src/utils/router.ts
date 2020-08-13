@@ -1,8 +1,10 @@
 import Taro from '@tarojs/taro'
 
-import { routes as rs } from '../app.config'
+// import { routes as rs } from '../app.config'
 
-export { routes } from '../app.config'
+// export { routes } from '../app.config'
+
+export const routes = {}
 
 export const goWebviewPage = (url: string, title = '理工喵', type = 2 as 1 | 2) => {
   if (type === 1) {
@@ -11,7 +13,7 @@ export const goWebviewPage = (url: string, title = '理工喵', type = 2 as 1 | 
     })
   } else {
     Taro.navigateTo({
-      url: rs.webview + `?url=${encodeURIComponent(url)}&title=${title}`
+      url: routes.webview + `?url=${encodeURIComponent(url)}&title=${title}`
     })
   }
 }

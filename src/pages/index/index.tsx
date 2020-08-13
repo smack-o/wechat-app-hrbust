@@ -40,7 +40,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 let interstitialAd: Taro.InterstitialAd
 
-const SWIPER_MARGIN = '45rpx'
+const SWIPER_MARGIN = '45px'
 class Index extends Component<IProps, PageState> {
   state = {
     cIndex: 0,
@@ -66,7 +66,7 @@ class Index extends Component<IProps, PageState> {
     // circular: true,
     // interval: 5000,
     // duration: 400,
-    // mSwiperItemMargin: '45rpx',
+    // mSwiperItemMargin: '45px',
     // currentSlideIdx: 0,
     // mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'
   }

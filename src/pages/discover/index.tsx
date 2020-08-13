@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Image } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { goPage } from '@/utils/router'
+import { goPage, routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
 
 // images
@@ -41,7 +41,7 @@ class Discover extends Component<IProps, PageState> {
       <View className="discover-container">
         <View className="fn-wrapper">
           <View className="content">
-            <Image className="image" onClick={() => goPage('/pages/yingxin')} src={newFnIcon} mode="widthFix" />
+            <Image className="image" onClick={() => goPage(routes.yingxin)} src={newFnIcon} mode="widthFix" />
             <View className="text">新生速查</View>
           </View>
           <View className="content" onClick={() => goPage('/pages/about')}>

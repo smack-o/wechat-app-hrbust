@@ -16,7 +16,7 @@ const hosts = {
 const API_BASE_URL = hosts[env]
 
 export default (option: RequestParams): Promise<Request.requestResult> => new Promise((resolve, reject) => {
-  const { url, interceptTokenError = true, data = {} } = option
+  const { url, data = {} } = option
   let reqUrl = API_BASE_URL + url
 
   // 删减没有数据的参数
@@ -41,6 +41,7 @@ export default (option: RequestParams): Promise<Request.requestResult> => new Pr
     success: res => {
       console.log(res)
       if (res && res.statusCode === 200 && res.data.status === 200) {
+        // @ts-ignore
         Taro.setStorageSync('app_cookie', res.cookies[0])
         resolve(res.data)
         return

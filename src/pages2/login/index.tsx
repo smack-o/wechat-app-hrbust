@@ -73,6 +73,10 @@ class Login extends Component<IProps, PageState> {
   }
 
   onSubmit = async (e: TaroBaseEventOrig) => {
+    // 授权失败不允许登录
+    if (/fail auth deny/.test(e.detail.errMsg)) {
+      return
+    }
     if (!e.detail.userInfo) {
       Taro.setStorageSync('userInfo', e.detail.userInfo)
     }

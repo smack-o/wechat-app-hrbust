@@ -80,9 +80,80 @@ export const valueEqual = (a: any, b: any): boolean => {
   return false
 }
 
+// 获取当前页面url
 export const getCurrentPageUrl = (): string => {
   var pages = Taro.getCurrentPages()    //获取加载的页面
   var currentPage = pages[pages.length - 1]    //获取当前页面的对象
   var url = currentPage?.route    //当前页面url
   return url
+}
+
+// 获取用户权限
+export const getAuthorize = async (scope = 'scope.writePhotosAlbum'): Promise<Error | undefined> => new Promise((resolve) => {
+  Taro.getSetting({
+    success(res) {
+      if (!res.authSetting[scope]) {
+        Taro.authorize({
+          scope,
+          success: () => resolve(),
+          fail: () => {
+            Taro.showModal({
+              title: '打开权限设置',
+              content: '保存图片权限未开启，是否授权保存图片权限？',
+              confirmText: '确认',
+              success (result) {
+                if (result.confirm) {
+                  Taro.openSetting()
+                  resolve(new Error('用户打开权限'))
+                }
+                if (result.cancel) {
+                  resolve(new Error('用户取消打开权限'))
+                }
+              }
+            })
+          }
+        })
+        return
+      }
+      resolve()
+    }
+  })
+})
+// 保存图片
+export const saveImage = async (url: string) => {
+  const err = await getAuthorize('scope.writePhotosAlbum')
+  if (err) {
+    return
+  }
+
+  Taro.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.writePhotosAlbum']) {
+        Taro.authorize({
+          scope: 'scope.writePhotosAlbum',
+          success () {
+            // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+            // Taro.startRecord()
+          }
+        })
+      }
+    }
+  })
+  Taro.saveImageToPhotosAlbum({
+    filePath: url,
+    success: () => {
+      Taro.showModal({
+        title: '保存成功',
+        content: '图片成功保存到相册',
+        showCancel: false,
+        confirmText: '确认',
+        success (result) {
+          if (result.confirm) {
+          }
+        }
+      })
+    },
+    fail() {
+    }
+  })
 }

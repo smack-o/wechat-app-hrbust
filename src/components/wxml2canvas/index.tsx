@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Canvas, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import { saveImage } from '@/utils'
 // import cn from 'classnames'
 // import loadingImg from './res/loading.gif'
 import xmlParse from './utils/xml-parser'
@@ -14,6 +15,7 @@ type Props = {
   height?: string
   wxml: string
   style: any
+  onImageLoaded: (url: string) => void
 }
 
 type IProps = Props
@@ -31,25 +33,18 @@ export default class Wxml2canvas extends Component<IProps, State> {
   }
 
   state: Readonly<State> = {
-    imageSrc: false,
-    // width: '375px',
-    // height: '1000px',
-  }
-
-  initCtx: any
-  dpr: number
-  ctx
-  canvas
-  boundary: {
-    top,
-    left,
-    width,
-    height
+    imageSrc: '',
   }
 
   componentDidMount() {
     this.initCanvas()
   }
+
+  initCtx: any
+  dpr: number
+  ctx: any
+  canvas: any
+  boundary: any
 
   initCanvas = async () => {
     setTimeout(() => {
@@ -103,6 +98,7 @@ export default class Wxml2canvas extends Component<IProps, State> {
       this.setState({
         imageSrc: tempFilePath,
       })
+      this.props.onImageLoaded(tempFilePath)
     })
     return Promise.resolve(container)
   }
@@ -129,40 +125,11 @@ export default class Wxml2canvas extends Component<IProps, State> {
     })
   }
 
-  saveImage = async () => {
-    // console.log('render event', wxml, style)
-    // await this.saveImage()
-  }
-
-  // async saveImage() {
-  //   const res = await this.canvasToTempFilePath()
-  //   wepy.saveImageToPhotosAlbum({
-  //     filePath: res.tempFilePath,
-  //     success: (res) => {
-  //       wepy.showModal({
-  //         title: '保存成功',
-  //         content: '图片成功保存到相册',
-  //         showCancel: false,
-  //         confirmText: '确认',
-  //         success (result) {
-  //           if (result.confirm) {
-  //             this.$apply()
-  //           }
-  //         }
-  //       })
-  //       console.log('success:' + res)
-  //     },
-  //     fail(e) {
-  //       console.log('err:' + e)
-  //     }
-  //   })
-  // }
-
   render() {
     const { width, height } = this.props
     const { imageSrc } = this.state
     return (
-      <View>
+      <View onLongPress={() => saveImage(imageSrc)} >
         { imageSrc
           ? <Image className="wxml2canvas__img" src={imageSrc} mode="widthFix" />
           : <Canvas className="wxml2canvas" id="wxml2canvas" type="2d" style={`width:${width};height:${height}`}></Canvas>}

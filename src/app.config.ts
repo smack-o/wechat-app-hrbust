@@ -43,6 +43,7 @@ export const router = {
     exam: 'exam/index', // 考试查询
     grade: 'grade/index', // 成绩查询
     gradeShare: 'grade/share/index', // 成绩查询
+    yingxin: 'yingxin/index', // 新生查询
   },
 }
 

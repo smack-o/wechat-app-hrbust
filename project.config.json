@@ -1,13 +1,97 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "wechat-app-hrbust",
-  "description": "",
-  "appid": "wxaed2c04fd10b6e1a",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram"
+	"miniprogramRoot": "dist/",
+	"projectname": "wechat-app-hrbust",
+	"description": "",
+	"appid": "wxaed2c04fd10b6e1a",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"coverView": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"useCompilerModule": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+  "condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "校园页面",
+					"pathName": "pages/campus/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发现页面",
+					"pathName": "pages/discover/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/account/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "查询考试信息",
+					"pathName": "pages2/exam/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages2/login/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "查询成绩",
+					"pathName": "pages2/grade/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }

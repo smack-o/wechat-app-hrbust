@@ -90,6 +90,12 @@
 					"pathName": "pages2/grade/index",
 					"query": "",
 					"scene": null
+        },
+				{
+					"id": -1,
+					"name": "成绩分享",
+					"pathName": "pages2/grade/share/index",
+					"scene": null
 				}
 			]
 		}

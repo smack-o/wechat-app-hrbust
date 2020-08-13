@@ -47,7 +47,7 @@
     "@tarojs/components": "3.0.7",
     "@tarojs/react": "3.0.7",
     "@tarojs/runtime": "3.0.7",
-    "@tarojs/taro": "3.0.7",
+    "@tarojs/taro": "3.0.5",
     "@types/classnames": "^2.2.10",
     "@types/react-redux": "^7.1.9",
     "classnames": "^2.2.6",
@@ -76,6 +76,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "stylelint": "9.3.0",
-    "typescript": "^3.7.0"
+    "typescript": "^3.7.0",
+    "widget-ui": "^1.0.2"
   }
 }

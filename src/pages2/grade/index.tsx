@@ -8,7 +8,7 @@ import { Dispatch } from 'redux'
 import { getGrades } from '@/redux/actions/user'
 import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast, dateFormat } from '@/utils'
-import { routes, goWebviewPage } from '@/utils/router'
+import { routes, goWebviewPage, goPage } from '@/utils/router'
 
 import pingguImg from './res/pinggu.jpg'
 import tipLogoIcon from './res/tip_logo.png'
@@ -219,12 +219,6 @@ class Grade extends Component<IProps, PageState> {
       nextState.showGDP = !(nextState.AVERAGE_GPA === '--' && nextState.AVERAGE_GRADE === '--' && nextState.OBLIGATORY_AVERAGE_GPA === '--')
 
       this.setState(nextState)
-      // if (!wepy.getStorageSync(this.hasFullGrade)) {
-      //   wepy.setStorageSync(this.hasFullGrade, true)
-      //   this.isFirstFull = true
-      // } else {
-      //   this.isFirstFull = false
-      // }
     }
   }
 
@@ -265,11 +259,24 @@ class Grade extends Component<IProps, PageState> {
     this.getList(year, term)
   }
 
+  // 关闭tip提示
   closeTipModal = () => {
     this.setState({
       isFirstFull: false,
     })
   }
+
+  // 成绩分享
+  onGradeShare = () => {
+    const { AVERAGE_GPA, myGrades } = this.state
+    // TODO: change usl
+    Taro.setStorageSync('grade:data', JSON.stringify({
+      grade: myGrades,
+      gpa: AVERAGE_GPA
+    }))
+    goPage(routes.gradeShare)
+  }
+
   render () {
     const { } = this.props
     const {
@@ -309,6 +316,7 @@ class Grade extends Component<IProps, PageState> {
 
         <View className="container">
           <View className="selecter">
+            {/* @ts-ignore */}
             <Picker className="picker-year" onChange={this.changeTerm} range={terms}>
               <View className="select-button">
                 <Text className="select-text">学期{year} {term === 1 ? '春' : '秋'}(点击切换)</Text>
@@ -316,7 +324,7 @@ class Grade extends Component<IProps, PageState> {
             </Picker>
             {
               AVERAGE_GPA && AVERAGE_GPA !== '--' && myGrades && myGrades.length >= 1 &&
-              <Button className="extra-button" bindtap="onGradeShare">生成成绩单</Button>
+              <Button className="extra-button" onClick={this.onGradeShare}>生成成绩单</Button>
             }
           </View>
           {
@@ -349,7 +357,7 @@ class Grade extends Component<IProps, PageState> {
                       return <View
                         key={index}
                         className={`title-row ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
-                        style={index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40rpx' : 'color: #333333'}
+                        style={index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40px' : 'color: #333333'}
                       >
                         <View className="list-item gradeName">
                           <Text className="list-text" >{item.gradeName}</Text>
@@ -364,7 +372,7 @@ class Grade extends Component<IProps, PageState> {
                       return <View
                         key={index}
                         className={`list-row ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
-                        style={`color: ${index === 0 ? '#999999' : '#333333'};background-color: ${index === 0 && '#fff'};padding-top:${index === 0 &&  '40rpx'};width: ${maxRemarkLength > 8 ? '1640rpx' : '1390rpx'};`}
+                        style={`color: ${index === 0 ? '#999999' : '#333333'};background-color: ${index === 0 && '#fff'};padding-top:${index === 0 &&  '40px'};width: ${maxRemarkLength > 8 ? '1640px' : '1390px'};`}
                       >
                         <View
                           className={`list-item gradeName ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
@@ -387,7 +395,7 @@ class Grade extends Component<IProps, PageState> {
                         <View className="list-item courseAttribute">
                           <Text className="list-text" >{item.courseAttribute}</Text>
                         </View>
-                        <View className="list-item courseRemark" style={maxRemarkLength > 8 ? 'width: 360rpx; min-width: 360rpx' : 'width: 110rpx; min-width: 110rpx'}>
+                        <View className="list-item courseRemark" style={maxRemarkLength > 8 ? 'width: 360px; min-width: 360px' : 'width: 110px; min-width: 110px'}>
                           <Text className="list-text" >{item.courseRemark}</Text>
                         </View>
                         <View className="list-item courseCharacter">

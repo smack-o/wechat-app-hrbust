@@ -15,7 +15,6 @@ type Props = {
 type IProps = Props
 
 export default function CaptchaModal(props: IProps) {
-  console.log(props)
   const { onSubmit, isOpened } = props
 
   const [captcha, setCaptcha] = useState<string>('')
@@ -38,27 +37,30 @@ export default function CaptchaModal(props: IProps) {
   return (
     <AtModal isOpened={isOpened} className="captcha-modal">
       <AtModalHeader>请输入验证码</AtModalHeader>
-      <AtModalContent>
-        <View className="dialog-body">
-          <View className="input-wrapper">
-            <AtInput
-              name="value"
-              title="验证码"
-              type="text"
-              value={captcha}
-              onChange={onInputChange}
-              placeholder="请输入验证码"
-              placeholderClass="placeholder"
-              className="captcha-input"
-            >
-              <Image className="captcha-image" onClick={onCaptchaClick} src={captchaImage || props.captchaImage} />
-            </AtInput>
+      {/* input 优先级最高，modal 隐藏了，input 也无法隐藏 */}
+      {
+        isOpened && <AtModalContent>
+          <View className="dialog-body">
+            <View className="input-wrapper">
+              <AtInput
+                name="value"
+                title="验证码"
+                type="text"
+                value={captcha}
+                onChange={onInputChange}
+                placeholder="请输入验证码"
+                placeholderClass="placeholder"
+                className="captcha-input"
+              >
+                <Image className="captcha-image" onClick={onCaptchaClick} src={captchaImage || props.captchaImage} />
+              </AtInput>
+            </View>
+            <View style="width: 160px; height: 50px">
+            </View>
           </View>
-          <View style="width: 160rpx; height: 50rpx">
-          </View>
-        </View>
-        <AtButton className="login-button" disabled={!captcha} type="primary" onClick={onConfirm}>确定</AtButton>
-      </AtModalContent>
+          <AtButton className="login-button" disabled={!captcha} type="primary" onClick={onConfirm}>确定</AtButton>
+        </AtModalContent>
+      }
     </AtModal>
   )
 }

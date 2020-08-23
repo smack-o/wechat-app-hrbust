@@ -180,7 +180,7 @@ class AboutMe extends Component<IProps, PageState> {
           {/* <View className="time">{time}</View> */}
           <View className="list">
             {
-              CONFIG.slice(0, count + 1).map((item, index) => {
+              CONFIG.slice(0, count + 1).map((item) => {
                 return <View key="wechat" id={item.text}>
                   <View className={`wechat animation ${item.position}`}>
                     <View className="avatar">

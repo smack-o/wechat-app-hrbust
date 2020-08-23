@@ -42,7 +42,7 @@ class Exam extends Component<IProps, PageState> {
 
   pageNo = 1
 
-  async onLoad(e) {
+  async onLoad() {
     await this.getList()
     if (this.props.user.exams.length === 0) {
       Taro.showToast({

@@ -10,7 +10,7 @@ export const GET_GRADES = 'user/GET_GRADES'
 
 // 检查session_key是否失效
 const checkSession = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     Taro.checkSession({
       success() {
         resolve(true)

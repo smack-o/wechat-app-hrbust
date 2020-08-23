@@ -99,7 +99,7 @@ class Grade extends Component<IProps, PageState> {
     })(),
   }
 
-  async onLoad(e) {
+  async onLoad() {
     let time = new Date()
     // time.setFullYear(2008,1,9);
     const natureYear = +dateFormat(time, 'yyyy')

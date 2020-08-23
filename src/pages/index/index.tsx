@@ -8,7 +8,7 @@ import { CommonState } from '@/redux/reducers/common'
 import { UserState } from '@/redux/reducers/user'
 import { IRootState } from '@/types'
 import cn from 'classnames'
-import { goPage } from '@/utils/router'
+import { goPage, routes } from '@/utils/router'
 
 // images
 import courseIcon from '@/assets/icon/course.png'
@@ -109,7 +109,7 @@ class Index extends Component<IProps, PageState> {
     }, {
       image: gradeIcon,
       text: '成绩查询',
-      url: './grade',
+      url: routes.grade,
       needLogin: true,
       shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
     },
@@ -137,7 +137,7 @@ class Index extends Component<IProps, PageState> {
     {
       image: examIcon,
       text: '考试安排',
-      url: './exam',
+      url: routes.exam,
       needLogin: true,
       shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
     }

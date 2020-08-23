@@ -57,19 +57,19 @@ class Campus extends Component<IProps, PageState> {
   }, {
     image: gradeIcon,
     text: '成绩查询',
-    url: './grade',
+    url: routes.grade,
     needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
   }, {
     image: afficheIcon,
     text: '教务公告',
-    url: './news/news',
+    url: routes.news,
     // needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
   }, {
     image: examIcon,
     text: '考试安排',
-    url: './exam',
+    url: routes.exam,
     needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
   }, {

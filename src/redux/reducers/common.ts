@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { GET_HOME_BANNER } from '../actions/common'
+import { GET_HOME_BANNER , GET_NEWS} from '../actions/common'
 
 export interface CommonState {
   banners: {
@@ -8,11 +8,13 @@ export interface CommonState {
     link: string
     type: number
     _id: string
-  }[]
+  }[],
+  news: any[]
 }
 
 const INITIAL_STATE: CommonState = {
-  banners: []
+  banners: [],
+  news: [],
 }
 
 export default function user(state = INITIAL_STATE, action: AnyAction): CommonState {
@@ -21,6 +23,11 @@ export default function user(state = INITIAL_STATE, action: AnyAction): CommonSt
       return {
         ...state,
         banners: action.data
+      }
+    case GET_NEWS:
+      return {
+        ...state,
+        news: action.page === 1 ? action.data : [...state.news, ...action.data]
       }
     default:
       return state

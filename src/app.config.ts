@@ -44,6 +44,7 @@ export const router = {
     grade: 'grade/index', // 成绩查询
     gradeShare: 'grade/share/index', // 成绩查询
     yingxin: 'yingxin/index', // 新生查询
+    news: 'news/index', // 教务新闻
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们

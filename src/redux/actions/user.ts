@@ -122,8 +122,6 @@ export const getExams = (...data: Parameters<typeof exams>): any => async (dispa
 
 export const getGrades = (...data: Parameters<typeof grades>): any => async (dispatch: Dispatch) => {
   const res = await grades(...data)
-  console.log(res)
-  // const list = res?.data || []
 
   dispatch({
     type: GET_GRADES,

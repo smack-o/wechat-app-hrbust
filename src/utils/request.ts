@@ -13,7 +13,7 @@ const hosts = {
   dev: 'https://hrbust-dev.smackgg.cn',
   prod: 'https://hrbust-dev.smackgg.cn'
 }
-const API_BASE_URL = hosts[env]
+export const API_BASE_URL = hosts[env]
 
 export default (option: RequestParams): Promise<Request.requestResult> => new Promise((resolve, reject) => {
   const { url, data = {} } = option

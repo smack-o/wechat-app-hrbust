@@ -3,8 +3,9 @@ import { banner, news } from '@/services/common'
 import { Dispatch } from 'redux'
 import { cError } from '@/utils'
 
-export const GET_HOME_BANNER = 'user/GET_HOME_BANNER'
-export const GET_NEWS = 'use/GET_NEWS'
+export const GET_HOME_BANNER = 'common/GET_HOME_BANNER'
+export const GET_NEWS = 'common/GET_NEWS'
+export const UPDATE_CLASSROOMS = 'common/UPDATE_CLASSROOMS'
 
 export const getBanner = (): any => async (dispatch: Dispatch) => {
   const [error, res] = await cError(banner())
@@ -28,3 +29,8 @@ export const getNews = (data: Parameters<typeof news>[0]): any => async (dispatc
   }
   return res
 }
+
+export const updateClassrooms = (list) => ({
+  type: UPDATE_CLASSROOMS,
+  data: list,
+})

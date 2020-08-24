@@ -5,22 +5,11 @@ export const router = {
     campus: 'campus/index', // 校园
     discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
-    // 'pages/index',
     //   // 'pages/page4',
     //   // 'pages/test',
-    //   'pages/login',
     //   'pages/course',
     //   'pages/courseDetail',
     //   'pages/choiceTrem',
-    //   'pages/news/news',
-    //   'pages/news/newsDetail',
-    //   'pages/grade',
-    //   'pages/exam',
-    //   'pages/webview',
-    //   'pages/discover',
-    //   'pages/about',
-    //   'pages/campus',
-    //   'pages/account',
     //   // 'pages/CET',
     //   // 'pages/cetGrade',
     //   'pages/christmas/christmasIndex',
@@ -29,7 +18,6 @@ export const router = {
     //   'pages/guoqi/index',
     //   'pages/guoqi/combine',
     //   'pages/guoqi/imageeditor',
-    //   'pages/yingxin',
     //   // 'pages/wifi',
     //   'pages/room/index',
     //   'pages/room/rooms',
@@ -45,6 +33,8 @@ export const router = {
     gradeShare: 'grade/share/index', // 成绩查询
     yingxin: 'yingxin/index', // 新生查询
     news: 'news/index', // 教务新闻
+    classroom: 'classroom/index', // 空教室查询
+    classroomList: 'classroom-list/index', // 空教室查询结果
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们

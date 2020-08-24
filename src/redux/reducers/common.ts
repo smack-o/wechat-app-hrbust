@@ -19,7 +19,7 @@ const INITIAL_STATE: CommonState = {
   classrooms: []
 }
 
-export default function user(state = INITIAL_STATE, action: AnyAction): CommonState {
+export default function common(state = INITIAL_STATE, action: AnyAction): CommonState {
   switch (action.type) {
     case GET_HOME_BANNER:
       return {

@@ -2,6 +2,7 @@
 import Taro from '@tarojs/taro'
 import { userInfo, wxLogin, exams, grades } from '@/services/user'
 import { Dispatch } from 'redux'
+import { startLoading, stopLoading } from './global'
 
 export const GET_USERINFO = 'user/GET_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
@@ -72,6 +73,7 @@ const login = () => {
 
 
 export const init = (): any => async (dispatch: Dispatch) => {
+  dispatch(startLoading())
   try {
     // 检查微信登录 session
     let res = await userInfo()
@@ -96,8 +98,11 @@ export const init = (): any => async (dispatch: Dispatch) => {
         studentInfo,
       }
     })
+
+    dispatch(stopLoading())
     // this.updateUserInfo(userInfo)
   } catch (e) {
+    dispatch(stopLoading())
     return Promise.resolve()
   }
 }

@@ -7,8 +7,10 @@ import { getBanner } from '@/redux/actions/common'
 import { CommonState } from '@/redux/reducers/common'
 import { UserState } from '@/redux/reducers/user'
 import { IRootState } from '@/types'
+
 import cn from 'classnames'
 import { goPage, routes } from '@/utils/router'
+import { Loading } from '@/components'
 
 // images
 import courseIcon from '@/assets/icon/course.png'
@@ -23,7 +25,8 @@ import SwiperChild from './components/SwiperChild'
 
 type PropsFromState = {
   banners: CommonState['banners']
-  user: UserState
+  user: UserState,
+  loading: IRootState['global']['loading']
 }
 
 type PropsFromDispatch = {
@@ -190,7 +193,11 @@ class Index extends Component<IProps, PageState> {
 
   render () {
     const { cIndex } = this.state
-    const { banners, user: { isLogin } } = this.props
+    const { banners, user: { isLogin }, loading } = this.props
+
+    if (loading) {
+      return <Loading loading={loading}></Loading>
+    }
 
     return (
       <View className="index-container">
@@ -246,6 +253,7 @@ class Index extends Component<IProps, PageState> {
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
   banners: state.common.banners,
+  loading: state.global.loading
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

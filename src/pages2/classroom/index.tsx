@@ -377,7 +377,6 @@ class QueryClassroom extends Component<IProps, PageState> {
         }))
       }
 
-      console.log(res.data.list, 'res.data.list')
       // 更新 redux
       await this.props.updateClassrooms(res.data.list)
 

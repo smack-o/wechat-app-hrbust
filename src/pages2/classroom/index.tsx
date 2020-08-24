@@ -317,25 +317,25 @@ class QueryClassroom extends Component<IProps, PageState> {
 
     // 用户触发广告后，显示激励视频广告
     // console.log(this.videoAd, this.loadAdError, thisDayTimeData, thisDayTimeData.times >= 2)
-    // if (this.videoAd && !this.loadAdError && thisDayTimeData && thisDayTimeData.times >= 2) {
-    //   Taro.showModal({
-    //     title: '是否观看广告',
-    //     content: '每日前两次免费查询，观看完广告今日不限次数查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
-    //     success: (res) => {
-    //       if (res.confirm && this.videoAd) {
-    //         this.videoAd.show().catch(() => {
-    //         // 失败重试
-    //           this.videoAd!.load().then(() => this.videoAd!.show()).catch(() => {
-    //             console.log('激励视频 广告显示失败')
-    //           })
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
-    //     }
-    //   })
-    //   return
-    // }
+    if (this.videoAd && !this.loadAdError && thisDayTimeData && thisDayTimeData.times >= 2) {
+      Taro.showModal({
+        title: '是否观看广告',
+        content: '每日前两次免费查询，观看完广告今日不限次数查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
+        success: (res) => {
+          if (res.confirm && this.videoAd) {
+            this.videoAd.show().catch(() => {
+            // 失败重试
+              this.videoAd!.load().then(() => this.videoAd!.show()).catch(() => {
+                console.log('激励视频 广告显示失败')
+              })
+            })
+          } else if (res.cancel) {
+            // console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    }
 
     const dataKeys = ['aid', 'buildingid', 'room', 'whichweek', 'week']
 

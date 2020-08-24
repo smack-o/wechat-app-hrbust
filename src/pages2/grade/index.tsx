@@ -357,7 +357,7 @@ class Grade extends Component<IProps, PageState> {
                       return <View
                         key={index}
                         className={`title-row ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
-                        style={index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40px' : 'color: #333333'}
+                        style={index === 0 ? 'color: #999999; background-color: #fff; padding-top: 40rpx' : 'color: #333333'}
                       >
                         <View className="list-item gradeName">
                           <Text className="list-text" >{item.gradeName}</Text>
@@ -372,7 +372,7 @@ class Grade extends Component<IProps, PageState> {
                       return <View
                         key={index}
                         className={`list-row ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
-                        style={`color: ${index === 0 ? '#999999' : '#333333'};background-color: ${index === 0 && '#fff'};padding-top:${index === 0 &&  '40px'};width: ${maxRemarkLength > 8 ? '1640px' : '1390px'};`}
+                        style={`color: ${index === 0 ? '#999999' : '#333333'};background-color: ${index === 0 && '#fff'};padding-top:${index === 0 &&  '40rpx'};width: ${maxRemarkLength > 8 ? '1700rpx' : '1450rpx'};`}
                       >
                         <View
                           className={`list-item gradeName ${index % 2 === 0 ? 'list-row-even' : 'list-row-odd'}`}
@@ -395,7 +395,7 @@ class Grade extends Component<IProps, PageState> {
                         <View className="list-item courseAttribute">
                           <Text className="list-text" >{item.courseAttribute}</Text>
                         </View>
-                        <View className="list-item courseRemark" style={maxRemarkLength > 8 ? 'width: 360px; min-width: 360px' : 'width: 110px; min-width: 110px'}>
+                        <View className="list-item courseRemark" style={maxRemarkLength > 8 ? 'width: 360rpx; min-width: 360rpx' : 'width: 110rpx; min-width: 110rpx'}>
                           <Text className="list-text" >{item.courseRemark}</Text>
                         </View>
                         <View className="list-item courseCharacter">

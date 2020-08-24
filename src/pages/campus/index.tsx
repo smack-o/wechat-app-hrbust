@@ -81,7 +81,7 @@ class Campus extends Component<IProps, PageState> {
   }, {
     image: queryRoomIcon,
     text: '查空教室',
-    url: './room/index',
+    url: routes.classroom,
     needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
   }

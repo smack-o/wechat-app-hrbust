@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, ScrollView } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { Dispatch } from 'redux'
 import { getExams } from '@/redux/actions/user'
 import { CommonState } from '@/redux/reducers/common'
 

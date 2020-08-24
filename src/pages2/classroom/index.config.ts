@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '考试'
+  navigationBarTitleText: '空教室查询'
 }

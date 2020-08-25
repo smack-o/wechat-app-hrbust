@@ -135,11 +135,13 @@ class Index extends Component<IProps, PageState> {
     return (
       <View className="pdd-container">
         <AtSearchBar
-          showActionButton={false}
+          className="top-bar"
+          showActionButton
           value={searchValue}
           actionName="搜索"
           onActionClick={this.onSearch}
           onChange={this.onSearchChange}
+          onConfirm={this.onSearch}
         />
         <View className="pdd-wrapper">
           <View className="pdd-list">

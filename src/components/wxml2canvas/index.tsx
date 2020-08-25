@@ -128,7 +128,7 @@ export default class Wxml2canvas extends Component<IProps, State> {
     const { width, height } = this.props
     const { imageSrc } = this.state
     return (
-      <View onLongPress={() => saveImage(imageSrc)} >
+      <View onClick={() => Taro.previewImage({ urls: [imageSrc]})} >
         { imageSrc
           ? <Image className="wxml2canvas__img" src={imageSrc} mode="widthFix" />
           : <Canvas className="wxml2canvas" id="wxml2canvas" type="2d" style={`width:${width};height:${height}`}></Canvas>}

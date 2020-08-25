@@ -35,7 +35,7 @@ export default function CaptchaModal(props: IProps) {
   }, [onSubmit, captcha])
 
   return (
-    <AtModal isOpened={isOpened} className="captcha-modal">
+    <AtModal isOpened={isOpened} className="captcha-modal" closeOnClickOverlay={false}>
       <AtModalHeader>请输入验证码</AtModalHeader>
       {/* input 优先级最高，modal 隐藏了，input 也无法隐藏 */}
       {

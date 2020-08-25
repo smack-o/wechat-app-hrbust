@@ -43,7 +43,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 let interstitialAd: Taro.InterstitialAd
 
-const SWIPER_MARGIN = '45px'
+const SWIPER_MARGIN = '45rpx'
 class Index extends Component<IProps, PageState> {
   state = {
     cIndex: 0,

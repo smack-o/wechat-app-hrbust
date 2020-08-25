@@ -6,8 +6,8 @@ export default function SwiperChild(props) {
   const { item, active } = props
 
   const linkToWebView = useCallback(() => {
-    const { type, url } = item
-    goWebviewPage(url, type)
+    const { type, link } = item
+    goWebviewPage(link, undefined, type)
   }, [item])
   return (
     <View

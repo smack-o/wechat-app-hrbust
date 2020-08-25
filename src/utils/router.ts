@@ -4,7 +4,7 @@ import { routes as rs } from '../app.config'
 
 export { routes } from '../app.config'
 
-export const goWebviewPage = (url: string, title = '理工喵', type = 2 as 1 | 2) => {
+export const goWebviewPage = (url: string, title = '理工喵', type = 2 as number) => {
   if (type === 1) {
     Taro.navigateTo({
       url

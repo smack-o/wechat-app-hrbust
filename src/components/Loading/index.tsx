@@ -20,7 +20,7 @@ export default function Loading(props: IProps) {
   return (
     <View className={cn('global-loading', loadingStyle === 'padding' ? 'loadingPadding' : 'loadingScreen')}>
       <Image className="image" src={loadingImg} />
-      <View className="text">loading...</View>
+      <View className="text">喵儿，加载中...</View>
     </View>
   )
 }

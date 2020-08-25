@@ -5,28 +5,22 @@ export const router = {
     campus: 'campus/index', // 校园
     discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
-    //   // 'pages/page4',
-    //   // 'pages/test',
-    //   'pages/course',
-    //   'pages/courseDetail',
-    //   'pages/choiceTrem',
-    //   // 'pages/CET',
-    //   // 'pages/cetGrade',
-    //   'pages/christmas/christmasIndex',
-    //   'pages/christmas/imageeditor',
-    //   'pages/christmas/combine',
-    //   'pages/guoqi/index',
-    //   'pages/guoqi/combine',
-    //   'pages/guoqi/imageeditor',
-    //   // 'pages/wifi',
-    //   'pages/room/index',
-    //   'pages/room/rooms',
-    //   'pages/gradeShare/grade'
-    //   // 'pages/gradeShare/grade'
-    //   // 'pages/combine/combine'
+    // 'pages/course',
+    // 'pages/courseDetail',
+    // 'pages/choiceTrem',
+    // 'pages/christmas/christmasIndex',
+    // 'pages/christmas/imageeditor',
+    // 'pages/christmas/combine',
+    // 'pages/guoqi/index',
+    // 'pages/guoqi/combine',
+    // 'pages/guoqi/imageeditor',
+    // 'pages/wifi',
+    // 'pages/combine/combine'
   },
   pages2: {
     login: 'login/index', // 登录页面
+    course: 'course/index', // 课表主页面
+    courseTerm: 'course-term/index', // 课表，选择学期页面
     webview: 'webview/index', // 公共 webview 承载页面
     exam: 'exam/index', // 考试查询
     grade: 'grade/index', // 成绩查询

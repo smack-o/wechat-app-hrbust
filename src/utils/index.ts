@@ -20,6 +20,7 @@ export const cError = async (fn: (| Promise<any> | ((data: any) => Promise<any>)
     const result = await fn
     return [null, result]
   } catch (error) {
+    console.log(error, 'error')
     return [error, error]
   }
 }

@@ -19,7 +19,7 @@
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-  "condition": {
+	"condition": {
 		"search": {
 			"current": -1,
 			"list": []
@@ -90,18 +90,31 @@
 					"pathName": "pages2/grade/index",
 					"query": "",
 					"scene": null
-        },
+				},
 				{
 					"id": -1,
 					"name": "成绩分享",
 					"pathName": "pages2/grade/share/index",
 					"scene": null
-        },
-        {
+				},
+				{
 					"id": -1,
 					"name": "关于我们",
 					"pathName": "pages3/aboutme/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "课表主页面",
+					"pathName": "pages2/course/index",
+					"scene": null
+        },
+        {
+					"id": -1,
+					"name": "课表学期选择页面",
+					"pathName": "pages2/course-term/index",
+					"query": "term=5",
 					"scene": null
 				}
 			]

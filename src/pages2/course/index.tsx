@@ -38,7 +38,7 @@ type PageState = {
   nowDayIndex: number,
   termId: number,
   courseData: any[],
-  detailData: any[],
+  // detailData: any[],
   unplanCourse: any[],
   // detailOpen: boolean,
   selectOpen: boolean,
@@ -59,12 +59,18 @@ class Course extends Component<IProps, PageState> {
     nowDayIndex: new Date().getDay(),
     termId: 0,
     courseData: [],
-    // detailData: [],
     unplanCourse: [],
     selectOpen: false,
     // currentTerm: 0,
     isShowCaptchaModal: false,
     captchaImage: '',
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentTerm !== nextProps.currentTerm) {
+      this.getCourseHandel(nextProps.currentTerm)
+    }
   }
 
   courseCardStyleMap = Array.from(new Array(14)).map((_, index) => {
@@ -96,7 +102,8 @@ class Course extends Component<IProps, PageState> {
       withShareTicket: true
     })
 
-    const username = this.props.user.studentInfo.username || '1705030215'
+    const username = this.props.user.studentInfo.username
+    //  || '1705030215'
     // 未登陆跳转
     if (!username) {
       return Taro.reLaunch({ url: routes.index })
@@ -127,12 +134,6 @@ class Course extends Component<IProps, PageState> {
     } else {
       // storage不存在课程数据，发送请求，重新获取，并存入storage
       this.getCourseHandel(this.props.currentTerm)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.currentTerm !== nextProps.currentTerm) {
-      this.getCourseHandel(nextProps.currentTerm)
     }
   }
 
@@ -259,7 +260,6 @@ class Course extends Component<IProps, PageState> {
 
   // 获取周、学期
   async getWeekAndTerm () {
-    console.log(1111)
     const [ err, res ]= await cError(getWeekAndTerm(this.userInfo.term))
 
     if (err) {
@@ -313,6 +313,8 @@ class Course extends Component<IProps, PageState> {
   setLoading = (loading: boolean) => {
     this.setState({ loading })
   }
+
+  // 获取课表
   getCourseHandel = async (term) => {
     this.setLoading(true)
     this.setState({
@@ -333,6 +335,7 @@ class Course extends Component<IProps, PageState> {
     }
   }
 
+  // 获取课表接口处理
   getCourse = async (term) => {
     const [err, res] = await cError(request({
       url: '/api/hrbust/course',
@@ -398,9 +401,11 @@ class Course extends Component<IProps, PageState> {
     return Promise.resolve()
   }
 
-
-  detailHandler = () => {
-
+  // 课程详情
+  detailHandler = (event: TaroBaseEventOrig) => {
+    const dayIndex = event.currentTarget.dataset.dayindex
+    const timeIndex = event.currentTarget.dataset.timeindex
+    Taro.navigateTo({url: `courseDetail?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.state.thisWeek}`})
   }
 
   currentWeekList () {

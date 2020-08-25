@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
-import { View, Image, OpenData, Button } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { goPage, routes } from '@/utils/router'
+import { routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
 import { logout } from '@/services/user'
-
-import arrowRight from '@/assets/icon/arrow_right.png'
-import authIcon from './res/authentication.png'
-import removeBindingIcon from './res/remove_binding.png'
-import contactIcon from './res/contact.png'
 
 // images
 import './index.less'
@@ -25,18 +20,53 @@ type PropsFromDispatch = {
 type PageOwnProps = {}
 
 type PageState = {
+  detailData: any[]
+  thisWeek: number
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
-class Account extends Component<IProps, PageState> {
-  state = {
+class CourseDetail extends Component<IProps, PageState> {
+  state: Readonly<PageState> = {
+    thisWeek: 1,
+    detailData: []
   }
 
   componentDidShow () {
   }
 
-  onLoad() {
+  dayNum = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+
+  async onLoad (e) {
+    const { thisWeek, timeIndex, dayIndex } = e
+
+    // 获取storage数据
+    const userInfo = Taro.getStorageSync(`course:${this.props.user.studentInfo.username}`)
+
+    // 未登陆跳转
+    if (!this.props.user.studentInfo.username || !userInfo) {
+      return Taro.reLaunch({url: routes.index})
+    }
+
+    const course = userInfo.course
+    const detailData = course[timeIndex]
+    if (!detailData) return
+
+    if (detailData.length > 0) {
+      let result: any[] = []
+      detailData.forEach((item) => {
+        if (item.day === +dayIndex) {
+          result.push(item)
+        }
+      })
+      if (result.length > 0) {
+        // this.detailData = result
+        this.setState({
+          detailData: result,
+          thisWeek
+        })
+      }
+    }
   }
 
   // 登出
@@ -57,41 +87,21 @@ class Account extends Component<IProps, PageState> {
   }
 
   render () {
-    const { user: { isLogin, studentInfo } } = this.props
-
+    const { detailData, thisWeek } = this.state
     return (
-      <View className="account-container">
-        <View className="user">
-          <View className="avatar-wrapper">
-            <OpenData className="avatar" type="userAvatarUrl" lang="zh_CN"></OpenData>
-          </View>
-          {!isLogin && <View className="button" onClick={() => goPage('./login')}>登录</View>}
-          {isLogin && <View className="info">
-            <View className="name"><OpenData type="userNickName" lang="zh_CN"></OpenData></View>
-            <View className="student">
-              <Image className="image" src={authIcon} />
-              <View>{studentInfo.name}</View>
-            </View>
-          </View>}
-        </View>
-
-        <View className="other">
+      <View className="course-detail-page">
+        <View className="detial">
           {
-            isLogin && <View className="item" onClick={this.logout}>
-              <Image className="image" src={removeBindingIcon} />
-              <View className="info">
-                <View>解除绑定</View>
-                <Image className="arrow-right" src={arrowRight} />
+            detailData.map((item, index) => {
+              return <View key={index} className={item.period[thisWeek] == 1 ? 'detial-current-week' : 'detail-not-current-week'}>
+                <View className="course-name">《{item.name}》</View>
+                <View>教室：{item.locale}</View>
+                <View>周数：{item.week}</View>
+                <View>节数：{this.dayNum[item.day - 1]}{item.sectionstart} ～ {item.sectionend}节</View>
+                <View>教师：{item.teacher}</View>
               </View>
-            </View>
+            })
           }
-          <Button className="item button" open-type="contact">
-            <Image className="image" src={contactIcon} />
-            <View className="info">
-              <View>联系阿喵</View>
-              <Image className="arrow-right" src={arrowRight} />
-            </View>
-          </Button>
         </View>
       </View>
     )
@@ -102,4 +112,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(Account)
+
+
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(CourseDetail)

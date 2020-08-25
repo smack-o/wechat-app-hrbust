@@ -21,6 +21,7 @@ export const router = {
     login: 'login/index', // 登录页面
     course: 'course/index', // 课表主页面
     courseTerm: 'course-term/index', // 课表，选择学期页面
+    courseDetail: 'course-detail/index', // 课表，课程详情页
     webview: 'webview/index', // 公共 webview 承载页面
     exam: 'exam/index', // 考试查询
     grade: 'grade/index', // 成绩查询

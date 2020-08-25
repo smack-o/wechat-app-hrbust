@@ -5,7 +5,8 @@ import { View, Image, OpenData, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
-import { logout } from '@/services/user'
+import { logout } from '@/redux/actions/user'
+import { Dispatch } from 'redux'
 
 import arrowRight from '@/assets/icon/arrow_right.png'
 import authIcon from './res/authentication.png'
@@ -20,6 +21,7 @@ type PropsFromState = {
 }
 
 type PropsFromDispatch = {
+  logout: typeof logout
 }
 
 type PageOwnProps = {}
@@ -40,13 +42,13 @@ class Account extends Component<IProps, PageState> {
   }
 
   // 登出
-  logout() {
+  logout = () => {
     Taro.showModal({
       title: '确定要解绑学号？',
       content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
-      success (res) {
+      success: (res) => {
         if (res.confirm) {
-          logout().then(() => {
+          this.props.logout().then(() => {
             Taro.reLaunch({
               url: routes.index
             })
@@ -65,7 +67,7 @@ class Account extends Component<IProps, PageState> {
           <View className="avatar-wrapper">
             <OpenData className="avatar" type="userAvatarUrl" lang="zh_CN"></OpenData>
           </View>
-          {!isLogin && <View className="button" onClick={() => goPage('./login')}>登录</View>}
+          {!isLogin && <View className="button" onClick={() => goPage(routes.login)}>登录</View>}
           {isLogin && <View className="info">
             <View className="name"><OpenData type="userNickName" lang="zh_CN"></OpenData></View>
             <View className="student">
@@ -102,4 +104,9 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(Account)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: () => dispatch(logout()),
+})
+
+
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Account)

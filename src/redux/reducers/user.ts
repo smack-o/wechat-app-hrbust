@@ -85,6 +85,7 @@ export default function user(state = INITIAL_STATE, action: AnyAction): UserStat
         ...action.data
       }
     case LOGOUT:
+      Taro.removeStorageSync('studentInfo')
       return {
         ...state,
         isLogin: false,

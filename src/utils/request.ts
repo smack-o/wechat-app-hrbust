@@ -39,10 +39,10 @@ export default (option: RequestParams): Promise<Request.requestResult> => new Pr
       cookie,
     },
     success: res => {
-      console.log(res)
       if (res && res.statusCode === 200 && res.data.status === 200) {
+        const { header } = res
         // @ts-ignore
-        Taro.setStorageSync('app_cookie', res.cookies[0])
+        Taro.setStorageSync('app_cookie', header['Set-Cookie'])
         resolve(res.data)
         return
       }

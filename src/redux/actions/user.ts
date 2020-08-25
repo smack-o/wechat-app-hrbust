@@ -1,6 +1,6 @@
 
 import Taro from '@tarojs/taro'
-import { userInfo, wxLogin, exams, grades } from '@/services/user'
+import { userInfo, wxLogin, exams, grades, logout as logoutReq } from '@/services/user'
 import { Dispatch } from 'redux'
 import { startLoading, stopLoading } from './global'
 
@@ -36,10 +36,8 @@ const login = () => {
       success: function (loginRes) {
         console.log(loginRes.code)
         if (loginRes.code) {
-          wxLogin({ code: loginRes.code }).then((res) => {
-            console.log(res)
-            const { data } = res
-            if (data.status === 200) {
+          wxLogin({ code: loginRes.code }).then((res: any) => {
+            if (res.status === 200) {
               resolve()
             } else {
               reject(new Error('理工喵登录失败！'))
@@ -104,7 +102,6 @@ export const init = (): any => async (dispatch: Dispatch) => {
         studentInfo,
       }
     })
-
     dispatch(stopLoading())
     // this.updateUserInfo(userInfo)
   } catch (e) {
@@ -113,9 +110,12 @@ export const init = (): any => async (dispatch: Dispatch) => {
   }
 }
 
-export const logout = () => ({
-  type: LOGOUT
-})
+export const logout = (): any => async (dispatch: Dispatch) => {
+  await logoutReq()
+  dispatch({
+    type: LOGOUT
+  })
+}
 
 
 export const getExams = (...data: Parameters<typeof exams>): any => async (dispatch: Dispatch) => {

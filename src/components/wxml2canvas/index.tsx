@@ -82,14 +82,13 @@ export default class Wxml2canvas extends Component<IProps, State> {
     const { root: xom } = xmlParse(wxml)
 
     const widget = new Widget(xom, style)
-    const container = widget.init()
-    // console.log(container)
-    const { top, left, width, height } = container as any
+    const container: any = widget.init()
+
     this.boundary = {
-      top,
-      left,
-      width,
-      height
+      top: container.layoutBox.top,
+      left: container.layoutBox.left,
+      width: container.computedStyle.width,
+      height: container.computedStyle.height,
     }
     const draw = new Draw(canvas, ctx)
     await draw.drawNode(container)

@@ -1,0 +1,74 @@
+@import '~@/styles/lib.less';
+
+.pdd-container {
+  .pdd-wrapper {
+    margin-top: 20rpx;
+
+    .pdd-list {
+      display: flex;
+      flex-wrap: wrap;
+      // justify-content: center;
+      padding: 0 10rpx;
+
+      .pdd-item {
+        position: relative;
+        width: 330rpx;
+        margin: 30rpx 15rpx 15rpx;
+        box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, .1);
+        border-radius: 10rpx;
+
+        .coupon {
+          position: absolute;
+          top: 0;
+          background: linear-gradient(90deg, #FF9E81, #FF3030);
+          padding: 5rpx 10rpx;
+          font-size: 20rpx;
+          font-weight: bolder;
+          color: #fff;
+          transform: translateY(-50%);
+          border-radius: 4rpx;
+        }
+
+        .name {
+          .text-ellipsis(2);
+
+          width: 100%;
+          padding: 20rpx 10rpx;
+          font-size: 20rpx;
+          height: 80rpx;
+          line-height: 30rpx;
+        }
+
+        .info {
+          padding: 20rpx 10rpx;
+
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+
+          .price {
+            color: @color-red;
+            font-size: 20rpx;
+
+            .min-price {
+              font-size: 30rpx;
+              font-weight: bolder;
+            }
+          }
+
+          .amount {
+            font-size: 18rpx;
+            color: @text-color-gray-light;
+          }
+        }
+        .thumb {
+          display: block;
+          width: 330rpx;
+          height: 330rpx;
+
+          border-radius: 10rpx 0;
+        }
+      }
+    }
+  }
+}

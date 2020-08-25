@@ -5,6 +5,7 @@ export const router = {
     campus: 'campus/index', // 校园
     discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
+    shop: 'shop/index', // 校园购
     // 'pages/course',
     // 'pages/courseDetail',
     // 'pages/choiceTrem',
@@ -77,6 +78,12 @@ export default {
       {
         pagePath: 'pages/campus/index',
         text: '校园',
+        iconPath: 'assets/icon/campus.png',
+        selectedIconPath: 'assets/icon/campus_selected.png'
+      },
+      {
+        pagePath: 'pages/shop/index',
+        text: '校园购',
         iconPath: 'assets/icon/campus.png',
         selectedIconPath: 'assets/icon/campus_selected.png'
       },

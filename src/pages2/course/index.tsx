@@ -353,7 +353,7 @@ class Course extends Component<IProps, PageState> {
     const { course: getCourseData, courseTermId, unplanCourse } = res.data
     this.setState({
       termId: courseTermId,
-      unplanCourse,
+      unplanCourse: unplanCourse || [],
     })
     // const getCourseData = res.data.data.course
     // 课表为空的话，提示
@@ -362,8 +362,7 @@ class Course extends Component<IProps, PageState> {
         content: '该学期未查询到课表，请创建该学期',
         showCancel: false,
         success: () => {
-          // TODO: jfldksjfl
-          Taro.navigateTo({url: 'choiceTrem'})
+          Taro.navigateTo({ url: routes.courseTerm })
         }
       })
 

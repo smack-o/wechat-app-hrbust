@@ -47,31 +47,6 @@ const SWIPER_MARGIN = '45rpx'
 class Index extends Component<IProps, PageState> {
   state = {
     cIndex: 0,
-    // slideCurimage: 'slide-curimage',
-    // slideImage: 'slide-image',
-    // isLoading: true,
-    // // imgUrls: [
-    // //   {
-    // //     image: 'http://ova96t3fz.bkt.clouddn.com/1c9e9cf6-75fe-4921-a88e-0b3bab801a10',
-    // //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-    // //   },
-    // //   {
-    // //     image: 'http://ova96t3fz.bkt.clouddn.com/2f7297f7-96a1-4582-92ee-4a09b0936f1c',
-    // //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-    // //   },
-    // //   {
-    // //     image: 'http://ova96t3fz.bkt.clouddn.com/4d80db82-719c-49ca-b02d-a897a50c5fd2',
-    // //     link: 'https://mp.weixin.qq.com/s/1EaLNFZGWe6UyZNrSEWQIQ'
-    // //   }
-    // // ],
-    // indicatorDots: false,
-    // autoplay: false,
-    // circular: true,
-    // interval: 5000,
-    // duration: 400,
-    // mSwiperItemMargin: '45px',
-    // currentSlideIdx: 0,
-    // mockImg: 'https://www.nvsay.com/uploads/allimg/171014/192-1G01409542IE.jpg'
   }
 
   componentDidShow () {

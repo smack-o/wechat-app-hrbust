@@ -106,7 +106,7 @@ class Index extends Component<IProps, PageState> {
     {
       image: courseIcon,
       text: '课表',
-      url: './course',
+      url: routes.course,
       needLogin: true,
       shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
     }, {

@@ -8,6 +8,12 @@ export const GET_USERINFO = 'user/GET_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
 export const GET_EXAMS = 'user/GET_EXAMS'
 export const GET_GRADES = 'user/GET_GRADES'
+export const SET_CURRENT_TERM = 'user/SET_CURRENT_TERM'
+
+export const setCurrentTerm = (term: number) => ({
+  type: SET_CURRENT_TERM,
+  data: term
+})
 
 // 检查session_key是否失效
 const checkSession = () => {

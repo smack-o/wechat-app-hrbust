@@ -1,7 +1,7 @@
 import { cError } from '@/utils'
 import request from '@/utils/request'
 import { store } from '@/redux/store'
-import { setCurrentTerm } from '@/redux/actions/course'
+import { setCurrentTerm } from '@/redux/actions/user'
 
 // 获取周、学期
 export const getWeekAndTerm = async (defaultTerm?: number) => {

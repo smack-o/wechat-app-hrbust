@@ -51,7 +51,7 @@ class Campus extends Component<IProps, PageState> {
   modules = [{
     image: courseIcon,
     text: '课表',
-    url: './course',
+    url: routes.course,
     needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
   }, {

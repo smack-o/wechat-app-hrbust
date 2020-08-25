@@ -10,7 +10,7 @@ import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast } from '@/utils'
 import request from '@/utils/request'
 import infoIcon from '@/assets/icon/icon_info.png'
-import { setCurrentTerm } from '@/redux/actions/course'
+import { setCurrentTerm } from '@/redux/actions/user'
 import { Dispatch } from 'redux'
 
 import checkIcon from './res/check.png'
@@ -20,7 +20,7 @@ import './index.less'
 
 type PropsFromState = {
   user: UserState
-  currentTerm: IRootState['course']['currentTerm']
+  currentTerm: IRootState['user']['currentTerm']
 }
 
 type PropsFromDispatch = {
@@ -287,7 +287,7 @@ class CourseTerm extends Component<IProps, PageState> {
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
-  currentTerm: state.course.currentTerm
+  currentTerm: state.user.currentTerm
 })
 
 

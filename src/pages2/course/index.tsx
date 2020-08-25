@@ -11,7 +11,7 @@ import { Loading, CaptchaModal } from '@/components'
 import { getWeekAndTerm } from '@/services/week'
 import infoIcon from '@/assets/icon/icon_info.png'
 import errorIcon from '@/assets/icon/error_icon.png'
-import { setCurrentTerm } from '@/redux/actions/course'
+import { setCurrentTerm } from '@/redux/actions/user'
 import { Dispatch } from 'redux'
 
 // images
@@ -21,7 +21,7 @@ import './index.less'
 
 type PropsFromState = {
   user: UserState
-  currentTerm: IRootState['course']['currentTerm']
+  currentTerm: IRootState['user']['currentTerm']
 }
 
 type PropsFromDispatch = {
@@ -111,8 +111,9 @@ class Course extends Component<IProps, PageState> {
 
     // 获取storage数据
     const userInfo = Taro.getStorageSync(`course:${username}`)
+
     if (userInfo) {
-      this.userInfo = userInfo
+      this.userInfo = userInfo || {}
       this.props.setCurrentTerm(this.userInfo.term)
     }
 
@@ -121,10 +122,11 @@ class Course extends Component<IProps, PageState> {
     // 获取当前周数、以及学期数
     // TODO: 优化 优先本地取 term 和 week
     await this.getWeekAndTerm()
-
+    console.log(userInfo, username, 'usernameusername')
     const course = this.userInfo.course
     const unplanCourse = this.userInfo.unplanCourse
     if (course) {
+      console.log(1)
       // storage 存在课程数据，直接渲染
       this.setState({
         courseData: course,
@@ -132,6 +134,7 @@ class Course extends Component<IProps, PageState> {
       })
       this.setLoading(false)
     } else {
+      console.log(2)
       // storage不存在课程数据，发送请求，重新获取，并存入storage
       this.getCourseHandel(this.props.currentTerm)
     }
@@ -402,10 +405,8 @@ class Course extends Component<IProps, PageState> {
   }
 
   // 课程详情
-  detailHandler = (event: TaroBaseEventOrig) => {
-    const dayIndex = event.currentTarget.dataset.dayindex
-    const timeIndex = event.currentTarget.dataset.timeindex
-    Taro.navigateTo({url: `courseDetail?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.state.thisWeek}`})
+  detailHandler = (dayIndex, timeIndex) => {
+    Taro.navigateTo({url: `${routes.courseDetail}?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.state.thisWeek}`})
   }
 
   currentWeekList () {
@@ -534,7 +535,7 @@ class Course extends Component<IProps, PageState> {
                         </View>
                       }
                       // <!-- 课表内容 -->
-                      return <View className="item" onClick={this.detailHandler} data-dayIndex={dayIndex} data-timeIndex={timeItem[0]} key={dayIndex}>
+                      return <View className="item" onClick={() => this.detailHandler(dayIndex, timeItem[0])} key={dayIndex}>
                         <View className="item-content">
                           {
                             courseData.length > 0 && courseData[timeItem[0]].map((item, index) => {
@@ -623,7 +624,7 @@ class Course extends Component<IProps, PageState> {
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
-  currentTerm: state.course.currentTerm
+  currentTerm: state.user.currentTerm
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

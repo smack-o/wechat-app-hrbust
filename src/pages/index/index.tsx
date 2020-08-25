@@ -171,7 +171,7 @@ class Index extends Component<IProps, PageState> {
     const { banners, user: { isLogin }, loading } = this.props
 
     if (loading) {
-      return <Loading loading={loading}></Loading>
+      return <Loading loading></Loading>
     }
 
     return (
@@ -212,7 +212,7 @@ class Index extends Component<IProps, PageState> {
         <Image className="discover-image" src={bgImg} mode="widthFix" />
         {
           !isLogin && <View className="login-wrapper">
-            <View className="login" onClick={() => goPage('./login')}>
+            <View className="login" onClick={() => goPage(routes.login)}>
               <Text className="login-text" style="color: #999999">校园功能仅对登录用户开放</Text>
               <View className="login-button">
                 <Text className="login-text">立即登录</Text>

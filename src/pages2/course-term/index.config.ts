@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '校园'
+  navigationBarTitleText: '选择学期'
 }

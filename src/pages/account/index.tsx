@@ -5,8 +5,9 @@ import { View, Image, OpenData, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
-import { logout } from '@/redux/actions/user'
+import { logout, init } from '@/redux/actions/user'
 import { Dispatch } from 'redux'
+import { cError } from '@/utils'
 
 import arrowRight from '@/assets/icon/arrow_right.png'
 import authIcon from './res/authentication.png'
@@ -22,6 +23,7 @@ type PropsFromState = {
 
 type PropsFromDispatch = {
   logout: typeof logout
+  init: typeof init
 }
 
 type PageOwnProps = {}
@@ -46,13 +48,21 @@ class Account extends Component<IProps, PageState> {
     Taro.showModal({
       title: '确定要解绑学号？',
       content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          this.props.logout().then(() => {
+          Taro.showLoading()
+          const [err] = await cError(this.props.logout())
+          Taro.hideLoading()
+          if (!err) {
             Taro.reLaunch({
-              url: routes.index
+              url: routes.index,
+              success: () => {
+                // 解绑 session 也会失效，需要重新登录
+                // TODO 后续需要优化后端逻辑，此时不应该失效，只做解绑操作即可
+                this.props.init()
+              }
             })
-          })
+          }
         }
       }
     })
@@ -106,6 +116,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(logout()),
+  init: () => dispatch(init()),
 })
 
 

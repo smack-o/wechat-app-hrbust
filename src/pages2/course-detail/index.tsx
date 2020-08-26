@@ -5,7 +5,6 @@ import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
-import { logout } from '@/services/user'
 
 // images
 import './index.less'
@@ -69,23 +68,6 @@ class CourseDetail extends Component<IProps, PageState> {
     }
   }
 
-  // 登出
-  logout() {
-    Taro.showModal({
-      title: '确定要解绑学号？',
-      content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
-      success (res) {
-        if (res.confirm) {
-          logout().then(() => {
-            Taro.reLaunch({
-              url: routes.index
-            })
-          })
-        }
-      }
-    })
-  }
-
   render () {
     const { detailData, thisWeek } = this.state
     return (
@@ -111,7 +93,5 @@ class CourseDetail extends Component<IProps, PageState> {
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
-
-
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(CourseDetail)

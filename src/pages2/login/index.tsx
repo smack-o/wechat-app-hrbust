@@ -52,7 +52,9 @@ class Login extends Component<IProps, PageState> {
   }
 
   getCaptcha = async () => {
+    Taro.showLoading()
     const [err, res] = await cError(getCaptcha())
+    Taro.hideLoading()
     if (err) {
       Taro.showToast({
         title: '服务暂时挂了呀~请退出稍后重试！',

@@ -83,9 +83,9 @@ export default {
       },
       {
         pagePath: 'pages/shop/index',
-        text: '校园购',
-        iconPath: 'assets/icon/campus.png',
-        selectedIconPath: 'assets/icon/campus_selected.png'
+        text: '优惠购',
+        iconPath: 'assets/icon/shop.png',
+        selectedIconPath: 'assets/icon/shop_selected.png'
       },
       {
         pagePath: 'pages/discover/index',

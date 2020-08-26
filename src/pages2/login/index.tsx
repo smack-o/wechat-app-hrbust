@@ -52,7 +52,9 @@ class Login extends Component<IProps, PageState> {
   }
 
   getCaptcha = async () => {
-    Taro.showLoading()
+    Taro.showLoading({
+      title: '加载中...'
+    })
     const [err, res] = await cError(getCaptcha())
     Taro.hideLoading()
     if (err) {

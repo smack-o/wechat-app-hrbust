@@ -50,7 +50,9 @@ class Account extends Component<IProps, PageState> {
       content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
       success: async (res) => {
         if (res.confirm) {
-          Taro.showLoading()
+          Taro.showLoading({
+            title: '加载中...'
+          })
           const [err] = await cError(this.props.logout())
           Taro.hideLoading()
           if (!err) {

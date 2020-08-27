@@ -4,7 +4,7 @@
 	"description": "",
 	"appid": "wxaed2c04fd10b6e1a",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"preloadBackgroundData": false,
@@ -44,7 +44,7 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "pages/index/index",
+					"name": "首页",
 					"pathName": "pages/index/index",
 					"query": "",
 					"scene": null
@@ -115,6 +115,12 @@
 					"name": "课表学期选择页面",
 					"pathName": "pages2/course-term/index",
 					"query": "term=5",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠购",
+					"pathName": "pages/shop/index",
 					"scene": null
 				}
 			]

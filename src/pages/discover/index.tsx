@@ -40,11 +40,11 @@ class Discover extends Component<IProps, PageState> {
     return (
       <View className="discover-container">
         <View className="fn-wrapper">
-          <View className="content">
-            <Image className="image" onClick={() => goPage(routes.yingxin)} src={newFnIcon} mode="widthFix" />
+          <View className="content" onClick={() => goPage(routes.yingxin)}>
+            <Image className="image" src={newFnIcon} mode="widthFix" />
             <View className="text">新生速查</View>
           </View>
-          <View className="content" onClick={() => goPage('/pages/about')}>
+          <View className="content" onClick={() => goPage(routes.aboutme)}>
             <Image className="image" src={touchMeIcon} mode="widthFix" />
             <View className="text">别点我</View>
           </View>

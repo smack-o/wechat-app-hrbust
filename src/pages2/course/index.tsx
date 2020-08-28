@@ -98,11 +98,17 @@ class Course extends Component<IProps, PageState> {
   }
   timeList = () => {
     const classNum = parseInt(String(this.state.termId / 2))
-    if (classNum === 1 || classNum === 2) {
-      return [['08:10', '09:00'], ['10:05', '10:55'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50'], ['20:00', '21:00']]
-    } else {
-      return [['08:10', '09:00'], ['10:20', '11:10'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50'], ['20:00', '21:00']]
+    if (classNum === 1) {
+      return [['08:00', '09:25'], ['09:50', '11:15'], ['13:30', '14:55'], ['15:30', '16:55'], ['18:10', '19:35'], ['19:50', '21:15']]
     }
+    if (classNum === 2) {
+      return [['08:05', '09:30'], ['10:10', '11:35'], ['13:35', '15:00'], ['15:45', '17:10'], ['18:15', '19:40'], ['19:55', '21:20']]
+    }
+    if (classNum === 3) {
+      return [['08:10', '09:35'], ['10:30', '11:55'], ['13:40', '15:05'], ['16:00', '17:25'], ['18:20', '19:45'], ['20:00', '21:25']]
+    }
+
+    return [['08:15', '09:40'], ['10:50', '12:15'], ['13:45', '15:10'], ['16:15', '17:40'], ['18:25', '19:50'], ['20:05', '21:30']]
   }
 
   async onLoad() {
@@ -514,6 +520,7 @@ class Course extends Component<IProps, PageState> {
             </Picker>
             <View className={`wrapper-right ${selectOpen ? 'rotate' : ''}`} onClick={this.selectListSwitch}>+</View>
           </View>
+          <View className="tips">*每节课上课时间仅供参考，具体时间以不同年级实际情况为准</View>
           <View className="course-header">
             <View className="item">
               {currentWeekList.month}月
@@ -535,14 +542,26 @@ class Course extends Component<IProps, PageState> {
                     [0,1,2,3,4,5,6,7].map((_, dayIndex) => {
                       if (dayIndex === 0) {
                         // <!-- 左侧时间列表 -->
-                        return <View className={`item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
+                        // return <View className={`item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
+                        //   <View className="time-item">
+                        //     <View>{timeList[timeIndex][0]}</View>
+                        //     <View className="num">{timeItem[0]}</View>
+                        //   </View>
+                        //   <View className="time-item">
+                        //     <View>{timeList[timeIndex][1]}</View>
+                        //     <View className="num">{timeItem[1]}</View>
+                        //   </View>
+                        // </View>
+                        return <View className={`time item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
                           <View className="time-item">
-                            <View>{timeList[timeIndex][0]}</View>
-                            <View className="num">{timeItem[0]}</View>
+                            {/* <View className="num">{timeItem[0]}</View> */}
+                            <View>第{timeItem[0]}/{timeItem[1]}节</View>
                           </View>
-                          <View className="time-item">
+                          <View className="time-item-num">
+                            <View>{timeList[timeIndex][0]}</View>
+                            <View>~</View>
                             <View>{timeList[timeIndex][1]}</View>
-                            <View className="num">{timeItem[1]}</View>
+                            {/* <View className="num">{timeItem[1]}</View> */}
                           </View>
                         </View>
                       }

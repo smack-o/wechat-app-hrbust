@@ -251,7 +251,7 @@ class QueryClassroom extends Component<IProps, PageState> {
 
       this.setState({
         aids,
-        buildingids,
+        buildingids: buildingids.reverse(),
         rooms,
         whichweeks: whichweeks.map(week => {
           if (+week.label === +this.thisWeek) {

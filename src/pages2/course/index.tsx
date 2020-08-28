@@ -88,6 +88,23 @@ class Course extends Component<IProps, PageState> {
   month = new Date().getMonth() + 1
   unplanCourseTitle = ['课程名称', '任课教师', '合班', '上课周次', '上课时间', '上课地点']
 
+  getTime = () => {
+    const time = [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']]
+    if (this.state.courseData.length > 10) {
+      time.push(['11', '12'])
+      return time
+    }
+    return time
+  }
+  timeList = () => {
+    const classNum = parseInt(String(this.state.termId / 2))
+    if (classNum === 1 || classNum === 2) {
+      return [['08:10', '09:00'], ['10:05', '10:55'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50'], ['20:00', '21:00']]
+    } else {
+      return [['08:10', '09:00'], ['10:20', '11:10'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50'], ['20:00', '21:00']]
+    }
+  }
+
   async onLoad() {
     // 在页面onLoad回调事件中创建插屏广告实例
     interstitialAd = Taro.createInterstitialAd({
@@ -122,11 +139,10 @@ class Course extends Component<IProps, PageState> {
     // 获取当前周数、以及学期数
     // TODO: 优化 优先本地取 term 和 week
     await this.getWeekAndTerm()
-    console.log(userInfo, username, 'usernameusername')
+
     const course = this.userInfo.course
     const unplanCourse = this.userInfo.unplanCourse
     if (course) {
-      console.log(1)
       // storage 存在课程数据，直接渲染
       this.setState({
         courseData: course,
@@ -134,7 +150,6 @@ class Course extends Component<IProps, PageState> {
       })
       this.setLoading(false)
     } else {
-      console.log(2)
       // storage不存在课程数据，发送请求，重新获取，并存入storage
       this.getCourseHandel(this.props.currentTerm)
     }
@@ -304,14 +319,6 @@ class Course extends Component<IProps, PageState> {
     })
   }
 
-  timeList = () => {
-    const classNum = parseInt(String(this.state.termId / 2))
-    if (classNum === 1 || classNum === 2) {
-      return [['08:10', '09:00'], ['10:05', '10:55'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
-    } else {
-      return [['08:10', '09:00'], ['10:20', '11:10'], ['13:30', '14:20'], ['15:25', '16:15'], ['18:00', '18:50']]
-    }
-  }
 
   setLoading = (loading: boolean) => {
     this.setState({ loading })
@@ -386,6 +393,11 @@ class Course extends Component<IProps, PageState> {
         courseCardStyleIndex++
       } else {
         courseItem.class = courseIdList[courseItem.courseId]
+      }
+
+      // 兼容 12 节课的情况
+      if (!courseList[courseItem.sectionstart]) {
+        courseList[courseItem.sectionstart] = []
       }
       courseList[courseItem.sectionstart].push(courseItem)
     })
@@ -477,6 +489,7 @@ class Course extends Component<IProps, PageState> {
     const currentWeekList = this.currentWeekList()
     const currentPart = this.currentPart()
     const timeList = this.timeList()
+    const time = this.getTime()
 
     if (loading) {
       return <Loading loading />
@@ -516,7 +529,7 @@ class Course extends Component<IProps, PageState> {
           </View>
           <View className="course-body">
             {
-              this.time.map((timeItem, timeIndex) => {
+              time.map((timeItem, timeIndex) => {
                 return <View className="line-item" key={timeItem[0]}>
                   {
                     [0,1,2,3,4,5,6,7].map((_, dayIndex) => {

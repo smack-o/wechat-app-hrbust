@@ -36,7 +36,7 @@ let interstitialAd: Taro.InterstitialAd
 class Index extends Component<IProps, PageState> {
   state: Readonly<PageState> = {
     pddList: [],
-    searchValue: '寝室神器',
+    searchValue: '',
     loading: false,
     hotKeywords: [],
     showScrollBtn: false
@@ -119,6 +119,7 @@ class Index extends Component<IProps, PageState> {
     if (!err) {
       this.setState({
         hotKeywords: res.data,
+        searchValue: res.data[0]
       })
     }
   }

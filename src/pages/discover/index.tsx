@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Navigator } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
 import { UserState } from '@/redux/reducers/user'
-
+import Taro from '@tarojs/taro'
 // images
 import newFnIcon from './res/new_fn_icon.png'
 import touchMeIcon from './res/touch_me_icon.png'
 import discoverIcon from './res/discover.png'
-
 import './index.less'
 
 type PropsFromState = {
   user: UserState
 }
-
 type PropsFromDispatch = {
 }
 
@@ -34,6 +32,8 @@ class Discover extends Component<IProps, PageState> {
   }
 
   onLoad() {
+    const waimaiPlugin = Taro.requirePlugin('waimai')
+    waimaiPlugin.init('110804100128')
   }
 
   render () {
@@ -49,6 +49,8 @@ class Discover extends Component<IProps, PageState> {
             <View className="text">别点我</View>
           </View>
         </View>
+        {/* @ts-ignore */}
+        <cards />
         <View className="info">
           更多功能敬请期待~
         </View>

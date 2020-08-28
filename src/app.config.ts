@@ -108,4 +108,11 @@ export default {
     navigationBarTitleText: '理工喵',
     navigationBarTextStyle: 'black'
   },
+
+  plugins: {
+    waimai: {
+      version: '1.1.0',
+      provider: 'wx05e29bcb0dd5320e'
+    }
+  }
 }

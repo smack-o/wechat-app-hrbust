@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Canvas, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { saveImage } from '@/utils'
 // import cn from 'classnames'
 // import loadingImg from './res/loading.gif'
 import xmlParse from './utils/xml-parser'

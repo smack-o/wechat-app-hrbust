@@ -16,9 +16,9 @@ import { Loading } from '@/components'
 import courseIcon from '@/assets/icon/course.png'
 import examIcon from '@/assets/icon/exam_schedule.png'
 import gradeIcon from '@/assets/icon/grade.png'
+import shopIcon from '@/assets/icon/shop_selected.png'
 import queryRoomIcon from '@/assets/icon/query_room.png'
 import bgImg from './res/home-bg.png'
-
 
 import './index.less'
 import SwiperChild from './components/SwiperChild'
@@ -220,6 +220,11 @@ class Index extends Component<IProps, PageState> {
             </View>
           </View>
         }
+
+        <View className="shop-icon" onClick={() => Taro.switchTab({ url: routes.shop })}>
+          <Image src={shopIcon} mode="widthFix" />
+          <Text>寝室必备</Text>
+        </View>
       </View>
     )
   }

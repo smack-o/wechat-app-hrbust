@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { View, Ad, Image, Text, Picker, Button, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import { getGrades } from '@/redux/actions/user'
 import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast, dateFormat } from '@/utils'
@@ -17,17 +16,11 @@ import tipButtonIcon from './res/tip_button_icon.png'
 
 import './index.less'
 
-type PropsFromState = {
-  grades: UserState['grades']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  getGrades: typeof getGrades
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
-type PageOwnProps = {
-  changeLoading: (boolean) => void
-}
+type PageOwnProps = {}
 
 type PageState = {
   loading: boolean
@@ -36,7 +29,7 @@ type PageState = {
   year: number
   term: number
   showEmpty?: boolean
-  errorMessage: string
+  needComments: boolean
   AVERAGE_GPA?: string,
   AVERAGE_GRADE?: string,
   OBLIGATORY_AVERAGE_GPA?: string,
@@ -74,7 +67,7 @@ class Grade extends Component<IProps, PageState> {
     captchaImage: '',
     isShowCaptchaModal: false,
     showEmpty: false,
-    errorMessage: '',
+    needComments: false,
     myGrades: [
       {
         gradeName: '课程',
@@ -128,8 +121,14 @@ class Grade extends Component<IProps, PageState> {
   getList = async (year: number, term: number, captcha = '') => {
 
     this.setLoading(true)
-    const [, res] = await cError(this.props.getGrades(year - 1980, term, captcha))
+    const [err, res] = await cError(this.props.getGrades(year - 1980, term, captcha))
     this.setLoading(false)
+    if (err && err.status === 400) {
+      this.setState({
+        needComments: true
+      })
+      return
+    }
 
     // 登录失效，需要输入验证码
     if (res.status === 400005) {
@@ -283,7 +282,7 @@ class Grade extends Component<IProps, PageState> {
       loading,
       captchaImage,
       isShowCaptchaModal,
-      errorMessage,
+      needComments,
       myGrades = [],
       showEmpty,
       AVERAGE_GPA,
@@ -296,23 +295,26 @@ class Grade extends Component<IProps, PageState> {
       isFirstFull,
     } = this.state
 
+    if (needComments) {
+      return <View className="grade-page">
+        <View className="pinggu-wrapper">
+          <View className="pinggu" onClick={this.toPingGu}>
+            <Image className="pinggu_image" src={pingguImg} mode="widthFix" />
+            <View className="color-blue">查看如何评教</View>
+            <View>{needComments}</View>
+            <Text selectable className="pinggu__info">请您去教务在线官网进行评估课程</Text>
+          </View>
+          <View>
+            <Text selectable className="pinggu__info">教务在线地址：http://jwzx.hrbust.edu.cn</Text>
+          </View>
+        </View>
+      </View>
+    }
+
     return (
       <View className="grade-page">
         <CaptchaModal captchaImage={captchaImage} onSubmit={this.onCaptchaModalSubmit} isOpened={isShowCaptchaModal}></CaptchaModal>
         <Loading loading={loading}></Loading>
-        {
-          errorMessage && <View className="pinggu-wrapper">
-            <View className="pinggu" onClick={this.toPingGu}>
-              <Image className="pinggu_image" src={pingguImg} mode="widthFix" />
-              <View className="color-blue">查看如何评教</View>
-              <View>{errorMessage}</View>
-              <Text selectable className="pinggu__info">请您去教务在线官网进行评估课程</Text>
-            </View>
-            <View>
-              <Text selectable className="pinggu__info">教务在线地址：http://jwzx.hrbust.edu.cn</Text>
-            </View>
-          </View>
-        }
 
         <View className="container">
           <View className="selecter">
@@ -428,8 +430,6 @@ const mapStateToProps = (state: IRootState) => ({
   grades: state.user.grades
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getGrades: (year: number, term: number, captcha: string) => dispatch(getGrades(year, term, captcha)),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getGrades }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Grade)

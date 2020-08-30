@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 import Taro from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import { getBanner } from '@/redux/actions/common'
 import { IRootState } from '@/types'
 import { pddSearch, getKeywords } from '@/services/pdd'
 import { AtSearchBar, AtIcon } from 'taro-ui'
@@ -11,13 +9,9 @@ import { cError } from '@/utils'
 
 import './index.less'
 
-type PropsFromState = {
-  loading: IRootState['global']['loading']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  getBanner: typeof getBanner
-}
+type PropsFromDispatch = {}
 
 type PageOwnProps = {}
 
@@ -36,7 +30,7 @@ let interstitialAd: Taro.InterstitialAd
 class Index extends Component<IProps, PageState> {
   state: Readonly<PageState> = {
     pddList: [],
-    searchValue: '',
+    searchValue: '寝室必备',
     loading: false,
     hotKeywords: [],
     showScrollBtn: false
@@ -54,6 +48,7 @@ class Index extends Component<IProps, PageState> {
     // }
 
     // this.pddSearch()
+    this.getKeywords()
   }
 
   // 搜索商品接口
@@ -110,8 +105,8 @@ class Index extends Component<IProps, PageState> {
       interstitialAd.onClose(() => { console.log('adclose') })
     }
 
+    await this.getKeywords()
     this.pddSearch(true)
-    this.getKeywords()
   }
 
   getKeywords = async () => {
@@ -265,12 +260,7 @@ class Index extends Component<IProps, PageState> {
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
-  banners: state.common.banners,
   loading: state.global.loading
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getBanner: () => dispatch(getBanner()),
-})
-
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Index)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(Index)

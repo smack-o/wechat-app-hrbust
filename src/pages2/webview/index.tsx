@@ -3,11 +3,8 @@ import { connect } from 'react-redux'
 import { View, WebView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
 type PropsFromDispatch = {
 }

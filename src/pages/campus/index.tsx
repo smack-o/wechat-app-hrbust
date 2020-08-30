@@ -5,7 +5,6 @@ import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import cn from 'classnames'
 import { goPage, routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 
 // images
 import courseIcon from '@/assets/icon/course.png'
@@ -20,17 +19,12 @@ import chidaoIcon from './res/chidao.png'
 
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
-
-type PropsFromDispatch = {
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
+type PropsFromDispatch = {}
 
 type PageOwnProps = {}
 
-type PageState = {
-}
+type PageState = {}
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
@@ -75,7 +69,7 @@ class Campus extends Component<IProps, PageState> {
   }, {
     image: phoneBookIcon,
     text: '理工电邮',
-    url: `${routes.webview}?url=${encodeURIComponent('http://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rdhttp://mp.weixin.qq.com/s?__biz=MzUwOTk3NTEzNg==&mid=100000003&idx=1&sn=6c0650f0d944ad9e0ee6111dc5dc50e5&chksm=790b4e0c4e7cc71ad82a724462bed37ed99ba19c95c8c823382a9895dd1eab9dca59ec7da119#rd')}&title=理工电邮`,
+    url: `${routes.webview}?url=${encodeURIComponent('https://mp.weixin.qq.com/s/8Lsdsd7tMdjM6YgU2rGkbA')}&title=理工电邮`,
     // needLogin: true,
     shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
   }, {

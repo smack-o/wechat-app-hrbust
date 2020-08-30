@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Image, Navigator } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 import Taro from '@tarojs/taro'
 // images
 import newFnIcon from './res/new_fn_icon.png'
@@ -11,9 +10,7 @@ import touchMeIcon from './res/touch_me_icon.png'
 import discoverIcon from './res/discover.png'
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {
 }
 

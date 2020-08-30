@@ -4,9 +4,8 @@ import Taro from '@tarojs/taro'
 import { View, Image, OpenData, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 import { logout, init } from '@/redux/actions/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import { cError } from '@/utils'
 
 import arrowRight from '@/assets/icon/arrow_right.png'
@@ -14,22 +13,15 @@ import authIcon from './res/authentication.png'
 import removeBindingIcon from './res/remove_binding.png'
 import contactIcon from './res/contact.png'
 
-// images
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  logout: typeof logout
-  init: typeof init
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
-type PageState = {
-}
+type PageState = {}
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
@@ -79,14 +71,16 @@ class Account extends Component<IProps, PageState> {
           <View className="avatar-wrapper">
             <OpenData className="avatar" type="userAvatarUrl" lang="zh_CN"></OpenData>
           </View>
-          {!isLogin && <View className="button" onClick={() => goPage(routes.login)}>登录</View>}
-          {isLogin && <View className="info">
-            <View className="name"><OpenData type="userNickName" lang="zh_CN"></OpenData></View>
-            <View className="student">
-              <Image className="image" src={authIcon} />
-              <View>{studentInfo.name}</View>
+          {!isLogin
+            ? <View className="button" onClick={() => goPage(routes.login)}>登录</View>
+            : <View className="info">
+              <View className="name"><OpenData type="userNickName" lang="zh_CN"></OpenData></View>
+              <View className="student">
+                <Image className="image" src={authIcon} />
+                <View>{studentInfo.name}</View>
+              </View>
             </View>
-          </View>}
+          }
         </View>
 
         <View className="other">
@@ -116,10 +110,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => dispatch(logout()),
-  init: () => dispatch(init()),
-})
-
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ logout, init }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Account)

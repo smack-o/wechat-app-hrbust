@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import Taro from '@tarojs/taro'
 import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { getBanner } from '@/redux/actions/common'
-import { CommonState } from '@/redux/reducers/common'
-import { UserState } from '@/redux/reducers/user'
 import { IRootState } from '@/types'
 
 import cn from 'classnames'
@@ -19,19 +17,13 @@ import gradeIcon from '@/assets/icon/grade.png'
 import shopIcon from '@/assets/icon/shop_selected.png'
 import queryRoomIcon from '@/assets/icon/query_room.png'
 import bgImg from './res/home-bg.png'
-
-import './index.less'
 import SwiperChild from './components/SwiperChild'
 
-type PropsFromState = {
-  banners: CommonState['banners']
-  user: UserState,
-  loading: IRootState['global']['loading']
-}
+import './index.less'
 
-type PropsFromDispatch = {
-  getBanner: typeof getBanner
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
+
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
@@ -60,8 +52,6 @@ class Index extends Component<IProps, PageState> {
       })
     }
   }
-
-  componentDidHide () { }
 
   onLoad() {
     // 在页面onLoad回调事件中创建插屏广告实例
@@ -236,8 +226,6 @@ const mapStateToProps = (state: IRootState) => ({
   loading: state.global.loading
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getBanner: () => dispatch(getBanner()),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getBanner }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Index)

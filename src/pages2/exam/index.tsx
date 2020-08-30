@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import { View, Ad } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
 import cn from 'classnames'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import { getExams } from '@/redux/actions/user'
 import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast } from '@/utils'
@@ -13,17 +12,12 @@ import { routes } from '@/utils/router'
 
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  getExams: typeof getExams
-}
 
-type PageOwnProps = {
-  changeLoading: (boolean) => void
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
+
+type PageOwnProps = {}
 
 type PageState = {
   loading: boolean
@@ -179,8 +173,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getExams: (...args) => dispatch(getExams(...args)),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getExams }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Exam)

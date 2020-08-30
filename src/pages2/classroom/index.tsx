@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { View, Text, Picker } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import { updateClassrooms } from '@/redux/actions/common'
 import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast } from '@/utils'
@@ -13,16 +12,11 @@ import { routes } from '@/utils/router'
 
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  updateClassrooms: typeof updateClassrooms
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {
-  changeLoading: (boolean) => void
 }
 
 type PageState = {
@@ -446,8 +440,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateClassrooms: (list) => dispatch(updateClassrooms(list)),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ updateClassrooms }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(QueryClassroom)

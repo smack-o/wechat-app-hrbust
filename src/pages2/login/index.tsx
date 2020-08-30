@@ -3,24 +3,19 @@ import { connect } from 'react-redux'
 import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
 import { AtInput, AtButton, AtIcon } from 'taro-ui'
 import { getCaptcha, login }from '@/services/user'
 import { cError } from '@/utils'
 import { routes } from '@/utils/router'
 import { init } from '@/redux/actions/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 
 import './index.less'
 
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  init: typeof init
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
@@ -167,9 +162,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  init: () => dispatch(init()),
-})
-
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ init }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Login)

@@ -4,7 +4,6 @@ import Taro from '@tarojs/taro'
 import { View, Text, Button, Picker, Ad, Navigator } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 import request from '@/utils/request'
 import { cError, showToast } from '@/utils'
 import { Loading, CaptchaModal } from '@/components'
@@ -12,21 +11,16 @@ import { getWeekAndTerm } from '@/services/week'
 import infoIcon from '@/assets/icon/icon_info.png'
 import errorIcon from '@/assets/icon/error_icon.png'
 import { setCurrentTerm } from '@/redux/actions/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 
 // images
 import './index.less'
 
 
 
-type PropsFromState = {
-  user: UserState
-  currentTerm: IRootState['user']['currentTerm']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  setCurrentTerm: typeof setCurrentTerm
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
@@ -82,7 +76,7 @@ class Course extends Component<IProps, PageState> {
   // 用户信息
   userInfo: any = {}
   // 学期
-  terms = ['大一 第1学期', '大一 第2学期', '大二 第1学期', '大二 第2学期', '大三 第1学期', '大三 第2学期', '大四 第1学期', '大四 第2学期']
+  terms = ['大一 第1学期', '大一 第2学期', '大二 第1学期', '大二 第2学期', '大三 第1学期', '大三 第2学期', '大四 第1学期', '大四 第2学期', '大五 第1学期', '大五 第2学期']
   dayNum = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
   time = [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']]
   month = new Date().getMonth() + 1
@@ -332,6 +326,7 @@ class Course extends Component<IProps, PageState> {
 
   // 获取课表
   getCourseHandel = async (term) => {
+    console.log(term)
     this.setLoading(true)
     this.setState({
       selectOpen: false
@@ -370,7 +365,7 @@ class Course extends Component<IProps, PageState> {
     })
     // const getCourseData = res.data.data.course
     // 课表为空的话，提示
-    if (!getCourseData) {
+    if (!getCourseData && !unplanCourse) {
       Taro.showModal({
         content: '该学期未查询到课表，请创建该学期',
         showCancel: false,
@@ -542,26 +537,14 @@ class Course extends Component<IProps, PageState> {
                     [0,1,2,3,4,5,6,7].map((_, dayIndex) => {
                       if (dayIndex === 0) {
                         // <!-- 左侧时间列表 -->
-                        // return <View className={`item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
-                        //   <View className="time-item">
-                        //     <View>{timeList[timeIndex][0]}</View>
-                        //     <View className="num">{timeItem[0]}</View>
-                        //   </View>
-                        //   <View className="time-item">
-                        //     <View>{timeList[timeIndex][1]}</View>
-                        //     <View className="num">{timeItem[1]}</View>
-                        //   </View>
-                        // </View>
                         return <View className={`time item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
                           <View className="time-item">
-                            {/* <View className="num">{timeItem[0]}</View> */}
                             <View>第{timeItem[0]}/{timeItem[1]}节</View>
                           </View>
                           <View className="time-item-num">
                             <View>{timeList[timeIndex][0]}</View>
                             <View>~</View>
                             <View>{timeList[timeIndex][1]}</View>
-                            {/* <View className="num">{timeItem[1]}</View> */}
                           </View>
                         </View>
                       }
@@ -658,8 +641,6 @@ const mapStateToProps = (state: IRootState) => ({
   currentTerm: state.user.currentTerm
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setCurrentTerm: (term) => dispatch(setCurrentTerm(term)),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ setCurrentTerm }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Course)

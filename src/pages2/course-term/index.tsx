@@ -4,28 +4,22 @@ import Taro from '@tarojs/taro'
 import { View, Picker, Image } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 import errorIcon from '@/assets/icon/error_icon.png'
 import { Loading, CaptchaModal } from '@/components'
 import { cError, showToast } from '@/utils'
 import request from '@/utils/request'
 import infoIcon from '@/assets/icon/icon_info.png'
 import { setCurrentTerm } from '@/redux/actions/user'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 
 import checkIcon from './res/check.png'
 
 // images
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-  currentTerm: IRootState['user']['currentTerm']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  setCurrentTerm: typeof setCurrentTerm
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
@@ -56,7 +50,9 @@ class CourseTerm extends Component<IProps, PageState> {
     {id: 4, label: '大三第一学期'},
     {id: 5, label: '大三第二学期'},
     {id: 6, label: '大四第一学期'},
-    {id: 7, label: '大四第二学期'}
+    {id: 7, label: '大四第二学期'},
+    {id: 8, label: '大五第一学期'},
+    {id: 9, label: '大五第二学期'}
   ]
 
   chooseTerm = 0
@@ -291,9 +287,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setCurrentTerm: (term) => dispatch(setCurrentTerm(term)),
-})
-
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ setCurrentTerm }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(CourseTerm)

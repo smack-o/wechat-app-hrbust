@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { CommonState } from '@/redux/reducers/common'
-import { Dispatch } from 'redux'
+import { Dispatch, bindActionCreators } from 'redux'
 import { getNews } from '@/redux/actions/common'
 import { Loading } from '@/components'
 import { cError, showToast } from '@/utils'
@@ -13,13 +12,9 @@ import { API_BASE_URL } from '@/utils/request'
 
 import './index.less'
 
-type PropsFromState = {
-  news: CommonState['news']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  getNews: typeof getNews
-}
+type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {
 }
@@ -115,8 +110,6 @@ const mapStateToProps = (state: IRootState) => ({
   news: state.common.news,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getNews: (data) => dispatch(getNews(data)),
-})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getNews }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(News)

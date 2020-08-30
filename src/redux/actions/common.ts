@@ -7,7 +7,7 @@ export const GET_HOME_BANNER = 'common/GET_HOME_BANNER'
 export const GET_NEWS = 'common/GET_NEWS'
 export const UPDATE_CLASSROOMS = 'common/UPDATE_CLASSROOMS'
 
-export const getBanner = (): any => async (dispatch: Dispatch) => {
+export const getBanner = () => async (dispatch: Dispatch) => {
   const [error, res] = await cError(banner())
   console.log(res)
   if (!error) {
@@ -16,6 +16,7 @@ export const getBanner = (): any => async (dispatch: Dispatch) => {
       data: res.data
     })
   }
+  return res
 }
 
 export const getNews = (data: Parameters<typeof news>[0]): any => async (dispatch: Dispatch) => {

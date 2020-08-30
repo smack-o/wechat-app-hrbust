@@ -4,17 +4,13 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { routes } from '@/utils/router'
-import { UserState } from '@/redux/reducers/user'
 
 // images
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-}
+type PropsFromDispatch = {}
 
 type PageOwnProps = {}
 

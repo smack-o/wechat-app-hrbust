@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { View, ScrollView, Text, OpenData, Image, Button, Audio } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
 import appAvatar from '@/assets/icon/app_avatar.png'
 import { routes } from '@/app.config'
 import bottomIcon from './res/wechat_bottom.jpg'
@@ -13,12 +12,9 @@ import bottomIcon from './res/wechat_bottom.jpg'
 import './index.less'
 
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-}
+type PropsFromDispatch = {}
 
 type PageOwnProps = {}
 

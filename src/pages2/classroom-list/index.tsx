@@ -2,27 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, ScrollView } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { getExams } from '@/redux/actions/user'
-import { CommonState } from '@/redux/reducers/common'
 
 import './index.less'
 
-type PropsFromState = {
-  rooms: CommonState['classrooms']
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-  getExams: typeof getExams
-}
+type PageOwnProps = {}
 
-type PageOwnProps = {
-  changeLoading: (boolean) => void
-}
+type PageState = {}
 
-type PageState = {
-}
-
-type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
+type IProps = PropsFromState & PageOwnProps
 
 class Classrooms extends Component<IProps, PageState> {
   state: Readonly<PageState> = {
@@ -143,4 +132,4 @@ const mapStateToProps = (state: IRootState) => ({
   rooms: state.common.classrooms,
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(Classrooms)
+export default connect<PropsFromState, {}, PageOwnProps>(mapStateToProps)(Classrooms)

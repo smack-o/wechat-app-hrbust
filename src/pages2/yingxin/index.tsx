@@ -3,14 +3,11 @@ import { connect } from 'react-redux'
 import { View, Text, Ad } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
-import { UserState } from '@/redux/reducers/user'
 import { AtButton, AtInput, AtTimeline } from 'taro-ui'
 import request from '@/utils/request'
 import './index.less'
 
-type PropsFromState = {
-  user: UserState
-}
+type PropsFromState = ReturnType<typeof mapStateToProps>
 
 type PropsFromDispatch = {
 }

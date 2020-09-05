@@ -137,7 +137,6 @@ class AboutMe extends Component<IProps, PageState> {
 
     // 音频
     if (CONFIG[count].position === 'left') {
-      console.log('---------', count)
       this.audioCtx.seek(0)
       this.audioCtx.play()
     }
@@ -157,7 +156,6 @@ class AboutMe extends Component<IProps, PageState> {
 
   // 点击图片展示
   viewImage = (src: string) => {
-    console.log(src)
     Taro.previewImage({
       current: src,
       urls: [src],
@@ -169,7 +167,7 @@ class AboutMe extends Component<IProps, PageState> {
 
   render () {
     const { count, scrollTop } = this.state
-    console.log(count, scrollTop)
+
     return (
       <View className="aboutme-page">
         <ScrollView className="list-wrapper" scrollY scrollTop={scrollTop}>

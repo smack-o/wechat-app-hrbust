@@ -1,0 +1,87 @@
+.query-classroom {
+  padding-top: 40rpx;
+
+  .selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+    .label {
+      position: relative;
+      width: 200rpx;
+      // line-height: 66rpx;
+      text-align: right;
+      margin-right: 38rpx;
+      font-size: 26rpx;
+      line-height: 30rpx;
+      color: #999999;
+    }
+
+    .color-red {
+      position: absolute;
+      right: -18rpx;
+      margin-top: 2rpx;
+    }
+
+    .small-size {
+      font-size: 20rpx;
+    }
+  }
+
+  .selector-input {
+    position: relative;
+    width: 460rpx;
+    height: 66rpx;
+    border-radius: 38rpx;
+    border: 1rpx solid #dcdcdc;
+    font-size: 24rpx;
+    line-height: 66rpx;
+    padding: 0 50rpx;
+    box-sizing: border-box;
+    color: #000;
+
+    .selector-placeholder {
+      color: #cccccc;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 30rpx;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 14rpx 13rpx 0 13rpx;
+      border-color: #bbbbbb transparent transparent transparent;
+    }
+  }
+
+  .button {
+    width: 630rpx;
+    height: 80rpx;
+    margin: 100rpx auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6dde9e;
+    box-shadow: 0px 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+    border-radius: 40rpx;
+    .button-text {
+      font-size: 26rpx;
+      color: #ffffff;
+    }
+  }
+
+  .infos {
+    width: 604rpx;
+    margin: 60rpx auto 0;
+    font-size: 24rpx;
+    color: #999999;
+  }
+
+  .color-red {
+    font-size: 30rpx;
+    color: #ff0000;
+    margin-top: 6rpx;
+  }
+}

@@ -76,9 +76,10 @@ class Login extends Component<IProps, PageState> {
     if (/fail auth deny/.test(e.detail.errMsg)) {
       return
     }
-    if (!e.detail.userInfo) {
+    if (e.detail.userInfo) {
       Taro.setStorageSync('userInfo', e.detail.userInfo)
     }
+
     const { username, password, captcha } = this.state
 
     Taro.setStorageSync('loginInfo', JSON.stringify({

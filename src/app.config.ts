@@ -34,6 +34,7 @@ export const router = {
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们
+    schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
   }
 }
 

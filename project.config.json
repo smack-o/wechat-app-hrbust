@@ -122,6 +122,12 @@
 					"name": "优惠购",
 					"pathName": "pages/shop/index",
 					"scene": null
+        },
+        {
+					"id": -1,
+					"name": "70周年校庆",
+					"pathName": "pages3/school-anniversary/index",
+					"scene": null
 				}
 			]
 		}

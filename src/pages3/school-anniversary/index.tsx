@@ -1,3 +1,5 @@
+// feat: 哈理工 70 周年校庆官方活动
+
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
@@ -190,6 +192,7 @@ class SchoolAnniversary extends Component<IProps, PageState> {
           {(step === 1 || step === 2) && <Image src={cropperImage} className="frame" />}
           {(step === 1 || step === 2) && <Image src={require(`./res/avatar-frames/${frameIndex + 1}.png`).default} className="frame" />}
           {step === 0 && <Cropper src={image} onReady={this.onCropperReady} />}
+          {step === 0 && image && <View className="tips">*图片可以缩放、裁剪</View>}
         </View>
         {
           step === 1 && <ScrollView className="frames" scrollX>
@@ -212,8 +215,15 @@ class SchoolAnniversary extends Component<IProps, PageState> {
           }
           <Fragment>
             { step > 0 && <Button onClick={this.prevStep}>上一步</Button>}
-            { step === 0 && <Button onClick={this.clearCanvas}>清空画布</Button>}
-            <Button onClick={this.nextStep} disabled={!image}>{ step === 2 ? '保存图片' : '下一步'}</Button>
+            {/* { step === 0 && image && <Button onClick={this.clearCanvas}>清空画布</Button>} */}
+            <Button
+              onClick={this.nextStep}
+              className={cn({
+                // flex1: step === 0 && !image
+                flex1: step === 0
+              })}
+              disabled={!image}
+            >{ step === 2 ? '保存图片' : '下一步'}</Button>
           </Fragment>
         </View>
         <Canvas

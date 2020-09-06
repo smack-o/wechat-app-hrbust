@@ -26,6 +26,14 @@
       left: 75rpx;
       z-index: 1;
     }
+
+    .tips {
+      position: absolute;
+      bottom: 0;
+      color: #04b00f;
+      font-size: 20rpx;
+      padding: 10rpx 20rpx;
+    }
   }
 
   .btn-wrapper {
@@ -77,10 +85,10 @@
       box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, .2);
       background: #ededed;
 
-      border: 1px solid transparent;
-
+      border: 2px solid transparent;
+      box-sizing: border-box;
       &.active {
-        border: 1px solid #04b00f;
+        border: 2px solid #04b00f;
       }
     }
   }
@@ -88,6 +96,7 @@
   .combine-canvas {
     position: fixed;
     opacity: 0;
-    left: -9999;
+    left: -9999px;
+    z-index: -1;
   }
 }

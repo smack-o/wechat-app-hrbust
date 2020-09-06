@@ -55,7 +55,7 @@ export default class Cropper extends Component<Props, State> {
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.cropper.removeImage()
-      this.pushOrign(nextProps.src)
+      nextProps.src && this.pushOrign(nextProps.src)
     }
   }
 

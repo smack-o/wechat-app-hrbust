@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View, Image, Button, ScrollView, Canvas } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { Cropper } from '@/components'
+import { Cropper, withShare } from '@/components'
 import cn from 'classnames'
 import WeCropper from 'we-cropper'
 // import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import { saveImage } from '@/utils'
 
 import bgImg from './res/bg.png'
+import shareIcon from './res/share-icon.png'
 
 import './index.less'
 
@@ -41,9 +42,7 @@ class SchoolAnniversary extends Component<IProps, PageState> {
     combineImage: '',
   }
 
-
   componentDidMount() {
-
   }
 
   cropper: WeCropper
@@ -233,4 +232,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(SchoolAnniversary)
+export default withShare({
+  title: '70周年校庆头像',
+  imageUrl: shareIcon,
+})(connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(SchoolAnniversary))

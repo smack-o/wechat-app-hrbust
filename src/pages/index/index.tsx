@@ -8,7 +8,7 @@ import { IRootState } from '@/types'
 
 import cn from 'classnames'
 import { goPage, routes } from '@/utils/router'
-import { Loading } from '@/components'
+import { Loading, withShare } from '@/components'
 
 // images
 import courseIcon from '@/assets/icon/course.png'
@@ -228,4 +228,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getBanner }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Index)
+export default withShare({
+  title: '理工喵儿，理工人专属小程序'
+})(connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Index))

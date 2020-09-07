@@ -1,6 +1,6 @@
 // 微信分享高阶组件
 
-import React, { Component } from 'react'
+import React, { ComponentClass } from 'react'
 import Taro from '@tarojs/taro'
 import { getCurrentPageUrl } from '@/utils'
 
@@ -19,8 +19,8 @@ const defaultOptions = {
 }
 
 function withShare(opts: Options = defaultOptions) {
-  return function demoComponent(WrappedComponent) {
-    return class WithShare extends Component {
+  return function demoComponent(WrappedComponent: ComponentClass) {
+    return class WithShare extends WrappedComponent {
       async componentWillMount() {
         Taro.showShareMenu({
           withShareTicket: true,
@@ -68,7 +68,8 @@ function withShare(opts: Options = defaultOptions) {
       }
 
       render() {
-        return <WrappedComponent />
+        // return <WrappedComponent />
+        return super.render()
       }
     }
   }

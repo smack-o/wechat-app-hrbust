@@ -9,6 +9,7 @@ export const LOGOUT = 'user/LOGOUT'
 export const GET_EXAMS = 'user/GET_EXAMS'
 export const GET_GRADES = 'user/GET_GRADES'
 export const SET_CURRENT_TERM = 'user/SET_CURRENT_TERM'
+export const UPDATE_USERINFO_PROMISE = 'user/UPDATE_USERINFO_PROMISE'
 
 export const setCurrentTerm = (term: number) => ({
   type: SET_CURRENT_TERM,
@@ -76,7 +77,7 @@ const login = () => {
 
 
 
-export const init = (): any => async (dispatch: Dispatch) => {
+export const initHandler = async (dispatch: Dispatch) => {
   dispatch(startLoading())
   try {
     // 检查微信登录 session
@@ -110,7 +111,16 @@ export const init = (): any => async (dispatch: Dispatch) => {
   }
 }
 
-export const logout = (): any => async (dispatch: Dispatch) => {
+export const init = () => async (dispatch: Dispatch) => {
+  const getUserInfoPromise = initHandler(dispatch)
+  dispatch({
+    type: UPDATE_USERINFO_PROMISE,
+    data: getUserInfoPromise
+  })
+  await getUserInfoPromise
+}
+
+export const logout = () => async (dispatch: Dispatch) => {
   await logoutReq()
   dispatch({
     type: LOGOUT
@@ -118,7 +128,7 @@ export const logout = (): any => async (dispatch: Dispatch) => {
 }
 
 
-export const getExams = (...data: Parameters<typeof exams>): any => async (dispatch: Dispatch) => {
+export const getExams = (...data: Parameters<typeof exams>) => async (dispatch: Dispatch) => {
   const res = await exams(...data)
   const list = res?.data || []
 
@@ -131,7 +141,7 @@ export const getExams = (...data: Parameters<typeof exams>): any => async (dispa
   return res
 }
 
-export const getGrades = (...data: Parameters<typeof grades>): any => async (dispatch: Dispatch) => {
+export const getGrades = (...data: Parameters<typeof grades>) => async (dispatch: Dispatch) => {
   const res = await grades(...data)
 
   dispatch({

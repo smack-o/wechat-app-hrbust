@@ -42,7 +42,9 @@ class Login extends Component<IProps, PageState> {
     this.setState(loginInfo)
   }
 
-  onLoad() {
+  async onLoad() {
+    const { user } = this.props
+    await user.getUserInfoPromise
     this.getCaptcha()
   }
 

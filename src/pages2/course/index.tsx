@@ -92,6 +92,7 @@ class Course extends Component<IProps, PageState> {
   }
   timeList = () => {
     const classNum = parseInt(String(this.state.termId / 2))
+    console.log(classNum, 'classNumclassNum')
     if (classNum === 1) {
       return [['08:00', '09:25'], ['09:50', '11:15'], ['13:30', '14:55'], ['15:30', '16:55'], ['18:10', '19:35'], ['19:50', '21:15']]
     }

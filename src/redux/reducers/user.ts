@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { AnyAction } from 'redux'
-import { GET_USERINFO, LOGOUT, GET_EXAMS, GET_GRADES, SET_CURRENT_TERM } from '../actions/user'
+import { GET_USERINFO, LOGOUT, GET_EXAMS, GET_GRADES, SET_CURRENT_TERM, UPDATE_USERINFO_PROMISE } from '../actions/user'
 
 
 const studentInfo = JSON.parse(Taro.getStorageSync('studentInfo') || '{}')
@@ -83,6 +83,11 @@ export default function user(state = INITIAL_STATE, action: AnyAction): UserStat
       return {
         ...state,
         ...action.data
+      }
+    case UPDATE_USERINFO_PROMISE:
+      return {
+        ...state,
+        getUserInfoPromise: action.data
       }
     case LOGOUT:
       Taro.removeStorageSync('studentInfo')

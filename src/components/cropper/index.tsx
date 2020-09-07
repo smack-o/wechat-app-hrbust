@@ -13,8 +13,8 @@ type State = {}
 
 const device = Taro.getSystemInfoSync()
 
-const width = device.windowWidth
-const height = device.windowWidth
+const width = device.windowWidth / 2
+const height = device.windowWidth / 2
 
 const defaultOptions = {
   id: 'cropper',
@@ -25,10 +25,10 @@ const defaultOptions = {
   scale: 2.5,
   zoom: 8,
   cut: {
-    x: (width - 300) / 2,
-    y: (height - 300) / 2,
-    width: 300,
-    height: 300,
+    x: (width - 150) / 2,
+    y: (height - 150) / 2,
+    width: 150,
+    height: 150,
   },
   boundStyle: {
     color: '#04b00f',

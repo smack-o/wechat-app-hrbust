@@ -11,25 +11,31 @@
   }
 
   .cropper-wrapper {
-    height: 750rpx;
-    // width: 50%;
-    // margin: 0 auto;
-    // padding-top: 500rpx;
+    height: 850rpx;
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 450rpx;
     position: relative;
+
+    // &.hidden {
+    //   opacity: 0;
+    // }
     .frame {
       position: absolute;
+      top: 450rpx;
+      left: 0;
 
-      width: 600rpx;
-      height: 600rpx;
+      width: 375rpx;
+      height: 375rpx;
 
-      top: 75rpx;
-      left: 75rpx;
+      // top: 75rpx;
+      // left: 75rpx;
       z-index: 1;
     }
 
     .tips {
       position: absolute;
-      bottom: 0;
+      bottom: 20rpx;
       color: #04b00f;
       font-size: 20rpx;
       padding: 10rpx 20rpx;

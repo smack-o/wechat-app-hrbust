@@ -74,7 +74,7 @@ class SchoolAnniversary extends Component<IProps, PageState> {
     // 需要获取裁剪之后的图片
     if (nextStep === 1) {
       // @ts-ignore
-      const path = await this.cropper.getCropperImage()
+      const path = await this.cropper.getCropperImage({ original: true })
       this.setState({
         cropperImage: path
       })
@@ -188,7 +188,10 @@ class SchoolAnniversary extends Component<IProps, PageState> {
     return (
       <View className="school-snniversary">
         <Image src={bgImg} className="bg-image" mode="widthFix" />
-        <View className="cropper-wrapper">
+        <View className={cn('cropper-wrapper', {
+          hidden: !image
+        })}
+        >
           {(step === 1 || step === 2) && <Image src={cropperImage} className="frame" />}
           {(step === 1 || step === 2) && <Image src={require(`./res/avatar-frames/${frameIndex + 1}.png`).default} className="frame" />}
           {step === 0 && <Cropper src={image} onReady={this.onCropperReady} />}
@@ -242,7 +245,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-export default withShare({
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(withShare({
   title: '70周年校庆头像',
   imageUrl: shareIcon,
-})(connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(SchoolAnniversary))
+})(SchoolAnniversary))

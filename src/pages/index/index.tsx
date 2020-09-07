@@ -228,6 +228,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getBanner }, dispatch)
 
-export default withShare({
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(withShare({
   title: '理工喵儿，理工人专属小程序'
-})(connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Index))
+})(Index))

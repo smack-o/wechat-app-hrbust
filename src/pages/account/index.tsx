@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
-import { View, Image, OpenData, Button } from '@tarojs/components'
+import { View, Image, OpenData, Text, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
 import { logout, init } from '@/redux/actions/user'
@@ -21,15 +21,22 @@ type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
 type PageOwnProps = {}
 
-type PageState = {}
+type PageState = {
+  version: string
+}
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Account extends Component<IProps, PageState> {
   state = {
+    version: '1.0.0'
   }
 
   componentDidShow () {
+    const { miniProgram } = Taro.getAccountInfoSync() || {}
+    this.setState({
+      version: miniProgram.version
+    })
   }
 
   onLoad() {
@@ -64,6 +71,9 @@ class Account extends Component<IProps, PageState> {
 
   render () {
     const { user: { isLogin, studentInfo } } = this.props
+    const { version } = this.state
+
+    console.log(version)
 
     return (
       <View className="account-container">
@@ -74,7 +84,10 @@ class Account extends Component<IProps, PageState> {
           {!isLogin
             ? <View className="button" onClick={() => goPage(routes.login)}>登录</View>
             : <View className="info">
-              <View className="name"><OpenData type="userNickName" lang="zh_CN"></OpenData></View>
+              <View className="name">
+                <OpenData type="userNickName" lang="zh_CN"></OpenData>
+                <Text selectable className="username">{studentInfo.username}</Text>
+              </View>
               <View className="student">
                 <Image className="image" src={authIcon} />
                 <View>{studentInfo.name}</View>
@@ -101,6 +114,8 @@ class Account extends Component<IProps, PageState> {
             </View>
           </Button>
         </View>
+
+        { version && <View className="version">@理工喵 v{version}</View>}
       </View>
     )
   }

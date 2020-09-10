@@ -105,7 +105,7 @@ export default {
 
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fafafa',
+    navigationBarBackgroundColor: '#ffffff',
     navigationBarTitleText: '理工喵',
     navigationBarTextStyle: 'black'
   },

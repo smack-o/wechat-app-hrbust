@@ -92,7 +92,7 @@ class Course extends Component<IProps, PageState> {
   }
   timeList = () => {
     const classNum = parseInt(String(this.state.termId / 2))
-    console.log(classNum, 'classNumclassNum')
+    // console.log(classNum, 'classNumclassNum')
     if (classNum === 1) {
       return [['08:00', '09:25'], ['09:50', '11:15'], ['13:30', '14:55'], ['15:30', '16:55'], ['18:10', '19:35'], ['19:50', '21:15']]
     }
@@ -294,10 +294,16 @@ class Course extends Component<IProps, PageState> {
 
     const { week } = res
 
+    // 设置当前周数，如果教务在线获取的周数超过25周，当前周数设置为25
+    const MAX_WEEK_NUM = 25
+    const isExceed = week > MAX_WEEK_NUM
+    const thisWeek = isExceed ? MAX_WEEK_NUM : week
+    const slectedWeek = isExceed ? (MAX_WEEK_NUM - 1) : (week - 1)
+
     this.setState({
-      thisWeek: week,
-      thisWeekNum: week,
-      slectedWeek: week,
+      thisWeek: thisWeek,
+      thisWeekNum: thisWeek,
+      slectedWeek: slectedWeek,
       // currentTerm: term,
     })
 
@@ -327,7 +333,7 @@ class Course extends Component<IProps, PageState> {
 
   // 获取课表
   getCourseHandel = async (term) => {
-    console.log(term)
+    // console.log(term)
     this.setLoading(true)
     this.setState({
       selectOpen: false

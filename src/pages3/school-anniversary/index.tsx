@@ -200,7 +200,7 @@ class SchoolAnniversary extends Component<IProps, PageState> {
         {
           step === 1 && <ScrollView className="frames" scrollX>
             {
-              Array(11).fill(0).map((_, index) => {
+              Array(7).fill(0).map((_, index) => {
                 return <Image className={cn('frame', {
                   active: index === frameIndex
                 })} key={index} src={require(`./res/avatar-frames/${index + 1}.png`).default} onClick={() => this.chooseFrame(index)}

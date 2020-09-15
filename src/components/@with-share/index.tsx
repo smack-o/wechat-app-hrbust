@@ -12,9 +12,9 @@ export type Options = {
 }
 
 const defaultOptions = {
-  title: 'pages/index/index',
-  imageUrl: '理工喵',
-  path: '',
+  title: '理工喵',
+  imageUrl: '',
+  path: 'pages/index/index',
   query: '',
 }
 

@@ -12,7 +12,7 @@ import WeCropper from 'we-cropper'
 import { saveImage } from '@/utils'
 
 import bgImg from './res/bg.png'
-import shareIcon from './res/share-icon.png'
+import shareIcon from './res/share-icon.jpg'
 
 import './index.less'
 
@@ -245,7 +245,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(withShare({
+export default withShare({
   title: '70周年校庆头像',
   imageUrl: shareIcon,
-})(SchoolAnniversary))
+})(SchoolAnniversary)

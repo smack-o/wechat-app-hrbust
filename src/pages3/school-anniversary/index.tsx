@@ -246,6 +246,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 export default withShare({
-  title: '70周年校庆头像',
+  title: '理工70周年专属校庆头像上线！',
   imageUrl: shareIcon,
 })(SchoolAnniversary)

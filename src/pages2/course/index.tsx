@@ -30,7 +30,7 @@ type PageState = {
   thisWeek: number,
   thisWeekNum: number,
   nowDayIndex: number,
-  termId: number,
+  // termId: number,
   courseData: any[],
   // detailData: any[],
   unplanCourse: any[],
@@ -41,17 +41,19 @@ type PageState = {
   captchaImage: string,
 }
 
+let thisWeekStorage = Taro.getStorageSync('course:week') || 3
+
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 let interstitialAd: Taro.InterstitialAd
 class Course extends Component<IProps, PageState> {
   state: Readonly<PageState> = {
     loading: false,
-    slectedWeek: 0,
-    thisWeek: 1,
-    thisWeekNum: 1,
+    slectedWeek: thisWeekStorage ? thisWeekStorage - 1 : 0,
+    thisWeek: thisWeekStorage || 1,
+    thisWeekNum: thisWeekStorage || 1,
     nowDayIndex: new Date().getDay(),
-    termId: 0,
+    // termId: 0,
     courseData: [],
     unplanCourse: [],
     selectOpen: false,
@@ -91,15 +93,19 @@ class Course extends Component<IProps, PageState> {
     return time
   }
   timeList = () => {
-    const classNum = parseInt(String(this.state.termId / 2))
-    // console.log(classNum, 'classNumclassNum')
-    if (classNum === 1) {
+    const { currentTerm } = this.props
+    // 大一
+    if (currentTerm === 0 || currentTerm === 1) {
       return [['08:00', '09:25'], ['09:50', '11:15'], ['13:30', '14:55'], ['15:30', '16:55'], ['18:10', '19:35'], ['19:50', '21:15']]
     }
-    if (classNum === 2) {
+
+    // 大二
+    if (currentTerm === 2 || currentTerm === 3) {
       return [['08:05', '09:30'], ['10:10', '11:35'], ['13:35', '15:00'], ['15:45', '17:10'], ['18:15', '19:40'], ['19:55', '21:20']]
     }
-    if (classNum === 3) {
+
+    // 大三
+    if (currentTerm === 4 || currentTerm === 5) {
       return [['08:10', '09:35'], ['10:30', '11:55'], ['13:40', '15:05'], ['16:00', '17:25'], ['18:20', '19:45'], ['20:00', '21:25']]
     }
 
@@ -307,6 +313,8 @@ class Course extends Component<IProps, PageState> {
       // currentTerm: term,
     })
 
+    Taro.setStorage({ key: 'course:week', data: thisWeek })
+    Taro.setStorage({ key: 'course:week.timestamp', data: Date.now() })
     return Promise.resolve()
   }
 
@@ -367,7 +375,7 @@ class Course extends Component<IProps, PageState> {
 
     const { course: getCourseData, courseTermId, unplanCourse } = res.data
     this.setState({
-      termId: courseTermId,
+      // termId: courseTermId,
       unplanCourse: unplanCourse || [],
     })
     // const getCourseData = res.data.data.course

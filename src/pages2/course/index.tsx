@@ -16,8 +16,6 @@ import { Dispatch, bindActionCreators } from 'redux'
 // images
 import './index.less'
 
-
-
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
 type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
@@ -25,20 +23,20 @@ type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 type PageOwnProps = {}
 
 type PageState = {
-  loading: boolean,
-  slectedWeek: number,
-  thisWeek: number,
-  thisWeekNum: number,
-  nowDayIndex: number,
+  loading: boolean
+  slectedWeek: number
+  thisWeek: number
+  thisWeekNum: number
+  nowDayIndex: number
   // termId: number,
-  courseData: any[],
+  courseData: any[]
   // detailData: any[],
-  unplanCourse: any[],
+  unplanCourse: any[]
   // detailOpen: boolean,
-  selectOpen: boolean,
+  selectOpen: boolean
   // currentTerm: number,
-  isShowCaptchaModal: boolean,
-  captchaImage: string,
+  isShowCaptchaModal: boolean
+  captchaImage: string
 }
 
 let thisWeekStorage = Taro.getStorageSync('course:week') || 3
@@ -62,7 +60,6 @@ class Course extends Component<IProps, PageState> {
     captchaImage: '',
   }
 
-
   componentWillReceiveProps(nextProps) {
     if (this.props.currentTerm !== nextProps.currentTerm) {
       this.getCourseHandel(nextProps.currentTerm)
@@ -78,14 +75,44 @@ class Course extends Component<IProps, PageState> {
   // 用户信息
   userInfo: any = {}
   // 学期
-  terms = ['大一 第1学期', '大一 第2学期', '大二 第1学期', '大二 第2学期', '大三 第1学期', '大三 第2学期', '大四 第1学期', '大四 第2学期', '大五 第1学期', '大五 第2学期']
+  terms = [
+    '大一 第1学期',
+    '大一 第2学期',
+    '大二 第1学期',
+    '大二 第2学期',
+    '大三 第1学期',
+    '大三 第2学期',
+    '大四 第1学期',
+    '大四 第2学期',
+    '大五 第1学期',
+    '大五 第2学期',
+  ]
   dayNum = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-  time = [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']]
+  time = [
+    ['1', '2'],
+    ['3', '4'],
+    ['5', '6'],
+    ['7', '8'],
+    ['9', '10'],
+  ]
   month = new Date().getMonth() + 1
-  unplanCourseTitle = ['课程名称', '任课教师', '合班', '上课周次', '上课时间', '上课地点']
+  unplanCourseTitle = [
+    '课程名称',
+    '任课教师',
+    '合班',
+    '上课周次',
+    '上课时间',
+    '上课地点',
+  ]
 
   getTime = () => {
-    const time = [['1', '2'], ['3', '4'], ['5', '6'], ['7', '8'], ['9', '10']]
+    const time = [
+      ['1', '2'],
+      ['3', '4'],
+      ['5', '6'],
+      ['7', '8'],
+      ['9', '10'],
+    ]
     if (this.state.courseData.length > 10) {
       time.push(['11', '12'])
       return time
@@ -93,29 +120,57 @@ class Course extends Component<IProps, PageState> {
     return time
   }
   timeList = () => {
-    const { currentTerm } = this.props
+    const currentTerm = +this.props.currentTerm
     // 大一
     if (currentTerm === 0 || currentTerm === 1) {
-      return [['08:00', '09:25'], ['09:50', '11:15'], ['13:30', '14:55'], ['15:30', '16:55'], ['18:10', '19:35'], ['19:50', '21:15']]
+      return [
+        ['08:00', '09:25'],
+        ['09:50', '11:15'],
+        ['13:30', '14:55'],
+        ['15:30', '16:55'],
+        ['18:10', '19:35'],
+        ['19:50', '21:15'],
+      ]
     }
 
     // 大二
     if (currentTerm === 2 || currentTerm === 3) {
-      return [['08:05', '09:30'], ['10:10', '11:35'], ['13:35', '15:00'], ['15:45', '17:10'], ['18:15', '19:40'], ['19:55', '21:20']]
+      return [
+        ['08:05', '09:30'],
+        ['10:10', '11:35'],
+        ['13:35', '15:00'],
+        ['15:45', '17:10'],
+        ['18:15', '19:40'],
+        ['19:55', '21:20'],
+      ]
     }
 
     // 大三
     if (currentTerm === 4 || currentTerm === 5) {
-      return [['08:10', '09:35'], ['10:30', '11:55'], ['13:40', '15:05'], ['16:00', '17:25'], ['18:20', '19:45'], ['20:00', '21:25']]
+      return [
+        ['08:10', '09:35'],
+        ['10:30', '11:55'],
+        ['13:40', '15:05'],
+        ['16:00', '17:25'],
+        ['18:20', '19:45'],
+        ['20:00', '21:25'],
+      ]
     }
 
-    return [['08:15', '09:40'], ['10:50', '12:15'], ['13:45', '15:10'], ['16:15', '17:40'], ['18:25', '19:50'], ['20:05', '21:30']]
+    return [
+      ['08:15', '09:40'],
+      ['10:50', '12:15'],
+      ['13:45', '15:10'],
+      ['16:15', '17:40'],
+      ['18:25', '19:50'],
+      ['20:05', '21:30'],
+    ]
   }
 
   async onLoad() {
     // 在页面onLoad回调事件中创建插屏广告实例
     interstitialAd = Taro.createInterstitialAd({
-      adUnitId: 'adunit-167f2a17e8f9ecc4'
+      adUnitId: 'adunit-167f2a17e8f9ecc4',
     })
     interstitialAd.onLoad(() => {})
     interstitialAd.onError(() => {})
@@ -123,7 +178,7 @@ class Course extends Component<IProps, PageState> {
 
     // 分享
     Taro.showShareMenu({
-      withShareTicket: true
+      withShareTicket: true,
     })
 
     const username = this.props.user.studentInfo.username
@@ -145,7 +200,7 @@ class Course extends Component<IProps, PageState> {
 
     // 获取当前周数、以及学期数
     // TODO: 优化 优先本地取 term 和 week
-    await this.getWeekAndTerm()
+    this.getWeekAndTerm()
 
     const course = this.userInfo.course
     const unplanCourse = this.userInfo.unplanCourse
@@ -153,7 +208,7 @@ class Course extends Component<IProps, PageState> {
       // storage 存在课程数据，直接渲染
       this.setState({
         courseData: course,
-        unplanCourse: unplanCourse
+        unplanCourse: unplanCourse,
       })
       this.setLoading(false)
     } else {
@@ -185,7 +240,9 @@ class Course extends Component<IProps, PageState> {
       selectOpen: false,
     })
 
-    const [createNewTermError] = await cError(this.createNewTerm(this.props.currentTerm, captcha))
+    const [createNewTermError] = await cError(
+      this.createNewTerm(this.props.currentTerm, captcha)
+    )
 
     this.setLoading(false)
     if (createNewTermError) {
@@ -200,10 +257,12 @@ class Course extends Component<IProps, PageState> {
     if (term === undefined) return
     const reqData = { term, captcha }
 
-    const [err, res] = await cError(request({
-      url: '/api/hrbust/updateCourse',
-      data: reqData
-    }))
+    const [err, res] = await cError(
+      request({
+        url: '/api/hrbust/updateCourse',
+        data: reqData,
+      })
+    )
 
     const { status } = res
 
@@ -211,7 +270,7 @@ class Course extends Component<IProps, PageState> {
       Taro.showToast({
         title: '课表为空',
         image: infoIcon,
-        duration: 1000
+        duration: 1000,
       })
       return Promise.reject('课表为空')
     }
@@ -224,16 +283,16 @@ class Course extends Component<IProps, PageState> {
         success(r) {
           if (r.confirm) {
             Taro.reLaunch({
-              url: routes.login
+              url: routes.login,
             })
             // console.log('用户点击确定')
           } else if (r.cancel) {
             // console.log('用户点击取消')
             Taro.switchTab({
-              url: routes.index
+              url: routes.index,
             })
           }
-        }
+        },
       })
       return Promise.reject('账号密码错误')
     }
@@ -250,7 +309,7 @@ class Course extends Component<IProps, PageState> {
         title: '验证码输入错误，请重新输入',
         complete: () => {
           this.showCaptchaModal(res.data.captcha)
-        }
+        },
       })
       return Promise.reject('验证码输入错误，请重新输入')
     }
@@ -259,7 +318,7 @@ class Course extends Component<IProps, PageState> {
       Taro.showToast({
         title: '抓取课表失败',
         image: errorIcon,
-        duration: 1000
+        duration: 1000,
       })
       return Promise.reject('抓取课表失败')
     }
@@ -284,8 +343,8 @@ class Course extends Component<IProps, PageState> {
   }
 
   // 获取周、学期
-  async getWeekAndTerm () {
-    const [ err, res ]= await cError(getWeekAndTerm(this.userInfo.term))
+  async getWeekAndTerm() {
+    const [err, res] = await cError(getWeekAndTerm(this.userInfo.term))
 
     if (err) {
       Taro.showModal({
@@ -293,7 +352,7 @@ class Course extends Component<IProps, PageState> {
         showCancel: false,
         success: () => {
           Taro.reLaunch({ url: routes.index })
-        }
+        },
       })
       return Promise.reject('获取周数错误')
     }
@@ -304,7 +363,7 @@ class Course extends Component<IProps, PageState> {
     const MAX_WEEK_NUM = 25
     const isExceed = week > MAX_WEEK_NUM
     const thisWeek = isExceed ? MAX_WEEK_NUM : week
-    const slectedWeek = isExceed ? (MAX_WEEK_NUM - 1) : (week - 1)
+    const slectedWeek = isExceed ? MAX_WEEK_NUM - 1 : week - 1
 
     this.setState({
       thisWeek: thisWeek,
@@ -330,10 +389,9 @@ class Course extends Component<IProps, PageState> {
   // 右上角加号，更新学期
   selectListSwitch = () => {
     this.setState({
-      selectOpen: !this.state.selectOpen
+      selectOpen: !this.state.selectOpen,
     })
   }
-
 
   setLoading = (loading: boolean) => {
     this.setState({ loading })
@@ -344,7 +402,7 @@ class Course extends Component<IProps, PageState> {
     // console.log(term)
     this.setLoading(true)
     this.setState({
-      selectOpen: false
+      selectOpen: false,
     })
 
     const [getCourseError] = await cError(this.getCourse(term))
@@ -354,7 +412,7 @@ class Course extends Component<IProps, PageState> {
         Taro.showToast({
           title: '课表为空',
           image: infoIcon,
-          duration: 1000
+          duration: 1000,
         })
       }
       return
@@ -363,13 +421,19 @@ class Course extends Component<IProps, PageState> {
 
   // 获取课表接口处理
   getCourse = async (term) => {
-    const [err, res] = await cError(request({
-      url: '/api/hrbust/course',
-      data: { term }
-    }))
+    const [err, res] = await cError(
+      request({
+        url: '/api/hrbust/course',
+        data: { term },
+      })
+    )
 
     if (err) {
-      Taro.showToast({title: '获取课表失败', image: errorIcon, duration: 1000})
+      Taro.showToast({
+        title: '获取课表失败',
+        image: errorIcon,
+        duration: 1000,
+      })
       return Promise.reject('获取课表失败')
     }
 
@@ -386,7 +450,7 @@ class Course extends Component<IProps, PageState> {
         showCancel: false,
         success: () => {
           Taro.navigateTo({ url: routes.courseTerm })
-        }
+        },
       })
 
       return
@@ -403,7 +467,9 @@ class Course extends Component<IProps, PageState> {
 
     getCourseData.forEach((courseItem) => {
       if (!courseIdList[courseItem.courseId]) {
-        let cardClassName = this.courseCardStyleMap[courseCardStyleIndex % this.courseCardStyleMap.length]
+        let cardClassName = this.courseCardStyleMap[
+          courseCardStyleIndex % this.courseCardStyleMap.length
+        ]
         courseIdList[courseItem.courseId] = cardClassName
         courseItem.class = cardClassName
         courseCardStyleIndex++
@@ -425,7 +491,10 @@ class Course extends Component<IProps, PageState> {
     // 学期数、课程、未安排课程存入Storage
     const userInfo = { term, course: courseList, unplanCourse }
     this.userInfo = userInfo
-    Taro.setStorage({ key: `course:${this.props.user.studentInfo.username}`, data: userInfo })
+    Taro.setStorage({
+      key: `course:${this.props.user.studentInfo.username}`,
+      data: userInfo,
+    })
 
     Taro.showToast({ title: '获取课表成功', icon: 'success', duration: 1000 })
     return Promise.resolve()
@@ -433,10 +502,12 @@ class Course extends Component<IProps, PageState> {
 
   // 课程详情
   detailHandler = (dayIndex, timeIndex) => {
-    Taro.navigateTo({url: `${routes.courseDetail}?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.state.thisWeek}`})
+    Taro.navigateTo({
+      url: `${routes.courseDetail}?dayIndex=${dayIndex}&timeIndex=${timeIndex}&thisWeek=${this.state.thisWeek}`,
+    })
   }
 
-  currentWeekList () {
+  currentWeekList() {
     let week
     const { thisWeekNum, slectedWeek } = this.state
     if (thisWeekNum === 25) {
@@ -452,22 +523,28 @@ class Course extends Component<IProps, PageState> {
     const aWeekTimeStamp = 7 * aDayTimeStamp
     const timeStamp = Date.now() + week * aWeekTimeStamp
     const currentDay = new Date(timeStamp).getDay()
-    const month = new Date(timeStamp + aDayTimeStamp * (currentDay + 6) % 7).getMonth() + 1
+    const month =
+      new Date(
+        timeStamp + ((aDayTimeStamp * (currentDay + 6)) % 7)
+      ).getMonth() + 1
 
     const days = Array.from(new Array(7)).map((_, i) => {
-      return new Date(timeStamp + aDayTimeStamp * (i - (currentDay + 6) % 7)).getDate()
+      return new Date(
+        timeStamp + aDayTimeStamp * (i - ((currentDay + 6) % 7))
+      ).getDate()
     })
 
     return {
       days,
-      month
+      month,
     }
   }
 
-  currentPart () {
+  currentPart() {
     const date = new Date()
     const hour = date.getHours()
-    const minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+    const minute =
+      date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
     const dateNum = parseInt('' + hour + minute)
 
     if (dateNum >= 600 && dateNum <= 950) {
@@ -485,7 +562,7 @@ class Course extends Component<IProps, PageState> {
     }
   }
 
-  render () {
+  render() {
     const {
       slectedWeek,
       thisWeekNum,
@@ -512,49 +589,77 @@ class Course extends Component<IProps, PageState> {
     }
     return (
       <View className="course-page">
-        <CaptchaModal captchaImage={captchaImage} onSubmit={this.onCaptchaModalSubmit} isOpened={isShowCaptchaModal}></CaptchaModal>
+        <CaptchaModal
+          captchaImage={captchaImage}
+          onSubmit={this.onCaptchaModalSubmit}
+          isOpened={isShowCaptchaModal}
+        ></CaptchaModal>
         <View className="wrap">
           <View className="refresh">更新课表请下拉刷新</View>
           <View className="picker-wrapper">
-            <View className="wrapper-left">
-            </View>
-            <Picker mode="selector" onChange={this.changeWeek} value={slectedWeek} range={this.weeks}>
+            <View className="wrapper-left"></View>
+            <Picker
+              mode="selector"
+              onChange={this.changeWeek}
+              value={slectedWeek}
+              range={this.weeks}
+            >
               <View>
                 <View>
-                  第<text className="num"> {this.weeks.length > 0 ? this.weeks[slectedWeek] : 0} </text>周
-
-                  {this.weeks[slectedWeek] == thisWeekNum && '(当前)'}
+                  第
+                  <text className="num">
+                    {' '}
+                    {this.weeks.length > 0 ? this.weeks[slectedWeek] : 0}{' '}
+                  </text>
+                  周{this.weeks[slectedWeek] == thisWeekNum && '(当前)'}
                 </View>
                 <View>{this.terms[currentTerm]}</View>
               </View>
             </Picker>
-            <View className={`wrapper-right ${selectOpen ? 'rotate' : ''}`} onClick={this.selectListSwitch}>+</View>
-          </View>
-          <View className="tips">*每节课上课时间仅供参考，具体时间以不同年级实际情况为准</View>
-          <View className="course-header">
-            <View className="item">
-              {currentWeekList.month}月
+            <View
+              className={`wrapper-right ${selectOpen ? 'rotate' : ''}`}
+              onClick={this.selectListSwitch}
+            >
+              +
             </View>
-            {
-              this.dayNum.map((dayItem, dayIndex) => {
-                return <View className={`item ${dayIndex + 1 === nowDayIndex ? 'now-day' : ''}`} key={dayIndex}>
+          </View>
+          <View className="tips">
+            *每节课上课时间仅供参考，具体时间以不同年级实际情况为准
+          </View>
+          <View className="course-header">
+            <View className="item">{currentWeekList.month}月</View>
+            {this.dayNum.map((dayItem, dayIndex) => {
+              return (
+                <View
+                  className={`item ${
+                    dayIndex + 1 === nowDayIndex ? 'now-day' : ''
+                  }`}
+                  key={dayIndex}
+                >
                   <View>{dayItem}</View>
                   <View>{currentWeekList.days[dayIndex]}日</View>
                 </View>
-              })
-            }
+              )
+            })}
           </View>
           <View className="course-body">
-            {
-              time.map((timeItem, timeIndex) => {
-                return <View className="line-item" key={timeItem[0]}>
-                  {
-                    [0,1,2,3,4,5,6,7].map((_, dayIndex) => {
-                      if (dayIndex === 0) {
-                        // <!-- 左侧时间列表 -->
-                        return <View className={`time item ${currentPart === timeIndex ? 'now-time' : ''}`} key={dayIndex}>
+            {time.map((timeItem, timeIndex) => {
+              return (
+                <View className="line-item" key={timeItem[0]}>
+                  {[0, 1, 2, 3, 4, 5, 6, 7].map((_, dayIndex) => {
+                    if (dayIndex === 0) {
+                      // <!-- 左侧时间列表 -->
+                      return (
+                        <View
+                          className={`time item ${
+                            currentPart === timeIndex ? 'now-time' : ''
+                          }`}
+                          key={dayIndex}
+                        >
                           <View className="time-item">
-                            <View>第{timeItem[0]}/{timeItem[1]}节</View>
+                            <View>
+                              第{timeItem[0]}/{timeItem[1]}节
+                            </View>
                           </View>
                           <View className="time-item-num">
                             <View>{timeList[timeIndex][0]}</View>
@@ -562,88 +667,128 @@ class Course extends Component<IProps, PageState> {
                             <View>{timeList[timeIndex][1]}</View>
                           </View>
                         </View>
-                      }
-                      // <!-- 课表内容 -->
-                      return <View className="item" onClick={() => this.detailHandler(dayIndex, timeItem[0])} key={dayIndex}>
+                      )
+                    }
+                    // <!-- 课表内容 -->
+                    return (
+                      <View
+                        className="item"
+                        onClick={() =>
+                          this.detailHandler(dayIndex, timeItem[0])
+                        }
+                        key={dayIndex}
+                      >
                         <View className="item-content">
-                          {
-                            courseData.length > 0 && courseData[timeItem[0]].map((item, index) => {
+                          {courseData.length > 0 &&
+                            courseData[timeItem[0]].map((item, index) => {
                               if (item.day != dayIndex) {
                                 return null
                               }
                               if (+item.period[thisWeek] === 1) {
-                                return <View key={index} className={`this-week ${item.class} ${item.day === nowDayIndex && (currentPart + 1) * 2 === item.sectionend ? 'use-border' : ''}`}>
-                                  <Text>《{item.name}》@{item.locale}</Text>
-                                </View>
+                                return (
+                                  <View
+                                    key={index}
+                                    className={`this-week ${item.class} ${
+                                      item.day === nowDayIndex &&
+                                      (currentPart + 1) * 2 === item.sectionend
+                                        ? 'use-border'
+                                        : ''
+                                    }`}
+                                  >
+                                    <Text>
+                                      《{item.name}》@{item.locale}
+                                    </Text>
+                                  </View>
+                                )
                               }
 
-                              return <View className="no-this-week" key={index}>
-                                <text>《{item.name}》@{item.locale}</text>
-                              </View>
-                            })
-                          }
+                              return (
+                                <View className="no-this-week" key={index}>
+                                  <text>
+                                    《{item.name}》@{item.locale}
+                                  </text>
+                                </View>
+                              )
+                            })}
                         </View>
                       </View>
-                    })
-                  }
+                    )
+                  })}
                 </View>
-              })
-            }
+              )
+            })}
           </View>
 
-          {
-            unplanCourse.length > 0 && <View className="unplan-course">
+          {unplanCourse.length > 0 && (
+            <View className="unplan-course">
               <View className="title">没有具体上课时间或地点的课程</View>
               <View className="content">
                 <View className="content-header">
-                  {
-                    this.unplanCourseTitle.map((item, index) => {
-                      return <View key={index}>{item}</View>
-                    })
-                  }
+                  {this.unplanCourseTitle.map((item, index) => {
+                    return <View key={index}>{item}</View>
+                  })}
                 </View>
-                {
-                  unplanCourse.map((unplanCourseObj, i) => {
-                    return <View className="unplan-item" key={i}>
-                      {
-                        Object.keys(unplanCourseObj).map(key => {
-                          return <View key={key}><Text className="text">{unplanCourseObj[key]}</Text></View>
-                        })
-                      }
+                {unplanCourse.map((unplanCourseObj, i) => {
+                  return (
+                    <View className="unplan-item" key={i}>
+                      {Object.keys(unplanCourseObj).map((key) => {
+                        return (
+                          <View key={key}>
+                            <Text className="text">{unplanCourseObj[key]}</Text>
+                          </View>
+                        )
+                      })}
                     </View>
-                  })
-                }
+                  )
+                })}
               </View>
             </View>
-          }
+          )}
 
           {/* <!-- SelectList --> */}
-          {
-            selectOpen && <View className="select-list">
-              <View className="empty-top" onClick={this.selectListSwitch}>
-              </View>
+          {selectOpen && (
+            <View className="select-list">
+              <View
+                className="empty-top"
+                onClick={this.selectListSwitch}
+              ></View>
               <View className="select-wrapper">
                 <Navigator url={routes.courseTerm} className="select-item">
                   <View className="select-text">选择学期</View>
                   <View className="select-data">{this.terms[currentTerm]}</View>
                   <View className="select-arrow"></View>
                 </Navigator>
-                <Picker mode="selector" onChange={this.changeWeek} value={slectedWeek} range={this.weeks}>
+                <Picker
+                  mode="selector"
+                  onChange={this.changeWeek}
+                  value={slectedWeek}
+                  range={this.weeks}
+                >
                   <View className="select-item">
                     <View className="select-text">选择周数</View>
                     <View className="select-data">
-                      第<Text className="num"> {this.weeks.length > 0 ? this.weeks[slectedWeek] : 0} </Text>周
-                      {this.weeks[slectedWeek] == thisWeekNum && '(当前)'}
+                      第
+                      <Text className="num">
+                        {' '}
+                        {this.weeks.length > 0
+                          ? this.weeks[slectedWeek]
+                          : 0}{' '}
+                      </Text>
+                      周{this.weeks[slectedWeek] == thisWeekNum && '(当前)'}
                     </View>
                     <View className="select-arrow"></View>
                   </View>
                 </Picker>
-                <Button type="primary" onClick={() => this.syncCourse()}>同步教务在线课表</Button>
+                <Button type="primary" onClick={() => this.syncCourse()}>
+                  同步教务在线课表
+                </Button>
               </View>
-              <View className="empty-bottom" onClick={this.selectListSwitch}>
-              </View>
+              <View
+                className="empty-bottom"
+                onClick={this.selectListSwitch}
+              ></View>
             </View>
-          }
+          )}
           <Ad className="advertising" unitId="adunit-f1ef7db925a525a8"></Ad>
         </View>
       </View>
@@ -653,9 +798,13 @@ class Course extends Component<IProps, PageState> {
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
-  currentTerm: state.user.currentTerm
+  currentTerm: state.user.currentTerm,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ setCurrentTerm }, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ setCurrentTerm }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Course)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Course)

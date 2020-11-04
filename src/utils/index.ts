@@ -158,3 +158,5 @@ export const saveImage = async (url: string) => {
     }
   })
 }
+
+export const delay = (timeout: number) => new Promise((resolve, reject) => setTimeout(resolve, timeout))

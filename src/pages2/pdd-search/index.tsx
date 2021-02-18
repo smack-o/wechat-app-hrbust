@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
@@ -6,8 +6,6 @@ import { IRootState } from '@/types'
 import { pddSearch, getKeywords, generateGoods, getChannel } from '@/services/pdd'
 import { AtSearchBar, AtIcon } from 'taro-ui'
 import { cError } from '@/utils'
-import { routes } from '@/utils/router'
-import ItemCard from './_components/ItemCard'
 
 import './index.less'
 
@@ -21,9 +19,8 @@ type PageState = {
   pddList: any[],
   searchValue: string,
   loading: boolean,
-  // hotKeywords: string[],
-  showScrollBtn: boolean,
-  channels: { title: string, goods_list: any[] }[]
+  hotKeywords: string[],
+  showScrollBtn: boolean
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -35,9 +32,8 @@ class Index extends Component<IProps, PageState> {
     pddList: [],
     searchValue: '寝室必备',
     loading: false,
-    // hotKeywords: [],
-    showScrollBtn: false,
-    channels: [],
+    hotKeywords: [],
+    showScrollBtn: false
   }
 
   pageNo = 1
@@ -109,26 +105,15 @@ class Index extends Component<IProps, PageState> {
       interstitialAd.onClose(() => { console.log('adclose') })
     }
 
-    this.getChannels()
     await this.getKeywords()
     this.pddSearch(true)
-  }
-
-  getChannels = async () => {
-    const [err, res] = await cError(getChannel())
-    console.log(res)
-    if (!err) {
-      this.setState({
-        channels: res.data
-      })
-    }
   }
 
   getKeywords = async () => {
     const [err, res] = await cError(getKeywords())
     if (!err) {
       this.setState({
-        // hotKeywords: res.data,
+        hotKeywords: res.data,
         searchValue: res.data[0]
       })
     }
@@ -136,8 +121,6 @@ class Index extends Component<IProps, PageState> {
 
   // 打开拼多多小程序
   onPddGoodsClick = async (goods) => {
-    // const [] = goods;
-    console.log(goods)
     const { search_id, goods_sign } = goods
     const [err, res] = await cError(generateGoods({
       goods_sign,
@@ -207,13 +190,8 @@ class Index extends Component<IProps, PageState> {
 
   setShowScrollBtn = (show: boolean) => this.setState({ showScrollBtn: show })
 
-  goSearch = () => {
-    Taro.navigateTo({
-      url: routes.pddSearch
-    })
-  }
   render () {
-    const { pddList, loading, channels, showScrollBtn } = this.state
+    const { pddList, loading, searchValue, hotKeywords, showScrollBtn } = this.state
 
     // if (loading) {
     //   return <Loading loading={loading}></Loading>
@@ -221,36 +199,63 @@ class Index extends Component<IProps, PageState> {
 
     return (
       <View className="pdd-container">
-        <View onClick={this.goSearch}>
-          <AtSearchBar
-            className="top-bar"
-            showActionButton
-            value=""
-            placeholder="点击搜索～"
-            actionName="搜索"
-            onActionClick={this.onSearch}
-            onChange={this.onSearchChange}
-            onConfirm={this.goSearch}
-            disabled
-          />
-        </View>
-
+        <AtSearchBar
+          className="top-bar"
+          showActionButton
+          value={searchValue}
+          actionName="搜索"
+          onActionClick={this.onSearch}
+          onChange={this.onSearchChange}
+          onConfirm={this.onSearch}
+        />
         {
-          channels.map((channel) => {
-            return <ItemCard key={channel.title} title={channel.title} list={channel.goods_list} nowrap />
-          })
+          hotKeywords.length > 0 && <View>
+            <View className="hot-keywords">
+              <View className="title">热门搜索：</View>
+              <ScrollView scrollX>
+                <View className="list">
+                  {
+                    hotKeywords.map((item) => {
+                      return <View className="item" key={item} onClick={() => this.onHotKeyClick(item)}>
+                        {item}
+                      </View>
+                    })
+                  }
+                </View>
+              </ScrollView>
+            </View>
+          </View>
         }
-
-
-
-        {/* <View className="channel-title">寝室必备</View>
         {
           loading && <View className="pdd-list-loading">加载中...</View>
-        } */}
-
-        <ItemCard title="寝室必备" list={pddList} loading={loading} />
-
-
+        }
+        {
+          !loading && <View className="pdd-wrapper">
+            <View className="pdd-list">
+              {
+                pddList.map((item) => {
+                  const { coupon_discount } = item
+                  return <View key={item.goods_id} className="pdd-item" onClick={() => this.onPddGoodsClick(item)}>
+                    <Image className="thumb" src={item.goods_thumbnail_url}></Image>
+                    {coupon_discount > 0 && <View className="coupon">校园专属{coupon_discount / 100}元优惠券</View>}
+                    <View className="name">{item.goods_name}</View>
+                    <View className="info">
+                      <View className="price">
+                        <Text className="min-price">￥{(item.min_group_price - coupon_discount) / 100}</Text> 拼团券后
+                      </View>
+                      {/* <View className="ori-price">
+                        {(item.min_normal_price + item.coupon_discount) / 100}
+                      </View> */}
+                      <View className="amount">
+                        已抢{item.sales_tip}件
+                      </View>
+                    </View>
+                  </View>
+                })
+              }
+            </View>
+          </View>
+        }
         {/* 回到顶部 */}
         {
           showScrollBtn && <View className="scroll-top-button" onClick={this.scrollToTop}>

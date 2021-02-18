@@ -31,6 +31,7 @@ export const router = {
     news: 'news/index', // 教务新闻
     classroom: 'classroom/index', // 空教室查询
     classroomList: 'classroom-list/index', // 空教室查询结果
+    pddSearch: 'pdd-search/index', // 品多多搜索页面
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们

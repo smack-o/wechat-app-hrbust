@@ -11,3 +11,13 @@ export const pddSearch = (data = {} as any) => request({
 export const getKeywords = () => request({
   url: '/api/pdd/keywords',
 })
+
+export const generateGoods = (data = {} as any) => request({
+  url: '/api/pdd/generateGoods',
+  data
+})
+
+
+export const getChannel = () => request({
+  url: '/api/pdd/channel',
+})

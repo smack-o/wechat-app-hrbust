@@ -26,7 +26,7 @@
         flex-shrink: 0;
         margin: 5rpx 10rpx;
         padding: 5rpx 20rpx;
-        box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, .1);
         border-radius: 20rpx;
       }
     }
@@ -34,14 +34,6 @@
 
   .pdd-wrapper {
     margin-top: 20rpx;
-
-    &.nowrap {
-      .pdd-list {
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        padding-right: 20px;
-      }
-    }
 
     .pdd-list {
       display: flex;
@@ -53,13 +45,13 @@
         position: relative;
         width: 330rpx;
         margin: 30rpx 15rpx 15rpx;
-        box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, .1);
         border-radius: 10rpx;
 
         .coupon {
           position: absolute;
           top: 0;
-          background: linear-gradient(90deg, #ff9e81, #ff3030);
+          background: linear-gradient(90deg, #FF9E81, #FF3030);
           padding: 5rpx 10rpx;
           font-size: 20rpx;
           font-weight: bolder;
@@ -119,8 +111,8 @@
     width: 88rpx;
     height: 88rpx;
     box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
-    border: 1px solid #e8e8e8;
-    background: #ffffff;
+    border: 1px solid #E8E8E8;
+    background: #FFFFFF;
     border-radius: 8rpx;
     opacity: 0.8;
     display: flex;
@@ -136,26 +128,5 @@
     color: gray;
     text-align: center;
     margin-top: 100rpx;
-  }
-
-  .channel-title {
-    margin: 30rpx 30rpx;
-    margin-bottom: 0;
-    position: relative;
-    font-size: 36rpx;
-    line-height: 54rpx;
-    padding-left: 26rpx;
-    font-family: 'PingFangSC-Semibold';
-    color: #000;
-
-    &::before {
-      position: absolute;
-      content: '';
-      width: 6rpx;
-      height: 40rpx;
-      background: #d6b44c;
-      left: 0;
-      top: 7rpx;
-    }
   }
 }

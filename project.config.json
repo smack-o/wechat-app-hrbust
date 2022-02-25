@@ -1,135 +1,149 @@
 {
-	"miniprogramRoot": "dist/",
-	"projectname": "wechat-app-hrbust",
-	"description": "",
-	"appid": "wxaed2c04fd10b6e1a",
-	"setting": {
-		"urlCheck": false,
-		"es6": false,
-		"postcss": false,
-		"preloadBackgroundData": false,
-		"minified": false,
-		"newFeature": true,
-		"autoAudits": false,
-		"coverView": true,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"useCompilerModule": false
-	},
-	"compileType": "miniprogram",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "首页",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "校园页面",
-					"pathName": "pages/campus/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "发现页面",
-					"pathName": "pages/discover/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "个人中心",
-					"pathName": "pages/account/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "查询考试信息",
-					"pathName": "pages2/exam/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "登录",
-					"pathName": "pages2/login/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "查询成绩",
-					"pathName": "pages2/grade/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "成绩分享",
-					"pathName": "pages2/grade/share/index",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "关于我们",
-					"pathName": "pages3/aboutme/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "课表主页面",
-					"pathName": "pages2/course/index",
-					"scene": null
+  "miniprogramRoot": "dist/",
+  "projectname": "wechat-app-hrbust",
+  "description": "",
+  "appid": "wxaed2c04fd10b6e1a",
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "postcss": false,
+    "preloadBackgroundData": false,
+    "minified": false,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false
+  },
+  "compileType": "miniprogram",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "首页",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
         },
         {
-					"id": -1,
-					"name": "课表学期选择页面",
-					"pathName": "pages2/course-term/index",
-					"query": "term=5",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "优惠购",
-					"pathName": "pages/shop/index",
-					"scene": null
+          "id": -1,
+          "name": "校园页面",
+          "pathName": "pages/campus/index",
+          "query": "",
+          "scene": null
         },
         {
-					"id": -1,
-					"name": "70周年校庆",
-					"pathName": "pages3/school-anniversary/index",
-					"scene": null
-				}
-			]
-		}
-	}
+          "id": -1,
+          "name": "发现页面",
+          "pathName": "pages/discover/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "个人中心",
+          "pathName": "pages/account/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 4,
+          "name": "查询考试信息",
+          "pathName": "pages2/exam/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "登录",
+          "pathName": "pages2/login/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "查询成绩",
+          "pathName": "pages2/grade/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "成绩分享",
+          "pathName": "pages2/grade/share/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "关于我们",
+          "pathName": "pages3/aboutme/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "课表主页面",
+          "pathName": "pages2/course/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "课表学期选择页面",
+          "pathName": "pages2/course-term/index",
+          "query": "term=5",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "优惠购",
+          "pathName": "pages/shop/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "70周年校庆",
+          "pathName": "pages3/school-anniversary/index",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

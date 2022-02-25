@@ -7,9 +7,10 @@ import getData from './demo.js'
 
 import './index.less'
 
-const { wxml, style, height } = getData()
 
 export default function GradeShare() {
+
+  const { wxml, style, height } = getData()
   let imageSrc = ''
 
   return (

@@ -45,7 +45,7 @@ class Login extends Component<IProps, PageState> {
   async onLoad() {
     const { user } = this.props
     await user.getUserInfoPromise
-    this.getCaptcha()
+    // this.getCaptcha()
   }
 
   getCaptcha = async () => {
@@ -74,6 +74,9 @@ class Login extends Component<IProps, PageState> {
   }
 
   onSubmit = async (e: TaroBaseEventOrig) => {
+    Taro.showLoading({
+      title: '登陆中...'
+    })
     // 授权失败不允许登录
     if (/fail auth deny/.test(e.detail.errMsg)) {
       return
@@ -81,6 +84,8 @@ class Login extends Component<IProps, PageState> {
     if (e.detail.userInfo) {
       Taro.setStorageSync('userInfo', e.detail.userInfo)
     }
+
+    console.log(e.detail.userInfo)
 
     const { username, password, captcha } = this.state
 
@@ -96,11 +101,15 @@ class Login extends Component<IProps, PageState> {
         showCancel: false
       })
 
+      Taro.hideLoading()
+
       this.getCaptcha()
       return
     }
 
     await this.props.init()
+
+    Taro.hideLoading()
 
     Taro.reLaunch({
       url: routes.index
@@ -148,7 +157,8 @@ class Login extends Component<IProps, PageState> {
           value={captcha}
           onChange={(e) => this.onInputChange('captcha', e)}
         >
-          <Image src={captchaImage} onClick={this.getCaptcha} />
+          {!captchaImage ? <AtButton className="captcha-btn" onClick={this.getCaptcha}>点击获取验证码</AtButton> : <Image src={captchaImage} onClick={this.getCaptcha}></Image>}
+          {/* <Image src={captchaImage} onClick={this.getCaptcha} /> */}
         </AtInput>
         <View className="tips">
           <View className="item">*默认密码身份证号（如最后一位X，需要大写）</View>

@@ -1,4 +1,5 @@
 import Taro, { RequestParams } from '@tarojs/taro'
+import Cookie from 'cookie'
 // import { config, getCurrentPageUrl } from '@/utils'
 // import { routes } from './router'
 
@@ -8,10 +9,10 @@ const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 
 const hosts = {
   // dev: 'http://118.89.247.29:8791',
-  dev: 'http://localhost:8791',
+  dev: 'http://localhost:7001',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.cn',
+  prod: 'https://hrbust-dev.smackgg.cn'
 }
 export const API_BASE_URL = hosts[env]
 
@@ -32,7 +33,8 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
     )
 
     // 请求携带 token
-    const cookie = Taro.getStorageSync('app_cookie')
+    const csrfToken = Taro.getStorageSync('csrfToken')
+    const cookie = Taro.getStorageSync('cookie')
 
     Taro.request({
       ...option,
@@ -40,18 +42,32 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
       url: reqUrl,
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        cookie,
+        // cookie,
+        Cookie: csrfToken
+          ? Cookie.serialize('csrfToken', csrfToken) + ';' + cookie
+          : '',
+        'x-csrf-token': csrfToken
       },
-      success: (res) => {
+      success: res => {
         if (res && res.statusCode === 200 && res.data.status === 200) {
           const { header } = res
-          // @ts-ignore
-          Taro.setStorageSync('app_cookie', header['Set-Cookie'])
+
+          const cookie = header['set-cookie'] || ''
+
+          Taro.setStorageSync('cookie', cookie)
+
+          const csrfToken = Cookie.parse(header['set-cookie'] || '').csrfToken
+
+          csrfToken &&
+            Taro.setStorageSync(
+              'csrfToken',
+              Cookie.parse(header['set-cookie']).csrfToken
+            )
           resolve(res.data)
           return
         }
         reject(res && res.data)
       },
-      fail: (error) => reject(error),
+      fail: error => reject(error)
     })
   })

@@ -1,6 +1,12 @@
-
 import Taro from '@tarojs/taro'
-import { userInfo, wxLogin, exams, grades, logout as logoutReq } from '@/services/user'
+import {
+  userInfo,
+  wxLogin,
+  exams,
+  grades,
+  logout as logoutReq,
+  wxAuth
+} from '@/services/user'
 import { Dispatch } from 'redux'
 import { startLoading, stopLoading } from './global'
 
@@ -18,7 +24,7 @@ export const setCurrentTerm = (term: number) => ({
 
 // 检查session_key是否失效
 const checkSession = () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     Taro.checkSession({
       success() {
         resolve(true)
@@ -34,10 +40,10 @@ const checkSession = () => {
 const login = () => {
   return new Promise((resolve, reject) => {
     Taro.login({
-      success: function (loginRes) {
+      success: function(loginRes) {
         console.log(loginRes.code)
         if (loginRes.code) {
-          wxLogin({ code: loginRes.code }).then((res: any) => {
+          wxAuth({ code: loginRes.code }).then((res: any) => {
             if (res.status === 200) {
               resolve()
             } else {
@@ -48,7 +54,7 @@ const login = () => {
           reject(new Error('登录失败！' + loginRes.errMsg))
         }
       },
-      fail: function () {
+      fail: function() {
         reject(new Error('登录失败！'))
       }
     })
@@ -75,23 +81,24 @@ const login = () => {
 
 // export const setLoading = createAction(SET_LOADING, loading => loading)
 
-
-
 export const initHandler = async (dispatch: Dispatch) => {
   dispatch(startLoading())
   try {
     // 检查微信登录 session
+    console.log(1)
     let res = await userInfo()
-    let { isLogin, studentInfo } = res.data
+    console.log(2)
+    // let { isLogin, studentInfo } = res.data
     const session = await checkSession()
     let cookie = Taro.getStorageSync('app_cookie')
-    if (!session || !cookie || !isLogin) {
-      // 没有服务器登录态
-      await login()
-      res = await userInfo()
-      isLogin = res.data.isLogin
-      studentInfo = res.data.studentInfo
-    }
+    // if (!session || !cookie || !isLogin) {
+    //   // 没有服务器登录态
+    //   await login()
+    //   res = await userInfo()
+    //   isLogin = res.data.isLogin
+    //   studentInfo = res.data.studentInfo
+    // }
+    await login()
     // 获取用户头像等信息
     // const userInfo = await getUserInfo()
     // this.globalData.userInfo = userInfo
@@ -99,8 +106,8 @@ export const initHandler = async (dispatch: Dispatch) => {
     dispatch({
       type: GET_USERINFO,
       data: {
-        isLogin: !!(isLogin && studentInfo && studentInfo.username),
-        studentInfo,
+        // isLogin: !!(isLogin && studentInfo && studentInfo.username),
+        // studentInfo
       }
     })
     dispatch(stopLoading())
@@ -127,26 +134,29 @@ export const logout = () => async (dispatch: Dispatch) => {
   })
 }
 
-
-export const getExams = (...data: Parameters<typeof exams>) => async (dispatch: Dispatch) => {
+export const getExams = (...data: Parameters<typeof exams>) => async (
+  dispatch: Dispatch
+) => {
   const res = await exams(...data)
   const list = res?.data || []
 
   dispatch({
     type: GET_EXAMS,
     data: list,
-    page: data[0] || 1,
+    page: data[0] || 1
   })
 
   return res
 }
 
-export const getGrades = (...data: Parameters<typeof grades>) => async (dispatch: Dispatch) => {
+export const getGrades = (...data: Parameters<typeof grades>) => async (
+  dispatch: Dispatch
+) => {
   const res = await grades(...data)
 
   dispatch({
     type: GET_GRADES,
-    data: res.data,
+    data: res.data
   })
 
   return res

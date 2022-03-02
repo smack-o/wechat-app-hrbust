@@ -9,6 +9,7 @@ import './app.less'
 
 class App extends Component {
   componentDidMount () {
+    console.log('indit')
     store.dispatch(init())
   }
 

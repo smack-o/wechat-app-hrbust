@@ -4,7 +4,7 @@ import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { AtInput, AtButton, AtIcon } from 'taro-ui'
-import { getCaptcha, login }from '@/services/user'
+import { getCaptcha, login, wxLogin }from '@/services/user'
 import { cError } from '@/utils'
 import { routes } from '@/utils/router'
 import { init } from '@/redux/actions/user'
@@ -81,39 +81,52 @@ class Login extends Component<IProps, PageState> {
     if (/fail auth deny/.test(e.detail.errMsg)) {
       return
     }
-    if (e.detail.userInfo) {
-      Taro.setStorageSync('userInfo', e.detail.userInfo)
-    }
-
+    // if (e.detail.userInfo) {
+    Taro.setStorageSync('userInfo', e.detail.userInfo)
+    wx.getUserProfile({
+      desc: '理工喵获取头像信息仅用于展示',
+      success: (data) => {
+        // console.log(1, data)
+        wxLogin(data)
+      },
+      fail: (err) => {
+        console.log(2, err)
+      }
+    })
     console.log(e.detail.userInfo)
+    // wxLogin( e.detail.userInfo)
+    // }
+
+
+    // console.log(e.detail.userInfo)
 
     const { username, password, captcha } = this.state
 
-    Taro.setStorageSync('loginInfo', JSON.stringify({
-      username,
-      password,
-    }))
+    // Taro.setStorageSync('loginInfo', JSON.stringify({
+    //   username,
+    //   password,
+    // }))
 
-    const [err] = await cError(login({ username, password, captcha }))
-    if (err) {
-      Taro.showModal({
-        content: err.message,
-        showCancel: false
-      })
+    // const [err] = await cError(login({ username, password, captcha }))
+    // if (err) {
+    //   Taro.showModal({
+    //     content: err.message,
+    //     showCancel: false
+    //   })
 
-      Taro.hideLoading()
+    //   Taro.hideLoading()
 
-      this.getCaptcha()
-      return
-    }
+    //   this.getCaptcha()
+    //   return
+    // }
 
-    await this.props.init()
+    // await this.props.init()
 
-    Taro.hideLoading()
+    // Taro.hideLoading()
 
-    Taro.reLaunch({
-      url: routes.index
-    })
+    // Taro.reLaunch({
+    //   url: routes.index
+    // })
 
   }
 
@@ -129,7 +142,7 @@ class Login extends Component<IProps, PageState> {
 
     return (
       <View className="login-page">
-        <View className="title">学生登录</View>
+        {/* <View className="title">学生登录</View>
         <AtInput
           name="username"
           title="学号"
@@ -148,7 +161,7 @@ class Login extends Component<IProps, PageState> {
           onChange={(e) => this.onInputChange('password', e)}
         >
           <AtIcon value="eye" size="26" onClick={this.changePassWordType}></AtIcon>
-        </AtInput>
+        </AtInput> */}
         <AtInput
           name="value"
           title="验证码"
@@ -160,12 +173,12 @@ class Login extends Component<IProps, PageState> {
           {!captchaImage ? <AtButton className="captcha-btn" onClick={this.getCaptcha}>点击获取验证码</AtButton> : <Image src={captchaImage} onClick={this.getCaptcha}></Image>}
           {/* <Image src={captchaImage} onClick={this.getCaptcha} /> */}
         </AtInput>
-        <View className="tips">
+        {/* <View className="tips">
           <View className="item">*默认密码身份证号（如最后一位X，需要大写）</View>
           <View className="item">*点击验证码图片切换验证码</View>
           <View className="item">*登录学号将绑定到该微信，如需绑定其它账号，请先去个人中心解绑</View>
-        </View>
-        <AtButton className="login-button"  disabled={!username || !password || !captcha} type="primary" openType="getUserInfo" onGetUserInfo={this.onSubmit}>登录</AtButton>
+        </View> */}
+        <AtButton className="login-button" type="primary" onClick={this.onSubmit}>登录</AtButton>
       </View>
     )
   }

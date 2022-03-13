@@ -80,3 +80,5 @@ mock/mock
 
 
 dump.rdb
+
+.history/

@@ -12,7 +12,7 @@ const hosts = {
   dev: 'http://localhost:7001',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.cn'
+  prod: 'https://hrbust-dev.smackgg.cn',
 }
 export const API_BASE_URL = hosts[env]
 
@@ -43,18 +43,16 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         // cookie,
-        Cookie: csrfToken
-          ? Cookie.serialize('csrfToken', csrfToken) + ';' + cookie
-          : '',
-        'x-csrf-token': csrfToken
+        Cookie: cookie,
+        'x-csrf-token': csrfToken,
       },
-      success: res => {
+      success: (res) => {
         if (res && res.statusCode === 200 && res.data.status === 200) {
           const { header } = res
 
           const cookie = header['set-cookie'] || ''
 
-          Taro.setStorageSync('cookie', cookie)
+          cookie && Taro.setStorageSync('cookie', cookie)
 
           const csrfToken = Cookie.parse(header['set-cookie'] || '').csrfToken
 
@@ -63,11 +61,11 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
               'csrfToken',
               Cookie.parse(header['set-cookie']).csrfToken
             )
-          resolve(res.data)
+          resolve(res.data.result)
           return
         }
-        reject(res && res.data)
+        reject(res && res.data.result)
       },
-      fail: error => reject(error)
+      fail: (error) => reject(error),
     })
   })

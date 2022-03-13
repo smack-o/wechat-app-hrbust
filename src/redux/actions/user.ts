@@ -1,11 +1,11 @@
 import Taro from '@tarojs/taro'
 import {
-  userInfo,
+  getUserInfo,
   wxLogin,
   exams,
   grades,
   logout as logoutReq,
-  wxAuth
+  wxAuth,
 } from '@/services/user'
 import { Dispatch } from 'redux'
 import { startLoading, stopLoading } from './global'
@@ -19,19 +19,19 @@ export const UPDATE_USERINFO_PROMISE = 'user/UPDATE_USERINFO_PROMISE'
 
 export const setCurrentTerm = (term: number) => ({
   type: SET_CURRENT_TERM,
-  data: term
+  data: term,
 })
 
 // 检查session_key是否失效
 const checkSession = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     Taro.checkSession({
       success() {
         resolve(true)
       },
       fail() {
         resolve(false)
-      }
+      },
     })
   })
 }
@@ -40,8 +40,7 @@ const checkSession = () => {
 const login = () => {
   return new Promise((resolve, reject) => {
     Taro.login({
-      success: function(loginRes) {
-        console.log(loginRes.code)
+      success: function (loginRes) {
         if (loginRes.code) {
           wxAuth({ code: loginRes.code }).then((res: any) => {
             if (res.status === 200) {
@@ -54,9 +53,9 @@ const login = () => {
           reject(new Error('登录失败！' + loginRes.errMsg))
         }
       },
-      fail: function() {
+      fail: function () {
         reject(new Error('登录失败！'))
-      }
+      },
     })
   })
 }
@@ -85,20 +84,19 @@ export const initHandler = async (dispatch: Dispatch) => {
   dispatch(startLoading())
   try {
     // 检查微信登录 session
-    console.log(1)
-    let res = await userInfo()
-    console.log(2)
-    // let { isLogin, studentInfo } = res.data
-    const session = await checkSession()
-    let cookie = Taro.getStorageSync('app_cookie')
-    // if (!session || !cookie || !isLogin) {
-    //   // 没有服务器登录态
-    //   await login()
-    //   res = await userInfo()
-    //   isLogin = res.data.isLogin
-    //   studentInfo = res.data.studentInfo
-    // }
-    await login()
+    let res = await getUserInfo()
+    console.log(11111, res)
+    // console.log(111, res.data, userInfo)
+    // const session = await checkSe-ssion()
+    // console.log(111222, session)
+    // let cookie = Taro.getStorageSync('app_cookie')
+    console.log(res.data && res.data.userInfo)
+    if (!(res.data && res.data.userInfo)) {
+      // 没有服务器登录态
+      await login()
+      res = await getUserInfo()
+      // isLogin = res.data.isLogin
+    }
     // 获取用户头像等信息
     // const userInfo = await getUserInfo()
     // this.globalData.userInfo = userInfo
@@ -108,11 +106,12 @@ export const initHandler = async (dispatch: Dispatch) => {
       data: {
         // isLogin: !!(isLogin && studentInfo && studentInfo.username),
         // studentInfo
-      }
+      },
     })
     dispatch(stopLoading())
     // this.updateUserInfo(userInfo)
   } catch (e) {
+    console.log(111, e)
     dispatch(stopLoading())
     return Promise.resolve()
   }
@@ -122,7 +121,7 @@ export const init = () => async (dispatch: Dispatch) => {
   const getUserInfoPromise = initHandler(dispatch)
   dispatch({
     type: UPDATE_USERINFO_PROMISE,
-    data: getUserInfoPromise
+    data: getUserInfoPromise,
   })
   await getUserInfoPromise
 }
@@ -130,34 +129,34 @@ export const init = () => async (dispatch: Dispatch) => {
 export const logout = () => async (dispatch: Dispatch) => {
   await logoutReq()
   dispatch({
-    type: LOGOUT
+    type: LOGOUT,
   })
 }
 
-export const getExams = (...data: Parameters<typeof exams>) => async (
-  dispatch: Dispatch
-) => {
-  const res = await exams(...data)
-  const list = res?.data || []
+export const getExams =
+  (...data: Parameters<typeof exams>) =>
+  async (dispatch: Dispatch) => {
+    const res = await exams(...data)
+    const list = res?.data || []
 
-  dispatch({
-    type: GET_EXAMS,
-    data: list,
-    page: data[0] || 1
-  })
+    dispatch({
+      type: GET_EXAMS,
+      data: list,
+      page: data[0] || 1,
+    })
 
-  return res
-}
+    return res
+  }
 
-export const getGrades = (...data: Parameters<typeof grades>) => async (
-  dispatch: Dispatch
-) => {
-  const res = await grades(...data)
+export const getGrades =
+  (...data: Parameters<typeof grades>) =>
+  async (dispatch: Dispatch) => {
+    const res = await grades(...data)
 
-  dispatch({
-    type: GET_GRADES,
-    data: res.data
-  })
+    dispatch({
+      type: GET_GRADES,
+      data: res.data,
+    })
 
-  return res
-}
+    return res
+  }

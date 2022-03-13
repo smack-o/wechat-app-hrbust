@@ -3,19 +3,19 @@ import request from '@/utils/request'
 // 微信登录
 export const wxAuth = (data: { code: string }) =>
   request({
-    url: '/api/user/wxauth',
+    url: '/api/user/wx_auth',
     method: 'POST',
     interceptTokenError: false,
-    data
+    data,
   })
 
 // 微信登录
 export const wxLogin = (data: any) =>
   request({
-    url: '/api/user/wxlogin',
+    url: '/api/user/wx_login',
     method: 'POST',
     interceptTokenError: false,
-    data
+    data,
   })
 
 export const login = (data: {
@@ -25,19 +25,19 @@ export const login = (data: {
 }) =>
   request({
     url: '/api/hrbust/login',
-    data
+    data,
   })
 
 // 登出
 export const logout = () =>
   request({
-    url: '/api/hrbust/logout'
+    url: '/api/hrbust/logout',
   })
 
 // 获取用户信息
-export const userInfo = () =>
+export const getUserInfo = () =>
   request({
-    url: '/api/user'
+    url: '/api/user_info',
   })
 
 // 获取用户考试信息
@@ -46,8 +46,8 @@ export const exams = (page = 1, captcha = '') =>
     url: '/api/hrbust/exam',
     data: {
       page,
-      captcha
-    }
+      captcha,
+    },
   })
 
 export const grades = (year: number, term: number, captcha?: string) =>
@@ -56,11 +56,11 @@ export const grades = (year: number, term: number, captcha?: string) =>
     data: {
       year,
       term,
-      captcha
-    }
+      captcha,
+    },
   })
 
 export const getCaptcha = () =>
   request({
-    url: '/api/hrbust/captcha'
+    url: '/api/hrbust/captcha',
   })

@@ -4,14 +4,13 @@ import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { AtInput, AtButton, AtIcon } from 'taro-ui'
-import { getCaptcha, login, wxLogin }from '@/services/user'
+import { getCaptcha, login, wxLogin } from '@/services/user'
 import { cError } from '@/utils'
 import { routes } from '@/utils/router'
 import { init } from '@/redux/actions/user'
 import { Dispatch, bindActionCreators } from 'redux'
 
 import './index.less'
-
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
@@ -20,11 +19,11 @@ type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 type PageOwnProps = {}
 
 type PageState = {
-  username: string,
-  password: string,
-  captcha: string,
-  captchaImage: string,
-  showPassword: boolean,
+  username: string
+  password: string
+  captcha: string
+  captchaImage: string
+  showPassword: boolean
 }
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
@@ -37,7 +36,7 @@ class Login extends Component<IProps, PageState> {
     showPassword: false,
   }
 
-  componentDidShow () {
+  componentDidShow() {
     const loginInfo = JSON.parse(Taro.getStorageSync('user:loginInfo') || '{}')
     this.setState(loginInfo)
   }
@@ -50,32 +49,31 @@ class Login extends Component<IProps, PageState> {
 
   getCaptcha = async () => {
     Taro.showLoading({
-      title: '加载中...'
+      title: '加载中...',
     })
     const [err, res] = await cError(getCaptcha())
     Taro.hideLoading()
     if (err) {
       Taro.showToast({
         title: '服务暂时挂了呀~请退出稍后重试！',
-        icon: 'none'
+        icon: 'none',
       })
     }
     this.setState({
-      captchaImage: res.data.captcha
+      captchaImage: res.data.captcha,
     })
   }
 
-
   onInputChange = (key: keyof PageState, value) => {
     const state = {
-      [key]: value
+      [key]: value,
     } as PageState
     this.setState(state)
   }
 
   onSubmit = async (e: TaroBaseEventOrig) => {
     Taro.showLoading({
-      title: '登陆中...'
+      title: '登陆中...',
     })
     // 授权失败不允许登录
     if (/fail auth deny/.test(e.detail.errMsg)) {
@@ -91,12 +89,11 @@ class Login extends Component<IProps, PageState> {
       },
       fail: (err) => {
         console.log(2, err)
-      }
+      },
     })
     console.log(e.detail.userInfo)
     // wxLogin( e.detail.userInfo)
     // }
-
 
     // console.log(e.detail.userInfo)
 
@@ -127,7 +124,6 @@ class Login extends Component<IProps, PageState> {
     // Taro.reLaunch({
     //   url: routes.index
     // })
-
   }
 
   changePassWordType = () => {
@@ -136,9 +132,9 @@ class Login extends Component<IProps, PageState> {
     })
   }
 
-  render () {
-
-    const { username, password, captcha, captchaImage, showPassword } = this.state
+  render() {
+    const { username, password, captcha, captchaImage, showPassword } =
+      this.state
 
     return (
       <View className="login-page">
@@ -170,7 +166,13 @@ class Login extends Component<IProps, PageState> {
           value={captcha}
           onChange={(e) => this.onInputChange('captcha', e)}
         >
-          {!captchaImage ? <AtButton className="captcha-btn" onClick={this.getCaptcha}>点击获取验证码</AtButton> : <Image src={captchaImage} onClick={this.getCaptcha}></Image>}
+          {!captchaImage ? (
+            <AtButton className="captcha-btn" onClick={this.getCaptcha}>
+              点击获取验证码
+            </AtButton>
+          ) : (
+            <Image src={captchaImage} onClick={this.getCaptcha}></Image>
+          )}
           {/* <Image src={captchaImage} onClick={this.getCaptcha} /> */}
         </AtInput>
         {/* <View className="tips">
@@ -178,7 +180,13 @@ class Login extends Component<IProps, PageState> {
           <View className="item">*点击验证码图片切换验证码</View>
           <View className="item">*登录学号将绑定到该微信，如需绑定其它账号，请先去个人中心解绑</View>
         </View> */}
-        <AtButton className="login-button" type="primary" onClick={this.onSubmit}>登录</AtButton>
+        <AtButton
+          className="login-button"
+          type="primary"
+          onClick={this.onSubmit}
+        >
+          登录
+        </AtButton>
       </View>
     )
   }
@@ -188,6 +196,10 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ init }, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ init }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Login)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)

@@ -4,9 +4,12 @@
 
 module.exports = {
   presets: [
-    ['taro', {
-      framework: 'react',
-      ts: true
-    }]
-  ]
+    [
+      'taro',
+      {
+        framework: 'preact',
+        ts: true,
+      },
+    ],
+  ],
 }

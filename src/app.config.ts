@@ -1,12 +1,13 @@
 export const router = {
   // 分包，pages 主包目前只放 tab 签的四个主页面，其它功能页面都放入 subPackages 中
   pages: {
-    login: 'login/index' // 登录页面
-  }
+    login: 'login/index', // 登录页面
+    'add-wall': 'add-wall/index',
+  },
 }
 
 export const pages = Object.keys(router.pages).map(
-  path => `pages/${router.pages[path]}`
+  (path) => `pages/${router.pages[path]}`
 )
 
 export type Routers = {
@@ -14,12 +15,11 @@ export type Routers = {
 }
 
 export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
-  Object.keys(router[packageName]).forEach(routerName => {
+  Object.keys(router[packageName]).forEach((routerName) => {
     r[routerName] = `/${packageName}/${router[packageName][routerName]}`
   })
   return r
 }, {} as Routers)
-
 export default {
   pages,
   // tabBar: {
@@ -65,13 +65,13 @@ export default {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#ffffff',
     navigationBarTitleText: '理工喵',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
   },
 
   plugins: {
     waimai: {
       version: '1.1.0',
-      provider: 'wx05e29bcb0dd5320e'
-    }
-  }
+      provider: 'wx05e29bcb0dd5320e',
+    },
+  },
 }

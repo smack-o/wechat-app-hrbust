@@ -43,7 +43,7 @@ const login = () => {
       success: function (loginRes) {
         if (loginRes.code) {
           wxAuth({ code: loginRes.code }).then((res: any) => {
-            if (res.status === 200) {
+            if (res.code === 0) {
               resolve()
             } else {
               reject(new Error('理工喵登录失败！'))
@@ -85,18 +85,16 @@ export const initHandler = async (dispatch: Dispatch) => {
   try {
     // 检查微信登录 session
     let res = await getUserInfo()
-    console.log(11111, res)
     // console.log(111, res.data, userInfo)
     // const session = await checkSe-ssion()
     // console.log(111222, session)
     // let cookie = Taro.getStorageSync('app_cookie')
-    console.log(res.data && res.data.userInfo)
-    if (!(res.data && res.data.userInfo)) {
-      // 没有服务器登录态
-      await login()
-      res = await getUserInfo()
-      // isLogin = res.data.isLogin
-    }
+    // if (!(res.data && res.data.userInfo)) {
+    //   // 没有服务器登录态
+    //   await login()
+    //   res = await getUserInfo()
+    //   // isLogin = res.data.isLogin
+    // }
     // 获取用户头像等信息
     // const userInfo = await getUserInfo()
     // this.globalData.userInfo = userInfo
@@ -105,7 +103,7 @@ export const initHandler = async (dispatch: Dispatch) => {
       type: GET_USERINFO,
       data: {
         // isLogin: !!(isLogin && studentInfo && studentInfo.username),
-        // studentInfo
+        res,
       },
     })
     dispatch(stopLoading())
@@ -133,30 +131,30 @@ export const logout = () => async (dispatch: Dispatch) => {
   })
 }
 
-export const getExams =
-  (...data: Parameters<typeof exams>) =>
-  async (dispatch: Dispatch) => {
-    const res = await exams(...data)
-    const list = res?.data || []
+// export const getExams =
+//   (...data: Parameters<typeof exams>) =>
+//   async (dispatch: Dispatch) => {
+//     const res = await exams(...data)
+//     const list = res?.data || []
 
-    dispatch({
-      type: GET_EXAMS,
-      data: list,
-      page: data[0] || 1,
-    })
+//     dispatch({
+//       type: GET_EXAMS,
+//       data: list,
+//       page: data[0] || 1,
+//     })
 
-    return res
-  }
+//     return res
+//   }
 
-export const getGrades =
-  (...data: Parameters<typeof grades>) =>
-  async (dispatch: Dispatch) => {
-    const res = await grades(...data)
+// export const getGrades =
+//   (...data: Parameters<typeof grades>) =>
+//   async (dispatch: Dispatch) => {
+//     const res = await grades(...data)
 
-    dispatch({
-      type: GET_GRADES,
-      data: res.data,
-    })
+//     dispatch({
+//       type: GET_GRADES,
+//       data: res.data,
+//     })
 
-    return res
-  }
+//     return res
+//   }

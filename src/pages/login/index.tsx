@@ -38,6 +38,7 @@ class Login extends Component<IProps, PageState> {
 
   componentDidShow() {
     const loginInfo = JSON.parse(Taro.getStorageSync('user:loginInfo') || '{}')
+    console.log(11111111111111111, this.props.user)
     this.setState(loginInfo)
   }
 
@@ -72,55 +73,49 @@ class Login extends Component<IProps, PageState> {
   }
 
   onSubmit = async (e: TaroBaseEventOrig) => {
-    Taro.showLoading({
-      title: '登陆中...',
+    Taro.navigateTo({
+      url: routes['add-wall'],
     })
-    // 授权失败不允许登录
-    if (/fail auth deny/.test(e.detail.errMsg)) {
-      return
-    }
+    // Taro.showLoading({
+    //   title: '登陆中...',
+    // })
+    // // 授权失败不允许登录
+    // if (/fail auth deny/.test(e.detail.errMsg)) {
+    //   return
+    // }
     // if (e.detail.userInfo) {
-    Taro.setStorageSync('userInfo', e.detail.userInfo)
-    wx.getUserProfile({
-      desc: '理工喵获取头像信息仅用于展示',
-      success: (data) => {
-        // console.log(1, data)
-        wxLogin(data)
-      },
-      fail: (err) => {
-        console.log(2, err)
-      },
-    })
-    console.log(e.detail.userInfo)
+    // Taro.setStorageSync('userInfo', e.detail.userInfo)
+    // wx.getUserProfile({
+    //   desc: '理工喵获取头像信息仅用于展示',
+    //   success: (data) => {
+    //     // console.log(1, data)
+    //     wxLogin(data)
+    //   },
+    //   fail: (err) => {
+    //     console.log(2, err)
+    //   },
+    // })
+    // console.log(e.detail.userInfo)
     // wxLogin( e.detail.userInfo)
     // }
-
     // console.log(e.detail.userInfo)
-
-    const { username, password, captcha } = this.state
-
+    // const { username, password, captcha } = this.state
     // Taro.setStorageSync('loginInfo', JSON.stringify({
     //   username,
     //   password,
     // }))
-
     // const [err] = await cError(login({ username, password, captcha }))
     // if (err) {
     //   Taro.showModal({
     //     content: err.message,
     //     showCancel: false
     //   })
-
     //   Taro.hideLoading()
-
     //   this.getCaptcha()
     //   return
     // }
-
     // await this.props.init()
-
     // Taro.hideLoading()
-
     // Taro.reLaunch({
     //   url: routes.index
     // })

@@ -1,22 +1,24 @@
 {
-    "extends": ["taro/react"],
-    "plugins": ["@typescript-eslint"],
-    "parser": "@typescript-eslint/parser",
-    "rules": {
-        "no-unused-expressions": "off",
-        "quotes": ["error","single"],
-        "jsx-quotes": ["error", "prefer-double"],
-        "@typescript-eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true  }],
-        "semi": "off",
-        "@typescript-eslint/semi": ["error", "never"],
-        "@typescript-eslint/indent": ["error", 2],
-        "no-undef": "error",
-        "@typescript-eslint/no-unused-vars": "warn",
-        "react/no-unused-state": "error",
-        "no-shadow": "off"
-    },
-    "globals": {
-        "wx": true,
-        "swan": true
-    }
+  "extends": ["taro/react"],
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "no-unused-expressions": "off",
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "@typescript-eslint/no-unused-expressions": [
+      "error",
+      { "allowShortCircuit": true, "allowTernary": true }
+    ],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error", "never"],
+    "no-undef": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "react/no-unused-state": "error",
+    "no-shadow": "off"
+  },
+  "globals": {
+    "wx": true,
+    "swan": true
+  }
 }

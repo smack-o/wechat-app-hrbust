@@ -1,5 +1,8 @@
 /* eslint-disable import/no-commonjs */
 const path = require('path')
+const getClientEnvironment = require('./utils/env')
+
+const env = getClientEnvironment('')
 
 const config = {
   projectName: 'wechat-app-hrbust',
@@ -7,6 +10,11 @@ const config = {
   designWidth: 750,
   alias: {
     '@': path.resolve(__dirname, '..', 'src'),
+    '@ajax': path.resolve(__dirname, '..', 'src/utils/ajax'),
+    '@services': path.resolve(__dirname, '..', 'src/services2'),
+  },
+  defineConstants: {
+    ...env.stringified
   },
   deviceRatio: {
     640: 2.34 / 2,
@@ -16,8 +24,6 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   plugins: [],
-  defineConstants: {
-  },
   copy: {
     patterns: [
     ],

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import 'taro-ui/dist/style/index.scss'
+import axios from 'axios'
+import mpAdapter from 'axios-miniprogram-adapter'
 
 import { store } from './redux/store'
 import { init } from './redux/actions/user'
 
 import './app.less'
+// 小程序 axios 兼容
+axios.defaults.adapter = mpAdapter
 
 class App extends Component {
   componentDidMount () {
@@ -28,5 +32,7 @@ class App extends Component {
     )
   }
 }
+
+console.log(process.env, 'process.env')
 
 export default App

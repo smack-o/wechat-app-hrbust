@@ -11,8 +11,9 @@ const hosts = {
   dev: 'http://localhost:8791',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.cn',
+  prod: 'https://hrbust-dev.smackgg.cn'
 }
+
 export const API_BASE_URL = hosts[env]
 
 export default (option: RequestParams): Promise<Request.requestResult> =>
@@ -40,9 +41,9 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
       url: reqUrl,
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        cookie,
+        cookie
       },
-      success: (res) => {
+      success: res => {
         if (res && res.statusCode === 200 && res.data.status === 200) {
           const { header } = res
           // @ts-ignore
@@ -52,6 +53,43 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
         }
         reject(res && res.data)
       },
-      fail: (error) => reject(error),
+      fail: error => reject(error)
     })
   })
+
+/**
+ * 封装 service request，code !== 0 的情况统一返回 error
+ */
+type PromiseValue<T> = T extends Promise<infer U> ? U : T
+
+type RequestValue<
+  R extends { code?: number; result?: any; message?: string },
+  T extends (...args: any[]) => Promise<R>
+> = (
+  ...args: Parameters<T>
+) => Promise<
+  [
+    Error | null,
+    PromiseValue<ReturnType<T>>['result'],
+    PromiseValue<ReturnType<T>>
+  ]
+>
+
+export function withRequest<
+  R extends { code?: number; result?: any; message?: string },
+  T extends (...args: any[]) => Promise<R>
+>(request: T): RequestValue<R, T> {
+  const callback = (...args: Parameters<T>) =>
+    request(...args).then(res => {
+      if (res.code === 0) {
+        return [null, res.result, res]
+      }
+
+      let message = res.message || ''
+      if (res.code === 10001) {
+        message = '请求失败'
+      }
+      return [new Error(message), res.result, res]
+    }) as ReturnType<RequestValue<R, T>>
+  return callback
+}

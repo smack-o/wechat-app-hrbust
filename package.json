@@ -28,7 +28,8 @@
     "dev:jd": "npm run build:jd -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch",
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
-    "lint-fix": "npm run lint -- --fix"
+    "lint-fix": "npm run lint -- --fix",
+    "api": "autos -c swagger.js --clear & eslint src/services2/**/**.ts --fix"
   },
   "husky": {
     "hooks": {
@@ -68,7 +69,12 @@
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^2.x",
     "@typescript-eslint/parser": "^2.x",
+    "auto-service": "^4.0.2",
+    "axios": "^0.26.1",
+    "axios-miniprogram-adapter": "^0.3.2",
     "babel-preset-taro": "3.1.4",
+    "dotenv": "^16.0.0",
+    "dotenv-expand": "^8.0.3",
     "eslint": "^6.8.0",
     "eslint-config-taro": "3.1.4",
     "eslint-plugin-import": "^2.12.0",

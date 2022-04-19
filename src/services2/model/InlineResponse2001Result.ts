@@ -13,17 +13,19 @@
 import * as models from './models'
 
 /**
-  * @property `[encryptedData]` 微信解密参数 encryptedData
-  * @property `[iv]` 微信解密参数 iv
+  * @property `_id` user id
+  * @property `[userInfo]` 
+  * @property `openid` wechat openid
   */
-export interface Data1 {
+export interface InlineResponse2001Result {
   /**
-   * 微信解密参数 encryptedData
+   * user id
    */
-  'encryptedData'?: string;
+  '_id': string;
+  'userInfo'?: models.InlineResponse2001ResultUserInfo;
   /**
-   * 微信解密参数 iv
+   * wechat openid
    */
-  'iv'?: string;
+  'openid': string;
 }
 

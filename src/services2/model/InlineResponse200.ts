@@ -13,11 +13,38 @@
 import * as models from './models'
 
 /**
-  * @property `status` 
+  * @property `code` 
+  * @property `resultCode` 
+  * @property `message` 
   * @property `[result]` 
+  * @property `[error]` 
   */
 export interface InlineResponse200 {
-  'status': string;
+  'code': InlineResponse200.CodeEnum;
+  'resultCode': InlineResponse200.ResultCodeEnum;
+  'message': string;
   'result'?: models.InlineResponse200Result;
+  'error'?: models.InlineResponse200ResultError;
 }
 
+export namespace InlineResponse200 {
+  export enum CodeEnum {
+    _100001 = '100001' as any,
+    _100002 = '100002' as any,
+    _400001 = '400001' as any,
+    _400002 = '400002' as any,
+    _400003 = '400003' as any,
+    _500000 = '500000' as any,
+    _500001 = '500001' as any
+  }
+  export enum ResultCodeEnum {
+    SUCCESS = 'SUCCESS' as any,
+    ERRPARAM = 'ERR_PARAM' as any,
+    SENMESSAGE = 'SEN_MESSAGE' as any,
+    NOTWECHATAUTH = 'NOT_WECHAT_AUTH' as any,
+    NOTLOGIN = 'NOT_LOGIN' as any,
+    NOTAUTH = 'NOT_AUTH' as any,
+    ERROR = 'ERROR' as any,
+    FAILUPLOAD = 'FAIL_UPLOAD' as any
+  }
+}

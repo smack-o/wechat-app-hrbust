@@ -13,17 +13,11 @@
 import * as models from './models'
 
 /**
-  * @property `[encryptedData]` 微信解密参数 encryptedData
-  * @property `[iv]` 微信解密参数 iv
+  * @property `[message]` 
+  * @property `[detail]` 
   */
-export interface Data1 {
-  /**
-   * 微信解密参数 encryptedData
-   */
-  'encryptedData'?: string;
-  /**
-   * 微信解密参数 iv
-   */
-  'iv'?: string;
+export interface InlineResponse200ResultError {
+  'message'?: string;
+  'detail'?: string;
 }
 

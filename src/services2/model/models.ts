@@ -1,7 +1,17 @@
 export * from './Data'
 export * from './Data1'
+export * from './Data2'
 export * from './InlineResponse200'
+export * from './InlineResponse2001'
+export * from './InlineResponse2001Result'
+export * from './InlineResponse2001ResultUserInfo'
+export * from './InlineResponse2002'
+export * from './InlineResponse2002Photos'
+export * from './InlineResponse2002Result'
+export * from './InlineResponse2003'
+export * from './InlineResponse2003Result'
 export * from './InlineResponse200Result'
+export * from './InlineResponse200ResultError'
 export type ModelInteger = number
 export type ModelFloat = number
 export type LocalDate = Date

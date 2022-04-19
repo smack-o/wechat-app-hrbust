@@ -1,8 +1,8 @@
-import DefaultApi from './DefaultApi'
+import MediaApi from './MediaApi'
 import UserApi from './UserApi'
 import WallApi from './WallApi'
 
-export * from './DefaultApi'
+export * from './MediaApi'
 export * from './UserApi'
 export * from './WallApi'
-export const APIS = { DefaultApi, UserApi, WallApi }
+export const APIS = { MediaApi, UserApi, WallApi }

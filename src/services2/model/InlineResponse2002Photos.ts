@@ -13,17 +13,21 @@
 import * as models from './models'
 
 /**
-  * @property `[encryptedData]` 微信解密参数 encryptedData
-  * @property `[iv]` 微信解密参数 iv
+  * @property `key` 图片 url
+  * @property `status` 
   */
-export interface Data1 {
+export interface InlineResponse2002Photos {
   /**
-   * 微信解密参数 encryptedData
+   * 图片 url
    */
-  'encryptedData'?: string;
-  /**
-   * 微信解密参数 iv
-   */
-  'iv'?: string;
+  'key': string;
+  'status': InlineResponse2002Photos.StatusEnum;
 }
 
+export namespace InlineResponse2002Photos {
+  export enum StatusEnum {
+    _0 = '0' as any,
+    _1 = '1' as any,
+    _2 = '2' as any
+  }
+}

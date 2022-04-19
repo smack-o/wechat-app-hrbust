@@ -29,8 +29,13 @@ class Discover extends Component<IProps, PageState> {
   }
 
   onLoad() {
+    Taro.hideTabBar()
     const waimaiPlugin = Taro.requirePlugin('waimai')
     waimaiPlugin.init('110804100128')
+  }
+
+  onShow() {
+    Taro.hideTabBar()
   }
 
   render () {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch, bindActionCreators } from 'redux'
-import Taro from '@tarojs/taro'
-import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
+import Taro, { UserInfo } from '@tarojs/taro'
+import { View, Text, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
 import { getBanner } from '@/redux/actions/common'
 import { IRootState } from '@/types'
 
@@ -16,6 +16,10 @@ import examIcon from '@/assets/icon/exam_schedule.png'
 import gradeIcon from '@/assets/icon/grade.png'
 import shopIcon from '@/assets/icon/shop_selected.png'
 import queryRoomIcon from '@/assets/icon/query_room.png'
+import { APIS } from '@/services2'
+import { withRequest } from '@/utils/request'
+
+
 import bgImg from './res/home-bg.png'
 import SwiperChild from './components/SwiperChild'
 
@@ -56,14 +60,21 @@ class Index extends Component<IProps, PageState> {
   onLoad() {
     // 在页面onLoad回调事件中创建插屏广告实例
     // 插屏广告
-    if (Taro.createInterstitialAd) {
-      interstitialAd = Taro.createInterstitialAd({
-        adUnitId: 'adunit-167f2a17e8f9ecc4'
-      })
-      interstitialAd.onLoad(() => { console.log('adload') })
-      interstitialAd.onError((error) => { console.log('aderror:', error) })
-      interstitialAd.onClose(() => { console.log('adclose') })
-    }
+    // if (Taro.createInterstitialAd) {
+    //   interstitialAd = Taro.createInterstitialAd({
+    //     adUnitId: 'adunit-167f2a17e8f9ecc4'
+    //   })
+    //   interstitialAd.onLoad(() => { console.log('adload') })
+    //   interstitialAd.onError((error) => { console.log('aderror:', error) })
+    //   interstitialAd.onClose(() => { console.log('adclose') })
+    // }
+  }
+
+  onShow() {
+    // Taro.getCurrentInstance()?.page?.getTabBar?.()
+    // Taro.getCurrentInstance()?.page?.getTabBar().setData({
+    //   selected: 0,
+    // })
   }
 
   // 金刚位模块列表
@@ -156,9 +167,28 @@ class Index extends Component<IProps, PageState> {
     goPage(url)
   }
 
+  onLogin = async () => {
+    const { user: { isLogin, isWechatLogin } } = this.props
+
+    if (!isWechatLogin) {
+      wx.getUserProfile({
+        desc: '用于理工喵信息展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: async (res) => {
+          await withRequest(APIS.UserApi.apiUserWxLoginPost)({
+            iv: res.iv,
+            encryptedData: res.encryptedData,
+          })
+          goPage(routes.login)
+        }
+      })
+      return
+    }
+    goPage(routes.login)
+  }
+
   render () {
     const { cIndex } = this.state
-    const { banners, user: { isLogin }, loading } = this.props
+    const { banners, user: { isLogin, isWechatLogin }, loading } = this.props
 
     if (loading) {
       return <Loading loading></Loading>
@@ -199,13 +229,15 @@ class Index extends Component<IProps, PageState> {
             })
           }
         </View>
-        <Image className="discover-image" src={bgImg} mode="widthFix" />
+
+        {isLogin && <Image className="discover-image" src={bgImg} mode="widthFix" />}
+
         {
-          !isLogin && <View className="login-wrapper">
-            <View className="login" onClick={() => goPage(routes.login)}>
-              <Text className="login-text" style="color: #999999">校园功能仅对登录用户开放</Text>
+         (!isWechatLogin || !isLogin) && <View className="login-wrapper">
+            <View className="login" onClick={this.onLogin}>
+              <Text className="login-text" style="color: #999999">部分校园功能仅对绑定学号用户开放</Text>
               <View className="login-button">
-                <Text className="login-text">立即登录</Text>
+                <Text className="login-text">{isWechatLogin ? '绑定学号' : '立即登录'}</Text>
               </View>
             </View>
           </View>
@@ -223,7 +255,7 @@ class Index extends Component<IProps, PageState> {
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
   banners: state.common.banners,
-  loading: state.global.loading
+  loading: state.global.loading,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getBanner }, dispatch)

@@ -11,9 +11,10 @@ import './app.less'
 // 小程序 axios 兼容
 axios.defaults.adapter = mpAdapter
 
+store.dispatch(init())
+
 class App extends Component {
   componentDidMount () {
-    store.dispatch(init())
   }
 
   componentDidShow () {}

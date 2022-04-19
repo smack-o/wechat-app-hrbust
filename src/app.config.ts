@@ -4,8 +4,9 @@ export const router = {
     index: 'index/index', // 首页
     campus: 'campus/index', // 校园
     discover: 'discover/index', // 发现
+    community: 'community/index', // 社区主页
     account: 'account/index', // 个人中心
-    shop: 'shop/index', // 校园购
+    shop: 'shop/index' // 校园购
     // 'pages/course',
     // 'pages/courseDetail',
     // 'pages/choiceTrem',
@@ -31,23 +32,28 @@ export const router = {
     news: 'news/index', // 教务新闻
     classroom: 'classroom/index', // 空教室查询
     classroomList: 'classroom-list/index', // 空教室查询结果
-    pddSearch: 'pdd-search/index', // 品多多搜索页面
+    pddSearch: 'pdd-search/index', // 品多多搜索页面,
+    createWall: 'create-wall/index'
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们
-    schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
+    schoolAnniversary: 'school-anniversary/index' // 70 周年校庆
   }
 }
 
-export const pages = Object.keys(router.pages).map(path => `pages/${router.pages[path]}`)
+export const pages = Object.keys(router.pages).map(
+  path => `pages/${router.pages[path]}`
+)
 
 export type Routers = {
-  [key in (keyof typeof router['pages'])]: string
-} & {
-  [key in (keyof typeof router['pages2'])]: string
-} & {
-  [key in (keyof typeof router['pages3'])]: string
-}
+  [key in keyof typeof router['pages']]: string
+} &
+  {
+    [key in keyof typeof router['pages2']]: string
+  } &
+  {
+    [key in keyof typeof router['pages3']]: string
+  }
 
 export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
   Object.keys(router[packageName]).forEach(routerName => {
@@ -58,14 +64,18 @@ export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
 
 export default {
   pages,
-  subPackages: [{
-    root: 'pages2',
-    pages: Object.values(router.pages2),
-  }, {
-    root: 'pages3',
-    pages: Object.values(router.pages3),
-  }],
+  subPackages: [
+    {
+      root: 'pages2',
+      pages: Object.values(router.pages2)
+    },
+    {
+      root: 'pages3',
+      pages: Object.values(router.pages3)
+    }
+  ],
   tabBar: {
+    custom: true,
     borderStyle: 'black',
     color: '#ccc',
     selectedColor: '#000',
@@ -84,16 +94,16 @@ export default {
         selectedIconPath: 'assets/icon/campus_selected.png'
       },
       {
+        pagePath: 'pages/discover/index',
+        text: 'Soul',
+        iconPath: 'assets/icon/find.png',
+        selectedIconPath: 'assets/icon/find_selected.png'
+      },
+      {
         pagePath: 'pages/shop/index',
         text: '优惠购',
         iconPath: 'assets/icon/shop.png',
         selectedIconPath: 'assets/icon/shop_selected.png'
-      },
-      {
-        pagePath: 'pages/discover/index',
-        text: '发现',
-        iconPath: 'assets/icon/find.png',
-        selectedIconPath: 'assets/icon/find_selected.png'
       },
       {
         pagePath: 'pages/account/index',

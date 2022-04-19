@@ -1,17 +1,10 @@
+
 import Taro from '@tarojs/taro'
-import { withRequest } from '@/utils/request'
-import { APIS } from '@/services2'
-import {
-  // userInfo,
-  // wxLogin,
-  exams,
-  grades,
-  logout as logoutReq
-} from '@/services/user'
+import { userInfo, wxLogin, exams, grades, logout as logoutReq } from '@/services/user'
 import { Dispatch } from 'redux'
 import { startLoading, stopLoading } from './global'
 
-export const UPDATE_USERINFO = 'user/UPDATE_USERINFO'
+export const GET_USERINFO = 'user/GET_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
 export const GET_EXAMS = 'user/GET_EXAMS'
 export const GET_GRADES = 'user/GET_GRADES'
@@ -25,7 +18,7 @@ export const setCurrentTerm = (term: number) => ({
 
 // 检查session_key是否失效
 const checkSession = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     Taro.checkSession({
       success() {
         resolve(true)
@@ -38,24 +31,29 @@ const checkSession = () => {
 }
 
 // 登录处理
-const login = () =>
-  new Promise((resolve, reject) => {
+const login = () => {
+  return new Promise((resolve, reject) => {
     Taro.login({
-      success: async loginRes => {
-        const [err] = await withRequest(APIS.UserApi.apiUserWxAuthPost)({
-          code: loginRes.code
-        })
-        if (!err) {
-          resolve('')
-          return
+      success: function (loginRes) {
+        console.log(loginRes.code)
+        if (loginRes.code) {
+          wxLogin({ code: loginRes.code }).then((res: any) => {
+            if (res.status === 200) {
+              resolve()
+            } else {
+              reject(new Error('理工喵登录失败！'))
+            }
+          })
+        } else {
+          reject(new Error('登录失败！' + loginRes.errMsg))
         }
-        reject(new Error('登录失败！' + loginRes.errMsg || err.message))
       },
-      fail: () => {
+      fail: function () {
         reject(new Error('登录失败！'))
       }
     })
   })
+}
 
 // 获取用户信息处理
 // const getUserInfo = (cb) => {
@@ -77,50 +75,34 @@ const login = () =>
 
 // export const setLoading = createAction(SET_LOADING, loading => loading)
 
+
+
 export const initHandler = async (dispatch: Dispatch) => {
   dispatch(startLoading())
   try {
     // 检查微信登录 session
-    let [err, res] = await withRequest(APIS.UserApi.apiUserGet)()
+    let res = await userInfo()
+    let { isLogin, studentInfo } = res.data
     const session = await checkSession()
-
-    // 未登录
-    if (err || !session) {
+    let cookie = Taro.getStorageSync('app_cookie')
+    if (!session || !cookie || !isLogin) {
+      // 没有服务器登录态
       await login()
-      ;[, res] = await withRequest(APIS.UserApi.apiUserGet)()
+      res = await userInfo()
+      isLogin = res.data.isLogin
+      studentInfo = res.data.studentInfo
     }
-
-    dispatch({
-      type: UPDATE_USERINFO,
-      data: {
-        // 判断是否有用户名
-        isWechatLogin: !!res?.userInfo?.nickName
-      }
-    })
-
-    console.log(res, 'res')
-
-    // let { isLogin, studentInfo } = res.data
-    // let cookie = Taro.getStorageSync('app_cookie')
-    // if (!session || !cookie || !isLogin) {
-    //   // 没有服务器登录态
-    // await login()
-    //   res = await userInfo()
-    //   isLogin = res.data.isLogin
-    //   studentInfo = res.data.studentInfo
-    // }
-
     // 获取用户头像等信息
     // const userInfo = await getUserInfo()
     // this.globalData.userInfo = userInfo
     // store.dispatch(setLoading(false))
-    // dispatch({
-    //   type: UPDATE_USERINFO,
-    //   data: {
-    //     isLogin: !!(isLogin && studentInfo && studentInfo.username),
-    //     studentInfo
-    //   }
-    // })
+    dispatch({
+      type: GET_USERINFO,
+      data: {
+        isLogin: !!(isLogin && studentInfo && studentInfo.username),
+        studentInfo,
+      }
+    })
     dispatch(stopLoading())
     // this.updateUserInfo(userInfo)
   } catch (e) {
@@ -145,32 +127,27 @@ export const logout = () => async (dispatch: Dispatch) => {
   })
 }
 
-export const getExams = (...data: Parameters<typeof exams>) => async (
-  dispatch: Dispatch
-) => {
+
+export const getExams = (...data: Parameters<typeof exams>) => async (dispatch: Dispatch) => {
   const res = await exams(...data)
   const list = res?.data || []
 
   dispatch({
     type: GET_EXAMS,
     data: list,
-    page: data[0] || 1
+    page: data[0] || 1,
   })
 
   return res
 }
 
-export const getGrades = (...data: Parameters<typeof grades>) => async (
-  dispatch: Dispatch
-) => {
+export const getGrades = (...data: Parameters<typeof grades>) => async (dispatch: Dispatch) => {
   const res = await grades(...data)
 
   dispatch({
     type: GET_GRADES,
-    data: res.data
+    data: res.data,
   })
 
   return res
 }
-
-// export const

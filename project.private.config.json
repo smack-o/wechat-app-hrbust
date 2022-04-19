@@ -1,50 +1,5 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "wechat-app-hrbust",
-  "description": "",
-  "appid": "wxaed2c04fd10b6e1a",
-  "setting": {
-    "urlCheck": false,
-    "es6": false,
-    "postcss": false,
-    "preloadBackgroundData": false,
-    "minified": false,
-    "newFeature": true,
-    "coverView": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "useIsolateContext": true,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "disableUseStrict": false,
-    "minifyWXML": true,
-    "showES6CompileOption": false,
-    "useCompilerPlugins": false
-  },
-  "compileType": "miniprogram",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -148,16 +103,9 @@
           "scene": null
         },
         {
-          "name": "创建表白墙",
-          "pathName": "pages2/create-wall/index",
+          "name": "新建表白墙",
+          "pathName": "pages2/create-wall",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
-        },
-        {
-          "name": "表白墙首页",
-          "pathName": "pages/community/index",
-          "query": "__key_=16503398361591",
           "scene": null,
           "launchMode": "default"
         }

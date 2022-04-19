@@ -1,3 +1,4 @@
+import { InlineResponse200, InlineResponse200ResultError } from '@/services2'
 import Taro, { RequestParams } from '@tarojs/taro'
 // import { config, getCurrentPageUrl } from '@/utils'
 // import { routes } from './router'
@@ -63,7 +64,13 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
 type PromiseValue<T> = T extends Promise<infer U> ? U : T
 
 type RequestValue<
-  R extends { code?: number; result?: any; message?: string },
+  R extends {
+    code: InlineResponse200.CodeEnum
+    resultCode: InlineResponse200.ResultCodeEnum
+    message: string
+    result?: any
+    error?: InlineResponse200ResultError
+  },
   T extends (...args: any[]) => Promise<R>
 > = (
   ...args: Parameters<T>
@@ -76,19 +83,25 @@ type RequestValue<
 >
 
 export function withRequest<
-  R extends { code?: number; result?: any; message?: string },
+  R extends {
+    code: InlineResponse200.CodeEnum
+    resultCode: InlineResponse200.ResultCodeEnum
+    message: string
+    result?: any
+    error?: InlineResponse200ResultError
+  },
   T extends (...args: any[]) => Promise<R>
 >(request: T): RequestValue<R, T> {
   const callback = (...args: Parameters<T>) =>
     request(...args).then(res => {
-      if (res.code === 0) {
+      if (res.code === 0 && res.result) {
         return [null, res.result, res]
       }
 
-      let message = res.message || ''
-      if (res.code === 10001) {
-        message = '请求失败'
-      }
+      let message = res.message || res.error?.message || '请求失败'
+
+      console.error(res.error, res.message)
+
       return [new Error(message), res.result, res]
     }) as ReturnType<RequestValue<R, T>>
   return callback

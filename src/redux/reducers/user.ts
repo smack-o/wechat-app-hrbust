@@ -1,7 +1,13 @@
 import Taro from '@tarojs/taro'
 import { AnyAction } from 'redux'
-import { GET_USERINFO, LOGOUT, GET_EXAMS, GET_GRADES, SET_CURRENT_TERM, UPDATE_USERINFO_PROMISE } from '../actions/user'
-
+import {
+  UPDATE_USERINFO,
+  LOGOUT,
+  GET_EXAMS,
+  GET_GRADES,
+  SET_CURRENT_TERM,
+  UPDATE_USERINFO_PROMISE
+} from '../actions/user'
 
 const studentInfo = JSON.parse(Taro.getStorageSync('studentInfo') || '{}')
 
@@ -12,12 +18,13 @@ if (studentInfo.username) {
   currentTerm = courseData.term
 }
 export interface UserState {
-  isLogin: boolean,
+  isWechatLogin: boolean
+  isLogin: boolean
   getUserInfoPromise?: Promise<any>
   studentInfo: {
-    name: string,
+    name: string
     username: string
-  },
+  }
   exams: {
     course: string
     date: string
@@ -26,7 +33,7 @@ export interface UserState {
     info: string
     position: string
     time: string
-  }[],
+  }[]
   grades: {
     grades: {
       courseAttribute: string
@@ -43,12 +50,12 @@ export interface UserState {
       passFlag: string
       term: string
       year: string
-    }[],
+    }[]
     AVERAGE_GPA?: string
     AVERAGE_GRADE?: string
     OBLIGATORY_AVERAGE_GPA?: string
     gradeTerm?: string
-  },
+  }
   currentTerm: number
   // userInfo: {
   //   nike: string,
@@ -56,6 +63,7 @@ export interface UserState {
 }
 
 const INITIAL_STATE: UserState = {
+  isWechatLogin: false,
   getUserInfoPromise: undefined,
   isLogin: false,
   studentInfo: {
@@ -65,17 +73,20 @@ const INITIAL_STATE: UserState = {
   },
   exams: [],
   grades: {
-    grades: [],
+    grades: []
   },
-  currentTerm,
+  currentTerm
   // userInfo: {
   //   nike,
   // }
 }
 
-export default function user(state = INITIAL_STATE, action: AnyAction): UserState {
+export default function user(
+  state = INITIAL_STATE,
+  action: AnyAction
+): UserState {
   switch (action.type) {
-    case GET_USERINFO:
+    case UPDATE_USERINFO:
       Taro.setStorage({
         key: 'studentInfo',
         data: JSON.stringify(action.data.studentInfo || {})
@@ -96,13 +107,14 @@ export default function user(state = INITIAL_STATE, action: AnyAction): UserStat
         isLogin: false,
         studentInfo: {
           name: '',
-          username: '',
+          username: ''
         }
       }
     case GET_EXAMS:
       return {
         ...state,
-        exams: action.page === 1 ? action.data : [...state.exams, ...action.data]
+        exams:
+          action.page === 1 ? action.data : [...state.exams, ...action.data]
       }
     case GET_GRADES:
       return {

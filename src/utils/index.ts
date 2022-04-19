@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 
 // export { default as config } from '../../mallConfig'
 export { default as dateFormat } from './dateFormat'
+export * from './request'
 
 // 新增 Toast finished 方法，Toast 弹窗关闭后触发
 export const showToast = ({

@@ -11,7 +11,7 @@ const config = {
   alias: {
     '@': path.resolve(__dirname, '..', 'src'),
     '@ajax': path.resolve(__dirname, '..', 'src/utils/ajax'),
-    '@services': path.resolve(__dirname, '..', 'src/services2'),
+    '@services': path.resolve(__dirname, '..', 'src/services2')
   },
   defineConstants: {
     ...env.stringified
@@ -25,19 +25,15 @@ const config = {
   outputRoot: 'dist',
   plugins: [],
   copy: {
-    patterns: [
-    ],
-    options: {
-    }
+    patterns: [],
+    options: {}
   },
   framework: 'react',
   mini: {
     postcss: {
       pxtransform: {
         enable: true,
-        config: {
-
-        }
+        config: {}
       },
       url: {
         enable: true,
@@ -52,7 +48,18 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    webpackChain(chain, webpack) {
+      chain.merge({
+        plugin: {
+          install: {
+            plugin: new webpack.ProvidePlugin({
+              FormData: path.resolve(__dirname, '/config/utils/formData')
+            })
+          }
+        }
+      })
+    },
   },
   h5: {
     publicPath: '/',
@@ -60,8 +67,7 @@ const config = {
     postcss: {
       autoprefixer: {
         enable: true,
-        config: {
-        }
+        config: {}
       },
       cssModules: {
         enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
@@ -74,7 +80,7 @@ const config = {
   }
 }
 
-module.exports = function (merge) {
+module.exports = function(merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }

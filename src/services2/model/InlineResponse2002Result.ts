@@ -19,7 +19,7 @@ import * as models from './models'
   * @property `likeCount` 点赞数
   * @property `isCollect` 是否收藏
   * @property `collectCount` 收藏数量
-  * @property `publisherId` 发布者id
+  * @property `[publisher]` 
   * @property `to` wall id
   * @property `tel` 手机号
   * @property `content` 内容
@@ -51,10 +51,7 @@ export interface InlineResponse2002Result {
    * 收藏数量
    */
   'collectCount': number;
-  /**
-   * 发布者id
-   */
-  'publisherId': string;
+  'publisher'?: models.InlineResponse2002Publisher;
   /**
    * wall id
    */

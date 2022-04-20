@@ -16,6 +16,10 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * request body
+  */
+export type ParamsBodyapiWallLikePut = models.Data3
+/**
   * @description apiWallListGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -45,6 +49,28 @@ export class WallApi {
     }
   }
 
+  /**
+   * 点赞/取消 表白项
+   * @summary 点赞/取消 表白项
+   
+   * @param data: ParamsBodyapiWallLikePut// request body
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiWallLikePut = (
+    
+    data: ParamsBodyapiWallLikePut,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const url = this.$basePath + '/api/wall/like'
+    const p: any = {}
+    p.data = data
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
+      url,
+      ...p
+    })
+  }
   /**
    * 获取用户发布的表白项列表
    * @summary 获取用户发布的表白项列表

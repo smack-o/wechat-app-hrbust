@@ -77,3 +77,6 @@ Thumbs.db
 
 # mock
 mock/mock
+
+
+.env.development.local

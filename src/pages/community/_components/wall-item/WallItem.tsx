@@ -3,11 +3,19 @@ import { getCdnUrl, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useCallback, useState } from 'react'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/zh-cn'
+
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
 import LikeSelectedIcon from '../../imgs/like_selected.png'
 
 import './WallItem.less'
+
+dayjs.locale('zh-cn') // 全局使用
+
+dayjs.extend(relativeTime)
 
 interface IWallItemProps {
   data: InlineResponse2002Result
@@ -27,23 +35,35 @@ const getPhotosCol = (length = 0) => {
 
 export default function WallItem(props: IWallItemProps) {
   const {
-    data: { photos = [], to, publisher, content, likeCount, isLike, _id },
+    data: {
+      photos = [],
+      to,
+      publisher,
+      content,
+      likeCount,
+      isLike,
+      _id,
+      createdAt
+    }
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
   const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount)
 
-  const onImageClick = useCallback((index: number) => {
-    // @ts-ignore
-    wx.previewMedia({
-      current: index,
-      sources: photos.map(item => ({
-        url:getCdnUrl(item.key),
-        type: 'image'
-      })),
-      showmenu: true
-    })
-  }, [photos])
+  const onImageClick = useCallback(
+    (index: number) => {
+      // @ts-ignore
+      wx.previewMedia({
+        current: index,
+        sources: photos.map(item => ({
+          url: getCdnUrl(item.key),
+          type: 'image'
+        })),
+        showmenu: true
+      })
+    },
+    [photos]
+  )
 
   const onLikeClick = useCallback(async () => {
     const [err] = await withRequest(APIS.WallApi.apiWallLikePut)({
@@ -60,12 +80,17 @@ export default function WallItem(props: IWallItemProps) {
   return (
     <View className={prefix}>
       <View className={`${prefix}__publisher`}>
-        <Image
-          className={`${prefix}__publisher-avatar`}
-          src={publisher?.userInfo?.avatarUrl || ''}
-        ></Image>
-        <View className={`${prefix}__publisher-name`}>
-          {publisher?.userInfo?.nickName}
+        <View className={`${prefix}__publisher-left`}>
+          <Image
+            className={`${prefix}__publisher-avatar`}
+            src={publisher?.userInfo?.avatarUrl || ''}
+          ></Image>
+          <View className={`${prefix}__publisher-name`}>
+            {publisher?.userInfo?.nickName}
+          </View>
+        </View>
+        <View className={`${prefix}__publisher-time`}>
+          {dayjs(createdAt).fromNow()}
         </View>
       </View>
       <View
@@ -96,7 +121,10 @@ export default function WallItem(props: IWallItemProps) {
           {likeCount}
         </View>
         <View className={`${prefix}__footer-item`} onClick={onLikeClick}>
-          <Image src={localIsLike ? LikeSelectedIcon : LikeIcon} mode="widthFix"></Image>
+          <Image
+            src={localIsLike ? LikeSelectedIcon : LikeIcon}
+            mode="widthFix"
+          ></Image>
           {localIsLikeCount}
         </View>
       </View>

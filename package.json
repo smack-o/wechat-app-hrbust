@@ -54,6 +54,7 @@
     "@types/react-redux": "^7.1.9",
     "classnames": "^2.2.6",
     "cookie": "^0.5.0",
+    "dayjs": "^1.11.1",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "react-redux": "^7.2.0",

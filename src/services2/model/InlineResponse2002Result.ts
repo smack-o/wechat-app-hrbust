@@ -13,6 +13,8 @@
 import * as models from './models'
 
 /**
+  * @property `createdAt` 创建时间
+  * @property `updatedAt` 更新时间
   * @property `_id` 表白墙id
   * @property `isPublisher` 是否是发布者
   * @property `isLike` 是否点赞
@@ -27,6 +29,14 @@ import * as models from './models'
   * @property `isDelete` 是否删除
   */
 export interface InlineResponse2002Result {
+  /**
+   * 创建时间
+   */
+  'createdAt': number;
+  /**
+   * 更新时间
+   */
+  'updatedAt': number;
   /**
    * 表白墙id
    */

@@ -604,6 +604,14 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
                       "_id": {
                         "type": "string",
                         "description": "表白墙id",
@@ -715,6 +723,8 @@
                       }
                     },
                     "required": [
+                      "createdAt",
+                      "updatedAt",
                       "_id",
                       "isPublisher",
                       "isLike",

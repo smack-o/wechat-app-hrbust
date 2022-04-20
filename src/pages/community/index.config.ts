@@ -1,7 +1,4 @@
 export default {
-  navigationBarTitleText: '发现',
-  usingComponents: {
-    cards: 'plugin://waimai/cards',
-    banner: 'plugin://waimai/banner'
-  }
+  navigationBarTitleText: '表白墙',
+  enablePullDownRefresh: true
 }

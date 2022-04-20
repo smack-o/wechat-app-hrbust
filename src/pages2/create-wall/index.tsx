@@ -71,12 +71,6 @@ class Discover extends Component<IProps, PageState> {
       photos = await this.uploadFiles()
     } catch (error) {
       Taro.hideLoading()
-      Taro.showToast({
-        title: '图片上传失败',
-        // @ts-ignore
-        icon: 'error',
-        duration: 2000
-      })
       return
     }
     Taro.hideLoading()

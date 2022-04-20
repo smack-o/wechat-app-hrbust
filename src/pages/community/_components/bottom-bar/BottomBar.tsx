@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Image } from '@tarojs/components'
+import FixBlock from '@/components/fix-block'
 import faceIcon from '../../imgs/bar/face.png'
 import faceSelectIcon from '../../imgs/bar/face_selected.png'
 import mineIcon from '../../imgs/bar/mine.png'
@@ -39,40 +40,45 @@ const barList = [
 ]
 
 export interface IBottomBarProps {
-  onChange?: (index: number,item: {
-    key: string;
-    icon: string;
-    selectIcon: string;
-    text: string;
-  }) => void
+  onChange?: (
+    index: number,
+    item: {
+      key: string
+      icon: string
+      selectIcon: string
+      text: string
+    }
+  ) => void
 }
 export default function BottomBar(props: IBottomBarProps) {
   const [current, setCurrent] = useState(0)
   const { onChange } = props
 
   return (
-    <View className="bottom-bar">
-      {barList.map((item, index) => {
-        const active = current === index
-        return (
-          <View
-            key={item.key}
-            className={`bottom-bar__item ${active ? 'active' : ''}`}
-            onClick={() => {
-              setCurrent(index)
-              onChange?.(index, item)
-            }}
-          >
-            <View className="bottom-bar__item-icon">
-              <Image
-                src={active ? item.selectIcon : item.icon}
-                mode="widthFix"
-              />
+    <FixBlock bottom={0}>
+      <View className="bottom-bar">
+        {barList.map((item, index) => {
+          const active = current === index
+          return (
+            <View
+              key={item.key}
+              className={`bottom-bar__item ${active ? 'active' : ''}`}
+              onClick={() => {
+                setCurrent(index)
+                onChange?.(index, item)
+              }}
+            >
+              <View className="bottom-bar__item-icon">
+                <Image
+                  src={active ? item.selectIcon : item.icon}
+                  mode="widthFix"
+                />
+              </View>
+              <View className="bottom-bar__item-text">{item.text}</View>
             </View>
-            <View className="bottom-bar__item-text">{item.text}</View>
-          </View>
-        )
-      })}
-    </View>
+          )
+        })}
+      </View>
+    </FixBlock>
   )
 }

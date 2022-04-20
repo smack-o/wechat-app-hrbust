@@ -1,0 +1,13 @@
+@prefix: fix-block;
+
+.@{prefix} {
+  position: relative;
+  z-index: 20;
+
+  &__children--fixed {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    z-index: 1;
+  }
+}

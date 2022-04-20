@@ -1,7 +1,6 @@
 import { APIS, InlineResponse2002Result } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
-import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, { useCallback, useState } from 'react'
 import CommentIcon from '../../imgs/comment.png'
@@ -28,7 +27,7 @@ const getPhotosCol = (length = 0) => {
 
 export default function WallItem(props: IWallItemProps) {
   const {
-    data: { photos = [], to, publisher, content, likeCount, isCollect, isLike, _id },
+    data: { photos = [], to, publisher, content, likeCount, isLike, _id },
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -47,10 +46,11 @@ export default function WallItem(props: IWallItemProps) {
   }, [photos])
 
   const onLikeClick = useCallback(async () => {
-    const [err, res] = await withRequest(APIS.WallApi.apiWallLikePut)({
+    const [err] = await withRequest(APIS.WallApi.apiWallLikePut)({
       brickId: _id
     })
 
+    // 本地变更
     if (!err) {
       setLocalIsLike(!localIsLike)
       setLocalIsLikeCount(localIsLikeCount + (localIsLike ? -1 : 1))

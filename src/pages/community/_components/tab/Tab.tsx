@@ -1,21 +1,22 @@
 import React from 'react'
 import cn from 'classnames'
 import { View } from '@tarojs/components'
+import FixBlock from '@/components/fix-block'
 
 import './Tab.less'
 
 interface ITabItem<Key> {
-  key: Key;
-  text: string;
+  key: Key
+  text: string
 }
 
 export interface ITabProps<Key = string> {
-  activeKey: Key;
-  tabList: ITabItem<Key>[];
-  children?: React.ReactNode;
-  onChange?: (index: number, key?: Key, text?: string) => void;
+  activeKey: Key
+  tabList: ITabItem<Key>[]
+  children?: React.ReactNode
+  onChange?: (index: number, key?: Key, text?: string) => void
   /** fix 距离顶部距离 */
-  fixBlockTop?: number;
+  fixBlockTop?: number
 }
 
 const prefix = 'community-tab'
@@ -25,6 +26,7 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
 
   return (
     <View className={prefix}>
+      <FixBlock top={0}>
         <View className={`${prefix}-title`}>
           {tabList.map((tabItem, index) => {
             const { key, text } = tabItem
@@ -45,6 +47,7 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
             )
           })}
         </View>
+      </FixBlock>
       {children && <View className={`${prefix}__content`}>{children}</View>}
     </View>
   )

@@ -15,7 +15,8 @@
     "no-undef": "error",
     "@typescript-eslint/no-unused-vars": "warn",
     "react/no-unused-state": "error",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "react/sort-comp": "off"
   },
   "globals": {
     "wx": true,

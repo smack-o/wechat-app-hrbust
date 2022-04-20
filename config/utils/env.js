@@ -52,7 +52,8 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-        PROXY_TARGET: process.env.PROXY_TARGET
+        PROXY_TARGET: process.env.PROXY_TARGET,
+        CND_PREFIX: process.env.CND_PREFIX,
       }
     )
   // Stringify all values so we can feed into Webpack DefinePlugin

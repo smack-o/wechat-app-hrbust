@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro'
+import { url } from 'swagger'
 
 // export { default as config } from '../../mallConfig'
 export { default as dateFormat } from './dateFormat'
@@ -175,3 +176,7 @@ export const saveImage = async (url: string) => {
 
 export const delay = (timeout: number) =>
   new Promise((resolve, reject) => setTimeout(resolve, timeout))
+
+export const getCdnUrl = (key: string) => {
+  return `${process.env.CND_PREFIX}/${key}`
+}

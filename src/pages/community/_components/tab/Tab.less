@@ -1,0 +1,32 @@
+@prefix: community-tab;
+
+.@{prefix} {
+  &-title {
+    height: 104px;
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    font-size: 32px;
+    color: #d1d1d6;
+    line-height: 45px;
+    background: #fff;
+  }
+  &__item {
+    margin-right: 64px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &.current {
+      // color: @Blue03;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #4e4c56;
+    }
+  }
+}

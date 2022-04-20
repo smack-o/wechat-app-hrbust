@@ -634,10 +634,37 @@
                         "description": "收藏数量",
                         "default": 0
                       },
-                      "publisherId": {
-                        "type": "string",
-                        "description": "发布者id",
-                        "default": ""
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
                       },
                       "to": {
                         "type": "string",
@@ -694,7 +721,6 @@
                       "likeCount",
                       "isCollect",
                       "collectCount",
-                      "publisherId",
                       "to",
                       "tel",
                       "content",
@@ -717,7 +743,8 @@
               "required": [
                 "code",
                 "resultCode",
-                "message"
+                "message",
+                "result"
               ]
             }
           }
@@ -840,6 +867,145 @@
               ]
             },
             "description": "success"
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/wall/like": {
+      "put": {
+        "summary": "点赞/取消 表白项",
+        "description": "点赞/取消 表白项",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "brickId": {
+                  "type": "string",
+                  "description": "wall id",
+                  "default": "",
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
           }
         },
         "tags": [

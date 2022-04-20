@@ -13,50 +13,66 @@ import './BottomBar.less'
 
 const barList = [
   {
+    key: 'wall',
     icon: wallIcon,
     selectIcon: wallSelectIcon,
     text: '表白墙'
   },
   {
+    key: 'sale',
     icon: faceIcon,
     selectIcon: faceSelectIcon,
     text: '情侣脸'
   },
   {
+    key: 'mine',
     icon: saleIcon,
     selectIcon: saleSelectIcon,
     text: '卖室友'
   },
   {
+    key: 'mine',
     icon: mineIcon,
     selectIcon: mineSelectIcon,
     text: '我的'
   }
 ]
-export default function BottomBar() {
+
+export interface IBottomBarProps {
+  onChange?: (index: number,item: {
+    key: string;
+    icon: string;
+    selectIcon: string;
+    text: string;
+  }) => void
+}
+export default function BottomBar(props: IBottomBarProps) {
   const [current, setCurrent] = useState(0)
+  const { onChange } = props
 
   return (
     <View className="bottom-bar">
-      {
-        barList.map((item, index) => {
-          return (
-            <View
-              key={index}
-              className={`item ${current === index ? 'active' : ''}`}
-              onClick={() => {
-                setCurrent(index)
-              }}
-            >
-              <View className="icon">
-                <Image src={item.icon} mode="widthFix" />
-              </View>
-              <View className="text">{item.text}</View>
+      {barList.map((item, index) => {
+        const active = current === index
+        return (
+          <View
+            key={item.key}
+            className={`bottom-bar__item ${active ? 'active' : ''}`}
+            onClick={() => {
+              setCurrent(index)
+              onChange?.(index, item)
+            }}
+          >
+            <View className="bottom-bar__item-icon">
+              <Image
+                src={active ? item.selectIcon : item.icon}
+                mode="widthFix"
+              />
             </View>
-          )
-        })
-      }
-      <View className="info"></View>
+            <View className="bottom-bar__item-text">{item.text}</View>
+          </View>
+        )
+      })}
     </View>
   )
 }

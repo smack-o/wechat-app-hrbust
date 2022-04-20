@@ -49,7 +49,24 @@ const config = {
         }
       }
     },
+    commonChunks: ['runtime', 'vendors', 'taro', 'common', 'moment'],
     webpackChain(chain, webpack) {
+      chain.merge({
+        optimization: {
+          splitChunks: {
+            cacheGroups: {
+              moment: {
+                name: 'moment',
+                priority: 1000,
+                test (module) {
+                  return /node_modules[\\/]moment/.test(module.context)
+                }
+              }
+            }
+          }
+        }
+      })
+
       chain.merge({
         plugin: {
           install: {

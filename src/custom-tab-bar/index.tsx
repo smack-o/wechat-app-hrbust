@@ -1,19 +1,7 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { CoverView, CoverImage } from '@tarojs/components'
 import cn from 'classnames'
-import HomeIcon from '@/assets/icon/home.png'
-import CampusIcon from '@/assets/icon/campus.png'
-import FindIcon from '@/assets/icon/find.png'
-import ShopIcon from '@/assets/icon/shop.png'
-import AccountIcon from '@/assets/icon/account.png'
-
-import HomeIconSelected from '@/assets/icon/home_selected.png'
-import CampusIconSelected from '@/assets/icon/campus_selected.png'
-import FindIconSelected from '@/assets/icon/find_selected.png'
-import ShopIconSelected from '@/assets/icon/shop_selected.png'
-import AccountIconSelected from '@/assets/icon/account_selected.png'
-
 import './index.less'
 
 const tabInfo = {
@@ -66,7 +54,7 @@ const tabInfo = {
       selectedIconPath: '/assets/icon/campus_selected.png'
     },
     {
-      pagePath: 'pages/community/index',
+      pagePath: 'pages3/community/index',
       text: 'Soul',
       iconPath: '/assets/icon/find.png',
       selectedIconPath: '/assets/icon/find_selected.png'
@@ -236,11 +224,13 @@ const switchTo = (path: string, index: number) => () => {
 }
 
 export default function CustomTabBar() {
-  const [path, setPath] = useState(Taro.getCurrentInstance()?.router?.path || '')
+  const [path, setPath] = useState(
+    Taro.getCurrentInstance()?.router?.path || ''
+  )
 
   useEffect(() => {
     // @ts-ignore
-    wx.onAppRoute(function (res) {
+    wx.onAppRoute(function(res) {
       setPath(res.path)
     })
   }, [])
@@ -253,7 +243,7 @@ export default function CustomTabBar() {
         return (
           <CoverView
             className={cn('tab-bar-item', {
-              large: index === 2,
+              large: index === 2
             })}
             onClick={switchTo(item.pagePath, index)}
             data-path={item.pagePath}
@@ -261,19 +251,12 @@ export default function CustomTabBar() {
           >
             <CoverImage
               className="custom-tab-item-img"
-              src={
-                isSelected
-                  ? item.selectedIconPath
-                  : item.iconPath
-              }
+              src={isSelected ? item.selectedIconPath : item.iconPath}
             />
             <CoverView
               className="custom-tab-item-text"
               style={{
-                color:
-                  isSelected
-                    ? tabInfo.selectedColor
-                    : tabInfo.color
+                color: isSelected ? tabInfo.selectedColor : tabInfo.color
               }}
             >
               {item.text}

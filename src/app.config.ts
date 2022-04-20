@@ -3,8 +3,7 @@ export const router = {
   pages: {
     index: 'index/index', // 首页
     campus: 'campus/index', // 校园
-    discover: 'discover/index', // 发现
-    community: 'community/index', // 社区主页
+    // discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
     shop: 'shop/index' // 校园购
     // 'pages/course',
@@ -37,7 +36,8 @@ export const router = {
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们
-    schoolAnniversary: 'school-anniversary/index' // 70 周年校庆
+    schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
+    community: 'community/index' // 社区主页
   }
 }
 
@@ -93,12 +93,12 @@ export default {
         iconPath: 'assets/icon/campus.png',
         selectedIconPath: 'assets/icon/campus_selected.png'
       },
-      {
-        pagePath: 'pages/discover/index',
-        text: 'Soul',
-        iconPath: 'assets/icon/find.png',
-        selectedIconPath: 'assets/icon/find_selected.png'
-      },
+      // {
+      //   pagePath: 'pages/discover/index',
+      //   text: 'Soul',
+      //   iconPath: 'assets/icon/find.png',
+      //   selectedIconPath: 'assets/icon/find_selected.png'
+      // },
       {
         pagePath: 'pages/shop/index',
         text: '优惠购',

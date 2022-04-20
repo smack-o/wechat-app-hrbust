@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import { View } from '@tarojs/components'
-import FixBlock from '@/components/fix-block'
+// import FixBlock from '@/components/fix-block'
 
 import './Tab.less'
 
@@ -26,28 +26,28 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
 
   return (
     <View className={prefix}>
-      <FixBlock top={0}>
-        <View className={`${prefix}-title`}>
-          {tabList.map((tabItem, index) => {
-            const { key, text } = tabItem
-            return (
-              <View
-                key={index}
-                className={cn(`${prefix}__item`, {
-                  current: activeKey === tabItem.key
-                })}
-                onClick={() => {
-                  if (activeKey !== key) {
-                    onChange?.(index, key, text)
-                  }
-                }}
-              >
-                {text}
-              </View>
-            )
-          })}
-        </View>
-      </FixBlock>
+      {/* <FixBlock top={0}> */}
+      <View className={`${prefix}-title`}>
+        {tabList.map((tabItem, index) => {
+          const { key, text } = tabItem
+          return (
+            <View
+              key={index}
+              className={cn(`${prefix}__item`, {
+                current: activeKey === tabItem.key
+              })}
+              onClick={() => {
+                if (activeKey !== key) {
+                  onChange?.(index, key, text)
+                }
+              }}
+            >
+              {text}
+            </View>
+          )
+        })}
+      </View>
+      {/* </FixBlock> */}
       {children && <View className={`${prefix}__content`}>{children}</View>}
     </View>
   )

@@ -2,7 +2,6 @@ import React, {
   Fragment,
   PropsWithChildren,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -37,21 +36,13 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
     () => `id_${Date.now()}_${parseInt(`${Math.random() * 1000}`, 10)}`,
     []
   )
-  console.log(id, 1)
-  useLayoutEffect(() => {
-      // console.log(ref.current.boundingClientRect, ref)
-      // console.log(id, 2)
-      // const miniNode = Taro.createSelectorQuery().select('.' + id)
-
-      // // let miniNode = wx.createSelectorQuery().select('.' + id)
-      // const rect = miniNode.boundingClientRect(rect => {
-      //   console.log(rect, rect.height, '1111')
-      //   setHeight(rect.height || 0)
-      // })
-      // console.log(rect, rect.height, '1111')
-      Taro.createSelectorQuery().select('.' + id).boundingClientRect(function(rect){
+  useEffect(() => {
+    Taro.createSelectorQuery()
+      .select('.' + id)
+      .boundingClientRect(function(rect) {
         setHeight(rect?.height || 0)
-      }).exec()
+      })
+      .exec()
   }, [children, id])
 
   const style =

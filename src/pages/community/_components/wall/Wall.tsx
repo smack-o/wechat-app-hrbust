@@ -1,10 +1,13 @@
 import React from 'react'
-import { View } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import { withRequest } from '@/utils'
 import { APIS, InlineResponse2002Result } from '@/services2'
+import { navigateTo } from '@tarojs/taro'
+import { routes } from '@/app.config'
 import Tab from '../tab'
 import { ITabProps } from '../tab/Tab'
 import WallItem from '../wall-item'
+import AddWallIcon from '../../imgs/add_wall.png'
 
 import './Wall.less'
 
@@ -89,6 +92,12 @@ export default class Wall extends React.Component<WallProps, WallState> {
     await this.fetchList()
   }
 
+  onAddWallClick = () => {
+    navigateTo({
+      url: routes.createWall
+    })
+  }
+
   render() {
     const { activeKey, hasNext } = this.state
     return (
@@ -102,6 +111,9 @@ export default class Wall extends React.Component<WallProps, WallState> {
             return <WallItem data={item} key={item._id}></WallItem>
           })}
         </Tab>
+        <View className="wall__add-wall" onClick={this.onAddWallClick}>
+          <Image src={AddWallIcon} mode="widthFix"></Image>
+        </View>
         {!hasNext && <View>到底了~</View>}
       </View>
     )

@@ -2,6 +2,7 @@ import React, {
   Fragment,
   PropsWithChildren,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -36,13 +37,18 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
     () => `id_${Date.now()}_${parseInt(`${Math.random() * 1000}`, 10)}`,
     []
   )
+
   useEffect(() => {
-    Taro.createSelectorQuery()
-      .select('.' + id)
-      .boundingClientRect(function(rect) {
-        setHeight(rect?.height || 0)
-      })
-      .exec()
+    console.log('useLayoutEffect')
+    setTimeout(() => {
+      Taro.createSelectorQuery()
+        .select('.' + id)
+        .boundingClientRect(function(rect) {
+          console.log(rect, id, 'rect')
+          setHeight(rect?.height || 0)
+        })
+        .exec()
+    }, 0)
   }, [children, id])
 
   const style =

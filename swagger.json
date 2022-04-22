@@ -138,6 +138,123 @@
         ]
       }
     },
+    "/api/media/compareface": {
+      "post": {
+        "summary": "图片对比，情侣脸识别",
+        "description": "图片对比，情侣脸识别",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "imageDataA": {
+                  "type": "string",
+                  "description": "图片A",
+                  "default": "",
+                  "require": true
+                },
+                "imageDataB": {
+                  "type": "string",
+                  "description": "图片B",
+                  "default": "",
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "confidence": {
+                      "type": "string",
+                      "description": "比对相似度",
+                      "default": ""
+                    },
+                    "qualityScoreA": {
+                      "type": "string",
+                      "description": "图片A质量",
+                      "default": ""
+                    },
+                    "qualityScoreB": {
+                      "type": "string",
+                      "description": "图片B质量",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "confidence",
+                    "qualityScoreA",
+                    "qualityScoreB"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            },
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Media"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/user": {
       "get": {
         "summary": "获取用户信息",
@@ -216,16 +333,10 @@
                           "default": ""
                         }
                       }
-                    },
-                    "openid": {
-                      "type": "string",
-                      "description": "wechat openid",
-                      "default": ""
                     }
                   },
                   "required": [
-                    "_id",
-                    "openid"
+                    "_id"
                   ]
                 },
                 "error": {

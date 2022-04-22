@@ -1,1 +1,1 @@
-export { default } from './Wall'
+export { default } from './LoversFace'

@@ -51,6 +51,9 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   init = async () => {
     this.pageNum = 0
+    this.setState({
+      list: []
+    })
     this.fetchList()
   }
 

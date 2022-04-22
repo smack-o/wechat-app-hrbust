@@ -90,15 +90,18 @@ export const initHandler = async (dispatch: Dispatch) => {
       ;[, res] = await withRequest(APIS.UserApi.apiUserGet)()
     }
 
+    const data: any = {
+      // 判断是否有用户名
+      isWechatLogin: !!res?.userInfo?.nickName
+    }
+    if (data.isWechatLogin) {
+      data.userInfo = res?.userInfo
+    }
+
     dispatch({
       type: UPDATE_USERINFO,
-      data: {
-        // 判断是否有用户名
-        isWechatLogin: !!res?.userInfo?.nickName
-      }
+      data
     })
-
-    console.log(res, 'res')
 
     // let { isLogin, studentInfo } = res.data
     // let cookie = Taro.getStorageSync('app_cookie')

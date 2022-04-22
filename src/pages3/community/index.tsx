@@ -24,7 +24,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Discover extends Component<IProps, PageState> {
   state: PageState = {
-    currentTab: 0
+    currentTab: 1
   }
 
   ref = createRef<any>()

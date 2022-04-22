@@ -57,9 +57,15 @@ export interface UserState {
     gradeTerm?: string
   }
   currentTerm: number
-  // userInfo: {
-  //   nike: string,
-  // }
+  userInfo: {
+    avatarUrl: string
+    city: string
+    country: string
+    gender: number
+    language: string
+    nickName: string
+    province: string
+  }
 }
 
 const INITIAL_STATE: UserState = {
@@ -75,10 +81,16 @@ const INITIAL_STATE: UserState = {
   grades: {
     grades: []
   },
-  currentTerm
-  // userInfo: {
-  //   nike,
-  // }
+  currentTerm,
+  userInfo: {
+    avatarUrl: '',
+    city: '',
+    country: '',
+    gender: 0,
+    language: 'zh_CN',
+    nickName: '许岩',
+    province: ''
+  }
 }
 
 export default function user(

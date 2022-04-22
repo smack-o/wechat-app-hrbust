@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch, bindActionCreators } from 'redux'
-import Taro, { UserInfo } from '@tarojs/taro'
-import { View, Text, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { getBanner } from '@/redux/actions/common'
 import { IRootState } from '@/types'
 
@@ -16,10 +16,7 @@ import examIcon from '@/assets/icon/exam_schedule.png'
 import gradeIcon from '@/assets/icon/grade.png'
 import shopIcon from '@/assets/icon/shop_selected.png'
 import queryRoomIcon from '@/assets/icon/query_room.png'
-import { APIS } from '@/services2'
-import { withRequest } from '@/utils/request'
-
-
+import { toLogin } from '@/utils'
 import bgImg from './res/home-bg.png'
 import SwiperChild from './components/SwiperChild'
 
@@ -42,16 +39,16 @@ let interstitialAd: Taro.InterstitialAd
 const SWIPER_MARGIN = '45rpx'
 class Index extends Component<IProps, PageState> {
   state = {
-    cIndex: 0,
+    cIndex: 0
   }
 
-  componentDidShow () {
+  componentDidShow() {
     // banner
     this.props.getBanner()
 
     // 在适合的场景显示插屏广告
     if (interstitialAd) {
-      interstitialAd.show().catch((err) => {
+      interstitialAd.show().catch(err => {
         console.log(err)
       })
     }
@@ -85,7 +82,8 @@ class Index extends Component<IProps, PageState> {
       url: routes.course,
       needLogin: true,
       shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
-    }, {
+    },
+    {
       image: gradeIcon,
       text: '成绩查询',
       url: routes.grade,
@@ -154,7 +152,9 @@ class Index extends Component<IProps, PageState> {
   }
 
   goPage = (index: number) => {
-    const { user: { isLogin } } = this.props
+    const {
+      user: { isLogin }
+    } = this.props
     const { needLogin, url } = this.modules[index]
     if (!isLogin && needLogin) {
       Taro.showToast({
@@ -167,28 +167,13 @@ class Index extends Component<IProps, PageState> {
     goPage(url)
   }
 
-  onLogin = async () => {
-    const { user: { isLogin, isWechatLogin } } = this.props
-
-    if (!isWechatLogin) {
-      wx.getUserProfile({
-        desc: '用于理工喵信息展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        success: async (res) => {
-          await withRequest(APIS.UserApi.apiUserWxLoginPost)({
-            iv: res.iv,
-            encryptedData: res.encryptedData,
-          })
-          goPage(routes.login)
-        }
-      })
-      return
-    }
-    goPage(routes.login)
-  }
-
-  render () {
+  render() {
     const { cIndex } = this.state
-    const { banners, user: { isLogin, isWechatLogin }, loading } = this.props
+    const {
+      banners,
+      user: { isLogin, isWechatLogin },
+      loading
+    } = this.props
 
     if (loading) {
       return <Loading loading></Loading>
@@ -207,43 +192,64 @@ class Index extends Component<IProps, PageState> {
           circular
           duration={400}
         >
-          {
-            banners.map((item, index) => {
-              return <SwiperItem key={item._id}>
-                <SwiperChild className="slide-item" item={item} active={cIndex === index} />
+          {banners.map((item, index) => {
+            return (
+              <SwiperItem key={item._id}>
+                <SwiperChild
+                  className="slide-item"
+                  item={item}
+                  active={cIndex === index}
+                />
               </SwiperItem>
-            })
-          }
+            )
+          })}
         </Swiper>
 
         <View className="modules">
-          {
-            this.modules.map((item, index) => {
-              return <View key={index} className={cn('module', {
-                'disabled': !(isLogin || !item.needLogin)
-              })} onClick={() => this.goPage(index)}
+          {this.modules.map((item, index) => {
+            return (
+              <View
+                key={index}
+                className={cn('module', {
+                  disabled: !(isLogin || !item.needLogin)
+                })}
+                onClick={() => this.goPage(index)}
               >
-                <Image className="modules_image" style={item.shadowColor} src={item.image} mode="widthFix" />
+                <Image
+                  className="modules_image"
+                  style={item.shadowColor}
+                  src={item.image}
+                  mode="widthFix"
+                />
                 <Text className="modules_text">{item.text}</Text>
               </View>
-            })
-          }
+            )
+          })}
         </View>
 
-        {isLogin && <Image className="discover-image" src={bgImg} mode="widthFix" />}
+        {isLogin && (
+          <Image className="discover-image" src={bgImg} mode="widthFix" />
+        )}
 
-        {
-         (!isWechatLogin || !isLogin) && <View className="login-wrapper">
-            <View className="login" onClick={this.onLogin}>
-              <Text className="login-text" style="color: #999999">部分校园功能仅对绑定学号用户开放</Text>
+        {(!isWechatLogin || !isLogin) && (
+          <View className="login-wrapper">
+            <View className="login" onClick={() => toLogin(isWechatLogin)}>
+              <Text className="login-text" style="color: #999999">
+                部分校园功能仅对绑定学号用户开放
+              </Text>
               <View className="login-button">
-                <Text className="login-text">{isWechatLogin ? '绑定学号' : '立即登录'}</Text>
+                <Text className="login-text">
+                  {isWechatLogin ? '绑定学号' : '立即登录'}
+                </Text>
               </View>
             </View>
           </View>
-        }
+        )}
 
-        <View className="shop-icon" onClick={() => Taro.switchTab({ url: routes.shop })}>
+        <View
+          className="shop-icon"
+          onClick={() => Taro.switchTab({ url: routes.shop })}
+        >
           <Image src={shopIcon} mode="widthFix" />
           <Text>寝室必备</Text>
         </View>
@@ -255,11 +261,17 @@ class Index extends Component<IProps, PageState> {
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
   banners: state.common.banners,
-  loading: state.global.loading,
+  loading: state.global.loading
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ getBanner }, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ getBanner }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(withShare({
-  title: '理工喵儿，理工人专属小程序'
-})(Index))
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  withShare({
+    title: '理工喵儿，理工人专属小程序'
+  })(Index)
+)

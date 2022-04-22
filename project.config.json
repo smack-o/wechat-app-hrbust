@@ -156,8 +156,15 @@
         },
         {
           "name": "表白墙首页",
-          "pathName": "pages/community/index",
+          "pathName": "pages3/community/index",
           "query": "__key_=16503398361591",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/account/index",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }

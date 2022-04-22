@@ -6,15 +6,9 @@ import { AtInput, AtTextarea, AtButton, AtImagePicker } from 'taro-ui'
 import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
-import { showToast, withRequest } from '@/utils'
+import { withRequest } from '@/utils'
 import { getHeader } from '@/utils/ajax/ajax'
-
-
-// images
-import newFnIcon from './res/new_fn_icon.png'
-import touchMeIcon from './res/touch_me_icon.png'
-import discoverIcon from './res/discover.png'
-
+import { File } from 'taro-ui/types/image-picker'
 
 import './index.less'
 
@@ -27,18 +21,17 @@ type PageState = {
   to: string
   tel?: string
   content: string
-  files: any[]
+  files: File[]
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
-
 
 class Discover extends Component<IProps, PageState> {
   state = {
     to: '',
     tel: '',
     content: '',
-    files: [],
+    files: []
   }
 
   componentDidShow() {}
@@ -65,7 +58,7 @@ class Discover extends Component<IProps, PageState> {
 
     let photos: string[] = []
     Taro.showLoading({
-      title: '上传图片中...',
+      title: '上传图片中...'
     })
     try {
       photos = await this.uploadFiles()
@@ -92,7 +85,7 @@ class Discover extends Component<IProps, PageState> {
         url: `${process.env.PROXY_TARGET}/api/media`,
         filePath: url,
         name: 'file',
-        header: getHeader(),
+        header: getHeader()
       })
       // console.log(JSON.parse(data))
       const res = JSON.parse(data)
@@ -108,8 +101,7 @@ class Discover extends Component<IProps, PageState> {
     return Promise.all(promises)
   }
 
-  onFileChange = (files) => {
-    console.log(files)
+  onFileChange = (files: File[]) => {
     this.setState({
       files
     })
@@ -142,7 +134,8 @@ class Discover extends Component<IProps, PageState> {
           onChange={e => this.onInputChange('content', e)}
         />
 
-        <AtImagePicker  files={files}
+        <AtImagePicker
+          files={files}
           onChange={this.onFileChange}
         ></AtImagePicker>
         <AtButton onClick={this.onSubmit}>提交</AtButton>

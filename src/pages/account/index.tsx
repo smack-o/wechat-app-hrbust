@@ -6,7 +6,7 @@ import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
 import { logout, init } from '@/redux/actions/user'
 import { Dispatch, bindActionCreators } from 'redux'
-import { cError } from '@/utils'
+import { cError, toLogin } from '@/utils'
 
 import arrowRight from '@/assets/icon/arrow_right.png'
 import authIcon from './res/authentication.png'
@@ -32,22 +32,21 @@ class Account extends Component<IProps, PageState> {
     version: '1.0.0'
   }
 
-  componentDidShow () {
+  componentDidShow() {
     const { miniProgram } = Taro.getAccountInfoSync() || {}
     this.setState({
       version: miniProgram.version
     })
   }
 
-  onLoad() {
-  }
+  onLoad() {}
 
   // 登出
   logout = () => {
     Taro.showModal({
       title: '确定要解绑学号？',
       content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
-      success: async (res) => {
+      success: async res => {
         if (res.confirm) {
           Taro.showLoading({
             title: '加载中...'
@@ -69,43 +68,91 @@ class Account extends Component<IProps, PageState> {
     })
   }
 
-  render () {
-    const { user: { isLogin, studentInfo } } = this.props
+  render() {
+    const {
+      user: {
+        isLogin,
+        isWechatLogin,
+        studentInfo,
+        userInfo: { avatarUrl, nickName }
+      }
+    } = this.props
     const { version } = this.state
-
-    console.log(version)
 
     return (
       <View className="account-container">
         <View className="user">
           <View className="avatar-wrapper">
-            <OpenData className="avatar" type="userAvatarUrl" lang="zh_CN"></OpenData>
+            {isWechatLogin ? (
+              <Image className="avatar" src={avatarUrl}></Image>
+            ) : (
+              <OpenData
+                className="avatar"
+                type="userAvatarUrl"
+                lang="zh_CN"
+              ></OpenData>
+            )}
           </View>
-          {!isLogin
-            ? <View className="button" onClick={() => goPage(routes.login)}>登录</View>
-            : <View className="info">
+          {isWechatLogin ? (
+            <View className="info">
               <View className="name">
-                <OpenData type="userNickName" lang="zh_CN"></OpenData>
-                <Text selectable className="username">{studentInfo.username}</Text>
+                {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
+                <Text>{nickName}</Text>
+                <Text selectable className="username">
+                  {studentInfo.username}
+                </Text>
               </View>
               <View className="student">
                 <Image className="image" src={authIcon} />
                 <View>{studentInfo.name}</View>
               </View>
             </View>
-          }
+          ) : (
+            <View className="button" onClick={() => toLogin(isWechatLogin)}>
+              立即登录
+            </View>
+          )}
+          {isWechatLogin && !isLogin && (
+            <View
+              className="bind-button"
+              onClick={() => toLogin(isWechatLogin)}
+            >
+              绑定学号
+            </View>
+          )}
         </View>
 
         <View className="other">
-          {
-            isLogin && <View className="item" onClick={this.logout}>
+          {isLogin && (
+            <View className="item" onClick={this.logout}>
               <Image className="image" src={removeBindingIcon} />
               <View className="info">
                 <View>解除绑定</View>
                 <Image className="arrow-right" src={arrowRight} />
               </View>
             </View>
-          }
+          )}
+          <Button className="item button" open-type="contact">
+            <Image className="image" src={contactIcon} />
+            <View className="info">
+              <View>我的消息</View>
+              <Image className="arrow-right" src={arrowRight} />
+            </View>
+          </Button>
+          <Button className="item button" open-type="contact">
+            <Image className="image" src={contactIcon} />
+            <View className="info">
+              <View>我的表白</View>
+              <Image className="arrow-right" src={arrowRight} />
+            </View>
+          </Button>
+          <Button className="item button" open-type="contact">
+            <Image className="image" src={contactIcon} />
+            <View className="info">
+              <View>我的舍友</View>
+              <Image className="arrow-right" src={arrowRight} />
+            </View>
+          </Button>
           <Button className="item button" open-type="contact">
             <Image className="image" src={contactIcon} />
             <View className="info">
@@ -115,16 +162,20 @@ class Account extends Component<IProps, PageState> {
           </Button>
         </View>
 
-        { version && <View className="version">@理工喵 v{version}</View>}
+        {version && <View className="version">@理工喵 v{version}</View>}
       </View>
     )
   }
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  user: state.user,
+  user: state.user
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ logout, init }, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ logout, init }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(Account)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Account)

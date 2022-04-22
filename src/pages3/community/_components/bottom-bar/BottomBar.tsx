@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { View, Image } from '@tarojs/components'
+import { routes } from '@/app.config'
+import Taro from '@tarojs/taro'
 import FixBlock from '@/components/fix-block'
 import faceIcon from '../../imgs/bar/face.png'
 import faceSelectIcon from '../../imgs/bar/face_selected.png'
@@ -64,6 +66,10 @@ export default function BottomBar(props: IBottomBarProps) {
               key={item.key}
               className={`bottom-bar__item ${active ? 'active' : ''}`}
               onClick={() => {
+                if (index === 3) {
+                  Taro.switchTab({ url: routes.account })
+                  return
+                }
                 setCurrent(index)
                 onChange?.(index, item)
               }}

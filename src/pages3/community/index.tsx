@@ -24,7 +24,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Discover extends Component<IProps, PageState> {
   state: PageState = {
-    currentTab: 1
+    currentTab: 0
   }
 
   ref = createRef<any>()
@@ -41,8 +41,7 @@ class Discover extends Component<IProps, PageState> {
     }
   ]
 
-  onBarChange: IBottomBarProps['onChange'] = (index, item) => {
-    console.log(item)
+  onBarChange: IBottomBarProps['onChange'] = index => {
     this.setState({
       currentTab: index
     })
@@ -67,7 +66,7 @@ class Discover extends Component<IProps, PageState> {
     return (
       <View className="discover-container">
         <Comp ref={this.ref} />
-        <BottomBar onChange={this.onBarChange}></BottomBar>
+        <BottomBar current={currentTab} onChange={this.onBarChange}></BottomBar>
       </View>
     )
   }

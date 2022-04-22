@@ -100,12 +100,14 @@ export function withRequest<
 
       let message = res.message || res.error?.message || '请求失败'
 
-      Taro.showToast({
-        title: message,
-        // @ts-ignore
-        icon: 'error',
-        duration: 2000
-      })
+      if (![400001, 400002].includes(res.code)) {
+        Taro.showToast({
+          title: message,
+          // @ts-ignore
+          icon: 'error',
+          duration: 2000
+        })
+      }
 
       console.error(res.error, res.message)
 

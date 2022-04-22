@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import { routes } from '@/app.config'
 import Taro from '@tarojs/taro'
@@ -51,10 +51,16 @@ export interface IBottomBarProps {
       text: string
     }
   ) => void
+  current: number
 }
 export default function BottomBar(props: IBottomBarProps) {
+  const { current: propsCurrent } = props
   const [current, setCurrent] = useState(0)
   const { onChange } = props
+
+  useEffect(() => {
+    setCurrent(propsCurrent)
+  }, [propsCurrent])
 
   return (
     <FixBlock bottom={0}>

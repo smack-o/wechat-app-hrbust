@@ -13,6 +13,7 @@ type LoversFaceState = {
   filesA: File[]
   filesB: File[]
   confidence: number
+  fetching: boolean
 }
 
 type LoversFaceProps = {}
@@ -25,7 +26,8 @@ export default class LoversFace extends React.Component<
   state: LoversFaceState = {
     filesA: [],
     filesB: [],
-    confidence: -1
+    confidence: -1,
+    fetching: false
   }
   componentDidMount() {}
 
@@ -58,6 +60,16 @@ export default class LoversFace extends React.Component<
 
   onSubmit = async () => {
     const { filesA, filesB } = this.state
+    if (filesA.length === 0 || filesB.length === 0) {
+      Taro.showToast({
+        title: '请先添加图片',
+        icon: 'none'
+      })
+      return
+    }
+    this.setState({
+      fetching: true
+    })
 
     const files = await Promise.all([
       compressImage(filesA[0].url),
@@ -89,6 +101,10 @@ export default class LoversFace extends React.Component<
         confidence: +res.confidence
       })
     }
+
+    this.setState({
+      fetching: false
+    })
   }
 
   onReset = () => {
@@ -100,7 +116,7 @@ export default class LoversFace extends React.Component<
   }
 
   render() {
-    const { filesA, filesB, confidence } = this.state
+    const { filesA, filesB, confidence, fetching } = this.state
     return (
       <View className={prefix}>
         <View className={`${prefix}__title`}>试试你跟 TA 有没有情侣相吧~</View>
@@ -154,6 +170,7 @@ export default class LoversFace extends React.Component<
             type="primary"
             className={`${prefix}__button`}
             onClick={this.onSubmit}
+            loading={fetching}
           >
             开始测试
           </AtButton>

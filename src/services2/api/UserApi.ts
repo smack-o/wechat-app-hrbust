@@ -18,11 +18,11 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiUserWxAuthPost = models.Data
+export type ParamsBodyapiUserWxAuthPost = models.Data1
 /**
   * request body
   */
-export type ParamsBodyapiUserWxLoginPost = models.Data1
+export type ParamsBodyapiUserWxLoginPost = models.Data2
 
 export class UserApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -39,12 +39,12 @@ export class UserApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse2001
+   * @returns models.InlineResponse2002
    */
   public apiUserGet = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2001>  => {
+  ) : AjaxPromise<models.InlineResponse2002>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     return ajax.ajax({

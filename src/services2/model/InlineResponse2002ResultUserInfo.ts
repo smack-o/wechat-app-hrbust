@@ -21,7 +21,7 @@ import * as models from './models'
   * @property `[province]` 
   * @property `[country]` 
   */
-export interface InlineResponse2001ResultUserInfo {
+export interface InlineResponse2002ResultUserInfo {
   'nickName'?: string;
   'gender'?: number;
   'avatarUrl'?: string;

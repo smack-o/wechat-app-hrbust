@@ -16,6 +16,10 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * request body
+  */
+export type ParamsBodyapiMediaComparefacePost = models.Data
+/**
   * @description apiMediaPost参数
   * @property `file` file content
   */
@@ -36,6 +40,28 @@ export class MediaApi {
     }
   }
 
+  /**
+   * 图片对比，情侣脸识别
+   * @summary 图片对比，情侣脸识别
+   
+   * @param data: ParamsBodyapiMediaComparefacePost// request body
+   * @param opt ajax config
+   * @returns models.InlineResponse2001
+   */
+  public apiMediaComparefacePost = (
+    
+    data: ParamsBodyapiMediaComparefacePost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2001>  => {
+    const url = this.$basePath + '/api/media/compareface'
+    const p: any = {}
+    p.data = data
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    })
+  }
   /**
    * 上传文件
    * @summary 上传文件

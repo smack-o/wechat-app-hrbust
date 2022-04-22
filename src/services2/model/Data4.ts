@@ -13,12 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `[code]` js code
+  * @property `[brickId]` wall id
   */
-export interface Data1 {
+export interface Data4 {
   /**
-   * js code
+   * wall id
    */
-  'code'?: string;
+  'brickId'?: string;
 }
 

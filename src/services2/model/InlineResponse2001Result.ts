@@ -13,19 +13,22 @@
 import * as models from './models'
 
 /**
-  * @property `_id` user id
-  * @property `[userInfo]` 
-  * @property `openid` wechat openid
+  * @property `confidence` 比对相似度
+  * @property `qualityScoreA` 图片A质量
+  * @property `qualityScoreB` 图片B质量
   */
 export interface InlineResponse2001Result {
   /**
-   * user id
+   * 比对相似度
    */
-  '_id': string;
-  'userInfo'?: models.InlineResponse2001ResultUserInfo;
+  'confidence': string;
   /**
-   * wechat openid
+   * 图片A质量
    */
-  'openid': string;
+  'qualityScoreA': string;
+  /**
+   * 图片B质量
+   */
+  'qualityScoreB': string;
 }
 

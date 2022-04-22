@@ -16,15 +16,15 @@ import * as models from './models'
   * @property `key` 图片 url
   * @property `status` 
   */
-export interface InlineResponse2002Photos {
+export interface InlineResponse2003Photos {
   /**
    * 图片 url
    */
   'key': string;
-  'status': InlineResponse2002Photos.StatusEnum;
+  'status': InlineResponse2003Photos.StatusEnum;
 }
 
-export namespace InlineResponse2002Photos {
+export namespace InlineResponse2003Photos {
   export enum StatusEnum {
     _0 = '0' as any,
     _1 = '1' as any,

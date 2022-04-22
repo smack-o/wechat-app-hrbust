@@ -13,14 +13,17 @@
 import * as models from './models'
 
 /**
-  * @property `_id` 发布者id
-  * @property `[userInfo]` 
+  * @property `nickName` 发布者昵称
+  * @property `avatarUrl` 发布者姓名
   */
-export interface InlineResponse2002Publisher {
+export interface InlineResponse2003PublisherUserInfo {
   /**
-   * 发布者id
+   * 发布者昵称
    */
-  '_id': string;
-  'userInfo'?: models.InlineResponse2002PublisherUserInfo;
+  'nickName': string;
+  /**
+   * 发布者姓名
+   */
+  'avatarUrl': string;
 }
 

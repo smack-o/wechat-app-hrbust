@@ -13,12 +13,17 @@
 import * as models from './models'
 
 /**
-  * @property `[code]` js code
+  * @property `[imageDataA]` 图片A
+  * @property `[imageDataB]` 图片B
   */
 export interface Data {
   /**
-   * js code
+   * 图片A
    */
-  'code'?: string;
+  'imageDataA'?: string;
+  /**
+   * 图片B
+   */
+  'imageDataB'?: string;
 }
 

@@ -13,12 +13,14 @@
 import * as models from './models'
 
 /**
-  * @property `[code]` js code
+  * @property `_id` 发布者id
+  * @property `[userInfo]` 
   */
-export interface Data1 {
+export interface InlineResponse2003Publisher {
   /**
-   * js code
+   * 发布者id
    */
-  'code'?: string;
+  '_id': string;
+  'userInfo'?: models.InlineResponse2003PublisherUserInfo;
 }
 

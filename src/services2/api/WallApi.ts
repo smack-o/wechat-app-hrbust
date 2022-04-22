@@ -18,7 +18,7 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiWallLikePut = models.Data3
+export type ParamsBodyapiWallLikePut = models.Data4
 /**
   * @description apiWallListGet参数
   * @property `[pageNum]` 分页页码
@@ -38,7 +38,7 @@ export interface ParamsapiWallListGet {
 /**
   * request body
   */
-export type ParamsBodyapiWallPost = models.Data2
+export type ParamsBodyapiWallPost = models.Data3
 
 export class WallApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -77,12 +77,12 @@ export class WallApi {
    * @param params ParamsapiWallListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2002
+   * @returns models.InlineResponse2003
    */
   public apiWallListGet = (
     params: ParamsapiWallListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2002>  => {
+  ) : AjaxPromise<models.InlineResponse2003>  => {
     const url = this.$basePath + '/api/wall/list'
     const p: any = {}
     p.query = {}
@@ -101,12 +101,12 @@ export class WallApi {
    
    * @param data: ParamsBodyapiWallPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2004
    */
   public apiWallPost = (
     
     data: ParamsBodyapiWallPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2004>  => {
     const url = this.$basePath + '/api/wall'
     const p: any = {}
     p.data = data

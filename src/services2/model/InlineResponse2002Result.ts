@@ -13,74 +13,14 @@
 import * as models from './models'
 
 /**
-  * @property `createdAt` 创建时间
-  * @property `updatedAt` 更新时间
-  * @property `_id` 表白墙id
-  * @property `isPublisher` 是否是发布者
-  * @property `isLike` 是否点赞
-  * @property `likeCount` 点赞数
-  * @property `isCollect` 是否收藏
-  * @property `collectCount` 收藏数量
-  * @property `[publisher]` 
-  * @property `to` wall id
-  * @property `tel` 手机号
-  * @property `content` 内容
-  * @property `[photos]` 图片列表
-  * @property `isDelete` 是否删除
+  * @property `_id` user id
+  * @property `[userInfo]` 
   */
 export interface InlineResponse2002Result {
   /**
-   * 创建时间
-   */
-  'createdAt': number;
-  /**
-   * 更新时间
-   */
-  'updatedAt': number;
-  /**
-   * 表白墙id
+   * user id
    */
   '_id': string;
-  /**
-   * 是否是发布者
-   */
-  'isPublisher': boolean;
-  /**
-   * 是否点赞
-   */
-  'isLike': boolean;
-  /**
-   * 点赞数
-   */
-  'likeCount': string;
-  /**
-   * 是否收藏
-   */
-  'isCollect': boolean;
-  /**
-   * 收藏数量
-   */
-  'collectCount': number;
-  'publisher'?: models.InlineResponse2002Publisher;
-  /**
-   * wall id
-   */
-  'to': string;
-  /**
-   * 手机号
-   */
-  'tel': string;
-  /**
-   * 内容
-   */
-  'content': string;
-  /**
-   * 图片列表
-   */
-  'photos'?: Array<models.InlineResponse2002Photos>;
-  /**
-   * 是否删除
-   */
-  'isDelete': boolean;
+  'userInfo'?: models.InlineResponse2002ResultUserInfo;
 }
 

@@ -1,4 +1,4 @@
-import { APIS, InlineResponse2002Result } from '@/services2'
+import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
@@ -18,7 +18,7 @@ dayjs.locale('zh-cn') // 全局使用
 dayjs.extend(relativeTime)
 
 interface IWallItemProps {
-  data: InlineResponse2002Result
+  data: GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
 }
 
 const prefix = 'wall-item'

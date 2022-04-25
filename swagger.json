@@ -36,7 +36,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -49,7 +50,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -67,7 +69,8 @@
                         400002,
                         400003,
                         500000,
-                        500001
+                        500001,
+                        500002
                       ]
                     },
                     "resultCode": {
@@ -80,7 +83,8 @@
                         "NOT_LOGIN",
                         "NOT_AUTH",
                         "ERROR",
-                        "FAIL_UPLOAD"
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
                       ]
                     },
                     "message": {
@@ -180,7 +184,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -193,7 +198,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -255,6 +261,132 @@
         ]
       }
     },
+    "/api/legalcheck": {
+      "post": {
+        "summary": "微信审核回调",
+        "description": "微信审核回调",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Media"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/user": {
       "get": {
         "summary": "获取用户信息",
@@ -274,7 +406,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -287,7 +420,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -407,7 +541,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -420,7 +555,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -438,7 +574,8 @@
                         400002,
                         400003,
                         500000,
-                        500001
+                        500001,
+                        500002
                       ]
                     },
                     "resultCode": {
@@ -451,7 +588,8 @@
                         "NOT_LOGIN",
                         "NOT_AUTH",
                         "ERROR",
-                        "FAIL_UPLOAD"
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
                       ]
                     },
                     "message": {
@@ -552,7 +690,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -565,7 +704,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -583,7 +723,8 @@
                         400002,
                         400003,
                         500000,
-                        500001
+                        500001,
+                        500002
                       ]
                     },
                     "resultCode": {
@@ -596,7 +737,8 @@
                         "NOT_LOGIN",
                         "NOT_AUTH",
                         "ERROR",
-                        "FAIL_UPLOAD"
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
                       ]
                     },
                     "message": {
@@ -656,6 +798,369 @@
     },
     "/api/wall/list": {
       "get": {
+        "summary": "获取表白项列表",
+        "description": "获取表白项列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "string",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "wall id",
+                        "default": ""
+                      },
+                      "tel": {
+                        "type": "string",
+                        "description": "手机号",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "to",
+                      "tel",
+                      "content",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/wall/{brickId}": {
+      "get": {
+        "summary": "获取表白项列表",
+        "description": "获取表白项列表",
+        "parameters": [
+          {
+            "name": "brickId",
+            "type": "string",
+            "description": "wall id",
+            "default": "",
+            "require": true,
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/wall/publishList": {
+      "get": {
         "summary": "获取用户发布的表白项列表",
         "description": "获取用户发布的表白项列表",
         "parameters": [
@@ -691,7 +1196,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -704,7 +1210,236 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "string",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "wall id",
+                        "default": ""
+                      },
+                      "tel": {
+                        "type": "string",
+                        "description": "手机号",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "to",
+                      "tel",
+                      "content",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/wall/list/like": {
+      "get": {
+        "summary": "获取用户点赞的表白项列表",
+        "description": "获取用户点赞的表白项列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -894,8 +1629,7 @@
                 "to": {
                   "type": "string",
                   "description": "wall id",
-                  "default": "",
-                  "require": true
+                  "default": ""
                 },
                 "tel": {
                   "type": "string",
@@ -937,7 +1671,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -950,7 +1685,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -1037,7 +1773,8 @@
                     400002,
                     400003,
                     500000,
-                    500001
+                    500001,
+                    500002
                   ]
                 },
                 "resultCode": {
@@ -1050,7 +1787,8 @@
                     "NOT_LOGIN",
                     "NOT_AUTH",
                     "ERROR",
-                    "FAIL_UPLOAD"
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
                   ]
                 },
                 "message": {
@@ -1068,7 +1806,8 @@
                         400002,
                         400003,
                         500000,
-                        500001
+                        500001,
+                        500002
                       ]
                     },
                     "resultCode": {
@@ -1081,7 +1820,8 @@
                         "NOT_LOGIN",
                         "NOT_AUTH",
                         "ERROR",
-                        "FAIL_UPLOAD"
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
                       ]
                     },
                     "message": {

@@ -1,0 +1,69 @@
+@import '~@/styles/lib.less';
+
+.create-wall {
+  background: #fff;
+  min-height: 100vh;
+  padding: 0 40px;
+
+  &__form-item {
+    padding-top: 48px;
+    &__title {
+      font-size: 26px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #9a9a9a;
+      line-height: 32px;
+    }
+    &__input,
+    &__textarea {
+      width: 100%;
+      font-size: 30px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #4e4c56;
+      line-height: 42px;
+      padding-top: 18px;
+      padding-bottom: 22px;
+      border-bottom: 2px solid #f0f0f0;
+
+      outline: none;
+      &:focus {
+        border: 1px solid #00a0e9;
+      }
+    }
+
+    &__textarea {
+      min-height: 30px;
+    }
+
+    &__image-picker-message {
+      font-size: 26px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #2574ff;
+      line-height: 32px;
+      text-align: center;
+    }
+  }
+
+  &__tips {
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #4e4c56;
+    line-height: 44px;
+    margin-top: 62px;
+
+    &-title {
+      text-align: center;
+    }
+  }
+
+  &__button {
+    width: 370px;
+    height: 90px;
+    background: #3399ff;
+    border-radius: 45px;
+    margin-top: 85px;
+  }
+}

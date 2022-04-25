@@ -31,13 +31,14 @@ export const router = {
     news: 'news/index', // 教务新闻
     classroom: 'classroom/index', // 空教室查询
     classroomList: 'classroom-list/index', // 空教室查询结果
-    pddSearch: 'pdd-search/index', // 品多多搜索页面,
-    createWall: 'create-wall/index'
+    pddSearch: 'pdd-search/index' // 品多多搜索页面,
   },
   pages3: {
     aboutme: 'aboutme/index', // 关于我们
     // schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
-    community: 'community/index' // 社区主页
+    createWall: 'create-wall/index',
+    community: 'community/index', // 社区主页
+    wallDetail: 'wall-detail/index' // 社区主页
   }
 }
 

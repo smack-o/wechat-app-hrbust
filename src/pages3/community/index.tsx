@@ -41,6 +41,10 @@ class Discover extends Component<IProps, PageState> {
     }
   ]
 
+  onShow = () => {
+    this.ref?.current?.onShow?.()
+  }
+
   onBarChange: IBottomBarProps['onChange'] = index => {
     this.setState({
       currentTab: index
@@ -55,7 +59,6 @@ class Discover extends Component<IProps, PageState> {
 
   // 上拉加载
   onReachBottom() {
-    console.log(this.ref)
     this.ref?.current?.onReachBottom?.()
   }
 

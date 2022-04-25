@@ -149,7 +149,7 @@
         },
         {
           "name": "创建表白墙",
-          "pathName": "pages2/create-wall/index",
+          "pathName": "pages3/create-wall/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
@@ -165,6 +165,13 @@
           "name": "我的",
           "pathName": "pages/account/index",
           "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "详情页",
+          "pathName": "pages3/wall-detail/index",
+          "query": "id=625fac6c708756da5cb35dd1",
           "scene": null,
           "launchMode": "default"
         }

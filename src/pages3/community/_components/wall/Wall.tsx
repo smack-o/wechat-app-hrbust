@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, View } from '@tarojs/components'
 import { withRequest } from '@/utils'
-import { APIS, InlineResponse2002Result } from '@/services2'
+import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
 import { routes } from '@/app.config'
 import Tab from '../tab'
@@ -12,7 +12,7 @@ import AddWallIcon from '../../imgs/add_wall.png'
 import './Wall.less'
 
 type WallState = {
-  list: InlineResponse2002Result[]
+  list: GetApiResultType<typeof APIS.WallApi.apiWallListGet>
   activeKey?: string
   hasNext: boolean
 }
@@ -51,13 +51,10 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   init = async () => {
     this.pageNum = 0
-    this.setState({
-      list: []
-    })
-    this.fetchList()
+    this.fetchList(true)
   }
 
-  fetchList = async () => {
+  fetchList = async (reset?: boolean) => {
     this.fetching = true
     const [err, res] = await withRequest(APIS.WallApi.apiWallListGet)({
       pageNum: '' + this.pageNum,
@@ -71,7 +68,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
     }
 
     this.setState({
-      list: this.state.list.concat(res),
+      list: reset ? res : this.state.list.concat(res),
       hasNext: res.length === this.pageSize
     })
   }
@@ -91,8 +88,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   onPullDownRefresh = async () => {
-    this.pageNum = 0
-    await this.fetchList()
+    this.init()
   }
 
   onAddWallClick = () => {

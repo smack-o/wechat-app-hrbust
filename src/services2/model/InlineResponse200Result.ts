@@ -35,7 +35,8 @@ export namespace InlineResponse200Result {
     _400002 = '400002' as any,
     _400003 = '400003' as any,
     _500000 = '500000' as any,
-    _500001 = '500001' as any
+    _500001 = '500001' as any,
+    _500002 = '500002' as any
   }
   export enum ResultCodeEnum {
     SUCCESS = 'SUCCESS' as any,
@@ -45,6 +46,7 @@ export namespace InlineResponse200Result {
     NOTLOGIN = 'NOT_LOGIN' as any,
     NOTAUTH = 'NOT_AUTH' as any,
     ERROR = 'ERROR' as any,
-    FAILUPLOAD = 'FAIL_UPLOAD' as any
+    FAILUPLOAD = 'FAIL_UPLOAD' as any,
+    FACECOMPARERUPLOAD = 'FACE_COMPARER_UPLOAD' as any
   }
 }

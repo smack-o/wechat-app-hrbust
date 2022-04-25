@@ -41,6 +41,27 @@ export class MediaApi {
   }
 
   /**
+   * 微信审核回调
+   * @summary 微信审核回调
+   
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiLegalcheckPost = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const url = this.$basePath + '/api/legalcheck'
+    const p: any = {}
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    })
+  }
+  /**
    * 图片对比，情侣脸识别
    * @summary 图片对比，情侣脸识别
    

@@ -16,6 +16,17 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description apiWallBrickIdGet参数
+  * @property `brickId` wall id
+  */
+export interface ParamsapiWallBrickIdGet {
+  // pathParams
+  /**
+   * wall id
+   */
+  brickId: string;
+}
+/**
   * request body
   */
 export type ParamsBodyapiWallLikePut = models.Data4
@@ -36,9 +47,41 @@ export interface ParamsapiWallListGet {
   pageSize?: string;
 }
 /**
+  * @description apiWallListLikeGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiWallListLikeGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
   * request body
   */
 export type ParamsBodyapiWallPost = models.Data3
+/**
+  * @description apiWallPublishListGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiWallPublishListGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
 
 export class WallApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -49,6 +92,31 @@ export class WallApi {
     }
   }
 
+  /**
+   * 获取表白项列表
+   * @summary 获取表白项列表
+   * @param params ParamsapiWallBrickIdGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiWallBrickIdGet = (
+    params: ParamsapiWallBrickIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    brickId,
+} = params
+    const url = this.$basePath + `/api/wall/${brickId}`
+    const p: any = {}
+    ajax.check(params.brickId, 'brickId')
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
   /**
    * 点赞/取消 表白项
    * @summary 点赞/取消 表白项
@@ -72,8 +140,8 @@ export class WallApi {
     })
   }
   /**
-   * 获取用户发布的表白项列表
-   * @summary 获取用户发布的表白项列表
+   * 获取表白项列表
+   * @summary 获取表白项列表
    * @param params ParamsapiWallListGet
    
    * @param opt ajax config
@@ -84,6 +152,30 @@ export class WallApi {
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.InlineResponse2003>  => {
     const url = this.$basePath + '/api/wall/list'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取用户点赞的表白项列表
+   * @summary 获取用户点赞的表白项列表
+   * @param params ParamsapiWallListLikeGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2003
+   */
+  public apiWallListLikeGet = (
+    params: ParamsapiWallListLikeGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2003>  => {
+    const url = this.$basePath + '/api/wall/list/like'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
@@ -113,6 +205,30 @@ export class WallApi {
     return ajax.ajax({
       ...opt,
       method: 'POST',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取用户发布的表白项列表
+   * @summary 获取用户发布的表白项列表
+   * @param params ParamsapiWallPublishListGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2003
+   */
+  public apiWallPublishListGet = (
+    params: ParamsapiWallPublishListGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2003>  => {
+    const url = this.$basePath + '/api/wall/publishList'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
       url,
       ...p
     })

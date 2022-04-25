@@ -34,7 +34,7 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
     )
 
     // 请求携带 token
-    const cookie = Taro.getStorageSync('app_cookie')
+    const cookie = Taro.getStorageSync('new_cookie')
 
     Taro.request({
       ...option,

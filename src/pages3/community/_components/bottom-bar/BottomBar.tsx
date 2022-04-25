@@ -13,25 +13,31 @@ import wallIcon from '../../imgs/bar/wall.png'
 import wallSelectIcon from '../../imgs/bar/wall_selected.png'
 
 import './BottomBar.less'
+import wall from '../wall'
+import sellRoomie from '../sell-roomie'
+import loversFace from '../lovers-face'
 
-const barList = [
+export const barList = [
   {
     key: 'wall',
     icon: wallIcon,
     selectIcon: wallSelectIcon,
-    text: '表白墙'
-  },
-  {
-    key: 'sale',
-    icon: faceIcon,
-    selectIcon: faceSelectIcon,
-    text: '情侣脸'
+    text: '表白墙',
+    component: wall
   },
   {
     key: 'mine',
     icon: saleIcon,
     selectIcon: saleSelectIcon,
+    component: sellRoomie,
     text: '卖室友'
+  },
+  {
+    key: 'sale',
+    icon: faceIcon,
+    selectIcon: faceSelectIcon,
+    text: '情侣脸',
+    component: loversFace
   },
   {
     key: 'mine',
@@ -59,6 +65,9 @@ export default function BottomBar(props: IBottomBarProps) {
   const { onChange } = props
 
   useEffect(() => {
+    Taro.setNavigationBarTitle({
+      title: barList[propsCurrent].text
+    })
     setCurrent(propsCurrent)
   }, [propsCurrent])
 
@@ -76,6 +85,9 @@ export default function BottomBar(props: IBottomBarProps) {
                   Taro.switchTab({ url: routes.account })
                   return
                 }
+                Taro.setNavigationBarTitle({
+                  title: item.text
+                })
                 setCurrent(index)
                 onChange?.(index, item)
               }}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
 import Taro from '@tarojs/taro'
-import BottomBar from './_components/bottom-bar'
+import BottomBar, { barList } from './_components/bottom-bar'
 
 import './index.less'
 import { IBottomBarProps } from './_components/bottom-bar/BottomBar'
@@ -29,18 +29,6 @@ class Discover extends Component<IProps, PageState> {
 
   ref = createRef<any>()
 
-  tabs = [
-    {
-      component: Wall
-    },
-    {
-      component: LoversFace
-    },
-    {
-      component: SellRoomie
-    }
-  ]
-
   onShow = () => {
     this.ref?.current?.onShow?.()
   }
@@ -65,7 +53,12 @@ class Discover extends Component<IProps, PageState> {
   render() {
     const { currentTab } = this.state
 
-    const Comp = this.tabs[currentTab].component
+    const Comp = barList[currentTab].component
+
+    if (!Comp) {
+      return
+    }
+
     return (
       <View className="discover-container">
         <Comp ref={this.ref} />

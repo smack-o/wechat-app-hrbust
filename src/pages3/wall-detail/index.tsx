@@ -20,7 +20,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 const prefix = 'wall-detail'
 class CreateWall extends Component<IProps, PageState> {
-  state = {
+  state: PageState = {
     data: undefined
   }
 

@@ -10,6 +10,7 @@ import 'dayjs/locale/zh-cn'
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
 import LikeSelectedIcon from '../../imgs/like_selected.png'
+import PublisherTitle from '../publisher-title'
 
 import './WallItem.less'
 
@@ -18,7 +19,9 @@ dayjs.locale('zh-cn') // 全局使用
 dayjs.extend(relativeTime)
 
 interface IWallItemProps {
-  data: GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
+  data:
+    | GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
+    | GetApiResultType<typeof APIS.WallApi.apiWallBrickIdGet>
 }
 
 const prefix = 'wall-item'
@@ -44,11 +47,11 @@ export default function WallItem(props: IWallItemProps) {
       isLike,
       _id,
       createdAt
-    }
+    } = {}
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
-  const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount)
+  const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount || 0)
 
   const onImageClick = useCallback(
     (index: number) => {
@@ -79,20 +82,7 @@ export default function WallItem(props: IWallItemProps) {
 
   return (
     <View className={prefix}>
-      <View className={`${prefix}__publisher`}>
-        <View className={`${prefix}__publisher-left`}>
-          <Image
-            className={`${prefix}__publisher-avatar`}
-            src={publisher?.userInfo?.avatarUrl || ''}
-          ></Image>
-          <View className={`${prefix}__publisher-name`}>
-            {publisher?.userInfo?.nickName}
-          </View>
-        </View>
-        <View className={`${prefix}__publisher-time`}>
-          {dayjs(createdAt).fromNow()}
-        </View>
-      </View>
+      <PublisherTitle time={createdAt} publisher={publisher}></PublisherTitle>
       <View
         className={classNames(
           `${prefix}__photos`,
@@ -112,7 +102,10 @@ export default function WallItem(props: IWallItemProps) {
         })}
       </View>
       <View className={`${prefix}__content`}>
-        <Text className={`${prefix}__content-to`}>@{to}</Text>
+        {to !== undefined && (
+          <Text className={`${prefix}__content-to`}>@{to}</Text>
+        )}
+
         <Text className={`${prefix}__content-detail`}>{content}</Text>
       </View>
       <View className={`${prefix}__footer`}>

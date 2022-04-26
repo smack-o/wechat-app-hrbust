@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Input, Textarea } from '@tarojs/components'
+import { View, Input, Textarea, Picker } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { AtButton, AtImagePicker } from 'taro-ui'
 import { goPage, routes } from '@/utils/router'
@@ -18,9 +18,11 @@ type PropsFromDispatch = {}
 type PageOwnProps = {}
 
 type PageState = {
-  to: string
-  tel?: string
-  content: string
+  name: string
+  gender: number
+  major: string
+  description: string
+  content?: string
   files: File[]
   fetching: boolean
 }
@@ -28,14 +30,18 @@ type PageState = {
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 const prefix = 'create-wall'
-class CreateWall extends Component<IProps, PageState> {
-  state: PageState = {
-    to: '',
-    tel: '',
+class CreateSaleWall extends Component<IProps, PageState> {
+  state = {
+    name: '',
+    gender: 0,
+    major: '',
+    description: '',
     content: '',
     files: [],
     fetching: false
   }
+
+  genderRange = ['男', '女']
 
   onInputChange = (key: keyof PageState, e) => {
     const state = {
@@ -51,11 +57,23 @@ class CreateWall extends Component<IProps, PageState> {
   }
 
   onSubmit = async () => {
-    const { to, tel, content, files } = this.state
+    const { name, description, gender, major, content, files } = this.state
 
-    if (!content) {
+    // 部分前置条件
+    let toastMsg = ''
+    if (!name) {
+      toastMsg = '请输入姓名'
+    } else if (!major) {
+      toastMsg = '请输入专业'
+    } else if (!description) {
+      toastMsg = '请输入对室友简介'
+    } else if (!files.length) {
+      toastMsg = '请上传至少一张照片'
+    }
+
+    if (toastMsg) {
       Taro.showToast({
-        title: '请输入内容',
+        title: toastMsg,
         icon: 'none'
       })
       return
@@ -79,21 +97,23 @@ class CreateWall extends Component<IProps, PageState> {
       Taro.hideLoading()
     }
 
-    const [err, res] = await withRequest(APIS.WallApi.apiWallPost)({
-      to,
-      tel,
+    const [err, res] = await withRequest(APIS.SaleWallApi.apiSaleWallPost)({
+      name,
+      description,
+      gender,
+      major,
       content,
       photos: photos.length ? photos : undefined
     })
 
     this.changeFetching(false)
 
-    if (!err && res?.brickId) {
+    if (!err && res?.id) {
       showToast({
         title: '发布成功',
         icon: 'success',
         finished: () => {
-          goPage(`${routes.wallDetail}?id=${res.brickId}`, Taro.redirectTo)
+          goPage(`${routes.saleWallDetail}?id=${res.id}`, Taro.redirectTo)
         }
       })
     }
@@ -131,41 +151,79 @@ class CreateWall extends Component<IProps, PageState> {
   }
 
   render() {
-    const { to, tel, content, files, fetching } = this.state
+    const {
+      name,
+      gender,
+      major,
+      description,
+      content,
+      files,
+      fetching
+    } = this.state
     return (
       <View className={prefix}>
         <View className={`${prefix}__form-item`}>
-          <View className={`${prefix}__form-item__title`}>表白对象</View>
+          <View className={`${prefix}__form-item__title`}>名字*</View>
           <Input
             className={`${prefix}__form-item__input`}
-            placeholder="请输入表白对象名称(非必填)"
-            value={to}
+            placeholder="名字"
+            value={name}
             type="text"
-            onInput={e => this.onInputChange('to', e)}
+            onInput={e => this.onInputChange('name', e)}
+          ></Input>
+        </View>
+        <View className={`${prefix}__form-item`}>
+          <View className={`${prefix}__form-item__title`}>性别*</View>
+          <Picker
+            className={`${prefix}__form-item__input`}
+            value={gender}
+            range={this.genderRange}
+            onChange={e => {
+              this.setState({
+                gender: +e.detail.value
+              })
+            }}
+          >
+            {this.genderRange[gender]}
+          </Picker>
+        </View>
+
+        <View className={`${prefix}__form-item`}>
+          <View className={`${prefix}__form-item__title`}>专业*</View>
+          <Input
+            className={`${prefix}__form-item__input`}
+            placeholder="专业"
+            value={major}
+            type="text"
+            onInput={e => this.onInputChange('major', e)}
           ></Input>
         </View>
 
         <View className={`${prefix}__form-item`}>
-          <View className={`${prefix}__form-item__title`}>表白对象手机号</View>
-          <Input
-            className={`${prefix}__form-item__input`}
-            placeholder="请输入表白对象手机号(非必填)"
-            value={tel}
-            type="text"
-            onInput={e => this.onInputChange('tel', e)}
-          ></Input>
+          <View className={`${prefix}__form-item__title`}>
+            对另一半的期望({content.length}/100字)
+          </View>
+          <Textarea
+            className={`${prefix}__form-item__textarea`}
+            placeholder="请输入对另一半的期望（非必填）"
+            value={content}
+            autoHeight
+            maxlength={100}
+            onInput={e => this.onInputChange('content', e)}
+          ></Textarea>
         </View>
 
         <View className={`${prefix}__form-item`}>
-          <View className={`${prefix}__form-item__title`}>内容*</View>
+          <View className={`${prefix}__form-item__title`}>
+            室友简介*({description.length}/100字)
+          </View>
           <Textarea
             className={`${prefix}__form-item__textarea`}
             placeholder="请输入内容"
-            value={content}
-            // type="text"
+            value={description}
             autoHeight
-            maxlength={200}
-            onInput={e => this.onInputChange('content', e)}
+            maxlength={100}
+            onInput={e => this.onInputChange('description', e)}
           ></Textarea>
         </View>
 
@@ -178,14 +236,14 @@ class CreateWall extends Component<IProps, PageState> {
             showAddBtn={files.length < 9}
           ></AtImagePicker>
           <View className={`${prefix}__form-item__image-picker-message`}>
-            <View>添加照片</View>
+            <View>添加室友照片*</View>
             <View>({files.length}/9)</View>
           </View>
         </View>
 
         <View className={`${prefix}__tips`}>
-          <View className={`${prefix}__tips-title`}>*关于表白墙</View>
-          您可选填您所表白的对象的手机号，在您提交表白信息后，系统会以短信的形式向他发送一则消息，通知TA登录该小程序查看您对TA的表白；TA只需登录该小程序在表白墙中搜索自己的手机号码即可查看表白信息。每天只能发送3条短信表白墙。
+          <View className={`${prefix}__tips-title`}>*关于卖舍友</View>
+          出售您的室友前请先征得本人同意哦，否则后果自负
         </View>
         <AtButton
           type="primary"
@@ -206,4 +264,4 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(CreateWall)
+)(CreateSaleWall)

@@ -169,9 +169,23 @@
           "launchMode": "default"
         },
         {
-          "name": "详情页",
+          "name": "表白墙详情页",
           "pathName": "pages3/wall-detail/index",
           "query": "id=625fac6c708756da5cb35dd1",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "新建卖舍友",
+          "pathName": "pages3/create-sale-wall/index",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "卖舍友详情",
+          "pathName": "pages3/sale-wall-detail/index",
+          "query": "id=6267aa71dd6e7a40bc8b4687",
           "scene": null,
           "launchMode": "default"
         }

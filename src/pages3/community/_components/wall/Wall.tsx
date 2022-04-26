@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, View } from '@tarojs/components'
+import { Image, View, Input } from '@tarojs/components'
 import { withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
@@ -97,6 +97,31 @@ export default class Wall extends React.Component<WallProps, WallState> {
     })
   }
 
+  onInut = async e => {
+    // APIS.WallApi.apiWallSearchGet({
+    //   // keyword: e.target.value,
+    //   pageNum: '0',
+    //   pageSize: '5'
+    // })
+    this.fetching = true
+    const [err, res] = await withRequest(APIS.WallApi.apiWallSearchGet)({
+      pageNum: '' + this.pageNum,
+      pageSize: '' + 20,
+      keyword: e.target.value
+    })
+
+    this.fetching = false
+
+    if (err || !res) {
+      return
+    }
+
+    this.setState({
+      list: true ? res : this.state.list.concat(res),
+      hasNext: res.length === this.pageSize
+    })
+  }
+
   render() {
     const { activeKey, hasNext } = this.state
     return (
@@ -106,6 +131,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
           tabList={this.tabList}
           onChange={this.onTabChange}
         >
+          <Input onInput={this.onInut}></Input>
           {this.state.list.map(item => {
             return <WallItem data={item} key={item._id}></WallItem>
           })}

@@ -37,8 +37,10 @@ export const router = {
     aboutme: 'aboutme/index', // 关于我们
     // schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
     createWall: 'create-wall/index',
-    community: 'community/index', // 社区主页
-    wallDetail: 'wall-detail/index' // 社区主页
+    community: 'community/index',
+    wallDetail: 'wall-detail/index',
+    createSaleWall: 'create-sale-wall/index',
+    saleWallDetail: 'sale-wall-detail/index'
   }
 }
 

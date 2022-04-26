@@ -11,7 +11,7 @@ interface ITabItem<Key> {
 }
 
 export interface ITabProps<Key = string> {
-  activeKey: Key
+  currentIndex: number
   tabList: ITabItem<Key>[]
   children?: React.ReactNode
   onChange?: (index: number, key?: Key, text?: string) => void
@@ -22,7 +22,7 @@ export interface ITabProps<Key = string> {
 const prefix = 'community-tab'
 
 export default function TopBar<Key>(props: ITabProps<Key>) {
-  const { activeKey, tabList, onChange, children } = props
+  const { currentIndex, tabList, onChange, children } = props
 
   return (
     <View className={prefix}>
@@ -34,10 +34,10 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
             <View
               key={index}
               className={cn(`${prefix}__item`, {
-                current: activeKey === tabItem.key
+                current: currentIndex === index
               })}
               onClick={() => {
-                if (activeKey !== key) {
+                if (currentIndex !== index) {
                   onChange?.(index, key, text)
                 }
               }}

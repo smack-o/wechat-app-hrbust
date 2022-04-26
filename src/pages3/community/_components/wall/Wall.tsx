@@ -13,7 +13,7 @@ import './Wall.less'
 
 type WallState = {
   list: GetApiResultType<typeof APIS.WallApi.apiWallListGet>
-  activeKey?: string
+  activeTab: number
   hasNext: boolean
 }
 
@@ -23,15 +23,18 @@ export default class Wall extends React.Component<WallProps, WallState> {
   tabList = [
     {
       key: 'all',
-      text: '全部'
+      text: '全部',
+      api: APIS.WallApi.apiWallListGet
     },
     {
-      key: 'collect',
-      text: '收藏'
+      key: 'like',
+      text: '喜欢',
+      api: APIS.WallApi.apiWallListLikeGet
     },
     {
       key: 'hot',
-      text: '最热'
+      text: '最热',
+      api: APIS.WallApi.apiWallListGet
     }
   ]
 
@@ -41,7 +44,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   state: WallState = {
     list: [],
-    activeKey: this.tabList[0].key,
+    activeTab: 0,
     hasNext: true
   }
 
@@ -56,7 +59,8 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   fetchList = async (reset?: boolean) => {
     this.fetching = true
-    const [err, res] = await withRequest(APIS.WallApi.apiWallListGet)({
+    const api = this.tabList[this.state.activeTab].api
+    const [err, res] = await withRequest(api)({
       pageNum: '' + this.pageNum,
       pageSize: '' + this.pageSize
     })
@@ -73,10 +77,15 @@ export default class Wall extends React.Component<WallProps, WallState> {
     })
   }
 
-  onTabChange: ITabProps['onChange'] = (_, key) => {
-    this.setState({
-      activeKey: key
-    })
+  onTabChange: ITabProps['onChange'] = async index => {
+    this.setState(
+      {
+        activeTab: index
+      },
+      () => {
+        this.init()
+      }
+    )
   }
 
   onReachBottom = () => {
@@ -123,11 +132,11 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   render() {
-    const { activeKey, hasNext } = this.state
+    const { activeTab, hasNext } = this.state
     return (
       <View className="wall">
         <Tab
-          activeKey={activeKey}
+          currentIndex={activeTab}
           tabList={this.tabList}
           onChange={this.onTabChange}
         >

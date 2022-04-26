@@ -28,7 +28,7 @@ import * as models from './models'
   * @property `[photos]` 图片列表
   * @property `isDelete` 是否删除
   */
-export interface InlineResponse2003Result {
+export interface InlineResponse2006Result {
   /**
    * 创建时间
    */
@@ -52,7 +52,7 @@ export interface InlineResponse2003Result {
   /**
    * 点赞数
    */
-  'likeCount': string;
+  'likeCount': number;
   /**
    * 是否收藏
    */
@@ -61,7 +61,7 @@ export interface InlineResponse2003Result {
    * 收藏数量
    */
   'collectCount': number;
-  'publisher'?: models.InlineResponse2003Publisher;
+  'publisher'?: models.InlineResponse2002Publisher;
   /**
    * wall id
    */
@@ -77,7 +77,7 @@ export interface InlineResponse2003Result {
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2003Photos>;
+  'photos'?: Array<models.InlineResponse2002Photos>;
   /**
    * 是否删除
    */

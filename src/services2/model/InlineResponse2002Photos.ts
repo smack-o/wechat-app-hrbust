@@ -13,12 +13,21 @@
 import * as models from './models'
 
 /**
-  * @property `id` wall id
+  * @property `key` 图片 url
+  * @property `status` 
   */
-export interface InlineResponse2004Result {
+export interface InlineResponse2002Photos {
   /**
-   * wall id
+   * 图片 url
    */
-  'id': string;
+  'key': string;
+  'status': InlineResponse2002Photos.StatusEnum;
 }
 
+export namespace InlineResponse2002Photos {
+  export enum StatusEnum {
+    _0 = '0' as any,
+    _1 = '1' as any,
+    _2 = '2' as any
+  }
+}

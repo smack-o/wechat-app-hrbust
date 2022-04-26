@@ -13,17 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `[encryptedData]` 微信解密参数 encryptedData
-  * @property `[iv]` 微信解密参数 iv
+  * @property `[id]` wall id
   */
 export interface Data2 {
   /**
-   * 微信解密参数 encryptedData
+   * wall id
    */
-  'encryptedData'?: string;
-  /**
-   * 微信解密参数 iv
-   */
-  'iv'?: string;
+  'id'?: string;
 }
 

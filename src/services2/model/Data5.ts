@@ -13,27 +13,20 @@
 import * as models from './models'
 
 /**
-  * @property `[name]` 姓名
-  * @property `[gender]` 
-  * @property `[major]` 主修专业
-  * @property `[description]` 描述
+  * @property `[to]` wall id
+  * @property `[tel]` 表白人的手机号
   * @property `[content]` 内容
   * @property `[photos]` 图片列表
   */
-export interface Data1 {
+export interface Data5 {
   /**
-   * 姓名
+   * wall id
    */
-  'name'?: string;
-  'gender'?: number;
+  'to'?: string;
   /**
-   * 主修专业
+   * 表白人的手机号
    */
-  'major'?: string;
-  /**
-   * 描述
-   */
-  'description'?: string;
+  'tel'?: string;
   /**
    * 内容
    */

@@ -13,17 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `nickName` 发布者昵称
-  * @property `avatarUrl` 发布者姓名
+  * @property `[brickId]` wall id
   */
-export interface InlineResponse2003PublisherUserInfo {
+export interface Data6 {
   /**
-   * 发布者昵称
+   * wall id
    */
-  'nickName': string;
-  /**
-   * 发布者姓名
-   */
-  'avatarUrl': string;
+  'brickId'?: string;
 }
 

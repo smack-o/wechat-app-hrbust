@@ -29,7 +29,7 @@ export interface ParamsapiWallBrickIdGet {
 /**
   * request body
   */
-export type ParamsBodyapiWallLikePut = models.Data4
+export type ParamsBodyapiWallLikePut = models.Data6
 /**
   * @description apiWallListGet参数
   * @property `[pageNum]` 分页页码
@@ -63,15 +63,11 @@ export interface ParamsapiWallListLikeGet {
   pageSize?: string;
 }
 /**
-  * request body
-  */
-export type ParamsBodyapiWallPost = models.Data3
-/**
-  * @description apiWallPublishListGet参数
+  * @description apiWallListPublishGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
   */
-export interface ParamsapiWallPublishListGet {
+export interface ParamsapiWallListPublishGet {
   // queryParams
   /**
    * 分页页码
@@ -81,6 +77,31 @@ export interface ParamsapiWallPublishListGet {
    * 每页数量
    */
   pageSize?: string;
+}
+/**
+  * request body
+  */
+export type ParamsBodyapiWallPost = models.Data5
+/**
+  * @description apiWallSearchGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  * @property `[keyword]` 关键字
+  */
+export interface ParamsapiWallSearchGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+  /**
+   * 关键字
+   */
+  keyword?: string;
 }
 
 export class WallApi {
@@ -93,17 +114,17 @@ export class WallApi {
   }
 
   /**
-   * 获取表白项列表
-   * @summary 获取表白项列表
+   * 获取表白墙详情
+   * @summary 获取表白墙详情
    * @param params ParamsapiWallBrickIdGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse200
+   * @returns models.InlineResponse2007
    */
   public apiWallBrickIdGet = (
     params: ParamsapiWallBrickIdGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse200>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const {
     brickId,
 } = params
@@ -118,8 +139,8 @@ export class WallApi {
     })
   }
   /**
-   * 点赞/取消 表白项
-   * @summary 点赞/取消 表白项
+   * 点赞/取消 表白墙
+   * @summary 点赞/取消 表白墙
    
    * @param data: ParamsBodyapiWallLikePut// request body
    * @param opt ajax config
@@ -140,17 +161,17 @@ export class WallApi {
     })
   }
   /**
-   * 获取表白项列表
-   * @summary 获取表白项列表
+   * 获取表白墙列表
+   * @summary 获取表白墙列表
    * @param params ParamsapiWallListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2006
    */
   public apiWallListGet = (
     params: ParamsapiWallListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/wall/list'
     const p: any = {}
     p.query = {}
@@ -164,18 +185,42 @@ export class WallApi {
     })
   }
   /**
-   * 获取用户点赞的表白项列表
-   * @summary 获取用户点赞的表白项列表
+   * 获取用户点赞的表白墙列表
+   * @summary 获取用户点赞的表白墙列表
    * @param params ParamsapiWallListLikeGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2006
    */
   public apiWallListLikeGet = (
     params: ParamsapiWallListLikeGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/wall/list/like'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取用户发布的表白墙列表
+   * @summary 获取用户发布的表白墙列表
+   * @param params ParamsapiWallListPublishGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiWallListPublishGet = (
+    params: ParamsapiWallListPublishGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/wall/list/publish'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
@@ -193,12 +238,12 @@ export class WallApi {
    
    * @param data: ParamsBodyapiWallPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2004
+   * @returns models.InlineResponse2008
    */
   public apiWallPost = (
     
     data: ParamsBodyapiWallPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2004>  => {
+  ) : AjaxPromise<models.InlineResponse2008>  => {
     const url = this.$basePath + '/api/wall'
     const p: any = {}
     p.data = data
@@ -210,22 +255,23 @@ export class WallApi {
     })
   }
   /**
-   * 获取用户发布的表白项列表
-   * @summary 获取用户发布的表白项列表
-   * @param params ParamsapiWallPublishListGet
+   * 根据关键字模糊搜索
+   * @summary 根据关键字模糊搜索
+   * @param params ParamsapiWallSearchGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2006
    */
-  public apiWallPublishListGet = (
-    params: ParamsapiWallPublishListGet,
+  public apiWallSearchGet = (
+    params: ParamsapiWallSearchGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
-    const url = this.$basePath + '/api/wall/publishList'
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/wall/search'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('keyword' in params) p.query.keyword = params.keyword
     return ajax.ajax({
       ...opt,
       method: 'GET',

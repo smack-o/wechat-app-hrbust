@@ -13,12 +13,14 @@
 import * as models from './models'
 
 /**
-  * @property `id` wall id
+  * @property `_id` user id
+  * @property `[userInfo]` 
   */
-export interface InlineResponse2004Result {
+export interface InlineResponse2005Result {
   /**
-   * wall id
+   * user id
    */
-  'id': string;
+  '_id': string;
+  'userInfo'?: models.InlineResponse2005ResultUserInfo;
 }
 

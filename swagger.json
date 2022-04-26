@@ -387,6 +387,1223 @@
         ]
       }
     },
+    "/api/sale-wall/list": {
+      "get": {
+        "summary": "获取卖舍友列表",
+        "description": "获取卖舍友列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "姓名",
+                        "default": ""
+                      },
+                      "gender": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "major": {
+                        "type": "string",
+                        "description": "主修专业",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "描述",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "name",
+                      "gender",
+                      "major",
+                      "description",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sale-wall/{id}": {
+      "get": {
+        "summary": "获取卖舍友详情",
+        "description": "获取卖舍友详情",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "wall id",
+            "default": "",
+            "require": true,
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
+                    },
+                    "updatedAt": {
+                      "type": "integer",
+                      "description": "更新时间"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "表白墙id",
+                      "default": ""
+                    },
+                    "isPublisher": {
+                      "type": "boolean",
+                      "description": "是否是发布者",
+                      "default": false
+                    },
+                    "isLike": {
+                      "type": "boolean",
+                      "description": "是否点赞",
+                      "default": false
+                    },
+                    "likeCount": {
+                      "type": "number",
+                      "description": "点赞数",
+                      "default": 0
+                    },
+                    "isCollect": {
+                      "type": "boolean",
+                      "description": "是否收藏",
+                      "default": false
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "description": "收藏数量",
+                      "default": 0
+                    },
+                    "publisher": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "发布者id",
+                          "default": ""
+                        },
+                        "userInfo": {
+                          "type": "object",
+                          "properties": {
+                            "nickName": {
+                              "type": "string",
+                              "description": "发布者昵称",
+                              "default": ""
+                            },
+                            "avatarUrl": {
+                              "type": "string",
+                              "description": "发布者姓名",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "nickName",
+                            "avatarUrl"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "_id"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "姓名",
+                      "default": ""
+                    },
+                    "gender": {
+                      "type": "number",
+                      "default": 0
+                    },
+                    "major": {
+                      "type": "string",
+                      "description": "主修专业",
+                      "default": ""
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "描述",
+                      "default": ""
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "内容",
+                      "default": ""
+                    },
+                    "photos": {
+                      "type": "array",
+                      "description": "图片列表",
+                      "default": [],
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "description": "图片 url",
+                            "default": ""
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "0",
+                              "1",
+                              "2"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "status"
+                        ]
+                      }
+                    },
+                    "isDelete": {
+                      "type": "boolean",
+                      "description": "是否删除",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "updatedAt",
+                    "_id",
+                    "isPublisher",
+                    "isLike",
+                    "likeCount",
+                    "isCollect",
+                    "collectCount",
+                    "name",
+                    "gender",
+                    "major",
+                    "description",
+                    "isDelete"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            },
+            "description": "success"
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sale-wall/list/publish": {
+      "get": {
+        "summary": "获取用户发布的卖舍友列表",
+        "description": "获取用户发布的卖舍友列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "姓名",
+                        "default": ""
+                      },
+                      "gender": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "major": {
+                        "type": "string",
+                        "description": "主修专业",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "描述",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "name",
+                      "gender",
+                      "major",
+                      "description",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sale-wall/list/like": {
+      "get": {
+        "summary": "获取用户点赞的卖舍友列表",
+        "description": "获取用户点赞的卖舍友列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "姓名",
+                        "default": ""
+                      },
+                      "gender": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "major": {
+                        "type": "string",
+                        "description": "主修专业",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "描述",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "name",
+                      "gender",
+                      "major",
+                      "description",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sale-wall": {
+      "post": {
+        "summary": "新建卖舍友",
+        "description": "新建卖舍友",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "姓名",
+                  "default": "",
+                  "require": true
+                },
+                "gender": {
+                  "type": "number",
+                  "default": 0,
+                  "require": true
+                },
+                "major": {
+                  "type": "string",
+                  "description": "主修专业",
+                  "default": "",
+                  "require": true
+                },
+                "description": {
+                  "type": "string",
+                  "description": "描述",
+                  "default": "",
+                  "require": true
+                },
+                "content": {
+                  "type": "string",
+                  "description": "内容",
+                  "default": ""
+                },
+                "photos": {
+                  "type": "array",
+                  "description": "图片列表",
+                  "default": [],
+                  "items": {
+                    "type": "string",
+                    "description": "图片 id",
+                    "default": ""
+                  },
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "wall id",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            },
+            "description": "success"
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/sale-wall/like": {
+      "put": {
+        "summary": "点赞/取消 卖舍友",
+        "description": "点赞/取消 卖舍友",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "wall id",
+                  "default": "",
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/user": {
       "get": {
         "summary": "获取用户信息",
@@ -798,8 +2015,8 @@
     },
     "/api/wall/list": {
       "get": {
-        "summary": "获取表白项列表",
-        "description": "获取表白项列表",
+        "summary": "获取表白墙列表",
+        "description": "获取表白墙列表",
         "parameters": [
           {
             "name": "pageNum",
@@ -883,7 +2100,243 @@
                         "default": false
                       },
                       "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "发布者id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "description": "发布者昵称",
+                                "default": ""
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "description": "发布者姓名",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "nickName",
+                              "avatarUrl"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "to": {
                         "type": "string",
+                        "description": "wall id",
+                        "default": ""
+                      },
+                      "tel": {
+                        "type": "string",
+                        "description": "手机号",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "to",
+                      "tel",
+                      "content",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/wall/search": {
+      "get": {
+        "summary": "根据关键字模糊搜索",
+        "description": "根据关键字模糊搜索",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "keyword",
+            "type": "string",
+            "description": "关键字",
+            "default": "",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
                         "description": "点赞数",
                         "default": 0
                       },
@@ -1026,8 +2479,8 @@
     },
     "/api/wall/{brickId}": {
       "get": {
-        "summary": "获取表白项列表",
-        "description": "获取表白项列表",
+        "summary": "获取表白墙详情",
+        "description": "获取表白墙详情",
         "parameters": [
           {
             "name": "brickId",
@@ -1040,7 +2493,6 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1077,56 +2529,137 @@
                 "result": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
+                    },
+                    "updatedAt": {
+                      "type": "integer",
+                      "description": "更新时间"
+                    },
+                    "_id": {
                       "type": "string",
-                      "enum": [
-                        100001,
-                        100002,
-                        400001,
-                        400002,
-                        400003,
-                        500000,
-                        500001,
-                        500002
-                      ]
+                      "description": "表白墙id",
+                      "default": ""
                     },
-                    "resultCode": {
-                      "type": "string",
-                      "enum": [
-                        "SUCCESS",
-                        "ERR_PARAM",
-                        "SEN_MESSAGE",
-                        "NOT_WECHAT_AUTH",
-                        "NOT_LOGIN",
-                        "NOT_AUTH",
-                        "ERROR",
-                        "FAIL_UPLOAD",
-                        "FACE_COMPARER_UPLOAD"
-                      ]
+                    "isPublisher": {
+                      "type": "boolean",
+                      "description": "是否是发布者",
+                      "default": false
                     },
-                    "message": {
-                      "type": "string"
+                    "isLike": {
+                      "type": "boolean",
+                      "description": "是否点赞",
+                      "default": false
                     },
-                    "result": {
-                      "type": "object",
-                      "properties": {}
+                    "likeCount": {
+                      "type": "number",
+                      "description": "点赞数",
+                      "default": 0
                     },
-                    "error": {
+                    "isCollect": {
+                      "type": "boolean",
+                      "description": "是否收藏",
+                      "default": false
+                    },
+                    "collectCount": {
+                      "type": "number",
+                      "description": "收藏数量",
+                      "default": 0
+                    },
+                    "publisher": {
                       "type": "object",
                       "properties": {
-                        "message": {
-                          "type": "string"
+                        "_id": {
+                          "type": "string",
+                          "description": "发布者id",
+                          "default": ""
                         },
-                        "detail": {
-                          "type": "string"
+                        "userInfo": {
+                          "type": "object",
+                          "properties": {
+                            "nickName": {
+                              "type": "string",
+                              "description": "发布者昵称",
+                              "default": ""
+                            },
+                            "avatarUrl": {
+                              "type": "string",
+                              "description": "发布者姓名",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "nickName",
+                            "avatarUrl"
+                          ]
                         }
+                      },
+                      "required": [
+                        "_id"
+                      ]
+                    },
+                    "to": {
+                      "type": "string",
+                      "description": "wall id",
+                      "default": ""
+                    },
+                    "tel": {
+                      "type": "string",
+                      "description": "手机号",
+                      "default": ""
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "内容",
+                      "default": ""
+                    },
+                    "photos": {
+                      "type": "array",
+                      "description": "图片列表",
+                      "default": [],
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "description": "图片 url",
+                            "default": ""
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "0",
+                              "1",
+                              "2"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "status"
+                        ]
                       }
+                    },
+                    "isDelete": {
+                      "type": "boolean",
+                      "description": "是否删除",
+                      "default": false
                     }
                   },
                   "required": [
-                    "code",
-                    "resultCode",
-                    "message"
+                    "createdAt",
+                    "updatedAt",
+                    "_id",
+                    "isPublisher",
+                    "isLike",
+                    "likeCount",
+                    "isCollect",
+                    "collectCount",
+                    "to",
+                    "tel",
+                    "content",
+                    "isDelete"
                   ]
                 },
                 "error": {
@@ -1146,7 +2679,8 @@
                 "resultCode",
                 "message"
               ]
-            }
+            },
+            "description": "success"
           }
         },
         "tags": [
@@ -1159,10 +2693,10 @@
         ]
       }
     },
-    "/api/wall/publishList": {
+    "/api/wall/list/publish": {
       "get": {
-        "summary": "获取用户发布的表白项列表",
-        "description": "获取用户发布的表白项列表",
+        "summary": "获取用户发布的表白墙列表",
+        "description": "获取用户发布的表白墙列表",
         "parameters": [
           {
             "name": "pageNum",
@@ -1246,7 +2780,7 @@
                         "default": false
                       },
                       "likeCount": {
-                        "type": "string",
+                        "type": "number",
                         "description": "点赞数",
                         "default": 0
                       },
@@ -1389,8 +2923,8 @@
     },
     "/api/wall/list/like": {
       "get": {
-        "summary": "获取用户点赞的表白项列表",
-        "description": "获取用户点赞的表白项列表",
+        "summary": "获取用户点赞的表白墙列表",
+        "description": "获取用户点赞的表白墙列表",
         "parameters": [
           {
             "name": "pageNum",
@@ -1474,7 +3008,7 @@
                         "default": false
                       },
                       "likeCount": {
-                        "type": "string",
+                        "type": "number",
                         "description": "点赞数",
                         "default": 0
                       },
@@ -1738,8 +3272,8 @@
     },
     "/api/wall/like": {
       "put": {
-        "summary": "点赞/取消 表白项",
-        "description": "点赞/取消 表白项",
+        "summary": "点赞/取消 表白墙",
+        "description": "点赞/取消 表白墙",
         "parameters": [
           {
             "name": "data",

@@ -1,6 +1,7 @@
 import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { goPage } from '@/utils/router'
+import Taro from '@tarojs/taro'
 import { Image, View, Text } from '@tarojs/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { routes } from '@/app.config'
@@ -50,11 +51,17 @@ export default function WallItem(props: IWallItemProps) {
     goPage(`${routes.saleWallDetail}?id=${_id}`)
   }, [_id])
 
+  const { height, width, key } = photos[0]
+
   return (
     <View className={prefix} onClick={onItemClick}>
       <Image
+        style={{
+          height:
+            height && width ? Taro.pxTransform((height / width) * 347) : 'auto'
+        }}
         className={`${prefix}__photo`}
-        src={getCdnUrl(photos?.[0]?.key)}
+        src={getCdnUrl(key)}
         mode="widthFix"
       ></Image>
       <View className={`${prefix}__info`}>

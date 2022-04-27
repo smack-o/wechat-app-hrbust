@@ -3,9 +3,6 @@ import { getCdnUrl, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useCallback, useState } from 'react'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/zh-cn'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
@@ -13,10 +10,6 @@ import LikeSelectedIcon from '../../imgs/like_selected.png'
 import PublisherTitle from '../publisher-title'
 
 import './WallItem.less'
-
-dayjs.locale('zh-cn') // 全局使用
-
-dayjs.extend(relativeTime)
 
 interface IWallItemProps {
   data:
@@ -102,9 +95,7 @@ export default function WallItem(props: IWallItemProps) {
         })}
       </View>
       <View className={`${prefix}__content`}>
-        {to !== undefined && (
-          <Text className={`${prefix}__content-to`}>@{to}</Text>
-        )}
+        {to && <Text className={`${prefix}__content-to`}>@{to}</Text>}
 
         <Text className={`${prefix}__content-detail`}>{content}</Text>
       </View>

@@ -69,6 +69,7 @@ class CreateWall extends Component<IProps, PageState> {
       Taro.showLoading({
         title: '上传图片中...'
       })
+      // TODO: 已经上传过的图片，不要重复上传 eg 出现错误重新提交的时候，现状是会重新上传
       try {
         photos = await this.uploadFiles()
       } catch (error) {

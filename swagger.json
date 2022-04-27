@@ -19,6 +19,31 @@
             "required": true,
             "description": "file content",
             "in": "formData"
+          },
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "height": {
+                  "type": "number",
+                  "description": "图片高度",
+                  "default": 0
+                },
+                "width": {
+                  "type": "number",
+                  "description": "图片宽度",
+                  "default": 0
+                },
+                "type": {
+                  "type": "string",
+                  "description": "图片类型",
+                  "default": ""
+                }
+              }
+            },
+            "in": "body"
           }
         ],
         "responses": {
@@ -563,6 +588,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -790,6 +830,21 @@
                               "1",
                               "2"
                             ]
+                          },
+                          "height": {
+                            "type": "number",
+                            "description": "图片高度",
+                            "default": 0
+                          },
+                          "width": {
+                            "type": "number",
+                            "description": "图片宽度",
+                            "default": 0
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "图片类型",
+                            "default": ""
                           }
                         },
                         "required": [
@@ -1027,6 +1082,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -1265,6 +1335,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -2180,6 +2265,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -2416,6 +2516,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -2633,6 +2748,21 @@
                               "1",
                               "2"
                             ]
+                          },
+                          "height": {
+                            "type": "number",
+                            "description": "图片高度",
+                            "default": 0
+                          },
+                          "width": {
+                            "type": "number",
+                            "description": "图片宽度",
+                            "default": 0
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "图片类型",
+                            "default": ""
                           }
                         },
                         "required": [
@@ -2860,6 +2990,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -3088,6 +3233,21 @@
                                 "1",
                                 "2"
                               ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
                             }
                           },
                           "required": [

@@ -7,9 +7,6 @@ import BottomBar, { barList } from './_components/bottom-bar'
 
 import './index.less'
 import { IBottomBarProps } from './_components/bottom-bar/BottomBar'
-import Wall from './_components/wall'
-import LoversFace from './_components/lovers-face'
-import SellRoomie from './_components/sell-roomie'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -24,7 +21,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Discover extends Component<IProps, PageState> {
   state: PageState = {
-    currentTab: 0
+    currentTab: 1
   }
 
   ref = createRef<any>()

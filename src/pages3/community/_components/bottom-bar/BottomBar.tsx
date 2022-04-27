@@ -13,9 +13,9 @@ import wallIcon from '../../imgs/bar/wall.png'
 import wallSelectIcon from '../../imgs/bar/wall_selected.png'
 
 import './BottomBar.less'
-import wall from '../wall'
-import sellRoomie from '../sell-roomie'
-import loversFace from '../lovers-face'
+import Wall from '../Wall'
+import SaleWall from '../sale-wall'
+import LoversFace from '../lovers-face'
 
 export const barList = [
   {
@@ -23,13 +23,13 @@ export const barList = [
     icon: wallIcon,
     selectIcon: wallSelectIcon,
     text: '表白墙',
-    component: wall
+    component: Wall
   },
   {
     key: 'mine',
     icon: saleIcon,
     selectIcon: saleSelectIcon,
-    component: sellRoomie,
+    component: SaleWall,
     text: '卖室友'
   },
   {
@@ -37,7 +37,7 @@ export const barList = [
     icon: faceIcon,
     selectIcon: faceSelectIcon,
     text: '情侣脸',
-    component: loversFace
+    component: LoversFace
   },
   {
     key: 'mine',

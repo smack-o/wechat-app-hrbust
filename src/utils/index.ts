@@ -5,6 +5,7 @@ import { url } from 'swagger'
 export { default as dateFormat } from './dateFormat'
 export * from './request'
 export * from './login'
+export * from './image'
 
 // 新增 Toast finished 方法，Toast 弹窗关闭后触发
 export const showToast = ({
@@ -178,6 +179,7 @@ export const saveImage = async (url: string) => {
 export const delay = (timeout: number) =>
   new Promise((resolve, reject) => setTimeout(resolve, timeout))
 
-export const getCdnUrl = (key: string) => {
+export const getCdnUrl = (key?: string) => {
+  // TODO: 缺省图补充
   return `${process.env.CND_PREFIX}/${key}`
 }

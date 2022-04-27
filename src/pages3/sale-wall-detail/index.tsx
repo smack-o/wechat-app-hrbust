@@ -51,6 +51,19 @@ class CreateWall extends Component<IProps, PageState> {
     }
   }
 
+  onImageClick = (index: number) => {
+    const photos = this.state.data?.photos || []
+    // @ts-ignore
+    wx.previewMedia({
+      current: index,
+      sources: photos.map(item => ({
+        url: getCdnUrl(item.key),
+        type: 'image'
+      })),
+      showmenu: true
+    })
+  }
+
   getData = async (id: string) => {
     const [err, res] = await withRequest(APIS.SaleWallApi.apiSaleWallIdGet)({
       id
@@ -112,11 +125,12 @@ class CreateWall extends Component<IProps, PageState> {
           className={`${prefix}__swiper`}
           // displayMultipleItems={photos?.length}
         >
-          {photos?.map(photo => (
+          {photos?.map((photo, index) => (
             <SwiperItem key={photo.key}>
               <Image
                 src={getCdnUrl(photo.key)}
                 className={`${prefix}__swiper-item`}
+                onClick={() => this.onImageClick(index)}
               ></Image>
             </SwiperItem>
           ))}

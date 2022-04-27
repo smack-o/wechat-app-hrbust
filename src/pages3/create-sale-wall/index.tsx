@@ -6,8 +6,7 @@ import { AtButton, AtImagePicker } from 'taro-ui'
 import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
-import { showToast, withRequest } from '@/utils'
-import { getHeader } from '@/utils/ajax/ajax'
+import { showToast, withRequest, uploadFileToServer } from '@/utils'
 import { File } from 'taro-ui/types/image-picker'
 
 import './index.less'
@@ -31,7 +30,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 const prefix = 'create-wall'
 class CreateSaleWall extends Component<IProps, PageState> {
-  state = {
+  state: PageState = {
     name: '',
     gender: 0,
     major: '',
@@ -87,6 +86,7 @@ class CreateSaleWall extends Component<IProps, PageState> {
       Taro.showLoading({
         title: '上传图片中...'
       })
+      // TODO: 已经上传过的图片，不要重复上传 eg 出现错误重新提交的时候，现状是会重新上传
       try {
         photos = await this.uploadFiles()
       } catch (error) {
@@ -113,7 +113,7 @@ class CreateSaleWall extends Component<IProps, PageState> {
         title: '发布成功',
         icon: 'success',
         finished: () => {
-          goPage(`${routes.saleWallDetail}?id=${res.id}`, Taro.redirectTo)
+          // goPage(`${routes.saleWallDetail}?id=${res.id}`, Taro.redirectTo)
         }
       })
     }
@@ -121,25 +121,7 @@ class CreateSaleWall extends Component<IProps, PageState> {
 
   uploadFiles = async () => {
     const { files } = this.state
-    const promises = files.map(async file => {
-      const { url } = file
-
-      const { data } = await Taro.uploadFile({
-        url: `${process.env.PROXY_TARGET}/api/media`,
-        filePath: url,
-        name: 'file',
-        header: getHeader()
-      })
-      // console.log(JSON.parse(data))
-      const res = JSON.parse(data)
-      // if (res.code === 0) {
-      //   return res.result.
-      // }
-
-      console.log(res)
-
-      return res.result.id
-    })
+    const promises = files.map(async file => uploadFileToServer(file.url))
 
     return Promise.all(promises)
   }
@@ -201,7 +183,7 @@ class CreateSaleWall extends Component<IProps, PageState> {
 
         <View className={`${prefix}__form-item`}>
           <View className={`${prefix}__form-item__title`}>
-            对另一半的期望({content.length}/100字)
+            对另一半的期望({content?.length}/100字)
           </View>
           <Textarea
             className={`${prefix}__form-item__textarea`}

@@ -13,12 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `[code]` js code
+  * @property `[id]` wall id
   */
 export interface Data3 {
   /**
-   * js code
+   * wall id
    */
-  'code'?: string;
+  'id'?: string;
 }
 

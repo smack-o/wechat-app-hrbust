@@ -29,7 +29,7 @@ export interface ParamsapiWallBrickIdGet {
 /**
   * request body
   */
-export type ParamsBodyapiWallLikePut = models.Data6
+export type ParamsBodyapiWallLikePut = models.Data7
 /**
   * @description apiWallListGet参数
   * @property `[pageNum]` 分页页码
@@ -81,7 +81,7 @@ export interface ParamsapiWallListPublishGet {
 /**
   * request body
   */
-export type ParamsBodyapiWallPost = models.Data5
+export type ParamsBodyapiWallPost = models.Data6
 /**
   * @description apiWallSearchGet参数
   * @property `[pageNum]` 分页页码

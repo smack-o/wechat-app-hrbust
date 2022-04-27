@@ -15,6 +15,9 @@ import * as models from './models'
 /**
   * @property `key` 图片 url
   * @property `status` 
+  * @property `[height]` 图片高度
+  * @property `[width]` 图片宽度
+  * @property `[type]` 图片类型
   */
 export interface InlineResponse2002Photos {
   /**
@@ -22,6 +25,18 @@ export interface InlineResponse2002Photos {
    */
   'key': string;
   'status': InlineResponse2002Photos.StatusEnum;
+  /**
+   * 图片高度
+   */
+  'height'?: number;
+  /**
+   * 图片宽度
+   */
+  'width'?: number;
+  /**
+   * 图片类型
+   */
+  'type'?: string;
 }
 
 export namespace InlineResponse2002Photos {

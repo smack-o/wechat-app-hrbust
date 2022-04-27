@@ -29,7 +29,7 @@ export interface ParamsapiSaleWallIdGet {
 /**
   * request body
   */
-export type ParamsBodyapiSaleWallLikePut = models.Data2
+export type ParamsBodyapiSaleWallLikePut = models.Data3
 /**
   * @description apiSaleWallListGet参数
   * @property `[pageNum]` 分页页码
@@ -81,7 +81,7 @@ export interface ParamsapiSaleWallListPublishGet {
 /**
   * request body
   */
-export type ParamsBodyapiSaleWallPost = models.Data1
+export type ParamsBodyapiSaleWallPost = models.Data2
 
 export class SaleWallApi {
   protected $basePath = ''.replace(/\/$/, '')

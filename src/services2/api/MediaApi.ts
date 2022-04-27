@@ -18,7 +18,7 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiMediaComparefacePost = models.Data
+export type ParamsBodyapiMediaComparefacePost = models.Data1
 /**
   * @description apiMediaPost参数
   * @property `file` file content
@@ -30,6 +30,10 @@ export interface ParamsapiMediaPost {
    */
   file: any;
 }
+/**
+  * request body
+  */
+export type ParamsBodyapiMediaPost = models.Data
 
 export class MediaApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -87,13 +91,13 @@ export class MediaApi {
    * 上传文件
    * @summary 上传文件
    * @param params ParamsapiMediaPost
-   
+   * @param data: ParamsBodyapiMediaPost// request body
    * @param opt ajax config
    * @returns models.InlineResponse200
    */
   public apiMediaPost = (
     params: ParamsapiMediaPost,
-    opt?: ExtraFetchParams
+    data: ParamsBodyapiMediaPost,opt?: ExtraFetchParams
   ) : AjaxPromise<models.InlineResponse200>  => {
     const url = this.$basePath + '/api/media'
     const p: any = {}
@@ -109,6 +113,7 @@ export class MediaApi {
     // p.form = new FormData();
     if ('file' in params) p.form.append('file', params.file)
     ajax.check(params.file, 'file')
+    p.data = data
     return ajax.ajax({
       ...opt,
       method: 'POST',

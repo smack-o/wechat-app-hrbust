@@ -18,11 +18,11 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiUserWxAuthPost = models.Data3
+export type ParamsBodyapiUserWxAuthPost = models.Data4
 /**
   * request body
   */
-export type ParamsBodyapiUserWxLoginPost = models.Data4
+export type ParamsBodyapiUserWxLoginPost = models.Data5
 
 export class UserApi {
   protected $basePath = ''.replace(/\/$/, '')

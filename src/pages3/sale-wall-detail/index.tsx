@@ -128,6 +128,7 @@ class CreateWall extends Component<IProps, PageState> {
           {photos?.map((photo, index) => (
             <SwiperItem key={photo.key}>
               <Image
+                mode="aspectFill"
                 src={getCdnUrl(photo.key)}
                 className={`${prefix}__swiper-item`}
                 onClick={() => this.onImageClick(index)}

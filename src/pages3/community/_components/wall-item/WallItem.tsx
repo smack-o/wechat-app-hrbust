@@ -2,7 +2,7 @@ import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
@@ -45,6 +45,11 @@ export default function WallItem(props: IWallItemProps) {
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
   const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount || 0)
+
+  useEffect(() => {
+    setLocalIsLike(isLike)
+    setLocalIsLikeCount(likeCount || 0)
+  }, [isLike, likeCount])
 
   const onImageClick = useCallback(
     (index: number) => {

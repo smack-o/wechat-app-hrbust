@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, View } from '@tarojs/components'
-import { getCdnUrl, withRequest } from '@/utils'
+import { withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
 import { routes } from '@/app.config'
@@ -11,15 +11,16 @@ import SaleWallItem from '../sale-wall-item'
 
 import './SaleWall.less'
 
+type List = GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>
+
 type WallState = {
-  list: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>
   listLeft: {
     height: number
-    list: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>
+    list: List
   }
   listRight: {
     height: number
-    list: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>
+    list: List
   }
   activeTab: number
   hasNext: boolean
@@ -31,7 +32,6 @@ const prefix = 'sale-wall'
 
 export default class SaleWall extends React.Component<WallProps, WallState> {
   state: WallState = {
-    list: [],
     listLeft: {
       height: 0,
       list: []
@@ -61,23 +61,6 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
       api: APIS.SaleWallApi.apiSaleWallListGet
     }
   ]
-  // tabList = [
-  //   {
-  //     key: 'all',
-  //     text: '全部',
-  //     api: APIS.WallApi.apiWallListGet
-  //   },
-  //   {
-  //     key: 'like',
-  //     text: '喜欢',
-  //     api: APIS.WallApi.apiWallListLikeGet
-  //   },
-  //   {
-  //     key: 'hot',
-  //     text: '最热',
-  //     api: APIS.WallApi.apiWallListGet
-  //   }
-  // ]
 
   pageNum = 0
   pageSize = 5
@@ -109,12 +92,16 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
     this.listPush(res, reset)
 
     this.setState({
-      // list: reset ? res : this.state.list.concat(res),
       hasNext: res.length === this.pageSize
     })
   }
 
-  listPush = (list: WallState['list'], reset?: boolean) => {
+  /**
+   * 瀑布流高度计算
+   * @param list
+   * @param reset
+   */
+  listPush = (list: List, reset?: boolean) => {
     let { listLeft, listRight } = this.state
     if (reset) {
       listLeft = {
@@ -130,11 +117,10 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
     list.forEach(item => {
       const imgHeight = item.photos?.[0]?.height || 400
       const imgWidth = item.photos?.[0]?.width || 400
+      // 拉齐到同一宽度对比高度
       const relHeight = (imgHeight / imgWidth) * 100
 
-      console.log(relHeight)
-
-      if (listLeft.height < listRight.height) {
+      if (listLeft.height <= listRight.height) {
         listLeft.list.push(item)
         listLeft.height += relHeight
       } else {
@@ -144,11 +130,9 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
     })
 
     this.setState({
-      list,
       listLeft,
       listRight
     })
-    console.log(listLeft, listRight, list)
   }
 
   onTabChange: ITabProps['onChange'] = async index => {
@@ -181,7 +165,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   }
 
   render() {
-    const { activeTab, hasNext } = this.state
+    const { activeTab, hasNext, listLeft, listRight } = this.state
     return (
       <View className={prefix}>
         <Tab
@@ -190,9 +174,16 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
           onChange={this.onTabChange}
         >
           <View className={`${prefix}__list`}>
-            {this.state.list.map(item => (
-              <SaleWallItem key={item._id} data={item}></SaleWallItem>
-            ))}
+            <View className={`${prefix}__list-column`}>
+              {listLeft.list.map(item => (
+                <SaleWallItem key={item._id} data={item}></SaleWallItem>
+              ))}
+            </View>
+            <View className={`${prefix}__list-column`}>
+              {listRight.list.map(item => (
+                <SaleWallItem key={item._id} data={item}></SaleWallItem>
+              ))}
+            </View>
           </View>
         </Tab>
         <View className={`${prefix}__add-wall`} onClick={this.onAddWallClick}>

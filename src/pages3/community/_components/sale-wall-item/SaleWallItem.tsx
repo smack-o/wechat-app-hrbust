@@ -1,7 +1,9 @@
 import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
+import { goPage } from '@/utils/router'
 import { Image, View, Text } from '@tarojs/components'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { routes } from '@/app.config'
 
 import SaleWallLike from '../../imgs/sale_wall_like.png'
 import SaleWallLiked from '../../imgs/sale_wall_liked.png'
@@ -23,20 +25,33 @@ export default function WallItem(props: IWallItemProps) {
   const [localIsLike, setLocalIsLike] = useState(isLike)
   const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount || 0)
 
-  const onLikeClick = useCallback(async () => {
-    const [err] = await withRequest(APIS.WallApi.apiWallLikePut)({
-      brickId: _id
-    })
+  useEffect(() => {
+    setLocalIsLike(isLike)
+    setLocalIsLikeCount(likeCount || 0)
+  }, [isLike, likeCount])
 
-    // 本地变更
-    if (!err) {
-      setLocalIsLike(!localIsLike)
-      setLocalIsLikeCount(localIsLikeCount + (localIsLike ? -1 : 1))
-    }
-  }, [_id, localIsLike, localIsLikeCount])
+  const onLikeClick = useCallback(
+    async e => {
+      e.stopPropagation()
+      const [err] = await withRequest(APIS.SaleWallApi.apiSaleWallLikePut)({
+        id: _id
+      })
+
+      // 本地变更
+      if (!err) {
+        setLocalIsLike(!localIsLike)
+        setLocalIsLikeCount(localIsLikeCount + (localIsLike ? -1 : 1))
+      }
+    },
+    [_id, localIsLike, localIsLikeCount]
+  )
+
+  const onItemClick = useCallback(() => {
+    goPage(`${routes.saleWallDetail}?id=${_id}`)
+  }, [_id])
 
   return (
-    <View className={prefix}>
+    <View className={prefix} onClick={onItemClick}>
       <Image
         className={`${prefix}__photo`}
         src={getCdnUrl(photos?.[0]?.key)}

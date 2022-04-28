@@ -21,7 +21,7 @@ type PageOwnProps = {}
 
 type PageState = {
   name: string
-  files: File[]
+  files: (File & { uploaded?: boolean; isNotTmpFile?: boolean })[]
   fetching: boolean
 }
 
@@ -112,7 +112,13 @@ class AccountEdit extends Component<IProps, PageState> {
 
   uploadFiles = async () => {
     const { files } = this.state
-    const promises = files.map(async file => uploadFileToServer(file.url))
+
+    const promises = files.map(async file => {
+      return uploadFileToServer({
+        url: file.url,
+        isNotTmpFile: file.isNotTmpFile
+      })
+    })
 
     return Promise.all(promises)
   }
@@ -120,6 +126,26 @@ class AccountEdit extends Component<IProps, PageState> {
   onFileChange = (files: File[]) => {
     this.setState({
       files
+    })
+  }
+
+  getUserInfo = () => {
+    wx.getUserProfile({
+      desc: '用于理工喵信息展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: async res => {
+        console.log(res, 'res')
+        this.setState({
+          name: res.userInfo.nickName,
+          files: [{ url: res.userInfo.avatarUrl, isNotTmpFile: true }]
+        })
+        // const [err] = await withRequest(APIS.UserApi.apiUserWxLoginPost)({
+        //   iv: res.iv,
+        //   encryptedData: res.encryptedData
+        // })
+        // if (!err) {
+        //   goPage(routes.login)
+        // }
+      }
     })
   }
 
@@ -162,15 +188,26 @@ class AccountEdit extends Component<IProps, PageState> {
           <View className={`${prefix}__tips-title`}>*关于头像与昵称</View>
           社区内发言、点赞、评论均会使用头像、若您没有修改昵称与头像，则默认使用微信昵称与头像。
         </View>
-        <AtButton
-          type="primary"
-          onClick={this.onSubmit}
-          className={`${prefix}__button`}
-          loading={fetching}
-          disabled={!name && files.length === 0}
-        >
-          确认修改
-        </AtButton>
+        <View className={`${prefix}__buttons`}>
+          <AtButton
+            type="secondary"
+            className={`${prefix}__button1`}
+            onClick={this.getUserInfo}
+          >
+            使用微信昵称头像
+          </AtButton>
+          <AtButton
+            type="primary"
+            onClick={this.onSubmit}
+            className={`${prefix}__button`}
+            loading={fetching}
+            disabled={
+              !name && (files.length === 0 || files[0]?.url === this.avatar)
+            }
+          >
+            确认修改
+          </AtButton>
+        </View>
       </View>
     )
   }

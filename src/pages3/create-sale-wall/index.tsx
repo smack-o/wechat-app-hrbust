@@ -121,7 +121,11 @@ class CreateSaleWall extends Component<IProps, PageState> {
 
   uploadFiles = async () => {
     const { files } = this.state
-    const promises = files.map(async file => uploadFileToServer(file.url))
+    const promises = files.map(async file =>
+      uploadFileToServer({
+        url: file.url
+      })
+    )
 
     return Promise.all(promises)
   }

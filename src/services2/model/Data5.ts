@@ -13,12 +13,25 @@
 import * as models from './models'
 
 /**
-  * @property `[code]` js code
+  * @property `[nickName]` 
+  * @property `[customName]` 
+  * @property `[gender]` 
+  * @property `[avatarUrl]` 
+  * @property `[language]` 
+  * @property `[city]` 
+  * @property `[province]` 
+  * @property `[country]` 
+  * @property `[customAvatarUrl]` 
   */
 export interface Data5 {
-  /**
-   * js code
-   */
-  'code'?: string;
+  'nickName'?: string;
+  'customName'?: string;
+  'gender'?: number;
+  'avatarUrl'?: string;
+  'language'?: string;
+  'city'?: string;
+  'province'?: string;
+  'country'?: string;
+  'customAvatarUrl'?: string;
 }
 

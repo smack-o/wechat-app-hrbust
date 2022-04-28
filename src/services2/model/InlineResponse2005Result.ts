@@ -13,12 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `[id]` wall id
+  * @property `id` wall id
   */
-export interface Data4 {
+export interface InlineResponse2005Result {
   /**
    * wall id
    */
-  'id'?: string;
+  'id': string;
 }
 

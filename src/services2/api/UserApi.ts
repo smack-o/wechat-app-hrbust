@@ -18,15 +18,15 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiUserPut = models.Data4
+export type ParamsBodyapiUserPut = models.Data5
 /**
   * request body
   */
-export type ParamsBodyapiUserWxAuthPost = models.Data5
+export type ParamsBodyapiUserWxAuthPost = models.Data6
 /**
   * request body
   */
-export type ParamsBodyapiUserWxLoginPost = models.Data6
+export type ParamsBodyapiUserWxLoginPost = models.Data7
 
 export class UserApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -43,12 +43,12 @@ export class UserApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiUserGet = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     return ajax.ajax({
@@ -64,12 +64,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserPut// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiUserPut = (
     
     data: ParamsBodyapiUserPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     p.data = data
@@ -86,12 +86,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxAuthPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiUserWxAuthPost = (
     
     data: ParamsBodyapiUserWxAuthPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/user/wx/auth'
     const p: any = {}
     p.data = data
@@ -108,12 +108,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxLoginPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiUserWxLoginPost = (
     
     data: ParamsBodyapiUserWxLoginPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/user/wx/login'
     const p: any = {}
     p.data = data

@@ -99,6 +99,7 @@ class Account extends Component<IProps, PageState> {
                 avatarSize="150rpx"
                 avatarUrl={avatarUrl}
                 customAvatarUrl={customAvatarUrl}
+                onClickType="preview"
               ></Avatar>
             ) : (
               // <Image

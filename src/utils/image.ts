@@ -1,5 +1,7 @@
+import { APIS } from '@/services2'
 import Taro, { uploadFile } from '@tarojs/taro'
 import { getHeader } from './ajax/ajax'
+import { withRequest } from './request'
 
 // const isDevtools = Taro.getSystemInfoSync().platform === 'devtools'
 
@@ -26,22 +28,39 @@ export const compressImage = (url: string, quality = 30): Promise<string> =>
   })
 
 /**
- * 压缩图片，获取图片信息，上传
- * @param url 图片 url
+ *
+ * @param param0
  * @returns
  */
-export const uploadFileToServer = async (url: string, quality = 80) => {
+export const uploadFileToServer = async ({
+  url = '',
+  quality = 80,
+  isNotTmpFile = false
+}) => {
   const { height, width, type } = await Taro.getImageInfo({
     src: url
   })
 
-  let r = 1
-  if (width > 800) {
-    r = 800 / width
+  // 非临时文件，使用网络上传接口
+  if (isNotTmpFile) {
+    const [err, res] = await withRequest(APIS.MediaApi.apiMediaUrlPost)({
+      url,
+      height,
+      width,
+      type
+    })
+    if (!err) {
+      return res?._id
+    }
   }
 
-  const compressUrl = await compressImage(url, quality * r)
-  console.log(url, compressUrl)
+  // 压缩比例 根据图片宽度动态计算
+  let rate = 1
+  if (width > 1000) {
+    rate = 800 / width
+  }
+
+  const compressUrl = await compressImage(url, quality * rate)
 
   try {
     const { data } = await uploadFile({
@@ -60,11 +79,6 @@ export const uploadFileToServer = async (url: string, quality = 80) => {
     if (!res?.result?.id) {
       throw new Error('上传失败')
     }
-
-    // isDevtools &&
-    //   Taro.getFileSystemManager().unlink({
-    //     filePath: compressUrl
-    //   })
     return res.result.id
   } catch (error) {
     Taro.showToast({

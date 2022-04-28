@@ -13,14 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `_id` user id
-  * @property `[userInfo]` 
+  * @property `[brickId]` wall id
   */
-export interface InlineResponse2002Publisher {
+export interface Data9 {
   /**
-   * user id
+   * wall id
    */
-  '_id': string;
-  'userInfo'?: models.InlineResponse2002PublisherUserInfo;
+  'brickId'?: string;
 }
 

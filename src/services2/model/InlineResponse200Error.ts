@@ -13,12 +13,11 @@
 import * as models from './models'
 
 /**
-  * @property `brickId` wall id
+  * @property `[message]` 
+  * @property `[detail]` 
   */
-export interface InlineResponse2008Result {
-  /**
-   * wall id
-   */
-  'brickId': string;
+export interface InlineResponse200Error {
+  'message'?: string;
+  'detail'?: string;
 }
 

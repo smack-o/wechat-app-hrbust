@@ -22,13 +22,15 @@ import * as models from './models'
   * @property `isCollect` 是否收藏
   * @property `collectCount` 收藏数量
   * @property `[publisher]` 
-  * @property `to` wall id
-  * @property `tel` 手机号
-  * @property `content` 内容
+  * @property `name` 姓名
+  * @property `gender` 
+  * @property `major` 主修专业
+  * @property `description` 描述
+  * @property `[content]` 内容
   * @property `[photos]` 图片列表
   * @property `isDelete` 是否删除
   */
-export interface InlineResponse2006Result {
+export interface InlineResponse2003Result {
   /**
    * 创建时间
    */
@@ -61,23 +63,28 @@ export interface InlineResponse2006Result {
    * 收藏数量
    */
   'collectCount': number;
-  'publisher'?: models.InlineResponse2002Publisher;
+  'publisher'?: models.InlineResponse2003Publisher;
   /**
-   * wall id
+   * 姓名
    */
-  'to': string;
+  'name': string;
+  'gender': number;
   /**
-   * 手机号
+   * 主修专业
    */
-  'tel': string;
+  'major': string;
+  /**
+   * 描述
+   */
+  'description': string;
   /**
    * 内容
    */
-  'content': string;
+  'content'?: string;
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2002PublisherUserInfoCustomAvatarUrl>;
+  'photos'?: Array<models.InlineResponse2003PublisherUserInfoCustomAvatarUrl>;
   /**
    * 是否删除
    */

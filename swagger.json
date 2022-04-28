@@ -48,7 +48,7 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
+            "description": "成功",
             "schema": {
               "type": "object",
               "properties": {
@@ -85,56 +85,190 @@
                 "result": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "key": {
+                      "type": "string",
+                      "description": "图片 url",
+                      "default": ""
+                    },
+                    "status": {
                       "type": "string",
                       "enum": [
-                        100001,
-                        100002,
-                        400001,
-                        400002,
-                        400003,
-                        500000,
-                        500001,
-                        500002
+                        "0",
+                        "1",
+                        "2"
                       ]
                     },
-                    "resultCode": {
+                    "height": {
+                      "type": "number",
+                      "description": "图片高度",
+                      "default": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "description": "图片宽度",
+                      "default": 0
+                    },
+                    "type": {
                       "type": "string",
-                      "enum": [
-                        "SUCCESS",
-                        "ERR_PARAM",
-                        "SEN_MESSAGE",
-                        "NOT_WECHAT_AUTH",
-                        "NOT_LOGIN",
-                        "NOT_AUTH",
-                        "ERROR",
-                        "FAIL_UPLOAD",
-                        "FACE_COMPARER_UPLOAD"
-                      ]
+                      "description": "图片类型",
+                      "default": ""
                     },
-                    "message": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string"
-                        },
-                        "detail": {
-                          "type": "string"
-                        }
-                      }
+                    "_id": {
+                      "type": "string",
+                      "description": "图片 id",
+                      "default": ""
                     }
                   },
                   "required": [
-                    "code",
-                    "resultCode",
-                    "message"
+                    "key",
+                    "status",
+                    "_id"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Media"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/media/url": {
+      "post": {
+        "summary": "通过抓取 url 上传文件",
+        "description": "通过抓取 url 上传文件",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "height": {
+                  "type": "number",
+                  "description": "图片高度",
+                  "default": 0
+                },
+                "width": {
+                  "type": "number",
+                  "description": "图片宽度",
+                  "default": 0
+                },
+                "type": {
+                  "type": "string",
+                  "description": "图片类型",
+                  "default": ""
+                },
+                "url": {
+                  "type": "string",
+                  "description": "图片 url",
+                  "default": "",
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "description": "图片 url",
+                      "default": ""
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "0",
+                        "1",
+                        "2"
+                      ]
+                    },
+                    "height": {
+                      "type": "number",
+                      "description": "图片高度",
+                      "default": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "description": "图片宽度",
+                      "default": 0
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "图片类型",
+                      "default": ""
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "图片 id",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "status",
+                    "_id"
                   ]
                 },
                 "error": {

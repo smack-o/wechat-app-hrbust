@@ -5,11 +5,13 @@ import Taro from '@tarojs/taro'
 import { Image, View, Text } from '@tarojs/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { routes } from '@/app.config'
+import Avatar from '@/components/Avatar'
+import Time from '@/components/Time'
 
 import SaleWallLike from '../../imgs/sale_wall_like.png'
 import SaleWallLiked from '../../imgs/sale_wall_liked.png'
 
-import { Avatar, Time } from '../publisher-title'
+// import { Avatar, Time } from '../publisher-title'
 import './SaleWallItem.less'
 
 interface IWallItemProps {
@@ -66,8 +68,9 @@ export default function WallItem(props: IWallItemProps) {
       ></Image>
       <View className={`${prefix}__info`}>
         <Avatar
-          avatarUrl={publisher?.userInfo?.avatarUrl || ''}
-          nickName={publisher?.userInfo?.nickName || ''}
+          {...publisher?.userInfo}
+          // avatarUrl={publisher?.userInfo?.avatarUrl || ''}
+          // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>
         <View className={`${prefix}__info-bottom`}>
           <Time time={createdAt || ''}></Time>

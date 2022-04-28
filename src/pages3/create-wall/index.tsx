@@ -6,7 +6,7 @@ import { AtButton, AtImagePicker } from 'taro-ui'
 import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
-import { showToast, withRequest } from '@/utils'
+import { showToast, uploadFileToServer, withRequest } from '@/utils'
 import { getHeader } from '@/utils/ajax/ajax'
 import { File } from 'taro-ui/types/image-picker'
 
@@ -102,25 +102,7 @@ class CreateWall extends Component<IProps, PageState> {
 
   uploadFiles = async () => {
     const { files } = this.state
-    const promises = files.map(async file => {
-      const { url } = file
-
-      const { data } = await Taro.uploadFile({
-        url: `${process.env.PROXY_TARGET}/api/media`,
-        filePath: url,
-        name: 'file',
-        header: getHeader()
-      })
-      // console.log(JSON.parse(data))
-      const res = JSON.parse(data)
-      // if (res.code === 0) {
-      //   return res.result.
-      // }
-
-      console.log(res)
-
-      return res.result.id
-    })
+    const promises = files.map(async file => uploadFileToServer(file.url))
 
     return Promise.all(promises)
   }

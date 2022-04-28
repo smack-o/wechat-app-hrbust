@@ -34,6 +34,7 @@ export const router = {
     pddSearch: 'pdd-search/index' // 品多多搜索页面,
   },
   pages3: {
+    accountEdit: 'account-edit/index', // 个人中心，编辑个人信息页面
     aboutme: 'aboutme/index', // 关于我们
     // schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
     createWall: 'create-wall/index',

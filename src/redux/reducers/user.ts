@@ -17,6 +17,7 @@ if (studentInfo.username) {
   const courseData = Taro.getStorageSync(`course:${studentInfo.username}`)
   currentTerm = courseData.term
 }
+
 export interface UserState {
   isWechatLogin: boolean
   isLogin: boolean
@@ -58,13 +59,19 @@ export interface UserState {
   }
   currentTerm: number
   userInfo: {
-    avatarUrl: string
-    city: string
-    country: string
-    gender: number
-    language: string
-    nickName: string
-    province: string
+    nickName?: string
+    customName?: string
+    customAvatarUrl?: {
+      checkCode: number
+      key: string
+      status: number
+    }
+    gender?: number
+    avatarUrl?: string
+    language?: string
+    city?: string
+    province?: string
+    country?: string
   }
 }
 
@@ -89,7 +96,13 @@ const INITIAL_STATE: UserState = {
     gender: 0,
     language: 'zh_CN',
     nickName: '许岩',
-    province: ''
+    province: '',
+    customAvatarUrl: {
+      checkCode: 1,
+      key: '',
+      status: 0
+    },
+    customName: ''
   }
 }
 

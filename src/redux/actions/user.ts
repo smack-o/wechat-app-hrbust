@@ -10,6 +10,7 @@ import {
 } from '@/services/user'
 import { Dispatch } from 'redux'
 import { startLoading, stopLoading } from './global'
+import { UserState } from '../reducers/user'
 
 export const UPDATE_USERINFO = 'user/UPDATE_USERINFO'
 export const LOGOUT = 'user/LOGOUT'
@@ -84,6 +85,7 @@ export const initHandler = async (dispatch: Dispatch) => {
     let [err, res] = await withRequest(APIS.UserApi.apiUserGet)()
     const session = await checkSession()
 
+    console.log(session, 'session')
     // 未登录
     if (err || !session) {
       await login()
@@ -130,6 +132,15 @@ export const initHandler = async (dispatch: Dispatch) => {
     dispatch(stopLoading())
     return Promise.resolve()
   }
+}
+
+export const updateUserInfo = (data: Partial<UserState>) => async (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: UPDATE_USERINFO,
+    data
+  })
 }
 
 export const init = () => async (dispatch: Dispatch) => {

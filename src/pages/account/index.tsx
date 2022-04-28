@@ -7,8 +7,9 @@ import { goPage, routes } from '@/utils/router'
 import { logout, init } from '@/redux/actions/user'
 import { Dispatch, bindActionCreators } from 'redux'
 import { cError, toLogin } from '@/utils'
-
+import Avatar from '@/components/Avatar'
 import arrowRight from '@/assets/icon/arrow_right.png'
+import { AtIcon } from 'taro-ui'
 import authIcon from './res/authentication.png'
 import removeBindingIcon from './res/remove_binding.png'
 import contactIcon from './res/contact.png'
@@ -68,13 +69,22 @@ class Account extends Component<IProps, PageState> {
     })
   }
 
+  onEditUserInfoClick = () => {
+    goPage(routes.accountEdit)
+  }
+
   render() {
     const {
       user: {
         isLogin,
         isWechatLogin,
         studentInfo,
-        userInfo: { avatarUrl, nickName }
+        userInfo: {
+          avatarUrl = '',
+          nickName = '',
+          customAvatarUrl,
+          customName = ''
+        }
       }
     } = this.props
     const { version } = this.state
@@ -84,8 +94,19 @@ class Account extends Component<IProps, PageState> {
         <View className="user">
           <View className="avatar-wrapper">
             {isWechatLogin ? (
-              <Image className="avatar" src={avatarUrl}></Image>
+              <Avatar
+                className="avatar"
+                avatarSize="150rpx"
+                avatarUrl={avatarUrl}
+                customAvatarUrl={customAvatarUrl}
+              ></Avatar>
             ) : (
+              // <Image
+              //   className="avatar"
+              //   src={
+              //     customAvatarUrl ? getCdnUrl(customAvatarUrl.key) : avatarUrl
+              //   }
+              // ></Image>
               <OpenData
                 className="avatar"
                 type="userAvatarUrl"
@@ -93,35 +114,34 @@ class Account extends Component<IProps, PageState> {
               ></OpenData>
             )}
           </View>
-          {isWechatLogin ? (
-            <View className="info">
-              <View className="name">
-                {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
-                <Text>{nickName}</Text>
-                <Text selectable className="username">
-                  {studentInfo.username}
-                </Text>
-              </View>
-              <View className="student">
-                <Image className="image" src={authIcon} />
-                <View>{studentInfo.name}</View>
-              </View>
+          <View className="info">
+            <View className="name">
+              {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
+              <Text>{customName || nickName}</Text>
+              {/* <Text selectable className="username">
+                {studentInfo.username}
+              </Text> */}
+              <AtIcon
+                value="edit"
+                className="edit"
+                size={18}
+                onClick={this.onEditUserInfoClick}
+              ></AtIcon>
             </View>
-          ) : (
-            <View className="button" onClick={() => toLogin(isWechatLogin)}>
-              立即登录
+            <View className="student">
+              <Image className="image" src={authIcon} />
+              <View>{studentInfo.name}fsdfds</View>
             </View>
-          )}
-          {isWechatLogin && !isLogin && (
-            <View
-              className="bind-button"
-              onClick={() => toLogin(isWechatLogin)}
-            >
-              绑定学号
-            </View>
-          )}
+          </View>
         </View>
-
+        <View className="button" onClick={() => toLogin(isWechatLogin)}>
+          立即登录
+        </View>
+        {isWechatLogin && !isLogin && (
+          <View className="bind-button" onClick={() => toLogin(isWechatLogin)}>
+            绑定学号
+          </View>
+        )}
         <View className="other">
           {isLogin && (
             <View className="item" onClick={this.logout}>

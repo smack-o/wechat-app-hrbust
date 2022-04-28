@@ -8,11 +8,14 @@ export const toLogin = async (isWechatLogin: boolean) => {
     wx.getUserProfile({
       desc: '用于理工喵信息展示', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: async res => {
-        await withRequest(APIS.UserApi.apiUserWxLoginPost)({
+        console.log(res, 'res')
+        const [err] = await withRequest(APIS.UserApi.apiUserWxLoginPost)({
           iv: res.iv,
           encryptedData: res.encryptedData
         })
-        goPage(routes.login)
+        if (!err) {
+          goPage(routes.login)
+        }
       }
     })
     return

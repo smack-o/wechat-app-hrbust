@@ -7,9 +7,11 @@ declare global {
 
   type CommonResult = (...args: any) => AjaxPromise<{ result?: any }>
 
-  type GetApiResultType<T extends CommonResult> = Awaited<
-    ReturnType<T>
-  >['result']
+  type GetApiResultType<T extends CommonResult> = Required<
+    Awaited<ReturnType<T>>['result']
+  >
+
+  type UnionToIntersection<T, K> = K extends any ? any : any
 }
 
 export {}

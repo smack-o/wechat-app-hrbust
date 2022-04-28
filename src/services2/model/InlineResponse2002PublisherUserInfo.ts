@@ -13,17 +13,25 @@
 import * as models from './models'
 
 /**
-  * @property `nickName` 发布者昵称
-  * @property `avatarUrl` 发布者姓名
+  * @property `[nickName]` 
+  * @property `[customName]` 
+  * @property `[customAvatarUrl]` 
+  * @property `[gender]` 
+  * @property `[avatarUrl]` 
+  * @property `[language]` 
+  * @property `[city]` 
+  * @property `[province]` 
+  * @property `[country]` 
   */
 export interface InlineResponse2002PublisherUserInfo {
-  /**
-   * 发布者昵称
-   */
-  'nickName': string;
-  /**
-   * 发布者姓名
-   */
-  'avatarUrl': string;
+  'nickName'?: string;
+  'customName'?: string;
+  'customAvatarUrl'?: models.InlineResponse2002PublisherUserInfoCustomAvatarUrl;
+  'gender'?: number;
+  'avatarUrl'?: string;
+  'language'?: string;
+  'city'?: string;
+  'province'?: string;
+  'country'?: string;
 }
 

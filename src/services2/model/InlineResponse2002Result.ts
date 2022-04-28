@@ -84,7 +84,7 @@ export interface InlineResponse2002Result {
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2002Photos>;
+  'photos'?: Array<models.InlineResponse2002PublisherUserInfoCustomAvatarUrl>;
   /**
    * 是否删除
    */

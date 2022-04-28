@@ -13,12 +13,27 @@
 import * as models from './models'
 
 /**
-  * @property `[brickId]` wall id
+  * @property `[to]` wall id
+  * @property `[tel]` 表白人的手机号
+  * @property `[content]` 内容
+  * @property `[photos]` 图片列表
   */
 export interface Data7 {
   /**
    * wall id
    */
-  'brickId'?: string;
+  'to'?: string;
+  /**
+   * 表白人的手机号
+   */
+  'tel'?: string;
+  /**
+   * 内容
+   */
+  'content'?: string;
+  /**
+   * 图片列表
+   */
+  'photos'?: Array<string>;
 }
 

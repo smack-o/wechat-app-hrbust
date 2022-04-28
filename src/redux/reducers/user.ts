@@ -62,7 +62,7 @@ export interface UserState {
     nickName?: string
     customName?: string
     customAvatarUrl?: {
-      checkCode: number
+      checkCode?: number
       key: string
       status: number
     }

@@ -15,13 +15,13 @@ dayjs.extend(relativeTime)
 const prefix = 'wall'
 
 type UserInfo = {
-  avatarUrl: string
-  nickName: string
+  avatarUrl?: string
+  nickName?: string
 }
 type Props = {
   publisher?: {
     userInfo?: UserInfo
-    _id: string
+    _id?: string
   }
   time?: string | number
   className?: string

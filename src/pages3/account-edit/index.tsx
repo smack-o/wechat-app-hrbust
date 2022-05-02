@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Input, Textarea } from '@tarojs/components'
+import { View, Input } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { AtButton, AtImagePicker } from 'taro-ui'
-import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
 import { getCdnUrl, showToast, uploadFileToServer, withRequest } from '@/utils'
-// import { getHeader } from '@/utils/ajax/ajax'
 import { File } from 'taro-ui/types/image-picker'
 import { bindActionCreators, Dispatch } from 'redux'
 import { updateUserInfo } from '@/redux/actions/user'
@@ -21,7 +19,7 @@ type PageOwnProps = {}
 
 type PageState = {
   name: string
-  files: (File & { uploaded?: boolean; isNotTmpFile?: boolean })[]
+  files: (File & { uploaded?: boolean; isNotTmpFile?: boolean; id?: string })[]
   fetching: boolean
 }
 
@@ -49,7 +47,7 @@ class AccountEdit extends Component<IProps, PageState> {
 
     this.setState({
       name: customName || nickName || '',
-      files: this.avatar ? [{ url: this.avatar }] : []
+      files: this.avatar ? [{ url: this.avatar, uploaded: true }] : []
     })
   }
 
@@ -77,7 +75,7 @@ class AccountEdit extends Component<IProps, PageState> {
       Taro.showLoading({
         title: '上传图片中...'
       })
-      // TODO: 已经上传过的图片，不要重复上传 eg 出现错误重新提交的时候，现状是会重新上传
+
       try {
         photos = await this.uploadFiles()
       } catch (error) {
@@ -114,13 +112,28 @@ class AccountEdit extends Component<IProps, PageState> {
     const { files } = this.state
 
     const promises = files.map(async file => {
-      return uploadFileToServer({
-        url: file.url,
-        isNotTmpFile: file.isNotTmpFile
-      })
+      if (!file.uploaded) {
+        file.uploaded = true
+        file.id = await uploadFileToServer({
+          url: file.url,
+          isNotTmpFile: file.isNotTmpFile
+        })
+      }
+      return file
     })
 
-    return Promise.all(promises)
+    const newFiles = await Promise.all(promises)
+
+    this.setState({
+      files: newFiles
+    })
+
+    return newFiles.reduce((pre, item) => {
+      if (item.id) {
+        pre.push(item.id)
+      }
+      return pre
+    }, [] as string[])
   }
 
   onFileChange = (files: File[]) => {

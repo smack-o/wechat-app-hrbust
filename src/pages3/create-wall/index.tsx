@@ -21,7 +21,7 @@ type PageState = {
   to: string
   tel?: string
   content: string
-  files: File[]
+  files: (File & { uploaded?: boolean; id?: string })[]
   fetching: boolean
 }
 
@@ -69,7 +69,6 @@ class CreateWall extends Component<IProps, PageState> {
       Taro.showLoading({
         title: '上传图片中...'
       })
-      // TODO: 已经上传过的图片，不要重复上传 eg 出现错误重新提交的时候，现状是会重新上传
       try {
         photos = await this.uploadFiles()
       } catch (error) {
@@ -102,13 +101,29 @@ class CreateWall extends Component<IProps, PageState> {
 
   uploadFiles = async () => {
     const { files } = this.state
-    const promises = files.map(async file =>
-      uploadFileToServer({
-        url: file.url
-      })
-    )
 
-    return Promise.all(promises)
+    const promises = files.map(async file => {
+      if (!file.uploaded) {
+        file.uploaded = true
+        file.id = await uploadFileToServer({
+          url: file.url
+        })
+      }
+      return file
+    })
+
+    const newFiles = await Promise.all(promises)
+
+    this.setState({
+      files: newFiles
+    })
+
+    return newFiles.reduce((pre, item) => {
+      if (item.id) {
+        pre.push(item.id)
+      }
+      return pre
+    }, [] as string[])
   }
 
   onFileChange = (files: File[]) => {

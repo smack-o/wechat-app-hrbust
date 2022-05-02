@@ -23,10 +23,10 @@ import * as models from './models'
   * @property `[province]` 
   * @property `[country]` 
   */
-export interface InlineResponse2003PublisherUserInfo {
+export interface InlineResponse2004PublisherUserInfo {
   'nickName'?: string;
   'customName'?: string;
-  'customAvatarUrl'?: models.InlineResponse2003PublisherUserInfoCustomAvatarUrl;
+  'customAvatarUrl'?: models.InlineResponse2003Photo;
   'gender'?: number;
   'avatarUrl'?: string;
   'language'?: string;

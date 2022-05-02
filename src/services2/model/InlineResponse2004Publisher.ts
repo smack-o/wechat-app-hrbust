@@ -16,11 +16,11 @@ import * as models from './models'
   * @property `_id` user id
   * @property `[userInfo]` 
   */
-export interface InlineResponse2003Publisher {
+export interface InlineResponse2004Publisher {
   /**
    * user id
    */
   '_id': string;
-  'userInfo'?: models.InlineResponse2003PublisherUserInfo;
+  'userInfo'?: models.InlineResponse2004PublisherUserInfo;
 }
 

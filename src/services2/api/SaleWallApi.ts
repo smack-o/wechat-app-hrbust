@@ -98,12 +98,12 @@ export class SaleWallApi {
    * @param params ParamsapiSaleWallIdGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2004
+   * @returns models.InlineResponse2005
    */
   public apiSaleWallIdGet = (
     params: ParamsapiSaleWallIdGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2004>  => {
+  ) : AjaxPromise<models.InlineResponse2005>  => {
     const {
     id,
 } = params
@@ -145,12 +145,12 @@ export class SaleWallApi {
    * @param params ParamsapiSaleWallListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2004
    */
   public apiSaleWallListGet = (
     params: ParamsapiSaleWallListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2004>  => {
     const url = this.$basePath + '/api/sale-wall/list'
     const p: any = {}
     p.query = {}
@@ -169,12 +169,12 @@ export class SaleWallApi {
    * @param params ParamsapiSaleWallListLikeGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2004
    */
   public apiSaleWallListLikeGet = (
     params: ParamsapiSaleWallListLikeGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2004>  => {
     const url = this.$basePath + '/api/sale-wall/list/like'
     const p: any = {}
     p.query = {}
@@ -193,12 +193,12 @@ export class SaleWallApi {
    * @param params ParamsapiSaleWallListPublishGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2004
    */
   public apiSaleWallListPublishGet = (
     params: ParamsapiSaleWallListPublishGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2004>  => {
     const url = this.$basePath + '/api/sale-wall/list/publish'
     const p: any = {}
     p.query = {}
@@ -217,12 +217,12 @@ export class SaleWallApi {
    
    * @param data: ParamsBodyapiSaleWallPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiSaleWallPost = (
     
     data: ParamsBodyapiSaleWallPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/sale-wall'
     const p: any = {}
     p.data = data

@@ -23,7 +23,7 @@ export interface InlineResponse2006 {
   'code': InlineResponse2006.CodeEnum;
   'resultCode': InlineResponse2006.ResultCodeEnum;
   'message': string;
-  'result'?: models.InlineResponse2003Publisher;
+  'result'?: models.InlineResponse2006Result;
   'error'?: models.InlineResponse200Error;
 }
 

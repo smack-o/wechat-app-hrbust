@@ -546,6 +546,176 @@
         ]
       }
     },
+    "/api/message/list": {
+      "get": {
+        "summary": "获取消息列表",
+        "description": "获取消息列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "消息 id",
+                        "default": ""
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "消息接收人",
+                        "default": ""
+                      },
+                      "from": {
+                        "type": "string",
+                        "description": "消息发送人",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photo": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "description": "图片 url",
+                            "default": ""
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "0",
+                              "1",
+                              "2"
+                            ]
+                          },
+                          "height": {
+                            "type": "number",
+                            "description": "图片高度",
+                            "default": 0
+                          },
+                          "width": {
+                            "type": "number",
+                            "description": "图片宽度",
+                            "default": 0
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "图片类型",
+                            "default": ""
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "status"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "to",
+                      "from",
+                      "content"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Message"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/sale-wall/list": {
       "get": {
         "summary": "获取卖舍友列表",

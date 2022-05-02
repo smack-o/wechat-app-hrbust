@@ -19,15 +19,15 @@ import * as models from './models'
   * @property `[result]` 
   * @property `[error]` 
   */
-export interface InlineResponse2005 {
-  'code': InlineResponse2005.CodeEnum;
-  'resultCode': InlineResponse2005.ResultCodeEnum;
+export interface InlineResponse20010 {
+  'code': InlineResponse20010.CodeEnum;
+  'resultCode': InlineResponse20010.ResultCodeEnum;
   'message': string;
-  'result'?: models.InlineResponse2004Result;
+  'result'?: models.InlineResponse20010Result;
   'error'?: models.InlineResponse200Error;
 }
 
-export namespace InlineResponse2005 {
+export namespace InlineResponse20010 {
   export enum CodeEnum {
     _100001 = '100001' as any,
     _100002 = '100002' as any,

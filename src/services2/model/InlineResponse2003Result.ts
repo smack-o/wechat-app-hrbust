@@ -15,20 +15,11 @@ import * as models from './models'
 /**
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
-  * @property `_id` 表白墙id
-  * @property `isPublisher` 是否是发布者
-  * @property `isLike` 是否点赞
-  * @property `likeCount` 点赞数
-  * @property `isCollect` 是否收藏
-  * @property `collectCount` 收藏数量
-  * @property `[publisher]` 
-  * @property `name` 姓名
-  * @property `gender` 
-  * @property `major` 主修专业
-  * @property `description` 描述
-  * @property `[content]` 内容
-  * @property `[photos]` 图片列表
-  * @property `isDelete` 是否删除
+  * @property `_id` 消息 id
+  * @property `to` 消息接收人
+  * @property `from` 消息发送人
+  * @property `content` 内容
+  * @property `[photo]` 
   */
 export interface InlineResponse2003Result {
   /**
@@ -40,54 +31,21 @@ export interface InlineResponse2003Result {
    */
   'updatedAt': number;
   /**
-   * 表白墙id
+   * 消息 id
    */
   '_id': string;
   /**
-   * 是否是发布者
+   * 消息接收人
    */
-  'isPublisher': boolean;
+  'to': string;
   /**
-   * 是否点赞
+   * 消息发送人
    */
-  'isLike': boolean;
-  /**
-   * 点赞数
-   */
-  'likeCount': number;
-  /**
-   * 是否收藏
-   */
-  'isCollect': boolean;
-  /**
-   * 收藏数量
-   */
-  'collectCount': number;
-  'publisher'?: models.InlineResponse2003Publisher;
-  /**
-   * 姓名
-   */
-  'name': string;
-  'gender': number;
-  /**
-   * 主修专业
-   */
-  'major': string;
-  /**
-   * 描述
-   */
-  'description': string;
+  'from': string;
   /**
    * 内容
    */
-  'content'?: string;
-  /**
-   * 图片列表
-   */
-  'photos'?: Array<models.InlineResponse2003PublisherUserInfoCustomAvatarUrl>;
-  /**
-   * 是否删除
-   */
-  'isDelete': boolean;
+  'content': string;
+  'photo'?: models.InlineResponse2003Photo;
 }
 

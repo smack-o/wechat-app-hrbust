@@ -26,7 +26,7 @@ import * as models from './models'
 export interface InlineResponse2004PublisherUserInfo {
   'nickName'?: string;
   'customName'?: string;
-  'customAvatarUrl'?: models.InlineResponse2003Photo;
+  'customAvatarUrl'?: models.InlineResponse2003ExtPhoto;
   'gender'?: number;
   'avatarUrl'?: string;
   'language'?: string;

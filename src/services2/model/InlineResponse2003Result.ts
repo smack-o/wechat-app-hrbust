@@ -19,7 +19,8 @@ import * as models from './models'
   * @property `to` 消息接收人
   * @property `from` 消息发送人
   * @property `content` 内容
-  * @property `[photo]` 
+  * @property `type` 消息类型
+  * @property `[ext]` 
   */
 export interface InlineResponse2003Result {
   /**
@@ -46,6 +47,10 @@ export interface InlineResponse2003Result {
    * 内容
    */
   'content': string;
-  'photo'?: models.InlineResponse2003Photo;
+  /**
+   * 消息类型
+   */
+  'type': string;
+  'ext'?: models.InlineResponse2003Ext;
 }
 

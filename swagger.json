@@ -637,41 +637,71 @@
                         "description": "内容",
                         "default": ""
                       },
-                      "photo": {
+                      "type": {
+                        "type": "string",
+                        "description": "消息类型",
+                        "default": ""
+                      },
+                      "ext": {
                         "type": "object",
                         "properties": {
-                          "key": {
-                            "type": "string",
-                            "description": "图片 url",
-                            "default": ""
-                          },
-                          "status": {
-                            "type": "string",
-                            "enum": [
-                              "0",
-                              "1",
-                              "2"
+                          "photo": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "description": "图片 url",
+                                "default": ""
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "0",
+                                  "1",
+                                  "2"
+                                ]
+                              },
+                              "height": {
+                                "type": "number",
+                                "description": "图片高度",
+                                "default": 0
+                              },
+                              "width": {
+                                "type": "number",
+                                "description": "图片宽度",
+                                "default": 0
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "图片类型",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "status"
                             ]
                           },
-                          "height": {
-                            "type": "number",
-                            "description": "图片高度",
-                            "default": 0
-                          },
-                          "width": {
-                            "type": "number",
-                            "description": "图片宽度",
-                            "default": 0
-                          },
-                          "type": {
+                          "brickId": {
                             "type": "string",
-                            "description": "图片类型",
+                            "description": "brickId",
+                            "default": ""
+                          },
+                          "metaId": {
+                            "type": "string",
+                            "description": "brickId",
+                            "default": ""
+                          },
+                          "commentId": {
+                            "type": "string",
+                            "description": "brickId",
                             "default": ""
                           }
                         },
                         "required": [
-                          "key",
-                          "status"
+                          "brickId",
+                          "metaId",
+                          "commentId"
                         ]
                       }
                     },
@@ -681,7 +711,8 @@
                       "_id",
                       "to",
                       "from",
-                      "content"
+                      "content",
+                      "type"
                     ]
                   }
                 },

@@ -77,7 +77,7 @@ export interface InlineResponse2008Result {
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2003Photo>;
+  'photos'?: Array<models.InlineResponse2003ExtPhoto>;
   /**
    * 是否删除
    */

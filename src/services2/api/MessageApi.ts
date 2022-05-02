@@ -65,6 +65,27 @@ export class MessageApi {
       ...p
     })
   }
+  /**
+   * 获取用户未读消息数量
+   * @summary 获取用户未读消息数量
+   
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2004
+   */
+  public apiMessageUnreadcountGet = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2004>  => {
+    const url = this.$basePath + '/api/message/unreadcount'
+    const p: any = {}
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
 }
 
 export default new MessageApi()

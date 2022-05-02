@@ -15,11 +15,11 @@ import * as models from './models'
 /**
   * @property `[photo]` 
   * @property `brickId` brickId
-  * @property `metaId` brickId
+  * @property `mateId` brickId
   * @property `commentId` brickId
   */
 export interface InlineResponse2003Ext {
-  'photo'?: models.InlineResponse2003ExtPhoto;
+  'photo'?: models.InlineResponse2003ToUserInfoCustomAvatarUrl;
   /**
    * brickId
    */
@@ -27,7 +27,7 @@ export interface InlineResponse2003Ext {
   /**
    * brickId
    */
-  'metaId': string;
+  'mateId': string;
   /**
    * brickId
    */

@@ -28,7 +28,7 @@ import * as models from './models'
   * @property `[photos]` 图片列表
   * @property `isDelete` 是否删除
   */
-export interface InlineResponse2008Result {
+export interface InlineResponse2009Result {
   /**
    * 创建时间
    */
@@ -61,7 +61,7 @@ export interface InlineResponse2008Result {
    * 收藏数量
    */
   'collectCount': number;
-  'publisher'?: models.InlineResponse2004Publisher;
+  'publisher'?: models.InlineResponse2003To;
   /**
    * wall id
    */
@@ -77,7 +77,7 @@ export interface InlineResponse2008Result {
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2003ExtPhoto>;
+  'photos'?: Array<models.InlineResponse2003ToUserInfoCustomAvatarUrl>;
   /**
    * 是否删除
    */

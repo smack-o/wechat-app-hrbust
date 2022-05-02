@@ -15,7 +15,7 @@ import * as models from './models'
 /**
   * @property `id` wall id
   */
-export interface InlineResponse2006Result {
+export interface InlineResponse2007Result {
   /**
    * wall id
    */

@@ -15,7 +15,7 @@ import * as models from './models'
 /**
   * @property `brickId` wall id
   */
-export interface InlineResponse20010Result {
+export interface InlineResponse20011Result {
   /**
    * wall id
    */

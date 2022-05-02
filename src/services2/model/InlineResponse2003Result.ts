@@ -16,11 +16,12 @@ import * as models from './models'
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
   * @property `_id` 消息 id
-  * @property `to` 消息接收人
-  * @property `from` 消息发送人
+  * @property `[to]` 
+  * @property `[from]` 
   * @property `content` 内容
   * @property `type` 消息类型
   * @property `[ext]` 
+  * @property `isRead` 是否已读
   */
 export interface InlineResponse2003Result {
   /**
@@ -35,14 +36,8 @@ export interface InlineResponse2003Result {
    * 消息 id
    */
   '_id': string;
-  /**
-   * 消息接收人
-   */
-  'to': string;
-  /**
-   * 消息发送人
-   */
-  'from': string;
+  'to'?: models.InlineResponse2003To;
+  'from'?: models.InlineResponse2003To;
   /**
    * 内容
    */
@@ -50,7 +45,31 @@ export interface InlineResponse2003Result {
   /**
    * 消息类型
    */
-  'type': string;
+  'type': InlineResponse2003Result.TypeEnum;
   'ext'?: models.InlineResponse2003Ext;
+  /**
+   * 是否已读
+   */
+  'isRead': boolean;
 }
 
+export namespace InlineResponse2003Result {
+  export enum TypeEnum {
+  /**
+   * `BrickLike` 消息类型
+   */
+    BrickLike = 'BrickLike' as any,
+  /**
+   * `MateLike` 消息类型
+   */
+    MateLike = 'MateLike' as any,
+  /**
+   * `Comment` 消息类型
+   */
+    Comment = 'Comment' as any,
+  /**
+   * `Hot` 消息类型
+   */
+    Hot = 'Hot' as any
+  }
+}

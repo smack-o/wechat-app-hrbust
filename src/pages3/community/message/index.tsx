@@ -5,7 +5,7 @@ import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
 import './index.less'
-import WallItem from '../community/_components/wall-item'
+import WallItem from '../_components/wall-item'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -18,29 +18,31 @@ type PageState = {
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
-const prefix = 'wall-detail'
-class CreateWall extends Component<IProps, PageState> {
+const prefix = 'message-page'
+class Message extends Component<IProps, PageState> {
   state: PageState = {
     data: undefined
   }
 
+  pageNum = 0
+  pageSize = 5
+  fetching = false
+
   onLoad(e) {
-    console.log(e)
-    if (e.id) {
-      this.getData(e.id)
-    }
+    this.getData()
   }
 
-  getData = async (id: string) => {
-    const [err, res] = await withRequest(APIS.WallApi.apiWallBrickIdGet)({
-      brickId: id
+  getData = async () => {
+    const [err, res] = await withRequest(APIS.MessageApi.apiMessageListGet)({
+      pageNum: String(this.pageNum),
+      pageSize: String(this.pageSize)
     })
-
-    if (!err && res) {
-      this.setState({
-        data: res
-      })
-    }
+    console.log(res)
+    // if (!err && res) {
+    //   this.setState({
+    //     data: res
+    //   })
+    // }
   }
 
   render() {
@@ -63,4 +65,4 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(CreateWall)
+)(Message)

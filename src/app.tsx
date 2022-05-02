@@ -5,7 +5,7 @@ import axios from 'axios'
 import mpAdapter from 'axios-miniprogram-adapter'
 
 import { store } from './redux/store'
-import { init } from './redux/actions/user'
+import { init, getUnreadCount, stopGetUnreadCount } from './redux/actions/user'
 
 import './app.less'
 // 小程序 axios 兼容
@@ -14,23 +14,24 @@ axios.defaults.adapter = mpAdapter
 store.dispatch(init())
 
 class App extends Component {
-  componentDidMount () {
+  componentDidMount() {}
+
+  componentDidShow() {
+    console.log('componentDidShow')
+    store.dispatch(getUnreadCount())
   }
 
-  componentDidShow () {}
+  componentDidHide() {
+    console.log('componentDidHide')
+    store.dispatch(stopGetUnreadCount())
+  }
 
-  componentDidHide () {}
-
-  componentDidCatchError () {}
+  componentDidCatchError() {}
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
-    return (
-      <Provider store={store}>
-        {this.props.children}
-      </Provider>
-    )
+  render() {
+    return <Provider store={store}>{this.props.children}</Provider>
   }
 }
 

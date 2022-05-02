@@ -7,6 +7,18 @@ import './Avatar.less'
 
 const prefix = 'component-avatar'
 
+export function NickName(props: {
+  className?: string
+  customName?: string
+  nickName?: string
+}) {
+  const { customName, nickName, className = '' } = props
+  const name = customName || nickName
+  return name ? (
+    <View className={`${prefix}__name ${className}`}>{name}</View>
+  ) : null
+}
+
 export default function Avatar(
   props: UserState['userInfo'] & {
     className?: string
@@ -26,7 +38,6 @@ export default function Avatar(
     onClickType
   } = props
 
-  const name = customName || nickName
   const avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl.key) : avatarUrl
 
   const onAvatarClick = useCallback(
@@ -66,7 +77,7 @@ export default function Avatar(
           height: avatarSize
         }}
       ></Image>
-      {name && <View className={`${prefix}__name`}>{name}</View>}
+      <NickName customName={customName} nickName={nickName}></NickName>
     </View>
   )
 }

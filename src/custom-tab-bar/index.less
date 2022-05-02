@@ -21,7 +21,9 @@
 }
 
 .tab-bar-item {
-  // flex: 1;
+  flex: 1;
+  position: relative;
+
   text-align: center;
   display: flex;
   justify-content: center;
@@ -43,4 +45,20 @@
 
 .tab-bar-item cover-view {
   font-size: 20rpx;
+  overflow: auto;
+}
+
+.custom-tab-item-dot {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  line-height: 22px;
+  right: 35rpx;
+  top: 5px;
+  width: 22px;
+  height: 22px;
+  font-size: 14px !important;
+  background: red;
+  border-radius: 50%;
+  color: white;
 }

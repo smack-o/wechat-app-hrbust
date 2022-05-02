@@ -18,6 +18,7 @@ export const GET_EXAMS = 'user/GET_EXAMS'
 export const GET_GRADES = 'user/GET_GRADES'
 export const SET_CURRENT_TERM = 'user/SET_CURRENT_TERM'
 export const UPDATE_USERINFO_PROMISE = 'user/UPDATE_USERINFO_PROMISE'
+export const SET_UNREAD_COUNT = 'user/SET_UNREAD_COUNT'
 
 export const setCurrentTerm = (term: number) => ({
   type: SET_CURRENT_TERM,
@@ -187,4 +188,36 @@ export const getGrades = (...data: Parameters<typeof grades>) => async (
   return res
 }
 
-// export const
+let unReadCounterTimer: number
+/**
+ * 轮询获取未读消息数
+ * @returns
+ */
+export const getUnreadCount = () => async (dispatch: Dispatch) => {
+  unReadCounterTimer && stopGetUnreadCount()
+  const handler = async () => {
+    const [err, res] = await withRequest(
+      APIS.MessageApi.apiMessageUnreadcountGet,
+      false
+    )()
+
+    if (err) {
+      return
+    }
+    dispatch({
+      type: SET_UNREAD_COUNT,
+      data: res?.unreadCount || 0
+    })
+  }
+
+  handler()
+  // 轮询 每半分钟拉取一次
+  unReadCounterTimer = setInterval(handler, 30 * 1000)
+}
+
+/**
+ * 停止轮询
+ */
+export const stopGetUnreadCount = () => {
+  clearInterval(unReadCounterTimer)
+}

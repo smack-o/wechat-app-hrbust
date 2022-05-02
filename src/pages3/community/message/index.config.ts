@@ -1,3 +1,4 @@
 export default {
-  navigationBarTitleText: '表白墙详情'
+  navigationBarTitleText: '消息列表',
+  enablePullDownRefresh: true
 }

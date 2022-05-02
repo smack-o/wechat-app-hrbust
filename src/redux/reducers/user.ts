@@ -6,7 +6,8 @@ import {
   GET_EXAMS,
   GET_GRADES,
   SET_CURRENT_TERM,
-  UPDATE_USERINFO_PROMISE
+  UPDATE_USERINFO_PROMISE,
+  SET_UNREAD_COUNT
 } from '../actions/user'
 
 const studentInfo = JSON.parse(Taro.getStorageSync('studentInfo') || '{}')
@@ -73,6 +74,7 @@ export interface UserState {
     province?: string
     country?: string
   }
+  unreadCount: number
 }
 
 const INITIAL_STATE: UserState = {
@@ -103,7 +105,8 @@ const INITIAL_STATE: UserState = {
       status: 0
     },
     customName: ''
-  }
+  },
+  unreadCount: 0
 }
 
 export default function user(
@@ -124,6 +127,12 @@ export default function user(
       return {
         ...state,
         getUserInfoPromise: action.data
+      }
+
+    case SET_UNREAD_COUNT:
+      return {
+        ...state,
+        unreadCount: action.data
       }
     case LOGOUT:
       Taro.removeStorageSync('studentInfo')

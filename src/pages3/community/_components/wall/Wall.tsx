@@ -54,7 +54,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   init = async () => {
     this.pageNum = 0
-    this.fetchList(true)
+    await this.fetchList(true)
   }
 
   fetchList = async (reset?: boolean) => {
@@ -93,12 +93,10 @@ export default class Wall extends React.Component<WallProps, WallState> {
       return
     }
     this.pageNum++
-    this.fetchList()
+    return this.fetchList()
   }
 
-  onPullDownRefresh = async () => {
-    this.init()
-  }
+  onPullDownRefresh = async () => this.init()
 
   onAddWallClick = () => {
     navigateTo({

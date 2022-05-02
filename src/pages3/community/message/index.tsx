@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
+import MessageItem from '../_components/message-item'
 import './index.less'
-import WallItem from '../_components/wall-item'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -13,7 +14,8 @@ type PropsFromDispatch = {}
 type PageOwnProps = {}
 
 type PageState = {
-  data: GetApiResultType<typeof APIS.WallApi.apiWallBrickIdGet>
+  list: GetApiResultType<typeof APIS.MessageApi.apiMessageListGet>
+  hasNext: boolean
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -21,39 +23,67 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 const prefix = 'message-page'
 class Message extends Component<IProps, PageState> {
   state: PageState = {
-    data: undefined
+    list: [],
+    hasNext: true
   }
 
   pageNum = 0
-  pageSize = 5
+  pageSize = 20
   fetching = false
 
-  onLoad(e) {
-    this.getData()
+  componentDidMount() {
+    this.init()
   }
 
-  getData = async () => {
+  init = async () => {
+    this.pageNum = 0
+    await this.fetchList(true)
+  }
+
+  fetchList = async (reset?: boolean) => {
+    this.fetching = true
     const [err, res] = await withRequest(APIS.MessageApi.apiMessageListGet)({
       pageNum: String(this.pageNum),
       pageSize: String(this.pageSize)
     })
-    console.log(res)
-    // if (!err && res) {
-    //   this.setState({
-    //     data: res
-    //   })
-    // }
+
+    this.fetching = false
+
+    if (err || !res) {
+      return
+    }
+
+    this.setState({
+      list: reset ? res : this.state.list.concat(res),
+      hasNext: res.length === this.pageSize
+    })
+  }
+
+  onReachBottom = () => {
+    if (!this.state.hasNext || this.fetching) {
+      return
+    }
+    this.pageNum++
+    this.fetchList()
+  }
+
+  onPullDownRefresh = async () => {
+    await this.init()
+    Taro.stopPullDownRefresh()
   }
 
   render() {
-    const { data } = this.state
+    const { list } = this.state
 
-    if (!data) {
+    // TODO: 兜底页
+    if (list.length === 0) {
       return null
     }
     return (
       <View className={prefix}>
-        <WallItem data={data}></WallItem>
+        {list.map(item => {
+          return <MessageItem key={item._id} data={item}></MessageItem>
+        })}
       </View>
     )
   }

@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import { View, Image, OpenData, Text, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
-import { logout, init } from '@/redux/actions/user'
+import { logout, init, getUnreadCount } from '@/redux/actions/user'
 import { Dispatch, bindActionCreators } from 'redux'
 import { cError, toLogin } from '@/utils'
 import Avatar from '@/components/Avatar'
@@ -38,6 +38,7 @@ class Account extends Component<IProps, PageState> {
     this.setState({
       version: miniProgram.version
     })
+    this.props.getUnreadCount()
   }
 
   onLoad() {}
@@ -73,6 +74,12 @@ class Account extends Component<IProps, PageState> {
     goPage(routes.accountEdit)
   }
 
+  onTest = () => {
+    wx.requestSubscribeMessage({
+      tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc']
+    })
+  }
+
   render() {
     const {
       user: {
@@ -84,13 +91,15 @@ class Account extends Component<IProps, PageState> {
           nickName = '',
           customAvatarUrl,
           customName = ''
-        }
+        },
+        unreadCount
       }
     } = this.props
     const { version } = this.state
 
     return (
       <View className="account-container">
+        <View onClick={this.onTest}>开启订阅消息</View>
         <View className="user">
           <View className="avatar-wrapper">
             {isWechatLogin ? (
@@ -153,10 +162,19 @@ class Account extends Component<IProps, PageState> {
               </View>
             </View>
           )}
-          <Button className="item button" open-type="contact">
+          <Button
+            className="item button"
+            onClick={() => goPage(routes.message)}
+          >
             <Image className="image" src={contactIcon} />
             <View className="info">
-              <View>我的消息</View>
+              <View className="title">
+                <View>我的消息</View>
+                {unreadCount > 0 && (
+                  <View className="count">{unreadCount}条新消息</View>
+                )}
+              </View>
+
               <Image className="arrow-right" src={arrowRight} />
             </View>
           </Button>
@@ -194,7 +212,7 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ logout, init }, dispatch)
+  bindActionCreators({ logout, init, getUnreadCount }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps,

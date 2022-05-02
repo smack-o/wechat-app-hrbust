@@ -14,12 +14,17 @@ const prefix = 'component-time'
 export default function Time(props: {
   time?: string | number
   className?: string
+  type?: 'relative' | 'absolute'
 }) {
-  const { time, className = '' } = props
+  const { time, className = '', type = 'absolute' } = props
   if (!time) {
     return null
   }
   return (
-    <View className={`${prefix} ${className}`}>{dayjs(time).fromNow()}</View>
+    <View className={`${prefix} ${className}`}>
+      {type === 'absolute'
+        ? dayjs(time).fromNow()
+        : dayjs(time).format('YYYY年MM月DD日 HH:mm')}
+    </View>
   )
 }

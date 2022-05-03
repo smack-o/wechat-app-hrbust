@@ -9,7 +9,7 @@ import { Dispatch, bindActionCreators } from 'redux'
 import { cError, toLogin } from '@/utils'
 import Avatar from '@/components/Avatar'
 import arrowRight from '@/assets/icon/arrow_right.png'
-import { AtIcon } from 'taro-ui'
+import { AtButton, AtIcon } from 'taro-ui'
 import authIcon from './res/authentication.png'
 import removeBindingIcon from './res/remove_binding.png'
 import contactIcon from './res/contact.png'
@@ -74,11 +74,11 @@ class Account extends Component<IProps, PageState> {
     goPage(routes.accountEdit)
   }
 
-  onTest = () => {
-    wx.requestSubscribeMessage({
-      tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc']
-    })
-  }
+  // onTest = () => {
+  //   wx.requestSubscribeMessage({
+  //     tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc']
+  //   })
+  // }
 
   render() {
     const {
@@ -99,7 +99,7 @@ class Account extends Component<IProps, PageState> {
 
     return (
       <View className="account-container">
-        <View onClick={this.onTest}>开启订阅消息</View>
+        {/* <View onClick={this.onTest}>开启订阅消息</View> */}
         <View className="user">
           <View className="avatar-wrapper">
             {isWechatLogin ? (
@@ -111,12 +111,6 @@ class Account extends Component<IProps, PageState> {
                 onClickType="preview"
               ></Avatar>
             ) : (
-              // <Image
-              //   className="avatar"
-              //   src={
-              //     customAvatarUrl ? getCdnUrl(customAvatarUrl.key) : avatarUrl
-              //   }
-              // ></Image>
               <OpenData
                 className="avatar"
                 type="userAvatarUrl"
@@ -144,13 +138,24 @@ class Account extends Component<IProps, PageState> {
             </View>
           </View>
         </View>
-        <View className="button" onClick={() => toLogin(isWechatLogin)}>
-          立即登录
-        </View>
+        {!isWechatLogin && (
+          <AtButton
+            type="primary"
+            className="login-button"
+            onClick={() => toLogin(isWechatLogin)}
+          >
+            立即登录
+          </AtButton>
+        )}
+
         {isWechatLogin && !isLogin && (
-          <View className="bind-button" onClick={() => toLogin(isWechatLogin)}>
+          <AtButton
+            type="primary"
+            className="login-button"
+            onClick={() => toLogin(isWechatLogin)}
+          >
             绑定学号
-          </View>
+          </AtButton>
         )}
         <View className="other">
           {isLogin && (

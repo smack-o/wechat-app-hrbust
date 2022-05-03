@@ -64,8 +64,8 @@ export interface UserState {
     customName?: string
     customAvatarUrl?: {
       checkCode?: number
-      key: string
-      status: number
+      key?: string
+      status?: number
     }
     gender?: number
     avatarUrl?: string

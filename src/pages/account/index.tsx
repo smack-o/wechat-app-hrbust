@@ -178,14 +178,17 @@ class Account extends Component<IProps, PageState> {
               <Image className="arrow-right" src={arrowRight} />
             </View>
           </Button>
-          <Button className="item button" open-type="contact">
+          <Button className="item button" onClick={() => goPage(routes.myWall)}>
             <Image className="image" src={contactIcon} />
             <View className="info">
               <View>我的表白</View>
               <Image className="arrow-right" src={arrowRight} />
             </View>
           </Button>
-          <Button className="item button" open-type="contact">
+          <Button
+            className="item button"
+            onClick={() => goPage(routes.mySaleWall)}
+          >
             <Image className="image" src={contactIcon} />
             <View className="info">
               <View>我的舍友</View>

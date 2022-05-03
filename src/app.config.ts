@@ -42,7 +42,9 @@ export const router = {
     wallDetail: 'community/wall-detail/index', // 表白墙详情
     createSaleWall: 'community/create-sale-wall/index', // 创建卖舍友
     saleWallDetail: 'community/sale-wall-detail/index', // 卖舍友详情
-    message: 'community/message/index' // 消息页面
+    message: 'community/message/index', // 消息页面
+    myWall: 'community/my-wall/index', // 我的表白墙
+    mySaleWall: 'community/my-sale-wall/index' // 我的卖舍友
   }
 }
 

@@ -195,6 +195,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "我的表白墙",
+          "pathName": "pages3/community/my-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的卖舍友",
+          "pathName": "pages3/community/my-sale-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

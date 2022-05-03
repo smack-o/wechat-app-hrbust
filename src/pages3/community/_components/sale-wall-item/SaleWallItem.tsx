@@ -68,7 +68,9 @@ export default function WallItem(props: IWallItemProps) {
       ></Image>
       <View className={`${prefix}__info`}>
         <Avatar
+          className={`${prefix}__avatar`}
           {...publisher?.userInfo}
+          avatarSize="40rpx"
           // avatarUrl={publisher?.userInfo?.avatarUrl || ''}
           // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>

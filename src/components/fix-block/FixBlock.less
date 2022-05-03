@@ -4,6 +4,11 @@
   position: relative;
   z-index: 20;
 
+  &--bottom {
+    box-sizing: content-box;
+    padding-bottom: calc(constant(safe-area-inset-bottom));
+    padding-bottom: calc(env(safe-area-inset-bottom));
+  }
   &__children--fixed {
     position: fixed;
     width: 100%;

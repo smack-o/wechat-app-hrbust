@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidHide() {
     console.log('componentDidHide')
-    store.dispatch(stopGetUnreadCount())
+    stopGetUnreadCount()
   }
 
   componentDidCatchError() {}

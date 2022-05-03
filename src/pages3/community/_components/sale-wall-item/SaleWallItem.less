@@ -3,6 +3,7 @@
 .sale-wall-item {
   width: 347px;
   border-radius: 12px;
+  overflow: hidden;
   margin-bottom: 10px;
   /* 防止多列布局，分页媒体和多区域上下文中的意外中断 */
   break-inside: avoid;
@@ -10,6 +11,13 @@
   margin: 0 8px 16px;
   &__photo {
     width: 100%;
+  }
+
+  &__avatar {
+    margin-right: 16px;
+    .component-avatar__name {
+      font-size: 28px;
+    }
   }
 
   &__info {

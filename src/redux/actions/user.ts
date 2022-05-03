@@ -190,6 +190,13 @@ export const getGrades = (...data: Parameters<typeof grades>) => async (
 
 let unReadCounterTimer: number
 /**
+ * 停止轮询
+ */
+export const stopGetUnreadCount = () => {
+  clearInterval(unReadCounterTimer)
+}
+
+/**
  * 轮询获取未读消息数
  * @returns
  */
@@ -213,11 +220,4 @@ export const getUnreadCount = () => async (dispatch: Dispatch) => {
   handler()
   // 轮询 每半分钟拉取一次
   unReadCounterTimer = setInterval(handler, 30 * 1000)
-}
-
-/**
- * 停止轮询
- */
-export const stopGetUnreadCount = () => {
-  clearInterval(unReadCounterTimer)
 }

@@ -24,22 +24,36 @@ interface IProps {
    */
   bottom?: number
   disabled?: boolean
+  /**
+   * 高度，若不传动态计算，建议传入，计算有性能开销
+   */
+  height?: number
 }
 
 const prefix = 'fix-block'
 
 export default function FixBlock(props: PropsWithChildren<IProps>) {
-  const { className, children, top, disabled, bottom } = props
+  const {
+    className,
+    children,
+    top,
+    disabled,
+    bottom,
+    height: propsHeight = 0
+  } = props
 
   const ref = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState(0)
+  const [height, setHeight] = useState(propsHeight)
+
   const id = useMemo(
     () => `id_${Date.now()}_${parseInt(`${Math.random() * 1000}`, 10)}`,
     []
   )
 
   useEffect(() => {
-    console.log('useLayoutEffect')
+    if (propsHeight) {
+      return
+    }
     setTimeout(() => {
       Taro.createSelectorQuery()
         .select('.' + id)
@@ -49,7 +63,7 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
         })
         .exec()
     }, 0)
-  }, [children, id])
+  }, [children, id, propsHeight])
 
   const style =
     height > 0
@@ -59,7 +73,7 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
       : {}
 
   if (disabled) {
-    return <Fragment>children</Fragment>
+    return <Fragment>{children}</Fragment>
   }
 
   // fix top or bottom
@@ -71,10 +85,13 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
     fixStyle.top = Taro.pxTransform(top || 0)
   }
 
-  console.log(fixStyle)
-
   return (
-    <View className={cn(prefix, className)} style={style}>
+    <View
+      className={cn(prefix, className, {
+        [`${prefix}--bottom`]: bottom === 0 && propsHeight
+      })}
+      style={style}
+    >
       <View
         className={cn(`${prefix}__children`, id, {
           [`${prefix}__children--fixed`]: height > 0

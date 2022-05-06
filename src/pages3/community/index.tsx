@@ -21,7 +21,7 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Discover extends Component<IProps, PageState> {
   state: PageState = {
-    currentTab: 1
+    currentTab: 0,
   }
 
   ref = createRef<any>()
@@ -30,9 +30,9 @@ class Discover extends Component<IProps, PageState> {
     this.ref?.current?.onShow?.()
   }
 
-  onBarChange: IBottomBarProps['onChange'] = index => {
+  onBarChange: IBottomBarProps['onChange'] = (index) => {
     this.setState({
-      currentTab: index
+      currentTab: index,
     })
   }
 
@@ -66,7 +66,7 @@ class Discover extends Component<IProps, PageState> {
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  user: state.user
+  user: state.user,
 })
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(

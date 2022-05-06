@@ -80,3 +80,4 @@ mock/mock
 
 
 .env.development.local
+.history/

@@ -47,6 +47,22 @@ export interface ParamsapiWallListGet {
   pageSize?: string;
 }
 /**
+  * @description apiWallListHotGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiWallListHotGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
   * @description apiWallListLikeGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -173,6 +189,30 @@ export class WallApi {
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/wall/list'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取热门列表
+   * @summary 获取热门列表
+   * @param params ParamsapiWallListHotGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2009
+   */
+  public apiWallListHotGet = (
+    params: ParamsapiWallListHotGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2009>  => {
+    const url = this.$basePath + '/api/wall/list/hot'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum

@@ -35,7 +35,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
     {
       key: 'hot',
       text: '最热',
-      api: APIS.WallApi.apiWallListGet
+      api: APIS.WallApi.apiWallListHotGet
     }
   ]
 

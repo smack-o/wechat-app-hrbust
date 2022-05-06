@@ -5283,6 +5283,304 @@
           }
         ]
       }
+    },
+    "/api/wall/list/hot": {
+      "get": {
+        "summary": "获取热门列表",
+        "description": "获取热门列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "wall id",
+                        "default": ""
+                      },
+                      "tel": {
+                        "type": "string",
+                        "description": "手机号",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "to",
+                      "tel",
+                      "content",
+                      "isDelete"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Wall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "responses": {},

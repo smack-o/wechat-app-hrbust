@@ -43,6 +43,9 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
               }}
             >
               {text}
+              {currentIndex === index && (
+                <View className={`${prefix}-active-bar`}></View>
+              )}
             </View>
           )
         })}

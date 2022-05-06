@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { routes } from '@/app.config'
 import Avatar from '@/components/Avatar'
 import Time from '@/components/Time'
+import classNames from 'classnames'
 
 import SaleWallLike from '../../imgs/sale_wall_like.png'
 import SaleWallLiked from '../../imgs/sale_wall_liked.png'
@@ -78,7 +79,12 @@ export default function WallItem(props: IWallItemProps) {
         ></Avatar>
         <View className={`${prefix}__info-bottom`}>
           <Time time={createdAt || ''} type={timeType}></Time>
-          <View className={`${prefix}__info-like`} onClick={onLikeClick}>
+          <View
+            className={classNames(`${prefix}__info-like`, {
+              active: localIsLike && !isLike
+            })}
+            onClick={onLikeClick}
+          >
             <Image
               src={localIsLike ? SaleWallLiked : SaleWallLike}
               mode="widthFix"

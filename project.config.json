@@ -149,7 +149,7 @@
         },
         {
           "name": "创建表白墙",
-          "pathName": "pages3/create-wall/index",
+          "pathName": "pages3/community/create-wall/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
@@ -170,24 +170,45 @@
         },
         {
           "name": "表白墙详情页",
-          "pathName": "pages3/wall-detail/index",
+          "pathName": "pages3/community/wall-detail/index",
           "query": "id=625fac6c708756da5cb35dd1",
           "scene": null,
           "launchMode": "default"
         },
         {
           "name": "新建卖舍友",
-          "pathName": "pages3/create-sale-wall/index",
+          "pathName": "pages3/community/create-sale-wall/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
         },
         {
           "name": "卖舍友详情",
-          "pathName": "pages3/sale-wall-detail/index",
+          "pathName": "pages3/community/sale-wall-detail/index",
           "query": "id=6267aa71dd6e7a40bc8b4687",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "消息列表页面",
+          "pathName": "pages3/community/message/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的表白墙",
+          "pathName": "pages3/community/my-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的卖舍友",
+          "pathName": "pages3/community/my-sale-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

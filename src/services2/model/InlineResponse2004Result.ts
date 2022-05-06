@@ -13,12 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `id` wall id
+  * @property `unreadCount` 未读消息数量
   */
 export interface InlineResponse2004Result {
   /**
-   * wall id
+   * 未读消息数量
    */
-  'id': string;
+  'unreadCount': number;
 }
 

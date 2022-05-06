@@ -24,7 +24,7 @@ export interface InlineResponse2001 {
   'resultCode': InlineResponse2001.ResultCodeEnum;
   'message': string;
   'result'?: models.InlineResponse2001Result;
-  'error'?: models.InlineResponse200ResultError;
+  'error'?: models.InlineResponse200Error;
 }
 
 export namespace InlineResponse2001 {

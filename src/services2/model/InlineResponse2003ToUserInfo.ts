@@ -14,6 +14,8 @@ import * as models from './models'
 
 /**
   * @property `[nickName]` 
+  * @property `[customName]` 
+  * @property `[customAvatarUrl]` 
   * @property `[gender]` 
   * @property `[avatarUrl]` 
   * @property `[language]` 
@@ -21,8 +23,10 @@ import * as models from './models'
   * @property `[province]` 
   * @property `[country]` 
   */
-export interface InlineResponse2005ResultUserInfo {
+export interface InlineResponse2003ToUserInfo {
   'nickName'?: string;
+  'customName'?: string;
+  'customAvatarUrl'?: models.InlineResponse2003ToUserInfoCustomAvatarUrl;
   'gender'?: number;
   'avatarUrl'?: string;
   'language'?: string;

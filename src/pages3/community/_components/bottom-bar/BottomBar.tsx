@@ -72,7 +72,7 @@ export default function BottomBar(props: IBottomBarProps) {
   }, [propsCurrent])
 
   return (
-    <FixBlock bottom={0}>
+    <FixBlock bottom={0} height={100}>
       <View className="bottom-bar">
         {barList.map((item, index) => {
           const active = current === index

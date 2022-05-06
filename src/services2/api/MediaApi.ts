@@ -18,7 +18,7 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiMediaComparefacePost = models.Data1
+export type ParamsBodyapiMediaComparefacePost = models.Data2
 /**
   * @description apiMediaPost参数
   * @property `file` file content
@@ -34,6 +34,10 @@ export interface ParamsapiMediaPost {
   * request body
   */
 export type ParamsBodyapiMediaPost = models.Data
+/**
+  * request body
+  */
+export type ParamsBodyapiMediaUrlPost = models.Data1
 
 export class MediaApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -50,12 +54,12 @@ export class MediaApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse200
+   * @returns models.InlineResponse2002
    */
   public apiLegalcheckPost = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse200>  => {
+  ) : AjaxPromise<models.InlineResponse2002>  => {
     const url = this.$basePath + '/api/legalcheck'
     const p: any = {}
     return ajax.ajax({
@@ -113,6 +117,28 @@ export class MediaApi {
     // p.form = new FormData();
     if ('file' in params) p.form.append('file', params.file)
     ajax.check(params.file, 'file')
+    p.data = data
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 通过抓取 url 上传文件
+   * @summary 通过抓取 url 上传文件
+   
+   * @param data: ParamsBodyapiMediaUrlPost// request body
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiMediaUrlPost = (
+    
+    data: ParamsBodyapiMediaUrlPost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const url = this.$basePath + '/api/media/url'
+    const p: any = {}
     p.data = data
     return ajax.ajax({
       ...opt,

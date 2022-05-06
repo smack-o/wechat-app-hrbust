@@ -91,7 +91,7 @@ export function withRequest<
     error?: InlineResponse200ResultError
   },
   T extends (...args: any[]) => Promise<R>
->(request: T): RequestValue<R, T> {
+>(request: T, showToast = true): RequestValue<R, T> {
   const callback = (...args: Parameters<T>) =>
     request(...args).then(res => {
       if (res.code === 0 && res.result) {
@@ -100,7 +100,7 @@ export function withRequest<
 
       let message = res.message || res.error?.message || '请求失败'
 
-      if (![400001, 400002].includes(res.code)) {
+      if (showToast && ![400001, 400002].includes(res.code)) {
         Taro.showToast({
           title: message,
           // @ts-ignore

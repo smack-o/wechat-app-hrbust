@@ -13,27 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `[to]` wall id
-  * @property `[tel]` 表白人的手机号
-  * @property `[content]` 内容
-  * @property `[photos]` 图片列表
+  * @property `[code]` js code
   */
 export interface Data6 {
   /**
-   * wall id
+   * js code
    */
-  'to'?: string;
-  /**
-   * 表白人的手机号
-   */
-  'tel'?: string;
-  /**
-   * 内容
-   */
-  'content'?: string;
-  /**
-   * 图片列表
-   */
-  'photos'?: Array<string>;
+  'code'?: string;
 }
 

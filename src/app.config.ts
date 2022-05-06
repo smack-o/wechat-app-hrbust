@@ -34,13 +34,17 @@ export const router = {
     pddSearch: 'pdd-search/index' // 品多多搜索页面,
   },
   pages3: {
+    accountEdit: 'account-edit/index', // 个人中心，编辑个人信息页面
     aboutme: 'aboutme/index', // 关于我们
     // schoolAnniversary: 'school-anniversary/index', // 70 周年校庆
-    createWall: 'create-wall/index',
-    community: 'community/index',
-    wallDetail: 'wall-detail/index',
-    createSaleWall: 'create-sale-wall/index',
-    saleWallDetail: 'sale-wall-detail/index'
+    community: 'community/index', // 社区首页
+    createWall: 'community/create-wall/index', // 创建表白墙
+    wallDetail: 'community/wall-detail/index', // 表白墙详情
+    createSaleWall: 'community/create-sale-wall/index', // 创建卖舍友
+    saleWallDetail: 'community/sale-wall-detail/index', // 卖舍友详情
+    message: 'community/message/index', // 消息页面
+    myWall: 'community/my-wall/index', // 我的表白墙
+    mySaleWall: 'community/my-sale-wall/index' // 我的卖舍友
   }
 }
 

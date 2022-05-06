@@ -13,81 +13,40 @@
 import * as models from './models'
 
 /**
-  * @property `createdAt` 创建时间
-  * @property `updatedAt` 更新时间
-  * @property `_id` 表白墙id
-  * @property `isPublisher` 是否是发布者
-  * @property `isLike` 是否点赞
-  * @property `likeCount` 点赞数
-  * @property `isCollect` 是否收藏
-  * @property `collectCount` 收藏数量
-  * @property `[publisher]` 
-  * @property `name` 姓名
-  * @property `gender` 
-  * @property `major` 主修专业
-  * @property `description` 描述
-  * @property `[content]` 内容
-  * @property `[photos]` 图片列表
-  * @property `isDelete` 是否删除
+  * @property `code` 
+  * @property `resultCode` 
+  * @property `message` 
+  * @property `[result]` 
+  * @property `[error]` 
   */
 export interface InlineResponse2002Result {
-  /**
-   * 创建时间
-   */
-  'createdAt': number;
-  /**
-   * 更新时间
-   */
-  'updatedAt': number;
-  /**
-   * 表白墙id
-   */
-  '_id': string;
-  /**
-   * 是否是发布者
-   */
-  'isPublisher': boolean;
-  /**
-   * 是否点赞
-   */
-  'isLike': boolean;
-  /**
-   * 点赞数
-   */
-  'likeCount': number;
-  /**
-   * 是否收藏
-   */
-  'isCollect': boolean;
-  /**
-   * 收藏数量
-   */
-  'collectCount': number;
-  'publisher'?: models.InlineResponse2002Publisher;
-  /**
-   * 姓名
-   */
-  'name': string;
-  'gender': number;
-  /**
-   * 主修专业
-   */
-  'major': string;
-  /**
-   * 描述
-   */
-  'description': string;
-  /**
-   * 内容
-   */
-  'content'?: string;
-  /**
-   * 图片列表
-   */
-  'photos'?: Array<models.InlineResponse2002Photos>;
-  /**
-   * 是否删除
-   */
-  'isDelete': boolean;
+  'code': InlineResponse2002Result.CodeEnum;
+  'resultCode': InlineResponse2002Result.ResultCodeEnum;
+  'message': string;
+  'result'?: any;
+  'error'?: models.InlineResponse200Error;
 }
 
+export namespace InlineResponse2002Result {
+  export enum CodeEnum {
+    _100001 = '100001' as any,
+    _100002 = '100002' as any,
+    _400001 = '400001' as any,
+    _400002 = '400002' as any,
+    _400003 = '400003' as any,
+    _500000 = '500000' as any,
+    _500001 = '500001' as any,
+    _500002 = '500002' as any
+  }
+  export enum ResultCodeEnum {
+    SUCCESS = 'SUCCESS' as any,
+    ERRPARAM = 'ERR_PARAM' as any,
+    SENMESSAGE = 'SEN_MESSAGE' as any,
+    NOTWECHATAUTH = 'NOT_WECHAT_AUTH' as any,
+    NOTLOGIN = 'NOT_LOGIN' as any,
+    NOTAUTH = 'NOT_AUTH' as any,
+    ERROR = 'ERROR' as any,
+    FAILUPLOAD = 'FAIL_UPLOAD' as any,
+    FACECOMPARERUPLOAD = 'FACE_COMPARER_UPLOAD' as any
+  }
+}

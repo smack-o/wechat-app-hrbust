@@ -5,7 +5,7 @@ import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
 import './index.less'
-import WallItem from '../community/_components/wall-item'
+import WallItem from '../_components/wall-item'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}

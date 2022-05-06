@@ -13,17 +13,25 @@
 import * as models from './models'
 
 /**
-  * @property `[encryptedData]` 微信解密参数 encryptedData
-  * @property `[iv]` 微信解密参数 iv
+  * @property `[nickName]` 
+  * @property `[customName]` 
+  * @property `[gender]` 
+  * @property `[avatarUrl]` 
+  * @property `[language]` 
+  * @property `[city]` 
+  * @property `[province]` 
+  * @property `[country]` 
+  * @property `[customAvatarUrl]` 
   */
 export interface Data5 {
-  /**
-   * 微信解密参数 encryptedData
-   */
-  'encryptedData'?: string;
-  /**
-   * 微信解密参数 iv
-   */
-  'iv'?: string;
+  'nickName'?: string;
+  'customName'?: string;
+  'gender'?: number;
+  'avatarUrl'?: string;
+  'language'?: string;
+  'city'?: string;
+  'province'?: string;
+  'country'?: string;
+  'customAvatarUrl'?: string;
 }
 

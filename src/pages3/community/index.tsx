@@ -57,7 +57,7 @@ class Discover extends Component<IProps, PageState> {
     }
 
     return (
-      <View className="discover-container">
+      <View className="community-container">
         <Comp ref={this.ref} />
         <BottomBar current={currentTab} onChange={this.onBarChange}></BottomBar>
       </View>

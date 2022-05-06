@@ -19,12 +19,12 @@ import * as models from './models'
   * @property `[width]` 图片宽度
   * @property `[type]` 图片类型
   */
-export interface InlineResponse2002Photos {
+export interface InlineResponse2003ToUserInfoCustomAvatarUrl {
   /**
    * 图片 url
    */
   'key': string;
-  'status': InlineResponse2002Photos.StatusEnum;
+  'status': InlineResponse2003ToUserInfoCustomAvatarUrl.StatusEnum;
   /**
    * 图片高度
    */
@@ -39,7 +39,7 @@ export interface InlineResponse2002Photos {
   'type'?: string;
 }
 
-export namespace InlineResponse2002Photos {
+export namespace InlineResponse2003ToUserInfoCustomAvatarUrl {
   export enum StatusEnum {
     _0 = '0' as any,
     _1 = '1' as any,

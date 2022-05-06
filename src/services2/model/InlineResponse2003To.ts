@@ -13,12 +13,14 @@
 import * as models from './models'
 
 /**
-  * @property `brickId` wall id
+  * @property `_id` user id
+  * @property `[userInfo]` 
   */
-export interface InlineResponse2008Result {
+export interface InlineResponse2003To {
   /**
-   * wall id
+   * user id
    */
-  'brickId': string;
+  '_id': string;
+  'userInfo'?: models.InlineResponse2003ToUserInfo;
 }
 

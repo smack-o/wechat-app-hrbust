@@ -16,15 +16,15 @@ import * as models from './models'
   * @property `code` 
   * @property `resultCode` 
   * @property `message` 
-  * @property `result` 
+  * @property `[result]` 
   * @property `[error]` 
   */
 export interface InlineResponse2006 {
   'code': InlineResponse2006.CodeEnum;
   'resultCode': InlineResponse2006.ResultCodeEnum;
   'message': string;
-  'result': Array<models.InlineResponse2006Result>;
-  'error'?: models.InlineResponse200ResultError;
+  'result'?: models.InlineResponse2005Result;
+  'error'?: models.InlineResponse200Error;
 }
 
 export namespace InlineResponse2006 {

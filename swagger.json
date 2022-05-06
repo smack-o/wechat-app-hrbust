@@ -48,7 +48,7 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
+            "description": "成功",
             "schema": {
               "type": "object",
               "properties": {
@@ -85,56 +85,190 @@
                 "result": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "key": {
+                      "type": "string",
+                      "description": "图片 url",
+                      "default": ""
+                    },
+                    "status": {
                       "type": "string",
                       "enum": [
-                        100001,
-                        100002,
-                        400001,
-                        400002,
-                        400003,
-                        500000,
-                        500001,
-                        500002
+                        "0",
+                        "1",
+                        "2"
                       ]
                     },
-                    "resultCode": {
+                    "height": {
+                      "type": "number",
+                      "description": "图片高度",
+                      "default": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "description": "图片宽度",
+                      "default": 0
+                    },
+                    "type": {
                       "type": "string",
-                      "enum": [
-                        "SUCCESS",
-                        "ERR_PARAM",
-                        "SEN_MESSAGE",
-                        "NOT_WECHAT_AUTH",
-                        "NOT_LOGIN",
-                        "NOT_AUTH",
-                        "ERROR",
-                        "FAIL_UPLOAD",
-                        "FACE_COMPARER_UPLOAD"
-                      ]
+                      "description": "图片类型",
+                      "default": ""
                     },
-                    "message": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string"
-                        },
-                        "detail": {
-                          "type": "string"
-                        }
-                      }
+                    "_id": {
+                      "type": "string",
+                      "description": "图片 id",
+                      "default": ""
                     }
                   },
                   "required": [
-                    "code",
-                    "resultCode",
-                    "message"
+                    "key",
+                    "status",
+                    "_id"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Media"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/media/url": {
+      "post": {
+        "summary": "通过抓取 url 上传文件",
+        "description": "通过抓取 url 上传文件",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "height": {
+                  "type": "number",
+                  "description": "图片高度",
+                  "default": 0
+                },
+                "width": {
+                  "type": "number",
+                  "description": "图片宽度",
+                  "default": 0
+                },
+                "type": {
+                  "type": "string",
+                  "description": "图片类型",
+                  "default": ""
+                },
+                "url": {
+                  "type": "string",
+                  "description": "图片 url",
+                  "default": "",
+                  "require": true
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "description": "图片 url",
+                      "default": ""
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "0",
+                        "1",
+                        "2"
+                      ]
+                    },
+                    "height": {
+                      "type": "number",
+                      "description": "图片高度",
+                      "default": 0
+                    },
+                    "width": {
+                      "type": "number",
+                      "description": "图片宽度",
+                      "default": 0
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "图片类型",
+                      "default": ""
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "图片 id",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "status",
+                    "_id"
                   ]
                 },
                 "error": {
@@ -412,6 +546,464 @@
         ]
       }
     },
+    "/api/message/list": {
+      "get": {
+        "summary": "获取消息列表",
+        "description": "获取消息列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "消息 id",
+                        "default": ""
+                      },
+                      "to": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "from": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id"
+                        ]
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "消息类型",
+                        "enum": [
+                          "BrickLike",
+                          "MateLike",
+                          "Comment",
+                          "Hot"
+                        ]
+                      },
+                      "ext": {
+                        "type": "object",
+                        "properties": {
+                          "photo": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "description": "图片 url",
+                                "default": ""
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "0",
+                                  "1",
+                                  "2"
+                                ]
+                              },
+                              "height": {
+                                "type": "number",
+                                "description": "图片高度",
+                                "default": 0
+                              },
+                              "width": {
+                                "type": "number",
+                                "description": "图片宽度",
+                                "default": 0
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "图片类型",
+                                "default": ""
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "status"
+                            ]
+                          },
+                          "brickId": {
+                            "type": "string",
+                            "description": "brickId",
+                            "default": ""
+                          },
+                          "mateId": {
+                            "type": "string",
+                            "description": "brickId",
+                            "default": ""
+                          },
+                          "commentId": {
+                            "type": "string",
+                            "description": "brickId",
+                            "default": ""
+                          }
+                        },
+                        "required": [
+                          "brickId",
+                          "mateId",
+                          "commentId"
+                        ]
+                      },
+                      "isRead": {
+                        "type": "boolean",
+                        "description": "是否已读",
+                        "default": false
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "content",
+                      "type",
+                      "isRead"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Message"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/message/unreadcount": {
+      "get": {
+        "summary": "获取用户未读消息数量",
+        "description": "获取用户未读消息数量",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "unreadCount": {
+                      "type": "number",
+                      "description": "未读消息数量",
+                      "default": 0
+                    }
+                  },
+                  "required": [
+                    "unreadCount"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Message"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/sale-wall/list": {
       "get": {
         "summary": "获取卖舍友列表",
@@ -518,7 +1110,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -526,19 +1118,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -760,7 +1407,7 @@
                       "properties": {
                         "_id": {
                           "type": "string",
-                          "description": "发布者id",
+                          "description": "user id",
                           "default": ""
                         },
                         "userInfo": {
@@ -768,19 +1415,74 @@
                           "properties": {
                             "nickName": {
                               "type": "string",
-                              "description": "发布者昵称",
                               "default": ""
+                            },
+                            "customName": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "customAvatarUrl": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string",
+                                  "description": "图片 url",
+                                  "default": ""
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "0",
+                                    "1",
+                                    "2"
+                                  ]
+                                },
+                                "height": {
+                                  "type": "number",
+                                  "description": "图片高度",
+                                  "default": 0
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "description": "图片宽度",
+                                  "default": 0
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "图片类型",
+                                  "default": ""
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "status"
+                              ]
+                            },
+                            "gender": {
+                              "type": "number",
+                              "default": 0
                             },
                             "avatarUrl": {
                               "type": "string",
-                              "description": "发布者姓名",
+                              "default": ""
+                            },
+                            "language": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "city": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "province": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "country": {
+                              "type": "string",
                               "default": ""
                             }
-                          },
-                          "required": [
-                            "nickName",
-                            "avatarUrl"
-                          ]
+                          }
                         }
                       },
                       "required": [
@@ -1012,7 +1714,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -1020,19 +1722,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -1265,7 +2022,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -1273,19 +2030,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -1744,9 +2556,253 @@
                           "type": "string",
                           "default": ""
                         },
+                        "customName": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "customAvatarUrl": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        },
                         "gender": {
                           "type": "number",
+                          "default": 0
+                        },
+                        "avatarUrl": {
+                          "type": "string",
                           "default": ""
+                        },
+                        "language": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "city": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "province": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "country": {
+                          "type": "string",
+                          "default": ""
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "_id"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            },
+            "description": "success"
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "更新用户信息",
+        "description": "更新用户信息",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickName": {
+                  "type": "string",
+                  "default": ""
+                },
+                "customName": {
+                  "type": "string",
+                  "default": ""
+                },
+                "gender": {
+                  "type": "number",
+                  "default": 0
+                },
+                "avatarUrl": {
+                  "type": "string",
+                  "default": ""
+                },
+                "language": {
+                  "type": "string",
+                  "default": ""
+                },
+                "city": {
+                  "type": "string",
+                  "default": ""
+                },
+                "province": {
+                  "type": "string",
+                  "default": ""
+                },
+                "country": {
+                  "type": "string",
+                  "default": ""
+                },
+                "customAvatarUrl": {
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "user id",
+                      "default": ""
+                    },
+                    "userInfo": {
+                      "type": "object",
+                      "properties": {
+                        "nickName": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "customName": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "customAvatarUrl": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        },
+                        "gender": {
+                          "type": "number",
+                          "default": 0
                         },
                         "avatarUrl": {
                           "type": "string",
@@ -1830,7 +2886,6 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
             "schema": {
               "type": "object",
               "properties": {
@@ -1867,56 +2922,88 @@
                 "result": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "_id": {
                       "type": "string",
-                      "enum": [
-                        100001,
-                        100002,
-                        400001,
-                        400002,
-                        400003,
-                        500000,
-                        500001,
-                        500002
-                      ]
+                      "description": "user id",
+                      "default": ""
                     },
-                    "resultCode": {
-                      "type": "string",
-                      "enum": [
-                        "SUCCESS",
-                        "ERR_PARAM",
-                        "SEN_MESSAGE",
-                        "NOT_WECHAT_AUTH",
-                        "NOT_LOGIN",
-                        "NOT_AUTH",
-                        "ERROR",
-                        "FAIL_UPLOAD",
-                        "FACE_COMPARER_UPLOAD"
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "error": {
+                    "userInfo": {
                       "type": "object",
                       "properties": {
-                        "message": {
-                          "type": "string"
+                        "nickName": {
+                          "type": "string",
+                          "default": ""
                         },
-                        "detail": {
-                          "type": "string"
+                        "customName": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "customAvatarUrl": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        },
+                        "gender": {
+                          "type": "number",
+                          "default": 0
+                        },
+                        "avatarUrl": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "language": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "city": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "province": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "country": {
+                          "type": "string",
+                          "default": ""
                         }
                       }
                     }
                   },
                   "required": [
-                    "code",
-                    "resultCode",
-                    "message"
+                    "_id"
                   ]
                 },
                 "error": {
@@ -1936,7 +3023,8 @@
                 "resultCode",
                 "message"
               ]
-            }
+            },
+            "description": "success"
           }
         },
         "tags": [
@@ -1979,7 +3067,6 @@
         ],
         "responses": {
           "200": {
-            "description": "success",
             "schema": {
               "type": "object",
               "properties": {
@@ -2016,56 +3103,88 @@
                 "result": {
                   "type": "object",
                   "properties": {
-                    "code": {
+                    "_id": {
                       "type": "string",
-                      "enum": [
-                        100001,
-                        100002,
-                        400001,
-                        400002,
-                        400003,
-                        500000,
-                        500001,
-                        500002
-                      ]
+                      "description": "user id",
+                      "default": ""
                     },
-                    "resultCode": {
-                      "type": "string",
-                      "enum": [
-                        "SUCCESS",
-                        "ERR_PARAM",
-                        "SEN_MESSAGE",
-                        "NOT_WECHAT_AUTH",
-                        "NOT_LOGIN",
-                        "NOT_AUTH",
-                        "ERROR",
-                        "FAIL_UPLOAD",
-                        "FACE_COMPARER_UPLOAD"
-                      ]
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "result": {
-                      "type": "object",
-                      "properties": {}
-                    },
-                    "error": {
+                    "userInfo": {
                       "type": "object",
                       "properties": {
-                        "message": {
-                          "type": "string"
+                        "nickName": {
+                          "type": "string",
+                          "default": ""
                         },
-                        "detail": {
-                          "type": "string"
+                        "customName": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "customAvatarUrl": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        },
+                        "gender": {
+                          "type": "number",
+                          "default": 0
+                        },
+                        "avatarUrl": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "language": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "city": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "province": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "country": {
+                          "type": "string",
+                          "default": ""
                         }
                       }
                     }
                   },
                   "required": [
-                    "code",
-                    "resultCode",
-                    "message"
+                    "_id"
                   ]
                 },
                 "error": {
@@ -2085,7 +3204,8 @@
                 "resultCode",
                 "message"
               ]
-            }
+            },
+            "description": "success"
           }
         },
         "tags": [
@@ -2204,7 +3324,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -2212,19 +3332,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -2455,7 +3630,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -2463,19 +3638,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -2687,7 +3917,7 @@
                       "properties": {
                         "_id": {
                           "type": "string",
-                          "description": "发布者id",
+                          "description": "user id",
                           "default": ""
                         },
                         "userInfo": {
@@ -2695,19 +3925,74 @@
                           "properties": {
                             "nickName": {
                               "type": "string",
-                              "description": "发布者昵称",
                               "default": ""
+                            },
+                            "customName": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "customAvatarUrl": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string",
+                                  "description": "图片 url",
+                                  "default": ""
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "0",
+                                    "1",
+                                    "2"
+                                  ]
+                                },
+                                "height": {
+                                  "type": "number",
+                                  "description": "图片高度",
+                                  "default": 0
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "description": "图片宽度",
+                                  "default": 0
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "图片类型",
+                                  "default": ""
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "status"
+                              ]
+                            },
+                            "gender": {
+                              "type": "number",
+                              "default": 0
                             },
                             "avatarUrl": {
                               "type": "string",
-                              "description": "发布者姓名",
+                              "default": ""
+                            },
+                            "language": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "city": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "province": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "country": {
+                              "type": "string",
                               "default": ""
                             }
-                          },
-                          "required": [
-                            "nickName",
-                            "avatarUrl"
-                          ]
+                          }
                         }
                       },
                       "required": [
@@ -2929,7 +4214,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -2937,19 +4222,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [
@@ -3172,7 +4512,7 @@
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "description": "发布者id",
+                            "description": "user id",
                             "default": ""
                           },
                           "userInfo": {
@@ -3180,19 +4520,74 @@
                             "properties": {
                               "nickName": {
                                 "type": "string",
-                                "description": "发布者昵称",
                                 "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
                               },
                               "avatarUrl": {
                                 "type": "string",
-                                "description": "发布者姓名",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
                                 "default": ""
                               }
-                            },
-                            "required": [
-                              "nickName",
-                              "avatarUrl"
-                            ]
+                            }
                           }
                         },
                         "required": [

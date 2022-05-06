@@ -4,11 +4,12 @@ import Taro from '@tarojs/taro'
 import { View, Image, OpenData, Text, Button } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { goPage, routes } from '@/utils/router'
-import { logout, init } from '@/redux/actions/user'
+import { logout, init, getUnreadCount } from '@/redux/actions/user'
 import { Dispatch, bindActionCreators } from 'redux'
 import { cError, toLogin } from '@/utils'
-
+import Avatar from '@/components/Avatar'
 import arrowRight from '@/assets/icon/arrow_right.png'
+import { AtButton, AtIcon } from 'taro-ui'
 import authIcon from './res/authentication.png'
 import removeBindingIcon from './res/remove_binding.png'
 import contactIcon from './res/contact.png'
@@ -37,6 +38,7 @@ class Account extends Component<IProps, PageState> {
     this.setState({
       version: miniProgram.version
     })
+    this.props.getUnreadCount()
   }
 
   onLoad() {}
@@ -68,23 +70,46 @@ class Account extends Component<IProps, PageState> {
     })
   }
 
+  onEditUserInfoClick = () => {
+    goPage(routes.accountEdit)
+  }
+
+  // onTest = () => {
+  //   wx.requestSubscribeMessage({
+  //     tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc']
+  //   })
+  // }
+
   render() {
     const {
       user: {
         isLogin,
         isWechatLogin,
         studentInfo,
-        userInfo: { avatarUrl, nickName }
+        userInfo: {
+          avatarUrl = '',
+          nickName = '',
+          customAvatarUrl,
+          customName = ''
+        },
+        unreadCount
       }
     } = this.props
     const { version } = this.state
 
     return (
       <View className="account-container">
+        {/* <View onClick={this.onTest}>开启订阅消息</View> */}
         <View className="user">
           <View className="avatar-wrapper">
             {isWechatLogin ? (
-              <Image className="avatar" src={avatarUrl}></Image>
+              <Avatar
+                className="avatar"
+                avatarSize="150rpx"
+                avatarUrl={avatarUrl}
+                customAvatarUrl={customAvatarUrl}
+                onClickType="preview"
+              ></Avatar>
             ) : (
               <OpenData
                 className="avatar"
@@ -93,35 +118,45 @@ class Account extends Component<IProps, PageState> {
               ></OpenData>
             )}
           </View>
-          {isWechatLogin ? (
-            <View className="info">
-              <View className="name">
-                {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
-                <Text>{nickName}</Text>
-                <Text selectable className="username">
-                  {studentInfo.username}
-                </Text>
-              </View>
-              <View className="student">
-                <Image className="image" src={authIcon} />
-                <View>{studentInfo.name}</View>
-              </View>
+          <View className="info">
+            <View className="name">
+              {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
+              <Text>{customName || nickName}</Text>
+              {/* <Text selectable className="username">
+                {studentInfo.username}
+              </Text> */}
+              <AtIcon
+                value="edit"
+                className="edit"
+                size={18}
+                onClick={this.onEditUserInfoClick}
+              ></AtIcon>
             </View>
-          ) : (
-            <View className="button" onClick={() => toLogin(isWechatLogin)}>
-              立即登录
+            <View className="student">
+              <Image className="image" src={authIcon} />
+              <View>{studentInfo.name}fsdfds</View>
             </View>
-          )}
-          {isWechatLogin && !isLogin && (
-            <View
-              className="bind-button"
-              onClick={() => toLogin(isWechatLogin)}
-            >
-              绑定学号
-            </View>
-          )}
+          </View>
         </View>
+        {!isWechatLogin && (
+          <AtButton
+            type="primary"
+            className="login-button"
+            onClick={() => toLogin(isWechatLogin)}
+          >
+            立即登录
+          </AtButton>
+        )}
 
+        {isWechatLogin && !isLogin && (
+          <AtButton
+            type="primary"
+            className="login-button"
+            onClick={() => toLogin(isWechatLogin)}
+          >
+            绑定学号
+          </AtButton>
+        )}
         <View className="other">
           {isLogin && (
             <View className="item" onClick={this.logout}>
@@ -132,21 +167,33 @@ class Account extends Component<IProps, PageState> {
               </View>
             </View>
           )}
-          <Button className="item button" open-type="contact">
+          <Button
+            className="item button"
+            onClick={() => goPage(routes.message)}
+          >
             <Image className="image" src={contactIcon} />
             <View className="info">
-              <View>我的消息</View>
+              <View className="title">
+                <View>我的消息</View>
+                {unreadCount > 0 && (
+                  <View className="count">{unreadCount}条新消息</View>
+                )}
+              </View>
+
               <Image className="arrow-right" src={arrowRight} />
             </View>
           </Button>
-          <Button className="item button" open-type="contact">
+          <Button className="item button" onClick={() => goPage(routes.myWall)}>
             <Image className="image" src={contactIcon} />
             <View className="info">
               <View>我的表白</View>
               <Image className="arrow-right" src={arrowRight} />
             </View>
           </Button>
-          <Button className="item button" open-type="contact">
+          <Button
+            className="item button"
+            onClick={() => goPage(routes.mySaleWall)}
+          >
             <Image className="image" src={contactIcon} />
             <View className="info">
               <View>我的舍友</View>
@@ -173,7 +220,7 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ logout, init }, dispatch)
+  bindActionCreators({ logout, init, getUnreadCount }, dispatch)
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps,

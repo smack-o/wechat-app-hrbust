@@ -6,7 +6,8 @@ import {
   GET_EXAMS,
   GET_GRADES,
   SET_CURRENT_TERM,
-  UPDATE_USERINFO_PROMISE
+  UPDATE_USERINFO_PROMISE,
+  SET_UNREAD_COUNT
 } from '../actions/user'
 
 const studentInfo = JSON.parse(Taro.getStorageSync('studentInfo') || '{}')
@@ -17,6 +18,7 @@ if (studentInfo.username) {
   const courseData = Taro.getStorageSync(`course:${studentInfo.username}`)
   currentTerm = courseData.term
 }
+
 export interface UserState {
   isWechatLogin: boolean
   isLogin: boolean
@@ -58,14 +60,21 @@ export interface UserState {
   }
   currentTerm: number
   userInfo: {
-    avatarUrl: string
-    city: string
-    country: string
-    gender: number
-    language: string
-    nickName: string
-    province: string
+    nickName?: string
+    customName?: string
+    customAvatarUrl?: {
+      checkCode?: number
+      key?: string
+      status?: number
+    }
+    gender?: number
+    avatarUrl?: string
+    language?: string
+    city?: string
+    province?: string
+    country?: string
   }
+  unreadCount: number
 }
 
 const INITIAL_STATE: UserState = {
@@ -89,8 +98,15 @@ const INITIAL_STATE: UserState = {
     gender: 0,
     language: 'zh_CN',
     nickName: '许岩',
-    province: ''
-  }
+    province: '',
+    customAvatarUrl: {
+      checkCode: 1,
+      key: '',
+      status: 0
+    },
+    customName: ''
+  },
+  unreadCount: 0
 }
 
 export default function user(
@@ -111,6 +127,12 @@ export default function user(
       return {
         ...state,
         getUserInfoPromise: action.data
+      }
+
+    case SET_UNREAD_COUNT:
+      return {
+        ...state,
+        unreadCount: action.data
       }
     case LOGOUT:
       Taro.removeStorageSync('studentInfo')

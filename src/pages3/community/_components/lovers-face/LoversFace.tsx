@@ -84,7 +84,7 @@ export default class LoversFace extends React.Component<
         imageDataA,
         imageDataB
       }
-      console.log(data)
+      // console.log(data)
       // console.log(data)
       // APIS.postLoversFace(data).then(res => {
       //   console.log(res)

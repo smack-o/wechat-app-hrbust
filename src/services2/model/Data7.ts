@@ -13,12 +13,17 @@
 import * as models from './models'
 
 /**
-  * @property `[brickId]` wall id
+  * @property `[encryptedData]` 微信解密参数 encryptedData
+  * @property `[iv]` 微信解密参数 iv
   */
 export interface Data7 {
   /**
-   * wall id
+   * 微信解密参数 encryptedData
    */
-  'brickId'?: string;
+  'encryptedData'?: string;
+  /**
+   * 微信解密参数 iv
+   */
+  'iv'?: string;
 }
 

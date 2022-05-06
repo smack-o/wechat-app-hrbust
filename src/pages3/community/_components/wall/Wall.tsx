@@ -24,18 +24,18 @@ export default class Wall extends React.Component<WallProps, WallState> {
     {
       key: 'all',
       text: '全部',
-      api: APIS.WallApi.apiWallListGet
+      api: APIS.WallApi.apiWallListGet,
     },
     {
       key: 'like',
       text: '喜欢',
-      api: APIS.WallApi.apiWallListLikeGet
+      api: APIS.WallApi.apiWallListLikeGet,
     },
     {
       key: 'hot',
       text: '最热',
-      api: APIS.WallApi.apiWallListGet
-    }
+      api: APIS.WallApi.apiWallListHotGet,
+    },
   ]
 
   pageNum = 0
@@ -45,7 +45,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
   state: WallState = {
     list: [],
     activeTab: 0,
-    hasNext: true
+    hasNext: true,
   }
 
   componentDidMount() {
@@ -62,7 +62,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({
       pageNum: '' + this.pageNum,
-      pageSize: '' + this.pageSize
+      pageSize: '' + this.pageSize,
     })
 
     this.fetching = false
@@ -73,14 +73,14 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
     this.setState({
       list: reset ? res : this.state.list.concat(res),
-      hasNext: res.length === this.pageSize
+      hasNext: res.length === this.pageSize,
     })
   }
 
-  onTabChange: ITabProps['onChange'] = async index => {
+  onTabChange: ITabProps['onChange'] = async (index) => {
     this.setState(
       {
-        activeTab: index
+        activeTab: index,
       },
       () => {
         this.init()
@@ -100,11 +100,11 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   onAddWallClick = () => {
     navigateTo({
-      url: routes.createWall
+      url: routes.createWall,
     })
   }
 
-  onInut = async e => {
+  onInut = async (e) => {
     // APIS.WallApi.apiWallSearchGet({
     //   // keyword: e.target.value,
     //   pageNum: '0',
@@ -114,7 +114,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
     const [err, res] = await withRequest(APIS.WallApi.apiWallSearchGet)({
       pageNum: '' + this.pageNum,
       pageSize: '' + 20,
-      keyword: e.target.value
+      keyword: e.target.value,
     })
 
     this.fetching = false
@@ -125,7 +125,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
     this.setState({
       list: true ? res : this.state.list.concat(res),
-      hasNext: res.length === this.pageSize
+      hasNext: res.length === this.pageSize,
     })
   }
 
@@ -139,7 +139,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
           onChange={this.onTabChange}
         >
           <Input onInput={this.onInut}></Input>
-          {this.state.list.map(item => {
+          {this.state.list.map((item) => {
             return <WallItem data={item} key={item._id}></WallItem>
           })}
         </Tab>

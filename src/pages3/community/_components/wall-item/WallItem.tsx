@@ -39,8 +39,8 @@ export default function WallItem(props: IWallItemProps) {
       likeCount,
       isLike,
       _id,
-      createdAt
-    } = {}
+      createdAt,
+    } = {},
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -56,11 +56,11 @@ export default function WallItem(props: IWallItemProps) {
       // @ts-ignore
       wx.previewMedia({
         current: index,
-        sources: photos.map(item => ({
+        sources: photos.map((item) => ({
           url: getCdnUrl(item.key),
-          type: 'image'
+          type: 'image',
         })),
-        showmenu: true
+        showmenu: true,
       })
     },
     [photos]
@@ -68,7 +68,7 @@ export default function WallItem(props: IWallItemProps) {
 
   const onLikeClick = useCallback(async () => {
     const [err] = await withRequest(APIS.WallApi.apiWallLikePut)({
-      brickId: _id
+      brickId: _id,
     })
 
     // 本地变更

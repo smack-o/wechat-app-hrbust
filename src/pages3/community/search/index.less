@@ -1,22 +1,5 @@
-@import '~@/styles/lib.less';
-
-.wall {
-  min-height: 100vh;
-  background: #eaeef0;
-
-  &__add-wall {
-    position: fixed;
-    bottom: calc(164px + constant(safe-area-inset-bottom));
-    bottom: calc(164px + env(safe-area-inset-bottom));
-    right: 30px;
-
-    image {
-      height: 162px;
-      width: 162px;
-    }
-  }
-
-  &-search {
+.community-search {
+  &-input {
     position: relative;
     width: 100%;
     height: 110px;
@@ -44,5 +27,23 @@
       line-height: 40px;
       padding: 0 40px 0 97px;
     }
+  }
+
+  &-tags {
+    display: flex;
+    padding: 20px;
+
+    .at-tag {
+      margin-right: 20px;
+    }
+  }
+
+  &__sale-wall-list {
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px 12px;
+    column-count: 2;
+    column-width: calc(50% - 16px);
+    column-gap: 0px;
   }
 }

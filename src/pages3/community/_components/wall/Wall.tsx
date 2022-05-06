@@ -3,11 +3,12 @@ import { Image, View, Input } from '@tarojs/components'
 import { withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
-import { routes } from '@/app.config'
+import { goPage, routes } from '@/utils/router'
 import Tab from '../tab'
 import { ITabProps } from '../tab/Tab'
 import WallItem from '../wall-item'
 import AddWallIcon from '../../imgs/add_wall.png'
+import SearchIcon from '../../imgs/search.png'
 
 import './Wall.less'
 
@@ -39,7 +40,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
   ]
 
   pageNum = 0
-  pageSize = 5
+  pageSize = 20
   fetching = false
 
   state: WallState = {
@@ -133,12 +134,24 @@ export default class Wall extends React.Component<WallProps, WallState> {
     const { activeTab, hasNext } = this.state
     return (
       <View className="wall">
+        <View
+          className="wall-search"
+          onClick={() => {
+            goPage(routes.search)
+          }}
+        >
+          <Image className="wall-search__icon" src={SearchIcon}></Image>
+          <Input
+            onInput={this.onInut}
+            placeholder="搜索关键词"
+            disabled
+          ></Input>
+        </View>
         <Tab
           currentIndex={activeTab}
           tabList={this.tabList}
           onChange={this.onTabChange}
         >
-          <Input onInput={this.onInut}></Input>
           {this.state.list.map(item => {
             return <WallItem data={item} key={item._id}></WallItem>
           })}

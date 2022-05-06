@@ -16,13 +16,15 @@ import './SaleWallItem.less'
 
 interface IWallItemProps {
   data: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>[0]
+  timeType?: 'relative' | 'absolute'
 }
 
 const prefix = 'sale-wall-item'
 
 export default function WallItem(props: IWallItemProps) {
   const {
-    data: { photos = [], publisher, likeCount, isLike, _id, createdAt } = {}
+    data: { photos = [], publisher, likeCount, isLike, _id, createdAt } = {},
+    timeType
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -75,7 +77,7 @@ export default function WallItem(props: IWallItemProps) {
           // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>
         <View className={`${prefix}__info-bottom`}>
-          <Time time={createdAt || ''}></Time>
+          <Time time={createdAt || ''} type={timeType}></Time>
           <View className={`${prefix}__info-like`} onClick={onLikeClick}>
             <Image
               src={localIsLike ? SaleWallLiked : SaleWallLike}

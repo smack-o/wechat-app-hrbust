@@ -51,7 +51,7 @@ class CreateWall extends Component<IProps, PageState> {
     }
     return (
       <View className={prefix}>
-        <WallItem data={data}></WallItem>
+        <WallItem data={data} timeType="relative"></WallItem>
       </View>
     )
   }

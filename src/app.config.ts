@@ -44,7 +44,8 @@ export const router = {
     saleWallDetail: 'community/sale-wall-detail/index', // 卖舍友详情
     message: 'community/message/index', // 消息页面
     myWall: 'community/my-wall/index', // 我的表白墙
-    mySaleWall: 'community/my-sale-wall/index' // 我的卖舍友
+    mySaleWall: 'community/my-sale-wall/index', // 我的卖舍友
+    search: 'community/search/index' // 搜索
   }
 }
 

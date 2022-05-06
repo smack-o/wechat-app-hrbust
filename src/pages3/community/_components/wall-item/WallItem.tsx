@@ -12,6 +12,7 @@ import PublisherTitle from '../publisher-title'
 import './WallItem.less'
 
 interface IWallItemProps {
+  timeType?: 'relative' | 'absolute'
   data:
     | GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
     | GetApiResultType<typeof APIS.WallApi.apiWallBrickIdGet>
@@ -40,7 +41,8 @@ export default function WallItem(props: IWallItemProps) {
       isLike,
       _id,
       createdAt
-    } = {}
+    } = {},
+    timeType
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -80,7 +82,11 @@ export default function WallItem(props: IWallItemProps) {
 
   return (
     <View className={prefix}>
-      <PublisherTitle time={createdAt} publisher={publisher}></PublisherTitle>
+      <PublisherTitle
+        time={createdAt}
+        publisher={publisher}
+        timeType={timeType}
+      ></PublisherTitle>
       <View
         className={classNames(
           `${prefix}__photos`,

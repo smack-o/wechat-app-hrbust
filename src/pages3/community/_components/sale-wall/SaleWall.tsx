@@ -63,7 +63,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   ]
 
   pageNum = 0
-  pageSize = 5
+  pageSize = 20
   fetching = false
 
   componentDidMount() {

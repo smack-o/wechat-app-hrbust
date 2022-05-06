@@ -25,16 +25,17 @@ type Props = {
   }
   time?: string | number
   className?: string
+  timeType?: 'relative' | 'absolute'
 }
 
 export default function PublisherTitle(props: Props) {
-  const { publisher, time, className } = props
+  const { publisher, time, className, timeType = 'absolute' } = props
 
   return (
     <View className={cn(`${prefix}__publisher`, className)}>
       <Avatar {...publisher?.userInfo}></Avatar>
 
-      <Time time={time}></Time>
+      <Time time={time} type={timeType}></Time>
     </View>
   )
 }

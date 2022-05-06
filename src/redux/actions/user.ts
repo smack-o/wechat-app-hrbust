@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import { withRequest } from '@/utils/request'
 import { APIS } from '@/services2'
 import {
-  // userInfo,
+  userInfo,
   // wxLogin,
   exams,
   grades,
@@ -86,7 +86,6 @@ export const initHandler = async (dispatch: Dispatch) => {
     let [err, res] = await withRequest(APIS.UserApi.apiUserGet)()
     const session = await checkSession()
 
-    console.log(session, 'session')
     // 未登录
     if (err || !session) {
       await login()
@@ -106,29 +105,23 @@ export const initHandler = async (dispatch: Dispatch) => {
       data
     })
 
-    // let { isLogin, studentInfo } = res.data
-    // let cookie = Taro.getStorageSync('app_cookie')
-    // if (!session || !cookie || !isLogin) {
-    //   // 没有服务器登录态
-    // await login()
-    //   res = await userInfo()
-    //   isLogin = res.data.isLogin
-    //   studentInfo = res.data.studentInfo
-    // }
+    // 获取学生信息 异步
+    userInfo().then(studentInfoRes => {
+      const studentInfo = studentInfoRes.data.studentInfo
+      dispatch({
+        type: UPDATE_USERINFO,
+        data: {
+          isLogin: !!(
+            studentInfoRes.data.isLogin &&
+            studentInfo &&
+            studentInfo.username
+          ),
+          studentInfo: studentInfoRes.data.studentInfo
+        }
+      })
+    })
 
-    // 获取用户头像等信息
-    // const userInfo = await getUserInfo()
-    // this.globalData.userInfo = userInfo
-    // store.dispatch(setLoading(false))
-    // dispatch({
-    //   type: UPDATE_USERINFO,
-    //   data: {
-    //     isLogin: !!(isLogin && studentInfo && studentInfo.username),
-    //     studentInfo
-    //   }
-    // })
     dispatch(stopLoading())
-    // this.updateUserInfo(userInfo)
   } catch (e) {
     dispatch(stopLoading())
     return Promise.resolve()

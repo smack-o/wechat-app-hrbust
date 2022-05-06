@@ -117,6 +117,7 @@ class CreateWall extends Component<IProps, PageState> {
           className={`${prefix}__title`}
           time={createdAt}
           publisher={publisher}
+          timeType="relative"
         ></PublisherTitle>
         <Swiper
           circular

@@ -82,6 +82,27 @@ export interface ParamsapiSaleWallListPublishGet {
   * request body
   */
 export type ParamsBodyapiSaleWallPost = models.Data3
+/**
+  * @description apiSaleWallSearchGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  * @property `[keyword]` 关键字
+  */
+export interface ParamsapiSaleWallSearchGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+  /**
+   * 关键字
+   */
+  keyword?: string;
+}
 
 export class SaleWallApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -229,6 +250,31 @@ export class SaleWallApi {
     return ajax.ajax({
       ...opt,
       method: 'POST',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 根据关键字模糊搜索
+   * @summary 根据关键字模糊搜索
+   * @param params ParamsapiSaleWallSearchGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2005
+   */
+  public apiSaleWallSearchGet = (
+    params: ParamsapiSaleWallSearchGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2005>  => {
+    const url = this.$basePath + '/api/sale-wall/search'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('keyword' in params) p.query.keyword = params.keyword
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
       url,
       ...p
     })

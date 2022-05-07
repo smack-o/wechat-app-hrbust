@@ -16,6 +16,14 @@ import * as models from './models'
   * @property `_id` user id
   * @property `createdAt` 创建时间
   * @property `[userInfo]` 
+  * @property `commentLikeCount` 评论点赞数量
+  * @property `commentPublishCount` 评论发布数量
+  * @property `brickLikeCount` 表白墙点赞数量
+  * @property `brickCollectCount` 表白墙收藏数量
+  * @property `brickPublishCount` 表白墙发布数量
+  * @property `mateLikeCount` 卖舍友点赞数量
+  * @property `mateCollectCount` 卖舍友收藏数量
+  * @property `matePublishCount` 卖舍友发布数量
   */
 export interface InlineResponse2001From {
   /**
@@ -27,5 +35,37 @@ export interface InlineResponse2001From {
    */
   'createdAt': number;
   'userInfo'?: models.InlineResponse2001FromUserInfo;
+  /**
+   * 评论点赞数量
+   */
+  'commentLikeCount': number;
+  /**
+   * 评论发布数量
+   */
+  'commentPublishCount': number;
+  /**
+   * 表白墙点赞数量
+   */
+  'brickLikeCount': number;
+  /**
+   * 表白墙收藏数量
+   */
+  'brickCollectCount': number;
+  /**
+   * 表白墙发布数量
+   */
+  'brickPublishCount': number;
+  /**
+   * 卖舍友点赞数量
+   */
+  'mateLikeCount': number;
+  /**
+   * 卖舍友收藏数量
+   */
+  'mateCollectCount': number;
+  /**
+   * 卖舍友发布数量
+   */
+  'matePublishCount': number;
 }
 

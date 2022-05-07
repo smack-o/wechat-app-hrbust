@@ -331,11 +331,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -423,11 +471,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "type": {
@@ -664,11 +760,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -756,11 +900,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "type": {
@@ -1543,11 +1735,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "from": {
@@ -1635,11 +1875,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "content": {
@@ -2037,11 +2325,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "name": {
@@ -2358,11 +2694,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "name": {
@@ -2660,11 +3044,59 @@
                               "default": ""
                             }
                           }
+                        },
+                        "commentLikeCount": {
+                          "type": "number",
+                          "description": "评论点赞数量",
+                          "default": ""
+                        },
+                        "commentPublishCount": {
+                          "type": "number",
+                          "description": "评论发布数量",
+                          "default": ""
+                        },
+                        "brickLikeCount": {
+                          "type": "number",
+                          "description": "表白墙点赞数量",
+                          "default": ""
+                        },
+                        "brickCollectCount": {
+                          "type": "number",
+                          "description": "表白墙收藏数量",
+                          "default": ""
+                        },
+                        "brickPublishCount": {
+                          "type": "number",
+                          "description": "表白墙发布数量",
+                          "default": ""
+                        },
+                        "mateLikeCount": {
+                          "type": "number",
+                          "description": "卖舍友点赞数量",
+                          "default": ""
+                        },
+                        "mateCollectCount": {
+                          "type": "number",
+                          "description": "卖舍友收藏数量",
+                          "default": ""
+                        },
+                        "matePublishCount": {
+                          "type": "number",
+                          "description": "卖舍友发布数量",
+                          "default": ""
                         }
                       },
                       "required": [
                         "_id",
-                        "createdAt"
+                        "createdAt",
+                        "commentLikeCount",
+                        "commentPublishCount",
+                        "brickLikeCount",
+                        "brickCollectCount",
+                        "brickPublishCount",
+                        "mateLikeCount",
+                        "mateCollectCount",
+                        "matePublishCount"
                       ]
                     },
                     "name": {
@@ -2979,11 +3411,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "name": {
@@ -3299,11 +3779,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "name": {
@@ -3828,11 +4356,59 @@
                           "default": ""
                         }
                       }
+                    },
+                    "commentLikeCount": {
+                      "type": "number",
+                      "description": "评论点赞数量",
+                      "default": ""
+                    },
+                    "commentPublishCount": {
+                      "type": "number",
+                      "description": "评论发布数量",
+                      "default": ""
+                    },
+                    "brickLikeCount": {
+                      "type": "number",
+                      "description": "表白墙点赞数量",
+                      "default": ""
+                    },
+                    "brickCollectCount": {
+                      "type": "number",
+                      "description": "表白墙收藏数量",
+                      "default": ""
+                    },
+                    "brickPublishCount": {
+                      "type": "number",
+                      "description": "表白墙发布数量",
+                      "default": ""
+                    },
+                    "mateLikeCount": {
+                      "type": "number",
+                      "description": "卖舍友点赞数量",
+                      "default": ""
+                    },
+                    "mateCollectCount": {
+                      "type": "number",
+                      "description": "卖舍友收藏数量",
+                      "default": ""
+                    },
+                    "matePublishCount": {
+                      "type": "number",
+                      "description": "卖舍友发布数量",
+                      "default": ""
                     }
                   },
                   "required": [
                     "_id",
-                    "createdAt"
+                    "createdAt",
+                    "commentLikeCount",
+                    "commentPublishCount",
+                    "brickLikeCount",
+                    "brickCollectCount",
+                    "brickPublishCount",
+                    "mateLikeCount",
+                    "mateCollectCount",
+                    "matePublishCount"
                   ]
                 },
                 "error": {
@@ -4036,11 +4612,59 @@
                           "default": ""
                         }
                       }
+                    },
+                    "commentLikeCount": {
+                      "type": "number",
+                      "description": "评论点赞数量",
+                      "default": ""
+                    },
+                    "commentPublishCount": {
+                      "type": "number",
+                      "description": "评论发布数量",
+                      "default": ""
+                    },
+                    "brickLikeCount": {
+                      "type": "number",
+                      "description": "表白墙点赞数量",
+                      "default": ""
+                    },
+                    "brickCollectCount": {
+                      "type": "number",
+                      "description": "表白墙收藏数量",
+                      "default": ""
+                    },
+                    "brickPublishCount": {
+                      "type": "number",
+                      "description": "表白墙发布数量",
+                      "default": ""
+                    },
+                    "mateLikeCount": {
+                      "type": "number",
+                      "description": "卖舍友点赞数量",
+                      "default": ""
+                    },
+                    "mateCollectCount": {
+                      "type": "number",
+                      "description": "卖舍友收藏数量",
+                      "default": ""
+                    },
+                    "matePublishCount": {
+                      "type": "number",
+                      "description": "卖舍友发布数量",
+                      "default": ""
                     }
                   },
                   "required": [
                     "_id",
-                    "createdAt"
+                    "createdAt",
+                    "commentLikeCount",
+                    "commentPublishCount",
+                    "brickLikeCount",
+                    "brickCollectCount",
+                    "brickPublishCount",
+                    "mateLikeCount",
+                    "mateCollectCount",
+                    "matePublishCount"
                   ]
                 },
                 "error": {
@@ -4216,11 +4840,59 @@
                           "default": ""
                         }
                       }
+                    },
+                    "commentLikeCount": {
+                      "type": "number",
+                      "description": "评论点赞数量",
+                      "default": ""
+                    },
+                    "commentPublishCount": {
+                      "type": "number",
+                      "description": "评论发布数量",
+                      "default": ""
+                    },
+                    "brickLikeCount": {
+                      "type": "number",
+                      "description": "表白墙点赞数量",
+                      "default": ""
+                    },
+                    "brickCollectCount": {
+                      "type": "number",
+                      "description": "表白墙收藏数量",
+                      "default": ""
+                    },
+                    "brickPublishCount": {
+                      "type": "number",
+                      "description": "表白墙发布数量",
+                      "default": ""
+                    },
+                    "mateLikeCount": {
+                      "type": "number",
+                      "description": "卖舍友点赞数量",
+                      "default": ""
+                    },
+                    "mateCollectCount": {
+                      "type": "number",
+                      "description": "卖舍友收藏数量",
+                      "default": ""
+                    },
+                    "matePublishCount": {
+                      "type": "number",
+                      "description": "卖舍友发布数量",
+                      "default": ""
                     }
                   },
                   "required": [
                     "_id",
-                    "createdAt"
+                    "createdAt",
+                    "commentLikeCount",
+                    "commentPublishCount",
+                    "brickLikeCount",
+                    "brickCollectCount",
+                    "brickPublishCount",
+                    "mateLikeCount",
+                    "mateCollectCount",
+                    "matePublishCount"
                   ]
                 },
                 "error": {
@@ -4402,11 +5074,59 @@
                           "default": ""
                         }
                       }
+                    },
+                    "commentLikeCount": {
+                      "type": "number",
+                      "description": "评论点赞数量",
+                      "default": ""
+                    },
+                    "commentPublishCount": {
+                      "type": "number",
+                      "description": "评论发布数量",
+                      "default": ""
+                    },
+                    "brickLikeCount": {
+                      "type": "number",
+                      "description": "表白墙点赞数量",
+                      "default": ""
+                    },
+                    "brickCollectCount": {
+                      "type": "number",
+                      "description": "表白墙收藏数量",
+                      "default": ""
+                    },
+                    "brickPublishCount": {
+                      "type": "number",
+                      "description": "表白墙发布数量",
+                      "default": ""
+                    },
+                    "mateLikeCount": {
+                      "type": "number",
+                      "description": "卖舍友点赞数量",
+                      "default": ""
+                    },
+                    "mateCollectCount": {
+                      "type": "number",
+                      "description": "卖舍友收藏数量",
+                      "default": ""
+                    },
+                    "matePublishCount": {
+                      "type": "number",
+                      "description": "卖舍友发布数量",
+                      "default": ""
                     }
                   },
                   "required": [
                     "_id",
-                    "createdAt"
+                    "createdAt",
+                    "commentLikeCount",
+                    "commentPublishCount",
+                    "brickLikeCount",
+                    "brickCollectCount",
+                    "brickPublishCount",
+                    "mateLikeCount",
+                    "mateCollectCount",
+                    "matePublishCount"
                   ]
                 },
                 "error": {
@@ -4626,11 +5346,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -4694,6 +5462,11 @@
                         "type": "boolean",
                         "description": "是否删除",
                         "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -4708,7 +5481,8 @@
                       "to",
                       "tel",
                       "content",
-                      "isDelete"
+                      "isDelete",
+                      "commentCount"
                     ]
                   }
                 },
@@ -4929,11 +5703,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -4997,6 +5819,11 @@
                         "type": "boolean",
                         "description": "是否删除",
                         "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -5011,7 +5838,8 @@
                       "to",
                       "tel",
                       "content",
-                      "isDelete"
+                      "isDelete",
+                      "commentCount"
                     ]
                   }
                 },
@@ -5240,11 +6068,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -5308,6 +6184,11 @@
                         "type": "boolean",
                         "description": "是否删除",
                         "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -5322,7 +6203,8 @@
                       "to",
                       "tel",
                       "content",
-                      "isDelete"
+                      "isDelete",
+                      "commentCount"
                     ]
                   }
                 },
@@ -5532,11 +6414,59 @@
                               "default": ""
                             }
                           }
+                        },
+                        "commentLikeCount": {
+                          "type": "number",
+                          "description": "评论点赞数量",
+                          "default": ""
+                        },
+                        "commentPublishCount": {
+                          "type": "number",
+                          "description": "评论发布数量",
+                          "default": ""
+                        },
+                        "brickLikeCount": {
+                          "type": "number",
+                          "description": "表白墙点赞数量",
+                          "default": ""
+                        },
+                        "brickCollectCount": {
+                          "type": "number",
+                          "description": "表白墙收藏数量",
+                          "default": ""
+                        },
+                        "brickPublishCount": {
+                          "type": "number",
+                          "description": "表白墙发布数量",
+                          "default": ""
+                        },
+                        "mateLikeCount": {
+                          "type": "number",
+                          "description": "卖舍友点赞数量",
+                          "default": ""
+                        },
+                        "mateCollectCount": {
+                          "type": "number",
+                          "description": "卖舍友收藏数量",
+                          "default": ""
+                        },
+                        "matePublishCount": {
+                          "type": "number",
+                          "description": "卖舍友发布数量",
+                          "default": ""
                         }
                       },
                       "required": [
                         "_id",
-                        "createdAt"
+                        "createdAt",
+                        "commentLikeCount",
+                        "commentPublishCount",
+                        "brickLikeCount",
+                        "brickCollectCount",
+                        "brickPublishCount",
+                        "mateLikeCount",
+                        "mateCollectCount",
+                        "matePublishCount"
                       ]
                     },
                     "to": {
@@ -5600,6 +6530,11 @@
                       "type": "boolean",
                       "description": "是否删除",
                       "default": false
+                    },
+                    "commentCount": {
+                      "type": "number",
+                      "description": "评论数",
+                      "default": 0
                     }
                   },
                   "required": [
@@ -5614,7 +6549,8 @@
                     "to",
                     "tel",
                     "content",
-                    "isDelete"
+                    "isDelete",
+                    "commentCount"
                   ]
                 },
                 "error": {
@@ -5841,11 +6777,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -5909,6 +6893,11 @@
                         "type": "boolean",
                         "description": "是否删除",
                         "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -5923,7 +6912,8 @@
                       "to",
                       "tel",
                       "content",
-                      "isDelete"
+                      "isDelete",
+                      "commentCount"
                     ]
                   }
                 },
@@ -6151,11 +7141,59 @@
                                 "default": ""
                               }
                             }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
                           }
                         },
                         "required": [
                           "_id",
-                          "createdAt"
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
                         ]
                       },
                       "to": {
@@ -6219,6 +7257,11 @@
                         "type": "boolean",
                         "description": "是否删除",
                         "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -6233,7 +7276,8 @@
                       "to",
                       "tel",
                       "content",
-                      "isDelete"
+                      "isDelete",
+                      "commentCount"
                     ]
                   }
                 },

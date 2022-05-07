@@ -11,7 +11,7 @@ import classNames from 'classnames'
 
 import SaleWallLike from '../../imgs/sale_wall_like.png'
 import SaleWallLiked from '../../imgs/sale_wall_liked.png'
-
+import CommentIcon from '../../imgs/comment.png'
 // import { Avatar, Time } from '../publisher-title'
 import './SaleWallItem.less'
 
@@ -24,7 +24,15 @@ const prefix = 'sale-wall-item'
 
 export default function WallItem(props: IWallItemProps) {
   const {
-    data: { photos = [], publisher, likeCount, isLike, _id, createdAt } = {},
+    data: {
+      photos = [],
+      publisher,
+      likeCount,
+      isLike,
+      _id,
+      createdAt,
+      commentCount
+    } = {},
     timeType
   } = props
 
@@ -87,7 +95,10 @@ export default function WallItem(props: IWallItemProps) {
             })}
             onClick={onLikeClick}
           >
+            <Image src={CommentIcon} mode="widthFix"></Image>
+            {commentCount}
             <Image
+              className={`${prefix}__info-like-icon`}
               src={localIsLike ? SaleWallLiked : SaleWallLike}
               mode="widthFix"
             ></Image>

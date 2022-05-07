@@ -41,7 +41,8 @@ export default function WallItem(props: IWallItemProps) {
       likeCount,
       isLike,
       _id,
-      createdAt
+      createdAt,
+      commentCount
     } = {},
     timeType,
     onClick
@@ -124,7 +125,7 @@ export default function WallItem(props: IWallItemProps) {
       <View className={`${prefix}__footer`}>
         <View className={`${prefix}__footer-item`}>
           <Image src={CommentIcon} mode="widthFix"></Image>
-          {likeCount}
+          {commentCount}
         </View>
         <View className={`${prefix}__footer-item`} onClick={onLikeClick}>
           <Image

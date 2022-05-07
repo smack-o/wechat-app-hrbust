@@ -37,7 +37,6 @@ class CreateWall extends Component<IProps, PageState> {
   fetching = false
 
   onLoad(e) {
-    console.log(e)
     if (e.id) {
       this.id = e.id
       this.getData()
@@ -58,11 +57,14 @@ class CreateWall extends Component<IProps, PageState> {
   }
 
   getComment = async (reset?: boolean) => {
+    if (this.fetching || !this.state.hasNext) {
+      return
+    }
     this.fetching = true
     const [err, res] = await withRequest(APIS.CommentApi.apiCommentBrickIdGet)({
       id: this.id,
-      pageNum: '' + this.pageNum,
-      pageSize: '' + this.pageSize
+      pageNum: String(this.pageNum),
+      pageSize: String(this.pageSize)
     })
 
     // const [err, res] = await withRequest(
@@ -115,10 +117,11 @@ class CreateWall extends Component<IProps, PageState> {
       icon: 'success'
     })
     this.getComment(true)
+    this.getData()
   }
 
   render() {
-    const { data, commentList, hasNext } = this.state
+    const { data, commentList = [] } = this.state
 
     if (!data) {
       return null
@@ -130,7 +133,6 @@ class CreateWall extends Component<IProps, PageState> {
           list={commentList}
           onCommentSubmit={this.onCommentSubmit}
         ></CommentList>
-        {!hasNext && <View>没有更多内容了</View>}
       </View>
     )
   }

@@ -76,17 +76,20 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   }
 
   fetchList = async (reset?: boolean) => {
+    if (!this.state.hasNext || this.fetching) {
+      return
+    }
     this.fetching = true
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({
-      pageNum: '' + this.pageNum,
-      pageSize: '' + this.pageSize
+      pageNum: String(this.pageNum),
+      pageSize: String(this.pageSize)
     })
 
     this.fetching = false
 
     if (err || !res) {
-      return
+      return Promise.reject()
     }
 
     this.listPush(res, reset)
@@ -151,7 +154,9 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
       return
     }
     this.pageNum++
-    return this.fetchList()
+    return this.fetchList().catch(() => {
+      this.pageNum--
+    })
   }
 
   onPullDownRefresh = async () => this.init()

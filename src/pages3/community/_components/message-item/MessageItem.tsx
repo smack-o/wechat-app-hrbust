@@ -75,6 +75,7 @@ export default function MessageItem(props: IProps) {
       photo={ext?.photo}
       content={content}
       time={createdAt}
+      userId={from?._id}
     ></ListItem>
   )
 }

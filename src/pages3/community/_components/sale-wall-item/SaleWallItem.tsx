@@ -74,6 +74,8 @@ export default function WallItem(props: IWallItemProps) {
           className={`${prefix}__avatar`}
           {...publisher?.userInfo}
           avatarSize="40rpx"
+          onClickType="jump"
+          _id={publisher?._id}
           // avatarUrl={publisher?.userInfo?.avatarUrl || ''}
           // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>

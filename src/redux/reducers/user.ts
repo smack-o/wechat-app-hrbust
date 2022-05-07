@@ -60,6 +60,7 @@ export interface UserState {
   }
   currentTerm: number
   userInfo: {
+    _id?: string
     nickName?: string
     customName?: string
     customAvatarUrl?: {

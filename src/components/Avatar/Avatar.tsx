@@ -3,6 +3,7 @@ import { View, Image } from '@tarojs/components'
 import cn from 'classnames'
 import { UserState } from '@/redux/reducers/user'
 import { getCdnUrl } from '@/utils'
+import { goPage, routes } from '@/utils/router'
 import './Avatar.less'
 
 const prefix = 'component-avatar'
@@ -28,6 +29,7 @@ export default function Avatar(
   }
 ) {
   const {
+    _id,
     avatarUrl = '',
     customAvatarUrl,
     customName,
@@ -59,11 +61,12 @@ export default function Avatar(
         })
       } else if (onClickType === 'jump') {
         // TODO: 跳转到个人主页
+        goPage(`${routes.otherAccount}?id=${_id}`)
       } else {
         onClick?.()
       }
     },
-    [avatar, onClick, onClickType]
+    [_id, avatar, onClick, onClickType]
   )
 
   return (

@@ -33,7 +33,11 @@ export default function PublisherTitle(props: Props) {
 
   return (
     <View className={cn(`${prefix}__publisher`, className)}>
-      <Avatar {...publisher?.userInfo}></Avatar>
+      <Avatar
+        {...publisher?.userInfo}
+        onClickType="jump"
+        _id={publisher?._id}
+      ></Avatar>
 
       <Time time={time} type={timeType}></Time>
     </View>

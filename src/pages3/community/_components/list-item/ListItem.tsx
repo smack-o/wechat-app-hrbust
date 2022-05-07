@@ -16,11 +16,13 @@ type IProps = {
   photo?: {
     key?: string
   }
+  userId?: string
 }
 
 const prefix = 'community-list-item'
 export default function ListItem(props: IProps) {
   const {
+    userId,
     onClick,
     userInfo,
     showDot = false,
@@ -37,6 +39,8 @@ export default function ListItem(props: IProps) {
         avatarSize="70rpx"
         avatarUrl={userInfo?.avatarUrl}
         customAvatarUrl={userInfo?.customAvatarUrl}
+        onClickType={userId ? 'jump' : undefined}
+        _id={userId}
       ></Avatar>
       <View className={`${prefix}-center`}>
         <View className={`${prefix}-center__title`}>

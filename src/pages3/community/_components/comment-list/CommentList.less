@@ -7,6 +7,8 @@
   &__item {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #fff;
 
     &__avatar {
       image {
@@ -46,7 +48,30 @@
       font-weight: 400;
       color: #4e4c56;
       line-height: 40px;
-      margin-bottom: 28px;
+    }
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+
+      &__delete {
+        font-size: 24px;
+        margin-right: 28px;
+      }
+
+      &__like {
+        display: flex;
+        align-items: center;
+        margin-right: 28px;
+        font-family: TrebuchetMS, Rotobo, 'Microsoft YaHei', sans-serif;
+        image {
+          width: 40px;
+          height: 40px;
+          margin-right: 8px;
+        }
+      }
     }
   }
 

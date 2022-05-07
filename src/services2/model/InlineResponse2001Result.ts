@@ -23,6 +23,10 @@ import * as models from './models'
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
   * @property `_id` id
+  * @property `isPublisher` 是否是发布者
+  * @property `isLike` 是否点赞
+  * @property `likeCount` 点赞数
+  * @property `collectCount` 收藏数量
   */
 export interface InlineResponse2001Result {
   'from'?: models.InlineResponse2001From;
@@ -59,5 +63,21 @@ export interface InlineResponse2001Result {
    * id
    */
   '_id': string;
+  /**
+   * 是否是发布者
+   */
+  'isPublisher': boolean;
+  /**
+   * 是否点赞
+   */
+  'isLike': boolean;
+  /**
+   * 点赞数
+   */
+  'likeCount': number;
+  /**
+   * 收藏数量
+   */
+  'collectCount': number;
 }
 

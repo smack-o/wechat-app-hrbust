@@ -60,6 +60,28 @@ export interface ParamsapiCommentCommentIdGet {
   pageSize?: string;
 }
 /**
+  * @description apiCommentIdDelete参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiCommentIdDelete {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
+  * @description apiCommentLikeIdPut参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiCommentLikeIdPut {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
   * @description apiCommentMateIdGet参数
   * @property `id` 请求参数 id
   * @property `[pageNum]` 分页页码
@@ -147,6 +169,56 @@ export class CommentApi {
     return ajax.ajax({
       ...opt,
       method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 删除 评论
+   * @summary 删除 评论
+   * @param params ParamsapiCommentIdDelete
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiCommentIdDelete = (
+    params: ParamsapiCommentIdDelete,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/comment/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 点赞/取消 评论
+   * @summary 点赞/取消 评论
+   * @param params ParamsapiCommentLikeIdPut
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiCommentLikeIdPut = (
+    params: ParamsapiCommentLikeIdPut,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/comment/like/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
       url,
       ...p
     })

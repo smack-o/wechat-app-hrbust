@@ -563,6 +563,26 @@
                         "type": "string",
                         "description": "id",
                         "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -570,7 +590,11 @@
                       "content",
                       "createdAt",
                       "updatedAt",
-                      "_id"
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "collectCount"
                     ]
                   }
                 },
@@ -992,6 +1016,26 @@
                         "type": "string",
                         "description": "id",
                         "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -999,7 +1043,11 @@
                       "content",
                       "createdAt",
                       "updatedAt",
-                      "_id"
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "collectCount"
                     ]
                   }
                 },
@@ -1421,6 +1469,26 @@
                         "type": "string",
                         "description": "id",
                         "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
                       }
                     },
                     "required": [
@@ -1428,9 +1496,283 @@
                       "content",
                       "createdAt",
                       "updatedAt",
-                      "_id"
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "collectCount"
                     ]
                   }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/comment/like/{id}": {
+      "put": {
+        "summary": "点赞/取消 评论",
+        "description": "点赞/取消 评论",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
+            "require": true,
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/comment/{id}": {
+      "delete": {
+        "summary": "删除 评论",
+        "description": "删除 评论",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
+            "require": true,
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
                 },
                 "error": {
                   "type": "object",

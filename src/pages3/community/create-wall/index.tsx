@@ -7,7 +7,6 @@ import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
 import { showToast, uploadFileToServer, withRequest } from '@/utils'
-import { getHeader } from '@/utils/ajax/ajax'
 import { File } from 'taro-ui/types/image-picker'
 
 import './index.less'
@@ -88,12 +87,12 @@ class CreateWall extends Component<IProps, PageState> {
 
     this.changeFetching(false)
 
-    if (!err && res?.brickId) {
+    if (!err && res?.id) {
       showToast({
         title: '发布成功',
         icon: 'success',
         finished: () => {
-          goPage(`${routes.wallDetail}?id=${res.brickId}`, Taro.redirectTo)
+          goPage(`${routes.wallDetail}?id=${res.id}`, Taro.redirectTo)
         }
       })
     }

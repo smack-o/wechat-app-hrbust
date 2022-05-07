@@ -14,6 +14,7 @@ import * as models from './models'
 
 /**
   * @property `_id` user id
+  * @property `createdAt` 创建时间
   * @property `[userInfo]` 
   */
 export interface InlineResponse2001From {
@@ -21,6 +22,10 @@ export interface InlineResponse2001From {
    * user id
    */
   '_id': string;
+  /**
+   * 创建时间
+   */
+  'createdAt': number;
   'userInfo'?: models.InlineResponse2001FromUserInfo;
 }
 

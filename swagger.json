@@ -254,92 +254,9 @@
                             "description": "user id",
                             "default": ""
                           },
-                          "userInfo": {
-                            "type": "object",
-                            "properties": {
-                              "nickName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customAvatarUrl": {
-                                "type": "object",
-                                "properties": {
-                                  "key": {
-                                    "type": "string",
-                                    "description": "图片 url",
-                                    "default": ""
-                                  },
-                                  "status": {
-                                    "type": "string",
-                                    "enum": [
-                                      "0",
-                                      "1",
-                                      "2"
-                                    ]
-                                  },
-                                  "height": {
-                                    "type": "number",
-                                    "description": "图片高度",
-                                    "default": 0
-                                  },
-                                  "width": {
-                                    "type": "number",
-                                    "description": "图片宽度",
-                                    "default": 0
-                                  },
-                                  "type": {
-                                    "type": "string",
-                                    "description": "图片类型",
-                                    "default": ""
-                                  }
-                                },
-                                "required": [
-                                  "key",
-                                  "status"
-                                ]
-                              },
-                              "gender": {
-                                "type": "number",
-                                "default": 0
-                              },
-                              "avatarUrl": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "language": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "city": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "province": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "country": {
-                                "type": "string",
-                                "default": ""
-                              }
-                            }
-                          }
-                        },
-                        "required": [
-                          "_id"
-                        ]
-                      },
-                      "to": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "description": "user id",
-                            "default": ""
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
                           },
                           "userInfo": {
                             "type": "object",
@@ -417,7 +334,100 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
+                        ]
+                      },
+                      "to": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "type": {
@@ -577,92 +587,9 @@
                             "description": "user id",
                             "default": ""
                           },
-                          "userInfo": {
-                            "type": "object",
-                            "properties": {
-                              "nickName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customAvatarUrl": {
-                                "type": "object",
-                                "properties": {
-                                  "key": {
-                                    "type": "string",
-                                    "description": "图片 url",
-                                    "default": ""
-                                  },
-                                  "status": {
-                                    "type": "string",
-                                    "enum": [
-                                      "0",
-                                      "1",
-                                      "2"
-                                    ]
-                                  },
-                                  "height": {
-                                    "type": "number",
-                                    "description": "图片高度",
-                                    "default": 0
-                                  },
-                                  "width": {
-                                    "type": "number",
-                                    "description": "图片宽度",
-                                    "default": 0
-                                  },
-                                  "type": {
-                                    "type": "string",
-                                    "description": "图片类型",
-                                    "default": ""
-                                  }
-                                },
-                                "required": [
-                                  "key",
-                                  "status"
-                                ]
-                              },
-                              "gender": {
-                                "type": "number",
-                                "default": 0
-                              },
-                              "avatarUrl": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "language": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "city": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "province": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "country": {
-                                "type": "string",
-                                "default": ""
-                              }
-                            }
-                          }
-                        },
-                        "required": [
-                          "_id"
-                        ]
-                      },
-                      "to": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "description": "user id",
-                            "default": ""
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
                           },
                           "userInfo": {
                             "type": "object",
@@ -740,7 +667,100 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
+                        ]
+                      },
+                      "to": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "type": {
@@ -1446,92 +1466,9 @@
                             "description": "user id",
                             "default": ""
                           },
-                          "userInfo": {
-                            "type": "object",
-                            "properties": {
-                              "nickName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customName": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "customAvatarUrl": {
-                                "type": "object",
-                                "properties": {
-                                  "key": {
-                                    "type": "string",
-                                    "description": "图片 url",
-                                    "default": ""
-                                  },
-                                  "status": {
-                                    "type": "string",
-                                    "enum": [
-                                      "0",
-                                      "1",
-                                      "2"
-                                    ]
-                                  },
-                                  "height": {
-                                    "type": "number",
-                                    "description": "图片高度",
-                                    "default": 0
-                                  },
-                                  "width": {
-                                    "type": "number",
-                                    "description": "图片宽度",
-                                    "default": 0
-                                  },
-                                  "type": {
-                                    "type": "string",
-                                    "description": "图片类型",
-                                    "default": ""
-                                  }
-                                },
-                                "required": [
-                                  "key",
-                                  "status"
-                                ]
-                              },
-                              "gender": {
-                                "type": "number",
-                                "default": 0
-                              },
-                              "avatarUrl": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "language": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "city": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "province": {
-                                "type": "string",
-                                "default": ""
-                              },
-                              "country": {
-                                "type": "string",
-                                "default": ""
-                              }
-                            }
-                          }
-                        },
-                        "required": [
-                          "_id"
-                        ]
-                      },
-                      "from": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "description": "user id",
-                            "default": ""
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
                           },
                           "userInfo": {
                             "type": "object",
@@ -1609,7 +1546,100 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
+                        ]
+                      },
+                      "from": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "content": {
@@ -1930,6 +1960,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -2006,7 +2040,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "name": {
@@ -2246,6 +2281,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -2322,7 +2361,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "name": {
@@ -2543,6 +2583,10 @@
                           "description": "user id",
                           "default": ""
                         },
+                        "createdAt": {
+                          "type": "integer",
+                          "description": "创建时间"
+                        },
                         "userInfo": {
                           "type": "object",
                           "properties": {
@@ -2619,7 +2663,8 @@
                         }
                       },
                       "required": [
-                        "_id"
+                        "_id",
+                        "createdAt"
                       ]
                     },
                     "name": {
@@ -2850,6 +2895,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -2926,7 +2975,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "name": {
@@ -3158,6 +3208,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -3234,7 +3288,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "name": {
@@ -3630,7 +3685,15 @@
       "get": {
         "summary": "获取用户信息",
         "description": "获取用户信息",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
@@ -3673,6 +3736,10 @@
                       "type": "string",
                       "description": "user id",
                       "default": ""
+                    },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
                     },
                     "userInfo": {
                       "type": "object",
@@ -3750,7 +3817,8 @@
                     }
                   },
                   "required": [
-                    "_id"
+                    "_id",
+                    "createdAt"
                   ]
                 },
                 "error": {
@@ -3877,6 +3945,10 @@
                       "description": "user id",
                       "default": ""
                     },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
+                    },
                     "userInfo": {
                       "type": "object",
                       "properties": {
@@ -3953,7 +4025,8 @@
                     }
                   },
                   "required": [
-                    "_id"
+                    "_id",
+                    "createdAt"
                   ]
                 },
                 "error": {
@@ -4052,6 +4125,10 @@
                       "description": "user id",
                       "default": ""
                     },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
+                    },
                     "userInfo": {
                       "type": "object",
                       "properties": {
@@ -4128,7 +4205,8 @@
                     }
                   },
                   "required": [
-                    "_id"
+                    "_id",
+                    "createdAt"
                   ]
                 },
                 "error": {
@@ -4233,6 +4311,10 @@
                       "description": "user id",
                       "default": ""
                     },
+                    "createdAt": {
+                      "type": "integer",
+                      "description": "创建时间"
+                    },
                     "userInfo": {
                       "type": "object",
                       "properties": {
@@ -4309,7 +4391,8 @@
                     }
                   },
                   "required": [
-                    "_id"
+                    "_id",
+                    "createdAt"
                   ]
                 },
                 "error": {
@@ -4452,6 +4535,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -4528,7 +4615,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "to": {
@@ -4750,6 +4838,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -4826,7 +4918,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "to": {
@@ -5056,6 +5149,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -5132,7 +5229,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "to": {
@@ -5343,6 +5441,10 @@
                           "description": "user id",
                           "default": ""
                         },
+                        "createdAt": {
+                          "type": "integer",
+                          "description": "创建时间"
+                        },
                         "userInfo": {
                           "type": "object",
                           "properties": {
@@ -5419,7 +5521,8 @@
                         }
                       },
                       "required": [
-                        "_id"
+                        "_id",
+                        "createdAt"
                       ]
                     },
                     "to": {
@@ -5640,6 +5743,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -5716,7 +5823,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "to": {
@@ -5938,6 +6046,10 @@
                             "description": "user id",
                             "default": ""
                           },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
                           "userInfo": {
                             "type": "object",
                             "properties": {
@@ -6014,7 +6126,8 @@
                           }
                         },
                         "required": [
-                          "_id"
+                          "_id",
+                          "createdAt"
                         ]
                       },
                       "to": {

@@ -16,6 +16,17 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description apiUserGet参数
+  * @property `[id]` 请求参数 id
+  */
+export interface ParamsapiUserGet {
+  // queryParams
+  /**
+   * 请求参数 id
+   */
+  id?: string;
+}
+/**
   * request body
   */
 export type ParamsBodyapiUserPut = models.Data5
@@ -40,17 +51,19 @@ export class UserApi {
   /**
    * 获取用户信息
    * @summary 获取用户信息
-   
+   * @param params ParamsapiUserGet
    
    * @param opt ajax config
    * @returns models.InlineResponse2009
    */
   public apiUserGet = (
-    
+    params: ParamsapiUserGet,
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
+    p.query = {}
+    if ('id' in params) p.query.id = params.id
     return ajax.ajax({
       ...opt,
       method: 'GET',

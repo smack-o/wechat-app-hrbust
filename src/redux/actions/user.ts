@@ -83,13 +83,13 @@ export const initHandler = async (dispatch: Dispatch) => {
   dispatch(startLoading())
   try {
     // 检查微信登录 session
-    let [err, res] = await withRequest(APIS.UserApi.apiUserGet)()
+    let [err, res] = await withRequest(APIS.UserApi.apiUserGet)({})
     const session = await checkSession()
 
     // 未登录
     if (err || !session) {
       await login()
-      ;[, res] = await withRequest(APIS.UserApi.apiUserGet)()
+      ;[, res] = await withRequest(APIS.UserApi.apiUserGet)({})
     }
 
     const data: any = {

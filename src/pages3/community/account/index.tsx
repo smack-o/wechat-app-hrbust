@@ -122,6 +122,10 @@ class OtherAccount extends Component<IProps, PageState> {
     this.setState({
       user: res
     })
+
+    Taro.setNavigationBarTitle({
+      title: `${res?.userInfo?.customName || res?.userInfo?.nickName} 的主页`
+    })
   }
 
   init = async () => {

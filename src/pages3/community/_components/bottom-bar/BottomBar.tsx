@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import { routes } from '@/app.config'
 import Taro from '@tarojs/taro'
+import { IRootState } from '@/types'
+import { connect } from 'react-redux'
 import FixBlock from '@/components/fix-block'
 import faceIcon from '../../imgs/bar/face.png'
 import faceSelectIcon from '../../imgs/bar/face_selected.png'
@@ -47,6 +49,9 @@ export const barList = [
   }
 ]
 
+type PropsFromState = ReturnType<typeof mapStateToProps>
+type PropsFromDispatch = {}
+
 export interface IBottomBarProps {
   onChange?: (
     index: number,
@@ -59,10 +64,13 @@ export interface IBottomBarProps {
   ) => void
   current: number
 }
-export default function BottomBar(props: IBottomBarProps) {
+
+type IProps = PropsFromState & PropsFromDispatch & IBottomBarProps
+
+export function BottomBar(props: IProps) {
   const { current: propsCurrent } = props
   const [current, setCurrent] = useState(0)
-  const { onChange } = props
+  const { onChange, unreadCount } = props
 
   useEffect(() => {
     Taro.setNavigationBarTitle({
@@ -99,6 +107,11 @@ export default function BottomBar(props: IBottomBarProps) {
                 />
               </View>
               <View className="bottom-bar__item-text">{item.text}</View>
+              {index === 3 && unreadCount > 0 && (
+                <View className="custom-tab-item-dot">
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </View>
+              )}
             </View>
           )
         })}
@@ -106,3 +119,11 @@ export default function BottomBar(props: IBottomBarProps) {
     </FixBlock>
   )
 }
+
+const mapStateToProps = (state: IRootState) => ({
+  unreadCount: state.user.unreadCount
+})
+
+export default connect<PropsFromState, PropsFromDispatch, IBottomBarProps>(
+  mapStateToProps
+)(BottomBar)

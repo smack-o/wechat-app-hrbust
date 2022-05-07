@@ -13,22 +13,46 @@
 import * as models from './models'
 
 /**
-  * @property `confidence` 比对相似度
-  * @property `qualityScoreA` 图片A质量
-  * @property `qualityScoreB` 图片B质量
+  * @property `[from]` 
+  * @property `[to]` 
+  * @property `type` 评论类型
+  * @property `[brickId]` 若评论表白墙，需要表白墙 id
+  * @property `[mateId]` 若评论卖舍友，需要卖舍友 id
+  * @property `[commentId]` 评论回复评论，需要评论 id
+  * @property `content` 评论内容
+  * @property `createdAt` 创建时间
+  * @property `updatedAt` 更新时间
   */
 export interface InlineResponse2001Result {
+  'from'?: models.InlineResponse2001From;
+  'to'?: models.InlineResponse2001From;
   /**
-   * 比对相似度
+   * 评论类型
    */
-  'confidence': string;
+  'type': number;
   /**
-   * 图片A质量
+   * 若评论表白墙，需要表白墙 id
    */
-  'qualityScoreA': string;
+  'brickId'?: string;
   /**
-   * 图片B质量
+   * 若评论卖舍友，需要卖舍友 id
    */
-  'qualityScoreB': string;
+  'mateId'?: string;
+  /**
+   * 评论回复评论，需要评论 id
+   */
+  'commentId'?: string;
+  /**
+   * 评论内容
+   */
+  'content': string;
+  /**
+   * 创建时间
+   */
+  'createdAt': number;
+  /**
+   * 更新时间
+   */
+  'updatedAt': number;
 }
 

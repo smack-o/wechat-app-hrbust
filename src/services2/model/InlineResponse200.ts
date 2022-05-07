@@ -24,7 +24,7 @@ export interface InlineResponse200 {
   'resultCode': InlineResponse200.ResultCodeEnum;
   'message': string;
   'result'?: models.InlineResponse200Result;
-  'error'?: models.InlineResponse200Error;
+  'error'?: models.InlineResponse200ResultError;
 }
 
 export namespace InlineResponse200 {

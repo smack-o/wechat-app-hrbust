@@ -16,20 +16,27 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
-  * @description apiWallBrickIdGet参数
-  * @property `brickId` wall id
+  * @description apiWallIdGet参数
+  * @property `id` 请求参数 id
   */
-export interface ParamsapiWallBrickIdGet {
+export interface ParamsapiWallIdGet {
   // pathParams
   /**
-   * wall id
+   * 请求参数 id
    */
-  brickId: string;
+  id: string;
 }
 /**
-  * request body
+  * @description apiWallLikeIdPut参数
+  * @property `id` 请求参数 id
   */
-export type ParamsBodyapiWallLikePut = models.Data9
+export interface ParamsapiWallLikeIdPut {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
 /**
   * @description apiWallListGet参数
   * @property `[pageNum]` 分页页码
@@ -132,21 +139,21 @@ export class WallApi {
   /**
    * 获取表白墙详情
    * @summary 获取表白墙详情
-   * @param params ParamsapiWallBrickIdGet
+   * @param params ParamsapiWallIdGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
-  public apiWallBrickIdGet = (
-    params: ParamsapiWallBrickIdGet,
+  public apiWallIdGet = (
+    params: ParamsapiWallIdGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const {
-    brickId,
+    id,
 } = params
-    const url = this.$basePath + `/api/wall/${brickId}`
+    const url = this.$basePath + `/api/wall/${id}`
     const p: any = {}
-    ajax.check(params.brickId, 'brickId')
+    ajax.check(params.id, 'id')
     return ajax.ajax({
       ...opt,
       method: 'GET',
@@ -157,18 +164,21 @@ export class WallApi {
   /**
    * 点赞/取消 表白墙
    * @summary 点赞/取消 表白墙
+   * @param params ParamsapiWallLikeIdPut
    
-   * @param data: ParamsBodyapiWallLikePut// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2002
+   * @returns models.InlineResponse200
    */
-  public apiWallLikePut = (
-    
-    data: ParamsBodyapiWallLikePut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2002>  => {
-    const url = this.$basePath + '/api/wall/like'
+  public apiWallLikeIdPut = (
+    params: ParamsapiWallLikeIdPut,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/wall/like/${id}`
     const p: any = {}
-    p.data = data
+    ajax.check(params.id, 'id')
     return ajax.ajax({
       ...opt,
       method: 'PUT',
@@ -182,12 +192,12 @@ export class WallApi {
    * @param params ParamsapiWallListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2009
+   * @returns models.InlineResponse20010
    */
   public apiWallListGet = (
     params: ParamsapiWallListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2009>  => {
+  ) : AjaxPromise<models.InlineResponse20010>  => {
     const url = this.$basePath + '/api/wall/list'
     const p: any = {}
     p.query = {}
@@ -206,12 +216,12 @@ export class WallApi {
    * @param params ParamsapiWallListHotGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2009
+   * @returns models.InlineResponse20010
    */
   public apiWallListHotGet = (
     params: ParamsapiWallListHotGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2009>  => {
+  ) : AjaxPromise<models.InlineResponse20010>  => {
     const url = this.$basePath + '/api/wall/list/hot'
     const p: any = {}
     p.query = {}
@@ -230,12 +240,12 @@ export class WallApi {
    * @param params ParamsapiWallListLikeGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2009
+   * @returns models.InlineResponse20010
    */
   public apiWallListLikeGet = (
     params: ParamsapiWallListLikeGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2009>  => {
+  ) : AjaxPromise<models.InlineResponse20010>  => {
     const url = this.$basePath + '/api/wall/list/like'
     const p: any = {}
     p.query = {}
@@ -254,12 +264,12 @@ export class WallApi {
    * @param params ParamsapiWallListPublishGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2009
+   * @returns models.InlineResponse20010
    */
   public apiWallListPublishGet = (
     params: ParamsapiWallListPublishGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2009>  => {
+  ) : AjaxPromise<models.InlineResponse20010>  => {
     const url = this.$basePath + '/api/wall/list/publish'
     const p: any = {}
     p.query = {}
@@ -278,12 +288,12 @@ export class WallApi {
    
    * @param data: ParamsBodyapiWallPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse20011
+   * @returns models.InlineResponse2008
    */
   public apiWallPost = (
     
     data: ParamsBodyapiWallPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20011>  => {
+  ) : AjaxPromise<models.InlineResponse2008>  => {
     const url = this.$basePath + '/api/wall'
     const p: any = {}
     p.data = data
@@ -300,12 +310,12 @@ export class WallApi {
    * @param params ParamsapiWallSearchGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2009
+   * @returns models.InlineResponse20010
    */
   public apiWallSearchGet = (
     params: ParamsapiWallSearchGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2009>  => {
+  ) : AjaxPromise<models.InlineResponse20010>  => {
     const url = this.$basePath + '/api/wall/search'
     const p: any = {}
     p.query = {}

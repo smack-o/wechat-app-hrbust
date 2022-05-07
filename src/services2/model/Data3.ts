@@ -13,34 +13,17 @@
 import * as models from './models'
 
 /**
-  * @property `[name]` 姓名
-  * @property `[gender]` 
-  * @property `[major]` 主修专业
-  * @property `[description]` 描述
-  * @property `[content]` 内容
-  * @property `[photos]` 图片列表
+  * @property `[imageDataA]` 图片A
+  * @property `[imageDataB]` 图片B
   */
 export interface Data3 {
   /**
-   * 姓名
+   * 图片A
    */
-  'name'?: string;
-  'gender'?: number;
+  'imageDataA'?: string;
   /**
-   * 主修专业
+   * 图片B
    */
-  'major'?: string;
-  /**
-   * 描述
-   */
-  'description'?: string;
-  /**
-   * 内容
-   */
-  'content'?: string;
-  /**
-   * 图片列表
-   */
-  'photos'?: Array<string>;
+  'imageDataB'?: string;
 }
 

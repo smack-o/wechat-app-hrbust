@@ -13,63 +13,22 @@
 import * as models from './models'
 
 /**
-  * @property `createdAt` 创建时间
-  * @property `updatedAt` 更新时间
-  * @property `_id` 消息 id
-  * @property `[to]` 
-  * @property `[from]` 
-  * @property `content` 内容
-  * @property `type` 消息类型
-  * @property `[ext]` 
-  * @property `isRead` 是否已读
+  * @property `confidence` 比对相似度
+  * @property `qualityScoreA` 图片A质量
+  * @property `qualityScoreB` 图片B质量
   */
 export interface InlineResponse2003Result {
   /**
-   * 创建时间
+   * 比对相似度
    */
-  'createdAt': number;
+  'confidence': string;
   /**
-   * 更新时间
+   * 图片A质量
    */
-  'updatedAt': number;
+  'qualityScoreA': string;
   /**
-   * 消息 id
+   * 图片B质量
    */
-  '_id': string;
-  'to'?: models.InlineResponse2003To;
-  'from'?: models.InlineResponse2003To;
-  /**
-   * 内容
-   */
-  'content': string;
-  /**
-   * 消息类型
-   */
-  'type': InlineResponse2003Result.TypeEnum;
-  'ext'?: models.InlineResponse2003Ext;
-  /**
-   * 是否已读
-   */
-  'isRead': boolean;
+  'qualityScoreB': string;
 }
 
-export namespace InlineResponse2003Result {
-  export enum TypeEnum {
-  /**
-   * `BrickLike` 消息类型
-   */
-    BrickLike = 'BrickLike' as any,
-  /**
-   * `MateLike` 消息类型
-   */
-    MateLike = 'MateLike' as any,
-  /**
-   * `Comment` 消息类型
-   */
-    Comment = 'Comment' as any,
-  /**
-   * `Hot` 消息类型
-   */
-    Hot = 'Hot' as any
-  }
-}

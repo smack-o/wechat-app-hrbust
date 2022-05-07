@@ -13,22 +13,37 @@
 import * as models from './models'
 
 /**
-  * @property `[height]` 图片高度
-  * @property `[width]` 图片宽度
-  * @property `[type]` 图片类型
+  * @property `[to]` 评论给谁的
+  * @property `[type]` 评论类型
+  * @property `[brickId]` 若评论表白墙，需要表白墙 id
+  * @property `[mateId]` 若评论卖舍友，需要卖舍友 id
+  * @property `[commentId]` 评论回复评论，需要评论 id
+  * @property `[content]` 评论内容
   */
 export interface Data {
   /**
-   * 图片高度
+   * 评论给谁的
    */
-  'height'?: number;
+  'to'?: string;
   /**
-   * 图片宽度
+   * 评论类型
    */
-  'width'?: number;
+  'type'?: number;
   /**
-   * 图片类型
+   * 若评论表白墙，需要表白墙 id
    */
-  'type'?: string;
+  'brickId'?: string;
+  /**
+   * 若评论卖舍友，需要卖舍友 id
+   */
+  'mateId'?: string;
+  /**
+   * 评论回复评论，需要评论 id
+   */
+  'commentId'?: string;
+  /**
+   * 评论内容
+   */
+  'content'?: string;
 }
 

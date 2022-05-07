@@ -16,7 +16,6 @@ import * as models from './models'
   * @property `[height]` 图片高度
   * @property `[width]` 图片宽度
   * @property `[type]` 图片类型
-  * @property `[url]` 图片 url
   */
 export interface Data1 {
   /**
@@ -31,9 +30,5 @@ export interface Data1 {
    * 图片类型
    */
   'type'?: string;
-  /**
-   * 图片 url
-   */
-  'url'?: string;
 }
 

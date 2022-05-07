@@ -16,7 +16,7 @@ import * as models from './models'
   * @property `[message]` 
   * @property `[detail]` 
   */
-export interface InlineResponse200Error {
+export interface InlineResponse200ResultError {
   'message'?: string;
   'detail'?: string;
 }

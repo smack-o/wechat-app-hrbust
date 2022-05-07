@@ -13,17 +13,27 @@
 import * as models from './models'
 
 /**
-  * @property `[imageDataA]` 图片A
-  * @property `[imageDataB]` 图片B
+  * @property `[height]` 图片高度
+  * @property `[width]` 图片宽度
+  * @property `[type]` 图片类型
+  * @property `[url]` 图片 url
   */
 export interface Data2 {
   /**
-   * 图片A
+   * 图片高度
    */
-  'imageDataA'?: string;
+  'height'?: number;
   /**
-   * 图片B
+   * 图片宽度
    */
-  'imageDataB'?: string;
+  'width'?: number;
+  /**
+   * 图片类型
+   */
+  'type'?: string;
+  /**
+   * 图片 url
+   */
+  'url'?: string;
 }
 

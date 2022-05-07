@@ -43,12 +43,12 @@ export class UserApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse2008
+   * @returns models.InlineResponse2009
    */
   public apiUserGet = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2008>  => {
+  ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     return ajax.ajax({
@@ -64,12 +64,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserPut// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2008
+   * @returns models.InlineResponse2009
    */
   public apiUserPut = (
     
     data: ParamsBodyapiUserPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2008>  => {
+  ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     p.data = data
@@ -86,12 +86,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxAuthPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2008
+   * @returns models.InlineResponse2009
    */
   public apiUserWxAuthPost = (
     
     data: ParamsBodyapiUserWxAuthPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2008>  => {
+  ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/user/wx/auth'
     const p: any = {}
     p.data = data
@@ -108,12 +108,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxLoginPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2008
+   * @returns models.InlineResponse2009
    */
   public apiUserWxLoginPost = (
     
     data: ParamsBodyapiUserWxLoginPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2008>  => {
+  ) : AjaxPromise<models.InlineResponse2009>  => {
     const url = this.$basePath + '/api/user/wx/login'
     const p: any = {}
     p.data = data

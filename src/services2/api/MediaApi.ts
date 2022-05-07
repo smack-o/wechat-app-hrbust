@@ -18,7 +18,7 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiMediaComparefacePost = models.Data2
+export type ParamsBodyapiMediaComparefacePost = models.Data3
 /**
   * @description apiMediaPost参数
   * @property `file` file content
@@ -33,11 +33,11 @@ export interface ParamsapiMediaPost {
 /**
   * request body
   */
-export type ParamsBodyapiMediaPost = models.Data
+export type ParamsBodyapiMediaPost = models.Data1
 /**
   * request body
   */
-export type ParamsBodyapiMediaUrlPost = models.Data1
+export type ParamsBodyapiMediaUrlPost = models.Data2
 
 export class MediaApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -54,12 +54,12 @@ export class MediaApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse2002
+   * @returns models.InlineResponse200
    */
   public apiLegalcheckPost = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2002>  => {
+  ) : AjaxPromise<models.InlineResponse200>  => {
     const url = this.$basePath + '/api/legalcheck'
     const p: any = {}
     return ajax.ajax({
@@ -75,12 +75,12 @@ export class MediaApi {
    
    * @param data: ParamsBodyapiMediaComparefacePost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2001
+   * @returns models.InlineResponse2003
    */
   public apiMediaComparefacePost = (
     
     data: ParamsBodyapiMediaComparefacePost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2001>  => {
+  ) : AjaxPromise<models.InlineResponse2003>  => {
     const url = this.$basePath + '/api/media/compareface'
     const p: any = {}
     p.data = data
@@ -97,12 +97,12 @@ export class MediaApi {
    * @param params ParamsapiMediaPost
    * @param data: ParamsBodyapiMediaPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse200
+   * @returns models.InlineResponse2002
    */
   public apiMediaPost = (
     params: ParamsapiMediaPost,
     data: ParamsBodyapiMediaPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse200>  => {
+  ) : AjaxPromise<models.InlineResponse2002>  => {
     const url = this.$basePath + '/api/media'
     const p: any = {}
     p.form = new FormData()
@@ -131,12 +131,12 @@ export class MediaApi {
    
    * @param data: ParamsBodyapiMediaUrlPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse200
+   * @returns models.InlineResponse2002
    */
   public apiMediaUrlPost = (
     
     data: ParamsBodyapiMediaUrlPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse200>  => {
+  ) : AjaxPromise<models.InlineResponse2002>  => {
     const url = this.$basePath + '/api/media/url'
     const p: any = {}
     p.data = data

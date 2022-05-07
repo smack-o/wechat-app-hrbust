@@ -13,40 +13,41 @@
 import * as models from './models'
 
 /**
-  * @property `code` 
-  * @property `resultCode` 
-  * @property `message` 
-  * @property `[result]` 
-  * @property `[error]` 
+  * @property `key` 图片 url
+  * @property `status` 
+  * @property `[height]` 图片高度
+  * @property `[width]` 图片宽度
+  * @property `[type]` 图片类型
+  * @property `_id` 图片 id
   */
 export interface InlineResponse2002Result {
-  'code': InlineResponse2002Result.CodeEnum;
-  'resultCode': InlineResponse2002Result.ResultCodeEnum;
-  'message': string;
-  'result'?: any;
-  'error'?: models.InlineResponse200Error;
+  /**
+   * 图片 url
+   */
+  'key': string;
+  'status': InlineResponse2002Result.StatusEnum;
+  /**
+   * 图片高度
+   */
+  'height'?: number;
+  /**
+   * 图片宽度
+   */
+  'width'?: number;
+  /**
+   * 图片类型
+   */
+  'type'?: string;
+  /**
+   * 图片 id
+   */
+  '_id': string;
 }
 
 export namespace InlineResponse2002Result {
-  export enum CodeEnum {
-    _100001 = '100001' as any,
-    _100002 = '100002' as any,
-    _400001 = '400001' as any,
-    _400002 = '400002' as any,
-    _400003 = '400003' as any,
-    _500000 = '500000' as any,
-    _500001 = '500001' as any,
-    _500002 = '500002' as any
-  }
-  export enum ResultCodeEnum {
-    SUCCESS = 'SUCCESS' as any,
-    ERRPARAM = 'ERR_PARAM' as any,
-    SENMESSAGE = 'SEN_MESSAGE' as any,
-    NOTWECHATAUTH = 'NOT_WECHAT_AUTH' as any,
-    NOTLOGIN = 'NOT_LOGIN' as any,
-    NOTAUTH = 'NOT_AUTH' as any,
-    ERROR = 'ERROR' as any,
-    FAILUPLOAD = 'FAIL_UPLOAD' as any,
-    FACECOMPARERUPLOAD = 'FACE_COMPARER_UPLOAD' as any
+  export enum StatusEnum {
+    _0 = '0' as any,
+    _1 = '1' as any,
+    _2 = '2' as any
   }
 }

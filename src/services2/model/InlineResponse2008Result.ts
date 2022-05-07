@@ -13,14 +13,12 @@
 import * as models from './models'
 
 /**
-  * @property `_id` user id
-  * @property `[userInfo]` 
+  * @property `id` 请求参数 id
   */
-export interface InlineResponse2003To {
+export interface InlineResponse2008Result {
   /**
-   * user id
+   * 请求参数 id
    */
-  '_id': string;
-  'userInfo'?: models.InlineResponse2003ToUserInfo;
+  'id': string;
 }
 

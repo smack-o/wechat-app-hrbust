@@ -13,12 +13,24 @@
 import * as models from './models'
 
 /**
-  * @property `brickId` wall id
+  * @property `[photo]` 
+  * @property `brickId` brickId
+  * @property `mateId` brickId
+  * @property `commentId` brickId
   */
-export interface InlineResponse20011Result {
+export interface InlineResponse2004Ext {
+  'photo'?: models.InlineResponse2001FromUserInfoCustomAvatarUrl;
   /**
-   * wall id
+   * brickId
    */
   'brickId': string;
+  /**
+   * brickId
+   */
+  'mateId': string;
+  /**
+   * brickId
+   */
+  'commentId': string;
 }
 

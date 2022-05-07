@@ -16,6 +16,17 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description apiWallIdDelete参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiWallIdDelete {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
   * @description apiWallIdGet参数
   * @property `id` 请求参数 id
   */
@@ -146,6 +157,31 @@ export class WallApi {
     }
   }
 
+  /**
+   * 删除 表白墙
+   * @summary 删除 表白墙
+   * @param params ParamsapiWallIdDelete
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiWallIdDelete = (
+    params: ParamsapiWallIdDelete,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/wall/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    })
+  }
   /**
    * 获取表白墙详情
    * @summary 获取表白墙详情

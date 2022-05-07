@@ -16,6 +16,17 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description apiSaleWallIdDelete参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiSaleWallIdDelete {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
   * @description apiSaleWallIdGet参数
   * @property `id` 请求参数 id
   */
@@ -130,6 +141,31 @@ export class SaleWallApi {
     }
   }
 
+  /**
+   * 删除 卖舍友
+   * @summary 删除 卖舍友
+   * @param params ParamsapiSaleWallIdDelete
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiSaleWallIdDelete = (
+    params: ParamsapiSaleWallIdDelete,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/sale-wall/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    })
+  }
   /**
    * 获取卖舍友详情
    * @summary 获取卖舍友详情

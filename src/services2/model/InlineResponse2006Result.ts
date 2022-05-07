@@ -29,6 +29,7 @@ import * as models from './models'
   * @property `[content]` 内容
   * @property `[photos]` 图片列表
   * @property `isDelete` 是否删除
+  * @property `commentCount` 评论数
   */
 export interface InlineResponse2006Result {
   /**
@@ -89,5 +90,9 @@ export interface InlineResponse2006Result {
    * 是否删除
    */
   'isDelete': boolean;
+  /**
+   * 评论数
+   */
+  'commentCount': number;
 }
 

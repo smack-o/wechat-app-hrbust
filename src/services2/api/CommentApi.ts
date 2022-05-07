@@ -60,6 +60,28 @@ export interface ParamsapiCommentCommentIdGet {
   pageSize?: string;
 }
 /**
+  * @description apiCommentMateIdGet参数
+  * @property `id` 请求参数 id
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiCommentMateIdGet {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
   * request body
   */
 export type ParamsBodyapiCommentPost = models.Data
@@ -117,6 +139,34 @@ export class CommentApi {
     id,
 } = params
     const url = this.$basePath + `/api/comment/comment/${id}`
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取卖舍友评论列表
+   * @summary 获取卖舍友评论列表
+   * @param params ParamsapiCommentMateIdGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2001
+   */
+  public apiCommentMateIdGet = (
+    params: ParamsapiCommentMateIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2001>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/comment/mate/${id}`
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum

@@ -42,11 +42,17 @@ class OtherAccount extends Component<IProps, PageState> {
     activeTab: 0
   }
 
+  id = ''
+  pageNum = 0
+  pageSize = 20
+  fetching = false
+
   fetchBrickList = async (reset?: boolean) => {
     this.fetching = true
     const [err, res] = await withRequest(APIS.WallApi.apiWallListPublishGet)({
       pageNum: String(this.pageNum),
-      pageSize: String(this.pageSize)
+      pageSize: String(this.pageSize),
+      id: this.id
     })
 
     this.fetching = false
@@ -67,7 +73,8 @@ class OtherAccount extends Component<IProps, PageState> {
       APIS.SaleWallApi.apiSaleWallListPublishGet
     )({
       pageNum: String(this.pageNum),
-      pageSize: String(this.pageSize)
+      pageSize: String(this.pageSize),
+      id: this.id
     })
 
     this.fetching = false
@@ -94,11 +101,6 @@ class OtherAccount extends Component<IProps, PageState> {
       api: this.fetchMateList
     }
   ]
-
-  id = ''
-  pageNum = 0
-  pageSize = 20
-  fetching = false
 
   onLoad(e) {
     if (e.id) {

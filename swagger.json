@@ -2806,6 +2806,13 @@
             "default": "20",
             "require": true,
             "in": "query"
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
+            "in": "query"
           }
         ],
         "responses": {
@@ -3118,6 +3125,13 @@
             "description": "每页数量",
             "default": "20",
             "require": true,
+            "in": "query"
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
             "in": "query"
           }
         ],
@@ -5654,6 +5668,13 @@
             "default": "20",
             "require": true,
             "in": "query"
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
+            "in": "query"
           }
         ],
         "responses": {
@@ -5956,6 +5977,13 @@
             "description": "每页数量",
             "default": "20",
             "require": true,
+            "in": "query"
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "请求参数 id",
+            "default": "",
             "in": "query"
           }
         ],

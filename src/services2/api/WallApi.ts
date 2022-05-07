@@ -73,6 +73,7 @@ export interface ParamsapiWallListHotGet {
   * @description apiWallListLikeGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
+  * @property `[id]` 请求参数 id
   */
 export interface ParamsapiWallListLikeGet {
   // queryParams
@@ -84,11 +85,16 @@ export interface ParamsapiWallListLikeGet {
    * 每页数量
    */
   pageSize?: string;
+  /**
+   * 请求参数 id
+   */
+  id?: string;
 }
 /**
   * @description apiWallListPublishGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
+  * @property `[id]` 请求参数 id
   */
 export interface ParamsapiWallListPublishGet {
   // queryParams
@@ -100,6 +106,10 @@ export interface ParamsapiWallListPublishGet {
    * 每页数量
    */
   pageSize?: string;
+  /**
+   * 请求参数 id
+   */
+  id?: string;
 }
 /**
   * request body
@@ -251,6 +261,7 @@ export class WallApi {
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('id' in params) p.query.id = params.id
     return ajax.ajax({
       ...opt,
       method: 'GET',
@@ -275,6 +286,7 @@ export class WallApi {
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('id' in params) p.query.id = params.id
     return ajax.ajax({
       ...opt,
       method: 'GET',

@@ -452,13 +452,19 @@
                       "updatedAt": {
                         "type": "integer",
                         "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "id",
+                        "default": ""
                       }
                     },
                     "required": [
                       "type",
                       "content",
                       "createdAt",
-                      "updatedAt"
+                      "updatedAt",
+                      "_id"
                     ]
                   }
                 },
@@ -769,13 +775,19 @@
                       "updatedAt": {
                         "type": "integer",
                         "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "id",
+                        "default": ""
                       }
                     },
                     "required": [
                       "type",
                       "content",
                       "createdAt",
-                      "updatedAt"
+                      "updatedAt",
+                      "_id"
                     ]
                   }
                 },

@@ -15,7 +15,8 @@ interface IWallItemProps {
   timeType?: 'relative' | 'absolute'
   data:
     | GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
-    | GetApiResultType<typeof APIS.WallApi.apiWallBrickIdGet>
+    | GetApiResultType<typeof APIS.WallApi.apiWallIdGet>
+  onClick?: () => void
 }
 
 const prefix = 'wall-item'
@@ -42,7 +43,8 @@ export default function WallItem(props: IWallItemProps) {
       _id,
       createdAt
     } = {},
-    timeType
+    timeType,
+    onClick
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -54,7 +56,8 @@ export default function WallItem(props: IWallItemProps) {
   }, [isLike, likeCount])
 
   const onImageClick = useCallback(
-    (index: number) => {
+    (index: number, e) => {
+      e.stopPropagation()
       // @ts-ignore
       wx.previewMedia({
         current: index,
@@ -68,20 +71,28 @@ export default function WallItem(props: IWallItemProps) {
     [photos]
   )
 
-  const onLikeClick = useCallback(async () => {
-    const [err] = await withRequest(APIS.WallApi.apiWallLikePut)({
-      brickId: _id
-    })
+  const onLikeClick = useCallback(
+    async e => {
+      e.stopPropagation()
+      if (!_id) {
+        return
+      }
 
-    // 本地变更
-    if (!err) {
-      setLocalIsLike(!localIsLike)
-      setLocalIsLikeCount(localIsLikeCount + (localIsLike ? -1 : 1))
-    }
-  }, [_id, localIsLike, localIsLikeCount])
+      const [err] = await withRequest(APIS.WallApi.apiWallLikeIdPut)({
+        id: _id
+      })
+
+      // 本地变更
+      if (!err) {
+        setLocalIsLike(!localIsLike)
+        setLocalIsLikeCount(localIsLikeCount + (localIsLike ? -1 : 1))
+      }
+    },
+    [_id, localIsLike, localIsLikeCount]
+  )
 
   return (
-    <View className={prefix}>
+    <View className={prefix} onClick={onClick}>
       <PublisherTitle
         time={createdAt}
         publisher={publisher}
@@ -96,7 +107,7 @@ export default function WallItem(props: IWallItemProps) {
         {photos?.map((photo, index) => {
           return (
             <Image
-              onClick={() => onImageClick(index)}
+              onClick={e => onImageClick(index, e)}
               className={`${prefix}__photos-item`}
               key={photo.key}
               mode={photos.length > 1 ? 'aspectFill' : 'widthFix'}

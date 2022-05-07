@@ -2,7 +2,7 @@ import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { goPage } from '@/utils/router'
 import Taro from '@tarojs/taro'
-import { Image, View, Text } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { routes } from '@/app.config'
 import Avatar from '@/components/Avatar'
@@ -39,8 +39,8 @@ export default function WallItem(props: IWallItemProps) {
   const onLikeClick = useCallback(
     async e => {
       e.stopPropagation()
-      const [err] = await withRequest(APIS.SaleWallApi.apiSaleWallLikePut)({
-        id: _id
+      const [err] = await withRequest(APIS.SaleWallApi.apiSaleWallLikeIdPut)({
+        id: _id || ''
       })
 
       // 本地变更

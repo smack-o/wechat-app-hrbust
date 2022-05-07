@@ -22,6 +22,7 @@ import * as models from './models'
   * @property `content` 评论内容
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
+  * @property `_id` id
   */
 export interface InlineResponse2001Result {
   'from'?: models.InlineResponse2001From;
@@ -54,5 +55,9 @@ export interface InlineResponse2001Result {
    * 更新时间
    */
   'updatedAt': number;
+  /**
+   * id
+   */
+  '_id': string;
 }
 

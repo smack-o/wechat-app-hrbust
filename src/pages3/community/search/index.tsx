@@ -132,6 +132,7 @@ export default class Search extends React.Component<{}, IState> {
         <View className={`${prefix}-input`}>
           <Image className={`${prefix}-input__icon`} src={SearchIcon}></Image>
           <Input
+            confirmType="search"
             onInput={this.onKeywordChange}
             placeholder="搜索关键词"
             onConfirm={this.fetchData}

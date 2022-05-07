@@ -134,7 +134,7 @@ class Account extends Component<IProps, PageState> {
             </View>
             <View className="student">
               <Image className="image" src={authIcon} />
-              <View>{studentInfo.name}fsdfds</View>
+              <View>{studentInfo.name}</View>
             </View>
           </View>
         </View>

@@ -2,7 +2,6 @@ import React, {
   Fragment,
   PropsWithChildren,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -43,6 +42,7 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
   } = props
 
   const ref = useRef<HTMLDivElement>(null)
+
   const [height, setHeight] = useState(propsHeight)
 
   const id = useMemo(
@@ -68,7 +68,7 @@ export default function FixBlock(props: PropsWithChildren<IProps>) {
   const style =
     height > 0
       ? {
-          height: `${height}px`
+          height: `${height}rpx`
         }
       : {}
 

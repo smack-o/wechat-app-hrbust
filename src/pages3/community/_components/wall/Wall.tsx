@@ -130,6 +130,8 @@ export default class Wall extends React.Component<WallProps, WallState> {
     })
   }
 
+  onItemClick = () => {}
+
   render() {
     const { activeTab, hasNext } = this.state
     return (
@@ -153,7 +155,13 @@ export default class Wall extends React.Component<WallProps, WallState> {
           onChange={this.onTabChange}
         >
           {this.state.list.map(item => {
-            return <WallItem data={item} key={item._id}></WallItem>
+            return (
+              <WallItem
+                data={item}
+                key={item._id}
+                onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
+              ></WallItem>
+            )
           })}
         </Tab>
         <View className="wall__add-wall" onClick={this.onAddWallClick}>

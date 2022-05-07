@@ -76,9 +76,6 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   }
 
   fetchList = async (reset?: boolean) => {
-    if (!this.state.hasNext || this.fetching) {
-      return
-    }
     this.fetching = true
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({

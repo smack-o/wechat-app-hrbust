@@ -45,7 +45,8 @@ export const router = {
     message: 'community/message/index', // 消息页面
     myWall: 'community/my-wall/index', // 我的表白墙
     mySaleWall: 'community/my-sale-wall/index', // 我的卖舍友
-    search: 'community/search/index' // 搜索
+    search: 'community/search/index', // 搜索
+    otherAccount: 'community/account/index' // 其他用户主页
   }
 }
 

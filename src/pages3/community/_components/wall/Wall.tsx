@@ -59,10 +59,6 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   fetchList = async (reset?: boolean) => {
-    if (!this.state.hasNext || this.fetching) {
-      return
-    }
-
     this.fetching = true
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({
@@ -111,31 +107,6 @@ export default class Wall extends React.Component<WallProps, WallState> {
     })
   }
 
-  onInut = async e => {
-    // APIS.WallApi.apiWallSearchGet({
-    //   // keyword: e.target.value,
-    //   pageNum: '0',
-    //   pageSize: '5'
-    // })
-    this.fetching = true
-    const [err, res] = await withRequest(APIS.WallApi.apiWallSearchGet)({
-      pageNum: '' + this.pageNum,
-      pageSize: '' + 20,
-      keyword: e.target.value
-    })
-
-    this.fetching = false
-
-    if (err || !res) {
-      return
-    }
-
-    this.setState({
-      list: true ? res : this.state.list.concat(res),
-      hasNext: res.length === this.pageSize
-    })
-  }
-
   onItemClick = () => {}
 
   render() {
@@ -149,11 +120,6 @@ export default class Wall extends React.Component<WallProps, WallState> {
           }}
         >
           <Image className="wall-search__icon" src={SearchIcon}></Image>
-          <Input
-            onInput={this.onInut}
-            placeholder="搜索关键词"
-            disabled
-          ></Input>
         </View>
         <Tab
           currentIndex={activeTab}

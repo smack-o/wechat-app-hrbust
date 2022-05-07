@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { IRootState } from '@/types'
-import { pddSearch, getKeywords, generateGoods, getChannel } from '@/services/pdd'
+import { pddSearch, getKeywords, generateGoods } from '@/services/pdd'
 import { AtSearchBar, AtIcon } from 'taro-ui'
 import { cError } from '@/utils'
 
@@ -16,10 +16,10 @@ type PropsFromDispatch = {}
 type PageOwnProps = {}
 
 type PageState = {
-  pddList: any[],
-  searchValue: string,
-  loading: boolean,
-  hotKeywords: string[],
+  pddList: any[]
+  searchValue: string
+  loading: boolean
+  hotKeywords: string[]
   showScrollBtn: boolean
 }
 
@@ -39,7 +39,7 @@ class Index extends Component<IProps, PageState> {
   pageNo = 1
   loading = false
 
-  async componentDidShow () {
+  async componentDidShow() {
     // // 在适合的场景显示插屏广告
     // if (interstitialAd) {
     //   interstitialAd.show().catch((err) => {
@@ -71,11 +71,13 @@ class Index extends Component<IProps, PageState> {
     })
     this.loading = true
 
-    const [err, res] = await cError(pddSearch({
-      page: this.pageNo,
-      keyword: this.state.searchValue,
-      // sort_type: 6,
-    }))
+    const [err, res] = await cError(
+      pddSearch({
+        page: this.pageNo,
+        keyword: this.state.searchValue
+        // sort_type: 6,
+      })
+    )
 
     Taro.hideLoading()
     this.loading = false
@@ -91,7 +93,7 @@ class Index extends Component<IProps, PageState> {
     }
   }
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   async onLoad() {
     // 在页面onLoad回调事件中创建插屏广告实例
@@ -100,9 +102,15 @@ class Index extends Component<IProps, PageState> {
       interstitialAd = Taro.createInterstitialAd({
         adUnitId: 'adunit-167f2a17e8f9ecc4'
       })
-      interstitialAd.onLoad(() => { console.log('adload') })
-      interstitialAd.onError((error) => { console.log('aderror:', error) })
-      interstitialAd.onClose(() => { console.log('adclose') })
+      interstitialAd.onLoad(() => {
+        console.log('adload')
+      })
+      interstitialAd.onError(error => {
+        console.log('aderror:', error)
+      })
+      interstitialAd.onClose(() => {
+        console.log('adclose')
+      })
     }
 
     await this.getKeywords()
@@ -120,13 +128,15 @@ class Index extends Component<IProps, PageState> {
   }
 
   // 打开拼多多小程序
-  onPddGoodsClick = async (goods) => {
+  onPddGoodsClick = async goods => {
     const { search_id, goods_sign } = goods
-    const [err, res] = await cError(generateGoods({
-      goods_sign,
-      // sort_type: 6,
-      search_id
-    }))
+    const [err, res] = await cError(
+      generateGoods({
+        goods_sign,
+        // sort_type: 6,
+        search_id
+      })
+    )
 
     if (!err) {
       console.log(res)
@@ -139,17 +149,17 @@ class Index extends Component<IProps, PageState> {
         // },
         // envVersion: 'develop',
         success(res) {
-        // 打开成功
+          // 打开成功
         }
       })
     }
   }
 
   // 搜索变更
-  onSearchChange = (value) => {
+  onSearchChange = value => {
     // 搜索条件变更需要重置页码
     this.setState({
-      searchValue: value,
+      searchValue: value
     })
   }
 
@@ -164,22 +174,25 @@ class Index extends Component<IProps, PageState> {
   }
 
   // 用户点击热门搜索
-  onHotKeyClick = (value) => {
-    this.setState({
-      searchValue: value
-    }, () => {
-      this.pddSearch(true)
-    })
+  onHotKeyClick = value => {
+    this.setState(
+      {
+        searchValue: value
+      },
+      () => {
+        this.pddSearch(true)
+      }
+    )
   }
 
   scrollToTop = () => {
     Taro.pageScrollTo({
-      scrollTop: 0,
+      scrollTop: 0
     })
   }
 
   // 监听滚动事件
-  onPageScroll = (e) => {
+  onPageScroll = e => {
     const { showScrollBtn } = this.state
     if (e.scrollTop >= 200) {
       !showScrollBtn && this.setShowScrollBtn(true)
@@ -190,8 +203,14 @@ class Index extends Component<IProps, PageState> {
 
   setShowScrollBtn = (show: boolean) => this.setState({ showScrollBtn: show })
 
-  render () {
-    const { pddList, loading, searchValue, hotKeywords, showScrollBtn } = this.state
+  render() {
+    const {
+      pddList,
+      loading,
+      searchValue,
+      hotKeywords,
+      showScrollBtn
+    } = this.state
 
     // if (loading) {
     //   return <Loading loading={loading}></Loading>
@@ -208,60 +227,79 @@ class Index extends Component<IProps, PageState> {
           onChange={this.onSearchChange}
           onConfirm={this.onSearch}
         />
-        {
-          hotKeywords.length > 0 && <View>
+        {hotKeywords.length > 0 && (
+          <View>
             <View className="hot-keywords">
               <View className="title">热门搜索：</View>
               <ScrollView scrollX>
                 <View className="list">
-                  {
-                    hotKeywords.map((item) => {
-                      return <View className="item" key={item} onClick={() => this.onHotKeyClick(item)}>
+                  {hotKeywords.map(item => {
+                    return (
+                      <View
+                        className="item"
+                        key={item}
+                        onClick={() => this.onHotKeyClick(item)}
+                      >
                         {item}
                       </View>
-                    })
-                  }
+                    )
+                  })}
                 </View>
               </ScrollView>
             </View>
           </View>
-        }
-        {
-          loading && <View className="pdd-list-loading">加载中...</View>
-        }
-        {
-          !loading && <View className="pdd-wrapper">
+        )}
+        {loading && <View className="pdd-list-loading">加载中...</View>}
+        {!loading && (
+          <View className="pdd-wrapper">
             <View className="pdd-list">
-              {
-                pddList.map((item) => {
-                  const { coupon_discount } = item
-                  return <View key={item.goods_id} className="pdd-item" onClick={() => this.onPddGoodsClick(item)}>
-                    <Image className="thumb" src={item.goods_thumbnail_url}></Image>
-                    {coupon_discount > 0 && <View className="coupon">校园专属{coupon_discount / 100}元优惠券</View>}
+              {pddList.map(item => {
+                const { coupon_discount } = item
+                return (
+                  <View
+                    key={item.goods_id}
+                    className="pdd-item"
+                    onClick={() => this.onPddGoodsClick(item)}
+                  >
+                    <Image
+                      className="thumb"
+                      src={item.goods_thumbnail_url}
+                    ></Image>
+                    {coupon_discount > 0 && (
+                      <View className="coupon">
+                        校园专属{coupon_discount / 100}元优惠券
+                      </View>
+                    )}
                     <View className="name">{item.goods_name}</View>
                     <View className="info">
                       <View className="price">
-                        <Text className="min-price">￥{(item.min_group_price - coupon_discount) / 100}</Text> 拼团券后
+                        <Text className="min-price">
+                          ￥{(item.min_group_price - coupon_discount) / 100}
+                        </Text>{' '}
+                        拼团券后
                       </View>
                       {/* <View className="ori-price">
                         {(item.min_normal_price + item.coupon_discount) / 100}
                       </View> */}
-                      <View className="amount">
-                        已抢{item.sales_tip}件
-                      </View>
+                      <View className="amount">已抢{item.sales_tip}件</View>
                     </View>
                   </View>
-                })
-              }
+                )
+              })}
             </View>
           </View>
-        }
+        )}
         {/* 回到顶部 */}
-        {
-          showScrollBtn && <View className="scroll-top-button" onClick={this.scrollToTop}>
-            <AtIcon className="arrow-up" value="chevron-up" size="30" color="#333333"></AtIcon>
+        {showScrollBtn && (
+          <View className="scroll-top-button" onClick={this.scrollToTop}>
+            <AtIcon
+              className="arrow-up"
+              value="chevron-up"
+              size="30"
+              color="#333333"
+            ></AtIcon>
           </View>
-        }
+        )}
       </View>
     )
   }
@@ -272,4 +310,6 @@ const mapStateToProps = (state: IRootState) => ({
   loading: state.global.loading
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(Index)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps
+)(Index)

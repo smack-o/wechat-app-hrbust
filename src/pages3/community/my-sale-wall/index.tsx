@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
-import { goPage } from '@/utils/router'
-import { routes } from '@/app.config'
 import './index.less'
-import ListItem from '../_components/list-item'
+import MateMessageList from '../_components/mate-message-list'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -79,33 +77,9 @@ class Message extends Component<IProps, PageState> {
   render() {
     const { list } = this.state
 
-    // TODO: 兜底页
-    if (list.length === 0) {
-      return null
-    }
     return (
       <View className={prefix}>
-        {list.map(item => {
-          return (
-            <ListItem
-              key={item._id}
-              userInfo={item.publisher?.userInfo}
-              onClick={() => {
-                goPage(`${routes.saleWallDetail}?id=${item._id}`)
-              }}
-              time={item.createdAt}
-              photo={item.photos?.[0]}
-              rightContent={item.content}
-              content={
-                <View>
-                  舍友&nbsp;
-                  <Text className="blue-text">@{item.name}</Text>&nbsp;
-                  {item.content}
-                </View>
-              }
-            ></ListItem>
-          )
-        })}
+        <MateMessageList list={list}></MateMessageList>
       </View>
     )
   }

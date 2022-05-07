@@ -1,14 +1,12 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
-import { goPage } from '@/utils/router'
-import { routes } from '@/app.config'
 import './index.less'
-import ListItem from '../_components/list-item'
+import BrickMessageList from '../_components/brick-message-list'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -83,32 +81,7 @@ class Message extends Component<IProps, PageState> {
     }
     return (
       <View className={prefix}>
-        {list.map(item => {
-          return (
-            <ListItem
-              key={item._id}
-              userInfo={item.publisher?.userInfo}
-              onClick={() => {
-                goPage(`${routes.wallDetail}?id=${item._id}`)
-              }}
-              time={item.createdAt}
-              photo={item.photos?.[0]}
-              rightContent={item.content}
-              content={
-                <View>
-                  {item.to && (
-                    <Fragment>
-                      表白&nbsp;
-                      <Text className="blue-text">@{item.to}</Text>&nbsp;
-                    </Fragment>
-                  )}
-
-                  {item.content}
-                </View>
-              }
-            ></ListItem>
-          )
-        })}
+        <BrickMessageList list={list}></BrickMessageList>
       </View>
     )
   }

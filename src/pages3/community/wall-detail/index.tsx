@@ -57,9 +57,6 @@ class CreateWall extends Component<IProps, PageState> {
   }
 
   getComment = async (reset?: boolean) => {
-    if (this.fetching || !this.state.hasNext) {
-      return
-    }
     this.fetching = true
     const [err, res] = await withRequest(APIS.CommentApi.apiCommentBrickIdGet)({
       id: this.id,
@@ -118,6 +115,22 @@ class CreateWall extends Component<IProps, PageState> {
     })
     this.getComment(true)
     this.getData()
+  }
+
+  onReachBottom = () => {
+    if (!this.state.hasNext || this.fetching) {
+      return
+    }
+    this.pageNum++
+    return this.getComment().catch(() => {
+      this.pageNum--
+    })
+  }
+
+  onPullDownRefresh = async () => {
+    await this.getData()
+    this.getComment(true)
+    Taro.stopPullDownRefresh()
   }
 
   render() {

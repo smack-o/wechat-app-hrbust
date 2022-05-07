@@ -189,7 +189,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
         <View className={`${prefix}__add-wall`} onClick={this.onAddWallClick}>
           <Image src={AddSaleWallIcon} mode="widthFix"></Image>
         </View>
-        {!hasNext && <View>到底了~</View>}
+        {/* {!hasNext && <View>到底了~</View>} */}
       </View>
     )
   }

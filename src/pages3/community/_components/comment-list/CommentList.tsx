@@ -34,9 +34,13 @@ export default function CommentList(props: IProps) {
 
   return (
     <Fragment>
-      <View className={prefix}>
-        {list.length !== 0 ? (
-          list.map((item, index) => {
+      {list.length === 0 ? (
+        <View className={`${prefix}__community-no-data community-no-data`}>
+          暂无评论
+        </View>
+      ) : (
+        <View className={prefix}>
+          {list.map((item, index) => {
             return (
               <View
                 className={`${prefix}__item`}
@@ -70,17 +74,18 @@ export default function CommentList(props: IProps) {
                 </View>
               </View>
             )
-          })
-        ) : (
-          <View>暂无评论</View>
-        )}
-      </View>
+          })}
+        </View>
+      )}
+
       <CommentInput
         onSubmit={onCommentSubmitHandler}
         placeholder={nickName ? `回复${nickName}` : '快来撩一下~'}
         currentIndex={currentIndex}
         onBlur={() => {
-          setCurrentIndex(-1)
+          setTimeout(() => {
+            setCurrentIndex(-1)
+          }, 0)
         }}
       ></CommentInput>
     </Fragment>

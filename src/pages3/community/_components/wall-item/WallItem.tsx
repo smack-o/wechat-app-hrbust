@@ -1,8 +1,9 @@
+import React, { useCallback, useEffect, useState } from 'react'
+import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
-import { getCdnUrl, withRequest } from '@/utils'
+import { getCdnUrl, showToast, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useCallback, useEffect, useState } from 'react'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
@@ -17,6 +18,7 @@ interface IWallItemProps {
     | GetApiResultType<typeof APIS.WallApi.apiWallListGet>[0]
     | GetApiResultType<typeof APIS.WallApi.apiWallIdGet>
   onClick?: () => void
+  showDelete?: boolean
 }
 
 const prefix = 'wall-item'
@@ -42,10 +44,12 @@ export default function WallItem(props: IWallItemProps) {
       isLike,
       _id,
       createdAt,
-      commentCount
+      commentCount,
+      isPublisher
     } = {},
     timeType,
-    onClick
+    onClick,
+    showDelete = false
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -92,6 +96,29 @@ export default function WallItem(props: IWallItemProps) {
     [_id, localIsLike, localIsLikeCount]
   )
 
+  const onDelete = useCallback(() => {
+    Taro.showModal({
+      title: '确认删除这条动态？',
+      content: '删除后无法找回，请谨慎操作。',
+      success: async res => {
+        if (res.confirm) {
+          const [err] = await withRequest(APIS.WallApi.apiWallIdDelete)({
+            id: _id || ''
+          })
+          if (!err) {
+            showToast({
+              title: '删除成功',
+              icon: 'success',
+              finished: () => {
+                Taro.navigateBack()
+              }
+            })
+          }
+        }
+      }
+    })
+  }, [_id])
+
   return (
     <View className={prefix} onClick={onClick}>
       <PublisherTitle
@@ -123,6 +150,14 @@ export default function WallItem(props: IWallItemProps) {
         <Text className={`${prefix}__content-detail`}>{content}</Text>
       </View>
       <View className={`${prefix}__footer`}>
+        {showDelete && isPublisher && (
+          <View
+            className={`${prefix}__footer-delete blue-text`}
+            onClick={onDelete}
+          >
+            删除
+          </View>
+        )}
         <View className={`${prefix}__footer-item`}>
           <Image src={CommentIcon} mode="widthFix"></Image>
           {commentCount}

@@ -110,7 +110,8 @@ export default class Wall extends React.Component<WallProps, WallState> {
   onItemClick = () => {}
 
   render() {
-    const { activeTab, hasNext } = this.state
+    const { activeTab } = this.state
+
     return (
       <View className="wall">
         <View
@@ -120,6 +121,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
           }}
         >
           <Image className="wall-search__icon" src={SearchIcon}></Image>
+          <Input placeholder="搜索关键词" disabled></Input>
         </View>
         <Tab
           currentIndex={activeTab}
@@ -139,7 +141,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
         <View className="wall__add-wall" onClick={this.onAddWallClick}>
           <Image src={AddWallIcon} mode="widthFix"></Image>
         </View>
-        {!hasNext && <View>到底了~</View>}
+        {/* {!hasNext && <View>到底了~</View>} */}
       </View>
     )
   }

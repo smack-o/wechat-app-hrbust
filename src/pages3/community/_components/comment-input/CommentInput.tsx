@@ -66,35 +66,14 @@ export default function CommentInput(props: IProps) {
           focus={currentIndex >= 0}
           onBlur={onBlur}
           confirmHold
+          adjustPosition
         ></Input>
-        {/* {!!nickName ? (
-          <Input
-            ref={ref}
-            maxlength={100}
-            placeholder={placeholder}
-            className={`${prefix}__input`}
-            value={value}
-            onInput={onInput}
-            placeholderClass={`${prefix}__input--placeholder`}
-            autoFocus
-            onBlur={onBlur}
-          ></Input>
-        ) : (
-          <Input
-            ref={ref}
-            maxlength={100}
-            placeholder={placeholder}
-            className={`${prefix}__input`}
-            value={value}
-            onInput={onInput}
-            placeholderClass={`${prefix}__input--placeholder`}
-          ></Input>
-        )} */}
         <AtButton
           className={`${prefix}__button`}
           type="primary"
           size="small"
           onClick={onSubmitHandle}
+          disabled={!value}
         >
           发送
         </AtButton>

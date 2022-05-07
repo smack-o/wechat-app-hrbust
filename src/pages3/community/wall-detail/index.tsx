@@ -4,7 +4,8 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { withRequest } from '@/utils'
+import { withRequest, showToast } from '@/utils'
+import { routes } from '@/app.config'
 import './index.less'
 import WallItem from '../_components/wall-item'
 import { CommentType } from '../_components/comment-input'
@@ -50,6 +51,23 @@ class CreateWall extends Component<IProps, PageState> {
     })
 
     if (!err && res) {
+      if (!res._id) {
+        // Taro.navigateBack()
+        showToast({
+          title: '该内容不存在或已被删除',
+          icon: 'none',
+          finished: () => {
+            Taro.navigateBack({
+              fail() {
+                Taro.switchTab({
+                  url: routes.index
+                })
+              }
+            })
+          }
+        })
+        return
+      }
       this.setState({
         data: res
       })
@@ -141,11 +159,17 @@ class CreateWall extends Component<IProps, PageState> {
     }
     return (
       <View className={prefix}>
-        <WallItem data={data} timeType="relative"></WallItem>
-        <CommentList
-          list={commentList}
-          onCommentSubmit={this.onCommentSubmit}
-        ></CommentList>
+        <WallItem data={data} timeType="relative" showDelete></WallItem>
+        <View className={`${prefix}__border-line`}></View>
+        <View className={`${prefix}__comment-title`}>
+          {data.commentCount} 条评论
+        </View>
+        <View className={`${prefix}__comment-list`}>
+          <CommentList
+            list={commentList}
+            onCommentSubmit={this.onCommentSubmit}
+          ></CommentList>
+        </View>
       </View>
     )
   }

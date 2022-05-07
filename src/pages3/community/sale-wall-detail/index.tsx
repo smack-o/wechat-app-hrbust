@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Taro from '@tarojs/taro'
 import { View, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { getCdnUrl, withRequest } from '@/utils'
+import { getCdnUrl, showToast, withRequest } from '@/utils'
 import classNames from 'classnames'
+import { routes } from '@/app.config'
 import PublisherTitle from '../_components/publisher-title'
 import maleIcon from './imgs/male.png'
 import femaleIcon from './imgs/female.png'
@@ -12,6 +14,8 @@ import locationIcon from './imgs/location.png'
 import likeIcon from './imgs/like.png'
 
 import './index.less'
+import CommentList from '../_components/comment-list'
+import { CommentType } from '../_components/comment-input'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -22,6 +26,8 @@ type PageState = {
   data: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallIdGet>
   isLikeLocal: boolean
   likeCountLocal: number
+  commentList: GetApiResultType<typeof APIS.CommentApi.apiCommentMateIdGet>
+  hasNext: boolean
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -31,8 +37,15 @@ class CreateWall extends Component<IProps, PageState> {
   state: PageState = {
     data: undefined,
     isLikeLocal: false,
-    likeCountLocal: 0
+    likeCountLocal: 0,
+    commentList: [],
+    hasNext: true
   }
+
+  id: string
+  pageNum = 0
+  pageSize = 20
+  fetching = false
 
   genderMap = [
     {
@@ -47,7 +60,9 @@ class CreateWall extends Component<IProps, PageState> {
 
   onLoad(e) {
     if (e.id) {
-      this.getData(e.id)
+      this.id = e.id
+      this.getData()
+      this.getComment()
     }
   }
 
@@ -64,12 +79,28 @@ class CreateWall extends Component<IProps, PageState> {
     })
   }
 
-  getData = async (id: string) => {
+  getData = async () => {
     const [err, res] = await withRequest(APIS.SaleWallApi.apiSaleWallIdGet)({
-      id
+      id: this.id
     })
 
     if (!err && res) {
+      if (!res._id) {
+        showToast({
+          title: '该内容不存在或已被删除',
+          icon: 'none',
+          finished: () => {
+            Taro.navigateBack({
+              fail() {
+                Taro.switchTab({
+                  url: routes.index
+                })
+              }
+            })
+          }
+        })
+        return
+      }
       this.setState({
         data: res,
         isLikeLocal: res.isLike,
@@ -81,9 +112,11 @@ class CreateWall extends Component<IProps, PageState> {
   onLikeClick = async () => {
     const { data, isLikeLocal, likeCountLocal } = this.state
 
-    const [err, res] = await withRequest(APIS.SaleWallApi.apiSaleWallLikePut)({
-      id: data?._id
-    })
+    const [err, res] = await withRequest(APIS.SaleWallApi.apiSaleWallLikeIdPut)(
+      {
+        id: data?._id || ''
+      }
+    )
 
     if (err || !res) {
       return
@@ -95,8 +128,104 @@ class CreateWall extends Component<IProps, PageState> {
     })
   }
 
+  onDelete = async () => {
+    const { data } = this.state
+    Taro.showModal({
+      title: '确认删除这条动态？',
+      content: '删除后无法找回，请谨慎操作。',
+      success: async res => {
+        if (res.confirm) {
+          const [err] = await withRequest(APIS.SaleWallApi.apiSaleWallIdDelete)(
+            {
+              id: data?._id || ''
+            }
+          )
+          if (!err) {
+            showToast({
+              title: '删除成功',
+              icon: 'success',
+              finished: () => {
+                Taro.navigateBack()
+              }
+            })
+          }
+        }
+      }
+    })
+  }
+
+  getComment = async (reset?: boolean) => {
+    this.fetching = true
+    const [err, res] = await withRequest(APIS.CommentApi.apiCommentMateIdGet)({
+      id: this.id,
+      pageNum: String(this.pageNum),
+      pageSize: String(this.pageSize)
+    })
+
+    this.fetching = false
+
+    if (err || !res) {
+      return
+    }
+
+    this.setState({
+      commentList: reset ? res : (this.state.commentList || []).concat(res),
+      hasNext: res.length === this.pageSize
+    })
+  }
+
+  // 评论
+  onCommentSubmit = async (value: string, currentIndex?: number) => {
+    const { data, commentList } = this.state
+    console.log(value)
+    if (!data) {
+      return
+    }
+
+    const params: Parameters<typeof APIS.CommentApi.apiCommentPost>[0] = {
+      mateId: data._id,
+      content: value,
+      to: data.publisher?._id,
+      type: CommentType.MateComment
+    }
+    // 回复评论
+    if (currentIndex !== undefined && currentIndex >= 0) {
+      params.to = commentList?.[currentIndex].from?._id
+      params.type = CommentType.ReplyComment
+      params.commentId = commentList?.[currentIndex]._id
+    }
+
+    const [err] = await withRequest(APIS.CommentApi.apiCommentPost)(params)
+
+    if (err) {
+      return Promise.reject()
+    }
+    Taro.showToast({
+      title: '评论成功',
+      icon: 'success'
+    })
+    this.getComment(true)
+    this.getData()
+  }
+
+  onReachBottom = () => {
+    if (!this.state.hasNext || this.fetching) {
+      return
+    }
+    this.pageNum++
+    return this.getComment().catch(() => {
+      this.pageNum--
+    })
+  }
+
+  onPullDownRefresh = async () => {
+    await this.getData()
+    this.getComment(true)
+    Taro.stopPullDownRefresh()
+  }
+
   render() {
-    const { data, isLikeLocal, likeCountLocal } = this.state
+    const { data, isLikeLocal, likeCountLocal, commentList } = this.state
     if (!data) {
       return null
     }
@@ -109,7 +238,8 @@ class CreateWall extends Component<IProps, PageState> {
       gender,
       content,
       description,
-      major
+      major,
+      isPublisher
     } = data
     return (
       <View className={prefix}>
@@ -158,6 +288,14 @@ class CreateWall extends Component<IProps, PageState> {
             <View className={`${prefix}__info-item__text`}>{description}</View>
           </View>
         </View>
+        {isPublisher && (
+          <View
+            className={`${prefix}__footer-delete blue-text`}
+            onClick={this.onDelete}
+          >
+            删除
+          </View>
+        )}
         <View
           className={classNames(`${prefix}__like`, {
             liked: isLikeLocal
@@ -169,6 +307,16 @@ class CreateWall extends Component<IProps, PageState> {
         </View>
         <View className={`${prefix}__like-tips`}>
           感兴趣的话就为TA点一颗小心心吧~~
+        </View>
+        <View className={`${prefix}__border-line`}></View>
+        <View className={`${prefix}__comment-title`}>
+          {data.commentCount} 条评论
+        </View>
+        <View className={`${prefix}__comment-list`}>
+          <CommentList
+            list={commentList}
+            onCommentSubmit={this.onCommentSubmit}
+          ></CommentList>
         </View>
       </View>
     )

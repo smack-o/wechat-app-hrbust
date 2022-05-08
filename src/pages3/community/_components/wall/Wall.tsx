@@ -131,6 +131,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
           {this.state.list.map(item => {
             return (
               <WallItem
+                showHotComments
                 data={item}
                 key={item._id}
                 onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}

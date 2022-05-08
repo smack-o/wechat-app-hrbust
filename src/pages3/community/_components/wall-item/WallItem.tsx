@@ -19,6 +19,7 @@ interface IWallItemProps {
     | GetApiResultType<typeof APIS.WallApi.apiWallIdGet>
   onClick?: () => void
   showDelete?: boolean
+  showHotComments?: boolean
 }
 
 const prefix = 'wall-item'
@@ -45,11 +46,13 @@ export default function WallItem(props: IWallItemProps) {
       _id,
       createdAt,
       commentCount,
-      isPublisher
+      isPublisher,
+      hotComments = []
     } = {},
     timeType,
     onClick,
-    showDelete = false
+    showDelete = false,
+    showHotComments = false
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -170,7 +173,20 @@ export default function WallItem(props: IWallItemProps) {
           {localIsLikeCount}
         </View>
       </View>
-      <View></View>
+      {showHotComments && hotComments.length > 0 && (
+        <View className={`${prefix}__comment-list`}>
+          {hotComments.map(item => {
+            return (
+              <View key={item._id} className={`${prefix}__comment-list__item`}>
+                <Text className="blue-text">
+                  @{item.from?.userInfo?.customName}:{' '}
+                </Text>
+                {item.content}
+              </View>
+            )
+          })}
+        </View>
+      )}
     </View>
   )
 }

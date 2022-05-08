@@ -1,52 +1,56 @@
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { APIS } from '@/services2'
 import Avatar, { NickName } from '@/components/Avatar'
 import { showToast, withRequest } from '@/utils'
 import Time from '@/components/Time'
-import CommentInput from '../comment-input'
+import CommentInput, { CommentType } from '../comment-input'
 import './CommentList.less'
 import LikeIcon from '../../imgs/like.png'
 import LikeSelectedIcon from '../../imgs/like_selected.png'
 
+interface IWrapperProps {
+  hotList?: GetApiResultType<typeof APIS.CommentApi.apiCommentBrickIdGet>
+  list: GetApiResultType<typeof APIS.CommentApi.apiCommentBrickIdGet>
+  onCommentSubmit?: (value: string, to?: string, commentId?: string) => void
+  showInput?: boolean
+  commentCount?: number
+}
+
 interface IProps {
   list: GetApiResultType<typeof APIS.CommentApi.apiCommentBrickIdGet>
-  onCommentSubmit?: (value: string, currentIndex?: number) => void
+  onCommentSubmit?: (value: string, to?: string, commentId?: string) => void
+  onCommentItemClick?: (
+    to?: string,
+    commentId?: string,
+    nickName?: string
+  ) => void
+  showInput?: boolean
+  avatarSize?: string
+  /**
+   * 父级评论 id
+   */
+  parentId?: string
 }
 
 const prefix = 'comment-list'
-export default function CommentList(props: IProps) {
-  const { list = [], onCommentSubmit } = props
+
+export function CommentList(props: IProps) {
+  const {
+    list = [],
+    avatarSize = '70rpx',
+    parentId = '',
+    onCommentItemClick
+  } = props
 
   const [listLocal, setListLocal] = useState(list)
-
-  const [currentIndex, setCurrentIndex] = useState(-1)
+  const [pageNum, setPageNum] = useState(1)
+  const [showReplyMore, setShowReplyMore] = useState(list.length >= 3)
 
   useEffect(() => {
     setListLocal(list)
   }, [list])
-
-  const nickName = useMemo(() => {
-    return currentIndex >= 0
-      ? list?.[currentIndex]?.from?.userInfo?.customName ||
-          list?.[currentIndex]?.from?.userInfo?.nickName
-      : ''
-  }, [currentIndex, list])
-
-  const onCommentSubmitHandler = useCallback(
-    async (value: string) => {
-      await onCommentSubmit?.(value, currentIndex)
-      setCurrentIndex(-1)
-    },
-    [onCommentSubmit, currentIndex]
-  )
 
   // 点赞
   const onLikeHandler = useCallback(
@@ -98,6 +102,32 @@ export default function CommentList(props: IProps) {
     },
     [listLocal]
   )
+
+  // 点击
+  const onItemClick = useCallback(
+    (item: typeof list[0]) => {
+      onCommentItemClick?.(
+        item.from?._id,
+        parentId || item._id,
+        item.from?.userInfo?.customName
+      )
+    },
+    [list, onCommentItemClick, parentId]
+  )
+
+  const loadReplyMore = useCallback(async () => {
+    const [err, res] = await withRequest(
+      APIS.CommentApi.apiCommentCommentIdGet
+    )({ id: parentId, pageNum: String(pageNum), pageSize: '3' })
+    setPageNum(pageNum + 1)
+    if (!err && res) {
+      setListLocal(listLocal.concat(res))
+      if (res.length < 3) {
+        setShowReplyMore(false)
+      }
+    }
+  }, [listLocal, pageNum, parentId])
+
   return (
     <Fragment>
       {listLocal.length === 0 ? (
@@ -107,74 +137,165 @@ export default function CommentList(props: IProps) {
       ) : (
         <View className={prefix}>
           {listLocal.map((item, index) => {
+            const { replyComment = [], content, from, type, to } = item
             return (
-              <View
-                className={`${prefix}__item`}
-                key={index}
-                onClick={() => {
-                  setCurrentIndex(index)
-                }}
-              >
-                <Avatar
-                  className={`${prefix}__item__avatar`}
-                  avatarSize="70rpx"
-                  customAvatarUrl={item.from?.userInfo?.customAvatarUrl}
-                  avatarUrl={item.from?.userInfo?.avatarUrl}
-                ></Avatar>
-                <View className={`${prefix}__item-right`}>
-                  <View className={`${prefix}__item__title`}>
-                    <NickName
-                      className={`${prefix}__item__title__name`}
-                      nickName={item.from?.userInfo?.nickName}
-                      customName={item.from?.userInfo?.customName}
-                    ></NickName>
-                    <Time
-                      className={`${prefix}__item__title__time`}
-                      time={item.createdAt}
-                      type="relative"
-                    ></Time>
-                  </View>
-                  <View className={`${prefix}__item__content`}>
-                    {item.content}
-                  </View>
+              <Fragment key={item._id}>
+                <View
+                  className={`${prefix}__item`}
+                  onClick={() => {
+                    onItemClick(item)
+                    // setCurrentIndex(index)
+                  }}
+                >
+                  <Avatar
+                    className={`${prefix}__item__avatar`}
+                    avatarSize={avatarSize}
+                    customAvatarUrl={from?.userInfo?.customAvatarUrl}
+                    avatarUrl={from?.userInfo?.avatarUrl}
+                  ></Avatar>
+                  <View className={`${prefix}__item-right`}>
+                    <View className={`${prefix}__item__title`}>
+                      <NickName
+                        className={`${prefix}__item__title__name`}
+                        nickName={from?.userInfo?.nickName}
+                        customName={from?.userInfo?.customName}
+                      ></NickName>
+                      <Time
+                        className={`${prefix}__item__title__time`}
+                        time={item.createdAt}
+                        type="relative"
+                      ></Time>
+                    </View>
+                    <View className={`${prefix}__item__content`}>
+                      {type === CommentType.ReplyComment
+                        ? `@${to?.userInfo?.customName}: ${content}`
+                        : content}
+                    </View>
 
-                  <View className={`${prefix}__item-footer`}>
-                    {item.isPublisher && (
+                    <View className={`${prefix}__item-footer`}>
+                      {item.isPublisher && (
+                        <View
+                          className={`${prefix}__item-footer__delete blue-text`}
+                          onClick={e => onDelete(index, e)}
+                        >
+                          删除
+                        </View>
+                      )}
                       <View
-                        className={`${prefix}__item-footer__delete blue-text`}
-                        onClick={e => onDelete(index, e)}
+                        className={`${prefix}__item-footer__like`}
+                        onClick={e => onLikeHandler(index, e)}
                       >
-                        删除
+                        <Image
+                          src={item.isLike ? LikeSelectedIcon : LikeIcon}
+                          mode="widthFix"
+                        ></Image>
+                        {item.likeCount}
                       </View>
-                    )}
-                    <View
-                      className={`${prefix}__item-footer__like`}
-                      onClick={e => onLikeHandler(index, e)}
-                    >
-                      <Image
-                        src={item.isLike ? LikeSelectedIcon : LikeIcon}
-                        mode="widthFix"
-                      ></Image>
-                      {item.likeCount}
                     </View>
                   </View>
                 </View>
-              </View>
+
+                {replyComment?.length > 0 && (
+                  <View className={`${prefix}__item-replay`}>
+                    <CommentList
+                      list={replyComment}
+                      avatarSize="50rpx"
+                      parentId={item._id}
+                      onCommentItemClick={onCommentItemClick}
+                    ></CommentList>
+                  </View>
+                )}
+              </Fragment>
             )
           })}
+          {parentId && showReplyMore && (
+            <View
+              className={`${prefix}__replay-more blue-text`}
+              onClick={loadReplyMore}
+            >
+              加载更多...
+            </View>
+          )}
+        </View>
+      )}
+    </Fragment>
+  )
+}
+
+export default function CommentListWrapper(props: IWrapperProps) {
+  const {
+    list = [],
+    onCommentSubmit,
+    showInput = false,
+    hotList = [],
+    commentCount
+  } = props
+
+  const [currentComment, setCurrentComment] = useState<{
+    to?: string
+    commentId?: string
+    nickName?: string
+  } | null>(null)
+
+  const onCommentSubmitHandler = useCallback(
+    async (value: string) => {
+      console.log(value, currentComment?.to, currentComment?.commentId)
+      await onCommentSubmit?.(
+        value,
+        currentComment?.to,
+        currentComment?.commentId
+      )
+      setCurrentComment(null)
+    },
+    [onCommentSubmit, currentComment]
+  )
+
+  const onCommentItemClick = useCallback(
+    (to?: string, commentId?: string, nickName?: string) => {
+      setCurrentComment({ to, commentId, nickName })
+    },
+    []
+  )
+
+  return (
+    <Fragment>
+      {hotList && hotList.length > 0 && (
+        <Fragment>
+          <View className={`${prefix}__comment-title`}>
+            热门评论 ({hotList.length})
+          </View>
+          <CommentList
+            list={hotList}
+            onCommentItemClick={onCommentItemClick}
+          ></CommentList>
+        </Fragment>
+      )}
+
+      {commentCount !== undefined && (
+        <View className={`${prefix}__comment-title`}>
+          最新评论 ({commentCount})
         </View>
       )}
 
-      <CommentInput
-        onSubmit={onCommentSubmitHandler}
-        placeholder={nickName ? `回复${nickName}` : '快来撩一下~'}
-        currentIndex={currentIndex}
-        onBlur={() => {
-          setTimeout(() => {
-            setCurrentIndex(-1)
-          }, 0)
-        }}
-      ></CommentInput>
+      <CommentList
+        list={list}
+        onCommentItemClick={onCommentItemClick}
+      ></CommentList>
+
+      {showInput && (
+        <CommentInput
+          onSubmit={onCommentSubmitHandler}
+          placeholder={
+            currentComment?.nickName
+              ? `回复${currentComment?.nickName}`
+              : '快来撩一下~'
+          }
+          isReply={!!currentComment?.to}
+          onBlur={() => {
+            setCurrentComment(null)
+          }}
+        ></CommentInput>
+      )}
     </Fragment>
   )
 }

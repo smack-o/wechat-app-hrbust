@@ -3,12 +3,42 @@
 .comment-list {
   padding: 28px 20px;
   background: #f7f9f8;
+  margin-bottom: 60px;
 
+  &__replay-more {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  &__comment-title {
+    font-size: 30px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #cdcdcd;
+    line-height: 42px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
   &__item {
     display: flex;
     align-items: flex-start;
     margin-bottom: 28px;
     border-bottom: 1px solid #fff;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &-replay {
+      padding-left: 20px;
+
+      .comment-list {
+        margin-bottom: 20px;
+      }
+      .comment-list__item {
+        margin-right: -20px;
+      }
+    }
 
     &__avatar {
       image {

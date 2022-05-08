@@ -9,6 +9,7 @@ interface IProps {
   onSubmit?: (value: string) => void
   currentIndex?: number
   onBlur?: () => void
+  isReply?: boolean
 }
 
 export enum CommentType {
@@ -31,7 +32,7 @@ export default function CommentInput(props: IProps) {
   const {
     placeholder = '快来撩一下~',
     onSubmit,
-    currentIndex = -1,
+    isReply = false,
     onBlur
   } = props
 
@@ -42,16 +43,20 @@ export default function CommentInput(props: IProps) {
     setValue(e.target.value)
   }, [])
 
-  // 切换回复 清空评论内容
-  useEffect(() => {
-    setValue('')
-  }, [currentIndex])
-
-  const onSubmitHandle = useCallback(async () => {
+  const onSubmitHandle = async () => {
     await onSubmit?.(value)
     setValue('')
-  }, [value, onSubmit])
+  }
 
+  const onBlurHandler = useCallback(() => {
+    // 延迟清除数据
+    setTimeout(() => {
+      setValue('')
+      onBlur?.()
+    }, 300)
+  }, [onBlur])
+
+  console.log(isReply, 'isReply')
   return (
     <FixBock bottom={0} height={110}>
       <View className={prefix}>
@@ -63,8 +68,8 @@ export default function CommentInput(props: IProps) {
           value={value}
           onInput={onInput}
           placeholderClass={`${prefix}__input--placeholder`}
-          focus={currentIndex >= 0}
-          onBlur={onBlur}
+          focus={isReply}
+          onBlur={onBlurHandler}
           confirmHold
           adjustPosition
         ></Input>
@@ -73,7 +78,7 @@ export default function CommentInput(props: IProps) {
           type="primary"
           size="small"
           onClick={onSubmitHandle}
-          disabled={!value}
+          // disabled={!value}
         >
           发送
         </AtButton>

@@ -28,6 +28,7 @@ import * as models from './models'
   * @property `[photos]` 图片列表
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
+  * @property `[hotComments]` 热门评论
   */
 export interface InlineResponse20010Result {
   /**
@@ -87,5 +88,9 @@ export interface InlineResponse20010Result {
    * 评论数
    */
   'commentCount': number;
+  /**
+   * 热门评论
+   */
+  'hotComments'?: Array<models.InlineResponse2001ReplyComment>;
 }
 

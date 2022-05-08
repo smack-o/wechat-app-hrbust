@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
@@ -103,9 +103,9 @@ class CreateWall extends Component<IProps, PageState> {
   }
 
   // 评论
-  onCommentSubmit = async (value: string, currentIndex?: number) => {
-    const { data, commentList } = this.state
-    console.log(value)
+  onCommentSubmit = async (value: string, to?: string, commentId?: string) => {
+    const { data } = this.state
+
     if (!data) {
       return
     }
@@ -117,10 +117,10 @@ class CreateWall extends Component<IProps, PageState> {
       type: CommentType.BrickComment
     }
     // 回复评论
-    if (currentIndex !== undefined && currentIndex >= 0) {
-      params.to = commentList?.[currentIndex].from?._id
+    if (commentId) {
+      params.to = to
       params.type = CommentType.ReplyComment
-      params.commentId = commentList?.[currentIndex]._id
+      params.commentId = commentId
     }
     const [err] = await withRequest(APIS.CommentApi.apiCommentPost)(params)
 
@@ -161,13 +161,13 @@ class CreateWall extends Component<IProps, PageState> {
       <View className={prefix}>
         <WallItem data={data} timeType="relative" showDelete></WallItem>
         <View className={`${prefix}__border-line`}></View>
-        <View className={`${prefix}__comment-title`}>
-          {data.commentCount} 条评论
-        </View>
         <View className={`${prefix}__comment-list`}>
           <CommentList
+            hotList={data.hotComments}
+            showInput
             list={commentList}
             onCommentSubmit={this.onCommentSubmit}
+            commentCount={data.commentCount}
           ></CommentList>
         </View>
       </View>

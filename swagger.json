@@ -4707,6 +4707,732 @@
         ]
       }
     },
+    "/api/sale-wall/list/hot": {
+      "get": {
+        "summary": "获取热门列表",
+        "description": "获取热门列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "表白墙id",
+                        "default": ""
+                      },
+                      "isPublisher": {
+                        "type": "boolean",
+                        "description": "是否是发布者",
+                        "default": false
+                      },
+                      "isLike": {
+                        "type": "boolean",
+                        "description": "是否点赞",
+                        "default": false
+                      },
+                      "likeCount": {
+                        "type": "number",
+                        "description": "点赞数",
+                        "default": 0
+                      },
+                      "isCollect": {
+                        "type": "boolean",
+                        "description": "是否收藏",
+                        "default": false
+                      },
+                      "collectCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
+                      "publisher": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "user id",
+                            "default": ""
+                          },
+                          "createdAt": {
+                            "type": "integer",
+                            "description": "创建时间"
+                          },
+                          "userInfo": {
+                            "type": "object",
+                            "properties": {
+                              "nickName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customName": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "customAvatarUrl": {
+                                "type": "object",
+                                "properties": {
+                                  "key": {
+                                    "type": "string",
+                                    "description": "图片 url",
+                                    "default": ""
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "0",
+                                      "1",
+                                      "2"
+                                    ]
+                                  },
+                                  "height": {
+                                    "type": "number",
+                                    "description": "图片高度",
+                                    "default": 0
+                                  },
+                                  "width": {
+                                    "type": "number",
+                                    "description": "图片宽度",
+                                    "default": 0
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "图片类型",
+                                    "default": ""
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "status"
+                                ]
+                              },
+                              "gender": {
+                                "type": "number",
+                                "default": 0
+                              },
+                              "avatarUrl": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "language": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "city": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "province": {
+                                "type": "string",
+                                "default": ""
+                              },
+                              "country": {
+                                "type": "string",
+                                "default": ""
+                              }
+                            }
+                          },
+                          "commentLikeCount": {
+                            "type": "number",
+                            "description": "评论点赞数量",
+                            "default": ""
+                          },
+                          "commentPublishCount": {
+                            "type": "number",
+                            "description": "评论发布数量",
+                            "default": ""
+                          },
+                          "brickLikeCount": {
+                            "type": "number",
+                            "description": "表白墙点赞数量",
+                            "default": ""
+                          },
+                          "brickCollectCount": {
+                            "type": "number",
+                            "description": "表白墙收藏数量",
+                            "default": ""
+                          },
+                          "brickPublishCount": {
+                            "type": "number",
+                            "description": "表白墙发布数量",
+                            "default": ""
+                          },
+                          "mateLikeCount": {
+                            "type": "number",
+                            "description": "卖舍友点赞数量",
+                            "default": ""
+                          },
+                          "mateCollectCount": {
+                            "type": "number",
+                            "description": "卖舍友收藏数量",
+                            "default": ""
+                          },
+                          "matePublishCount": {
+                            "type": "number",
+                            "description": "卖舍友发布数量",
+                            "default": ""
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "createdAt",
+                          "commentLikeCount",
+                          "commentPublishCount",
+                          "brickLikeCount",
+                          "brickCollectCount",
+                          "brickPublishCount",
+                          "mateLikeCount",
+                          "mateCollectCount",
+                          "matePublishCount"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "姓名",
+                        "default": ""
+                      },
+                      "gender": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "major": {
+                        "type": "string",
+                        "description": "主修专业",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "描述",
+                        "default": ""
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "内容",
+                        "default": ""
+                      },
+                      "photos": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
+                      },
+                      "hotComments": {
+                        "type": "array",
+                        "description": "热门评论",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "user id",
+                                  "default": ""
+                                },
+                                "createdAt": {
+                                  "type": "integer",
+                                  "description": "创建时间"
+                                },
+                                "userInfo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "nickName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customAvatarUrl": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string",
+                                          "description": "图片 url",
+                                          "default": ""
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "0",
+                                            "1",
+                                            "2"
+                                          ]
+                                        },
+                                        "height": {
+                                          "type": "number",
+                                          "description": "图片高度",
+                                          "default": 0
+                                        },
+                                        "width": {
+                                          "type": "number",
+                                          "description": "图片宽度",
+                                          "default": 0
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "description": "图片类型",
+                                          "default": ""
+                                        }
+                                      },
+                                      "required": [
+                                        "key",
+                                        "status"
+                                      ]
+                                    },
+                                    "gender": {
+                                      "type": "number",
+                                      "default": 0
+                                    },
+                                    "avatarUrl": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "language": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "city": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "province": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "country": {
+                                      "type": "string",
+                                      "default": ""
+                                    }
+                                  }
+                                },
+                                "commentLikeCount": {
+                                  "type": "number",
+                                  "description": "评论点赞数量",
+                                  "default": ""
+                                },
+                                "commentPublishCount": {
+                                  "type": "number",
+                                  "description": "评论发布数量",
+                                  "default": ""
+                                },
+                                "brickLikeCount": {
+                                  "type": "number",
+                                  "description": "表白墙点赞数量",
+                                  "default": ""
+                                },
+                                "brickCollectCount": {
+                                  "type": "number",
+                                  "description": "表白墙收藏数量",
+                                  "default": ""
+                                },
+                                "brickPublishCount": {
+                                  "type": "number",
+                                  "description": "表白墙发布数量",
+                                  "default": ""
+                                },
+                                "mateLikeCount": {
+                                  "type": "number",
+                                  "description": "卖舍友点赞数量",
+                                  "default": ""
+                                },
+                                "mateCollectCount": {
+                                  "type": "number",
+                                  "description": "卖舍友收藏数量",
+                                  "default": ""
+                                },
+                                "matePublishCount": {
+                                  "type": "number",
+                                  "description": "卖舍友发布数量",
+                                  "default": ""
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "createdAt",
+                                "commentLikeCount",
+                                "commentPublishCount",
+                                "brickLikeCount",
+                                "brickCollectCount",
+                                "brickPublishCount",
+                                "mateLikeCount",
+                                "mateCollectCount",
+                                "matePublishCount"
+                              ]
+                            },
+                            "to": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "user id",
+                                  "default": ""
+                                },
+                                "createdAt": {
+                                  "type": "integer",
+                                  "description": "创建时间"
+                                },
+                                "userInfo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "nickName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customAvatarUrl": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string",
+                                          "description": "图片 url",
+                                          "default": ""
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "0",
+                                            "1",
+                                            "2"
+                                          ]
+                                        },
+                                        "height": {
+                                          "type": "number",
+                                          "description": "图片高度",
+                                          "default": 0
+                                        },
+                                        "width": {
+                                          "type": "number",
+                                          "description": "图片宽度",
+                                          "default": 0
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "description": "图片类型",
+                                          "default": ""
+                                        }
+                                      },
+                                      "required": [
+                                        "key",
+                                        "status"
+                                      ]
+                                    },
+                                    "gender": {
+                                      "type": "number",
+                                      "default": 0
+                                    },
+                                    "avatarUrl": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "language": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "city": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "province": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "country": {
+                                      "type": "string",
+                                      "default": ""
+                                    }
+                                  }
+                                },
+                                "commentLikeCount": {
+                                  "type": "number",
+                                  "description": "评论点赞数量",
+                                  "default": ""
+                                },
+                                "commentPublishCount": {
+                                  "type": "number",
+                                  "description": "评论发布数量",
+                                  "default": ""
+                                },
+                                "brickLikeCount": {
+                                  "type": "number",
+                                  "description": "表白墙点赞数量",
+                                  "default": ""
+                                },
+                                "brickCollectCount": {
+                                  "type": "number",
+                                  "description": "表白墙收藏数量",
+                                  "default": ""
+                                },
+                                "brickPublishCount": {
+                                  "type": "number",
+                                  "description": "表白墙发布数量",
+                                  "default": ""
+                                },
+                                "mateLikeCount": {
+                                  "type": "number",
+                                  "description": "卖舍友点赞数量",
+                                  "default": ""
+                                },
+                                "mateCollectCount": {
+                                  "type": "number",
+                                  "description": "卖舍友收藏数量",
+                                  "default": ""
+                                },
+                                "matePublishCount": {
+                                  "type": "number",
+                                  "description": "卖舍友发布数量",
+                                  "default": ""
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "createdAt",
+                                "commentLikeCount",
+                                "commentPublishCount",
+                                "brickLikeCount",
+                                "brickCollectCount",
+                                "brickPublishCount",
+                                "mateLikeCount",
+                                "mateCollectCount",
+                                "matePublishCount"
+                              ]
+                            },
+                            "type": {
+                              "type": "number",
+                              "description": "评论类型",
+                              "default": 0
+                            },
+                            "brickId": {
+                              "type": "string",
+                              "description": "若评论表白墙，需要表白墙 id",
+                              "default": ""
+                            },
+                            "mateId": {
+                              "type": "string",
+                              "description": "若评论卖舍友，需要卖舍友 id",
+                              "default": ""
+                            },
+                            "commentId": {
+                              "type": "string",
+                              "description": "评论回复评论，需要评论 id",
+                              "default": ""
+                            },
+                            "content": {
+                              "type": "string",
+                              "description": "评论内容",
+                              "default": ""
+                            },
+                            "createdAt": {
+                              "type": "integer",
+                              "description": "创建时间"
+                            },
+                            "updatedAt": {
+                              "type": "integer",
+                              "description": "更新时间"
+                            },
+                            "_id": {
+                              "type": "string",
+                              "description": "id",
+                              "default": ""
+                            },
+                            "isPublisher": {
+                              "type": "boolean",
+                              "description": "是否是发布者",
+                              "default": false
+                            },
+                            "isLike": {
+                              "type": "boolean",
+                              "description": "是否点赞",
+                              "default": false
+                            },
+                            "likeCount": {
+                              "type": "number",
+                              "description": "点赞数",
+                              "default": 0
+                            },
+                            "collectCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "content",
+                            "createdAt",
+                            "updatedAt",
+                            "_id",
+                            "isPublisher",
+                            "isLike",
+                            "likeCount",
+                            "collectCount"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "isPublisher",
+                      "isLike",
+                      "likeCount",
+                      "isCollect",
+                      "collectCount",
+                      "name",
+                      "gender",
+                      "major",
+                      "description",
+                      "isDelete",
+                      "commentCount"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "SaleWall"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/sale-wall/search": {
       "get": {
         "summary": "根据关键字模糊搜索",

@@ -93,7 +93,6 @@ export default function WallItem(props: IWallItemProps) {
             className={classNames(`${prefix}__info-like`, {
               active: localIsLike && !isLike
             })}
-            onClick={onLikeClick}
           >
             <Image src={CommentIcon} mode="widthFix"></Image>
             {commentCount}
@@ -101,6 +100,7 @@ export default function WallItem(props: IWallItemProps) {
               className={`${prefix}__info-like-icon`}
               src={localIsLike ? SaleWallLiked : SaleWallLike}
               mode="widthFix"
+              onClick={onLikeClick}
             ></Image>
             {localIsLikeCount}
           </View>

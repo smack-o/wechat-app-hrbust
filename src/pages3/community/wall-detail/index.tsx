@@ -4,7 +4,7 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { withRequest, showToast } from '@/utils'
+import { withRequest, showToast, loginModal } from '@/utils'
 import { routes } from '@/app.config'
 import './index.less'
 import WallItem from '../_components/wall-item'
@@ -37,7 +37,8 @@ class CreateWall extends Component<IProps, PageState> {
   pageSize = 20
   fetching = false
 
-  onLoad(e) {
+  async onLoad(e) {
+    await loginModal()
     if (e.id) {
       this.id = e.id
       this.getData()

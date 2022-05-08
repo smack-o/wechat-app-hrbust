@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
 import Taro from '@tarojs/taro'
+import { loginModal } from '@/utils'
 import BottomBar, { barList } from './_components/bottom-bar'
 
 import './index.less'

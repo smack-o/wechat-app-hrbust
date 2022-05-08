@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, View, Input } from '@tarojs/components'
-import { withRequest } from '@/utils'
+import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
@@ -52,6 +52,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   async componentDidMount() {
+    await loginModal()
     await this.init()
     this.setState({
       loading: false

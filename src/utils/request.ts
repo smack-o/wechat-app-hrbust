@@ -12,7 +12,7 @@ const hosts = {
   dev: 'http://localhost:8791',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.cn'
+  prod: 'https://hrbust-dev.smackgg.com'
 }
 
 export const API_BASE_URL = hosts[env]

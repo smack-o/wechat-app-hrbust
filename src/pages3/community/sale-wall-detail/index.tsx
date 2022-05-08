@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import { View, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { getCdnUrl, showToast, withRequest } from '@/utils'
+import { getCdnUrl, loginModal, showToast, withRequest } from '@/utils'
 import classNames from 'classnames'
 import { routes } from '@/app.config'
 import PublisherTitle from '../_components/publisher-title'
@@ -58,7 +58,9 @@ class CreateWall extends Component<IProps, PageState> {
     }
   ]
 
-  onLoad(e) {
+  async onLoad(e) {
+    await loginModal()
+
     if (e.id) {
       this.id = e.id
       this.getData()

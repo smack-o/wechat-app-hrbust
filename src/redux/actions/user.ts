@@ -98,28 +98,27 @@ export const initHandler = async (dispatch: Dispatch) => {
     }
     if (data.isWechatLogin) {
       data.userInfo = res?.userInfo
-    }
-
-    dispatch({
-      type: UPDATE_USERINFO,
-      data
-    })
-
-    // 获取学生信息 异步
-    userInfo().then(studentInfoRes => {
-      const studentInfo = studentInfoRes.data.studentInfo
       dispatch({
         type: UPDATE_USERINFO,
-        data: {
-          isLogin: !!(
-            studentInfoRes.data.isLogin &&
-            studentInfo &&
-            studentInfo.username
-          ),
-          studentInfo: studentInfoRes.data.studentInfo
-        }
+        data
       })
-    })
+
+      // 获取学生信息 异步
+      userInfo().then(studentInfoRes => {
+        const studentInfo = studentInfoRes.data.studentInfo
+        dispatch({
+          type: UPDATE_USERINFO,
+          data: {
+            isLogin: !!(
+              studentInfoRes.data.isLogin &&
+              studentInfo &&
+              studentInfo.username
+            ),
+            studentInfo: studentInfoRes.data.studentInfo
+          }
+        })
+      })
+    }
 
     dispatch(stopLoading())
   } catch (e) {

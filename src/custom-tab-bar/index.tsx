@@ -4,6 +4,8 @@ import { CoverView, CoverImage } from '@tarojs/components'
 import { connect } from 'react-redux'
 import { IRootState } from '@/types'
 import cn from 'classnames'
+import { store } from '@/redux/store'
+import { toLogin } from '@/utils'
 import './index.less'
 
 const tabInfo = {
@@ -50,8 +52,18 @@ const isEqualPath = (a: string, b: string) =>
 const switchTo = (path: string, index: number) => () => {
   const url = '/' + path
   if (index === 2) {
-    Taro.navigateTo({
-      url
+    const isWechatLogin = store.getState().user.isWechatLogin
+    if (!isWechatLogin) {
+      toLogin(isWechatLogin, url)
+      return
+    }
+    wx.requestSubscribeMessage({
+      tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc'],
+      success: () => {
+        Taro.navigateTo({
+          url
+        })
+      }
     })
     return
   }
@@ -64,10 +76,6 @@ type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
 
 type PageOwnProps = {}
-
-type PageState = {
-  currentTab: number
-}
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 

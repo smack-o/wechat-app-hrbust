@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components'
-import { withRequest } from '@/utils'
+import { loginModal, withRequest } from '@/utils'
 import Taro from '@tarojs/taro'
 import { compressImage } from '@/utils/image'
 import { APIS } from '@/services2'
@@ -29,7 +29,9 @@ export default class LoversFace extends React.Component<
     confidence: -1,
     fetching: false
   }
-  componentDidMount() {}
+  async componentDidMount() {
+    await loginModal()
+  }
 
   onChangeA = (files: File[]) => {
     this.setState({

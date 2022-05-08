@@ -24,6 +24,7 @@ type WallState = {
   }
   activeTab: number
   hasNext: boolean
+  loading: boolean
 }
 
 type WallProps = {}
@@ -41,7 +42,8 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
       list: []
     },
     activeTab: 0,
-    hasNext: true
+    hasNext: true,
+    loading: true
   }
 
   tabList = [
@@ -66,8 +68,11 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   pageSize = 20
   fetching = false
 
-  componentDidMount() {
-    this.init()
+  async componentDidMount() {
+    await this.init()
+    this.setState({
+      loading: false
+    })
   }
 
   init = async () => {
@@ -165,7 +170,12 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   }
 
   render() {
-    const { activeTab, hasNext, listLeft, listRight } = this.state
+    const { activeTab, listLeft, listRight, loading } = this.state
+
+    if (loading) {
+      return null
+    }
+
     return (
       <View className={prefix}>
         <Tab
@@ -173,18 +183,22 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
           tabList={this.tabList}
           onChange={this.onTabChange}
         >
-          <View className={`${prefix}__list`}>
-            <View className={`${prefix}__list-column`}>
-              {listLeft.list.map(item => (
-                <SaleWallItem key={item._id} data={item}></SaleWallItem>
-              ))}
+          {listLeft.list.length === 0 && listRight.list.length === 0 ? (
+            <View className="community-no-data">暂无内容</View>
+          ) : (
+            <View className={`${prefix}__list`}>
+              <View className={`${prefix}__list-column`}>
+                {listLeft.list.map(item => (
+                  <SaleWallItem key={item._id} data={item}></SaleWallItem>
+                ))}
+              </View>
+              <View className={`${prefix}__list-column`}>
+                {listRight.list.map(item => (
+                  <SaleWallItem key={item._id} data={item}></SaleWallItem>
+                ))}
+              </View>
             </View>
-            <View className={`${prefix}__list-column`}>
-              {listRight.list.map(item => (
-                <SaleWallItem key={item._id} data={item}></SaleWallItem>
-              ))}
-            </View>
-          </View>
+          )}
         </Tab>
         <View className={`${prefix}__add-wall`} onClick={this.onAddWallClick}>
           <Image src={AddSaleWallIcon} mode="widthFix"></Image>

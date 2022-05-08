@@ -15,7 +15,7 @@ import wallIcon from '../../imgs/bar/wall.png'
 import wallSelectIcon from '../../imgs/bar/wall_selected.png'
 
 import './BottomBar.less'
-import Wall from '../Wall'
+import Wall from '../wall'
 import SaleWall from '../sale-wall'
 import LoversFace from '../lovers-face'
 

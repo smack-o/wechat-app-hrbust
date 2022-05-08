@@ -16,6 +16,7 @@ type WallState = {
   list: GetApiResultType<typeof APIS.WallApi.apiWallListGet>
   activeTab: number
   hasNext: boolean
+  loading: boolean
 }
 
 type WallProps = {}
@@ -46,11 +47,15 @@ export default class Wall extends React.Component<WallProps, WallState> {
   state: WallState = {
     list: [],
     activeTab: 0,
-    hasNext: true
+    hasNext: true,
+    loading: true
   }
 
-  componentDidMount() {
-    this.init()
+  async componentDidMount() {
+    await this.init()
+    this.setState({
+      loading: false
+    })
   }
 
   init = async () => {
@@ -110,7 +115,11 @@ export default class Wall extends React.Component<WallProps, WallState> {
   onItemClick = () => {}
 
   render() {
-    const { activeTab } = this.state
+    const { activeTab, loading, list = [] } = this.state
+
+    if (loading) {
+      return null
+    }
 
     return (
       <View className="wall">
@@ -128,16 +137,20 @@ export default class Wall extends React.Component<WallProps, WallState> {
           tabList={this.tabList}
           onChange={this.onTabChange}
         >
-          {this.state.list.map(item => {
-            return (
-              <WallItem
-                showHotComments
-                data={item}
-                key={item._id}
-                onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
-              ></WallItem>
-            )
-          })}
+          {list.length === 0 ? (
+            <View className="community-no-data">暂无内容</View>
+          ) : (
+            list.map(item => {
+              return (
+                <WallItem
+                  showHotComments
+                  data={item}
+                  key={item._id}
+                  onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
+                ></WallItem>
+              )
+            })
+          )}
         </Tab>
         <View className="wall__add-wall" onClick={this.onAddWallClick}>
           <Image src={AddWallIcon} mode="widthFix"></Image>

@@ -288,14 +288,6 @@ class CreateWall extends Component<IProps, PageState> {
             <View className={`${prefix}__info-item__text`}>{description}</View>
           </View>
         </View>
-        {isPublisher && (
-          <View
-            className={`${prefix}__footer-delete blue-text`}
-            onClick={this.onDelete}
-          >
-            删除
-          </View>
-        )}
         <View
           className={classNames(`${prefix}__like`, {
             liked: isLikeLocal
@@ -305,9 +297,18 @@ class CreateWall extends Component<IProps, PageState> {
           <Image src={likeIcon}></Image>
           {likeCountLocal}
         </View>
+
         <View className={`${prefix}__like-tips`}>
           感兴趣的话就为TA点一颗小心心吧~~
         </View>
+        {isPublisher && (
+          <View
+            className={`${prefix}__delete blue-text`}
+            onClick={this.onDelete}
+          >
+            删除
+          </View>
+        )}
         <View className={`${prefix}__border-line`}></View>
         <View className={`${prefix}__comment-title`}>
           {data.commentCount} 条评论

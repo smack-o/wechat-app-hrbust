@@ -4,6 +4,7 @@ import { AtTag } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
+import { goPage, routes } from '@/utils/router'
 import WallItem from '../_components/wall-item'
 import SearchIcon from '../imgs/search.png'
 import './index.less'
@@ -165,7 +166,11 @@ export default class Search extends React.Component<{}, IState> {
         <View className={`${prefix}-list`}>
           {tag === TagType.brick &&
             this.state.brickList.map(item => (
-              <WallItem data={item} key={item._id}></WallItem>
+              <WallItem
+                data={item}
+                key={item._id}
+                onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
+              ></WallItem>
             ))}
 
           {tag === TagType.mate && (

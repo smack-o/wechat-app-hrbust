@@ -31,6 +31,9 @@ class Discover extends Component<IProps, PageState> {
   }
 
   onBarChange: IBottomBarProps['onChange'] = index => {
+    Taro.pageScrollTo({
+      scrollTop: 0
+    })
     this.setState({
       currentTab: index
     })

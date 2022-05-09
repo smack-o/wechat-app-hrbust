@@ -1,5 +1,5 @@
-import React from 'react'
-import { Image, View, Input } from '@tarojs/components'
+import React, { Fragment } from 'react'
+import { Image, View, Input, Ad } from '@tarojs/components'
 import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import { navigateTo } from '@tarojs/taro'
@@ -141,14 +141,27 @@ export default class Wall extends React.Component<WallProps, WallState> {
           {list.length === 0 ? (
             <View className="community-no-data">暂无内容</View>
           ) : (
-            list.map(item => {
+            list.map((item, index) => {
               return (
-                <WallItem
-                  showHotComments
-                  data={item}
-                  key={item._id}
-                  onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
-                ></WallItem>
+                <Fragment key={item._id}>
+                  <WallItem
+                    showHotComments
+                    data={item}
+                    onClick={() =>
+                      goPage(`${routes.wallDetail}?id=${item._id}`)
+                    }
+                  ></WallItem>
+                  {index !== 0 && index % 5 === 0 && (
+                    <View className="wall-ad">
+                      {/* <Ad
+                        className="advertising"
+                        unitId="adunit-2d76930b51ac0dbe"
+                      ></Ad> */}
+                      {/* @ts-ignore */}
+                      <c-ad></c-ad>
+                    </View>
+                  )}
+                </Fragment>
               )
             })
           )}

@@ -17,8 +17,11 @@ type LoversFaceState = {
 }
 
 type LoversFaceProps = {}
+// 在页面中定义激励视频广告
 
 const prefix = 'lovers-face'
+
+const AD_STORAGE_KEY = 'loversface:thisDayTimeData'
 export default class LoversFace extends React.Component<
   LoversFaceProps,
   LoversFaceState
@@ -29,8 +32,37 @@ export default class LoversFace extends React.Component<
     confidence: -1,
     fetching: false
   }
+  videoAd: any = null
+  loadAdError: boolean
+  thisDayTimestamp: number
+
   async componentDidMount() {
     await loginModal()
+
+    const videoAd = Taro.createRewardedVideoAd({
+      adUnitId: 'adunit-76ab74da0c0d4251'
+    })
+    videoAd.onLoad(() => {})
+    videoAd.onError(err => {
+      console.log('loadAdError', err)
+      this.loadAdError = true
+    })
+    videoAd.onClose(res => {
+      // 用户点击了【关闭广告】按钮
+      if (res && res.isEnded) {
+        // 正常播放结束，可以下发游戏奖励
+        this.onCompare()
+      } else {
+        // 播放中途退出，不下发游戏奖励
+      }
+    })
+
+    this.thisDayTimestamp =
+      new Date(new Date().toLocaleDateString()).getTime() +
+      24 * 60 * 60 * 1000 -
+      1
+
+    this.videoAd = videoAd
   }
 
   onChangeA = (files: File[]) => {
@@ -60,7 +92,16 @@ export default class LoversFace extends React.Component<
       })
     })
 
-  onSubmit = async () => {
+  onCompare = async (adTimes?: number) => {
+    if (adTimes !== undefined) {
+      Taro.setStorageSync(
+        AD_STORAGE_KEY,
+        JSON.stringify({
+          timestamp: this.thisDayTimestamp,
+          times: adTimes
+        })
+      )
+    }
     const { filesA, filesB } = this.state
     if (filesA.length === 0 || filesB.length === 0) {
       Taro.showToast({
@@ -107,6 +148,51 @@ export default class LoversFace extends React.Component<
     this.setState({
       fetching: false
     })
+  }
+
+  onSubmit = () => {
+    // 广告逻辑
+    let thisDayTimeData = Taro.getStorageSync(AD_STORAGE_KEY)
+    if (thisDayTimeData) {
+      thisDayTimeData = JSON.parse(thisDayTimeData)
+
+      // 如果缓存时间已经小于当前时间清空缓存
+      if (thisDayTimeData.timestamp < this.thisDayTimestamp) {
+        Taro.removeStorageSync(AD_STORAGE_KEY)
+        thisDayTimeData = undefined
+      }
+    }
+
+    // 用户触发广告后，显示激励视频广告
+    // console.log(this.videoAd, this.loadAdError, thisDayTimeData, thisDayTimeData.times >= 2)
+    if (
+      this.videoAd &&
+      !this.loadAdError &&
+      thisDayTimeData &&
+      thisDayTimeData.times >= 1
+    ) {
+      Taro.showModal({
+        title: '是否观看广告',
+        content: '每日第一次免费查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
+        success: res => {
+          if (res.confirm && this.videoAd) {
+            this.videoAd.show().catch(() => {
+              // 失败重试
+              this.videoAd!.load()
+                .then(() => this.videoAd!.show())
+                .catch(() => {
+                  console.log('激励视频 广告显示失败')
+                })
+            })
+          } else if (res.cancel) {
+            // console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    }
+
+    this.onCompare(thisDayTimeData.times ? thisDayTimeData.times + 1 : 1)
   }
 
   onReset = () => {

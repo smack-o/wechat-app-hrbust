@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import cn from 'classnames'
 import { UserState } from '@/redux/reducers/user'
 import { getCdnUrl } from '@/utils'
@@ -18,7 +18,7 @@ export function NickName(props: {
   const name = customName || nickName
   return name ? (
     <View className={`${prefix}__name ${className}`}>
-      {name}
+      <Text userSelect>{name}</Text>
       {/* {isPublisher ? '(我)' : ''} */}
     </View>
   ) : null

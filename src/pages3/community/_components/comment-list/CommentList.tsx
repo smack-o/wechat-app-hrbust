@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
-import { Image, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import { APIS } from '@/services2'
 import Avatar, { NickName } from '@/components/Avatar'
 import { showToast, withRequest } from '@/utils'
@@ -176,11 +176,11 @@ export function CommentList(props: IProps) {
                         type="relative"
                       ></Time>
                     </View>
-                    <View className={`${prefix}__item__content`}>
+                    <Text userSelect className={`${prefix}__item__content`}>
                       {type === CommentType.ReplyComment
                         ? `@${to?.userInfo?.customName}: ${content}`
                         : content}
-                    </View>
+                    </Text>
 
                     <View className={`${prefix}__item-footer`}>
                       {isPublisher && (
@@ -199,7 +199,9 @@ export function CommentList(props: IProps) {
                           src={item.isLike ? LikeSelectedIcon : LikeIcon}
                           mode="widthFix"
                         ></Image>
-                        {item.likeCount}
+                        <Text className={item.isLike ? 'red-text' : ''}>
+                          {item.likeCount}
+                        </Text>
                       </View>
                     </View>
                   </View>

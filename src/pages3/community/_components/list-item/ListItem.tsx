@@ -1,6 +1,6 @@
 import React, { ReactChild } from 'react'
 import Avatar, { NickName } from '@/components/Avatar'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { getCdnUrl } from '@/utils'
 import Time from '@/components/Time'
 import { UserState } from '@/redux/reducers/user'
@@ -51,7 +51,9 @@ export default function ListItem(props: IProps) {
             customName={userInfo?.customName}
           ></NickName>
         </View>
-        <View className={`${prefix}-center__content`}>{content}</View>
+        <Text userSelect className={`${prefix}-center__content`}>
+          {content}
+        </Text>
         <Time
           className={`${prefix}-center__time`}
           type="relative"

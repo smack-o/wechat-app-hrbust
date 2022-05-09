@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { APIS } from '@/services2'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { goPage } from '@/utils/router'
 import { routes } from '@/app.config'
 import likeIcon from '../../imgs/like.png'
@@ -44,28 +44,28 @@ export default function MessageItem(props: IProps) {
   const content = useMemo(() => {
     if (type === TypeEnum.BrickLike) {
       return (
-        <View className={`${prefix}-center__content-detail`}>
+        <Text userSelect className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的表白墙
-        </View>
+        </Text>
       )
     } else if (type === TypeEnum.MateLike) {
       return (
-        <View className={`${prefix}-center__content-detail`}>
+        <Text userSelect className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的卖舍友
-        </View>
+        </Text>
       )
     } else if (type === TypeEnum.Comment) {
       return (
-        <View className={`${prefix}-center__content-detail`}>
+        <Text userSelect className={`${prefix}-center__content-detail`}>
           {contentText}
-        </View>
+        </Text>
       )
     } else if (type === TypeEnum.CommentLike) {
       return (
-        <View className={`${prefix}-center__content-detail`}>
+        <Text userSelect className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你的评论:{' '}
           {contentText}
-        </View>
+        </Text>
       )
     }
     return '您有一条新消息'

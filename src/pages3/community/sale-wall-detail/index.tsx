@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Taro from '@tarojs/taro'
-import { View, Swiper, SwiperItem, Image } from '@tarojs/components'
+import { View, Swiper, SwiperItem, Image, Text } from '@tarojs/components'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
 import { getCdnUrl, loginModal, showToast, withRequest } from '@/utils'
@@ -294,16 +294,28 @@ class SaleWallDetail extends Component<IProps, PageState> {
         </View>
         <View className={`${prefix}__info`}>
           <View className={`${prefix}__info-item`}>
-            <View className={`${prefix}__info-item__title`}>专业：</View>
-            <View className={`${prefix}__info-item__text`}>{major}</View>
+            <Text userSelect className={`${prefix}__info-item__title`}>
+              专业：
+            </Text>
+            <Text userSelect className={`${prefix}__info-item__text`}>
+              {major}
+            </Text>
           </View>
           <View className={`${prefix}__info-item`}>
-            <View className={`${prefix}__info-item__title`}>喜欢TA：</View>
-            <View className={`${prefix}__info-item__text`}>{content}</View>
+            <Text userSelect className={`${prefix}__info-item__title`}>
+              喜欢TA：
+            </Text>
+            <Text userSelect className={`${prefix}__info-item__text`}>
+              {content}
+            </Text>
           </View>
           <View className={`${prefix}__info-item`}>
-            <View className={`${prefix}__info-item__title`}>舍友简介：</View>
-            <View className={`${prefix}__info-item__text`}>{description}</View>
+            <Text userSelect className={`${prefix}__info-item__title`}>
+              舍友简介：
+            </Text>
+            <Text userSelect className={`${prefix}__info-item__text`}>
+              {description}
+            </Text>
           </View>
         </View>
         <View

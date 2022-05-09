@@ -149,9 +149,15 @@ export default function WallItem(props: IWallItemProps) {
         })}
       </View>
       <View className={`${prefix}__content`}>
-        {to && <Text className={`${prefix}__content-to`}>@{to}</Text>}
+        {to && (
+          <Text userSelect className={`${prefix}__content-to`}>
+            @{to}
+          </Text>
+        )}
 
-        <Text className={`${prefix}__content-detail`}>{content}</Text>
+        <Text className={`${prefix}__content-detail`} userSelect>
+          {content}
+        </Text>
       </View>
       <View className={`${prefix}__footer`}>
         {showDelete && isPublisher && (
@@ -171,7 +177,9 @@ export default function WallItem(props: IWallItemProps) {
             src={localIsLike ? LikeSelectedIcon : LikeIcon}
             mode="widthFix"
           ></Image>
-          {localIsLikeCount}
+          <Text className={localIsLike ? 'red-text' : ''}>
+            {localIsLikeCount}
+          </Text>
         </View>
       </View>
       {showHotComments && hotComments.length > 0 && (

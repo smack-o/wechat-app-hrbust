@@ -151,6 +151,15 @@ export default class LoversFace extends React.Component<
   }
 
   onSubmit = () => {
+    const { filesA, filesB } = this.state
+    if (filesA.length === 0 || filesB.length === 0) {
+      Taro.showToast({
+        title: '请先添加图片',
+        icon: 'none'
+      })
+      return
+    }
+
     // 广告逻辑
     let thisDayTimeData = Taro.getStorageSync(AD_STORAGE_KEY)
     if (thisDayTimeData) {

@@ -9,14 +9,13 @@ import './index.less'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
-type PropsFromDispatch = {
-}
+type PropsFromDispatch = {}
 
 type PageOwnProps = {}
 
 type PageState = {
-  id: string,
-  password: string,
+  id: string
+  password: string
   yingxinData?: {
     getStudentInformat: {
       XM: string
@@ -28,9 +27,9 @@ type PageState = {
       COUN_XM: string
       COUN_TEL: string
       ROOM_NAME: string
-    },
+    }
     getPayment: {
-      PRICE: string,
+      PRICE: string
     }[]
   }
 }
@@ -61,8 +60,7 @@ class YingXin extends Component<IProps, PageState> {
     // }]
   }
 
-  componentDidShow () {
-  }
+  componentDidShow() {}
 
   onLoad() {
     const storageData = Taro.getStorageSync('yingxin:data')
@@ -70,7 +68,7 @@ class YingXin extends Component<IProps, PageState> {
       const { id, password } = JSON.parse(storageData)
       this.setState({
         id,
-        password,
+        password
       })
     }
   }
@@ -95,7 +93,7 @@ class YingXin extends Component<IProps, PageState> {
       Taro.showToast({
         title: '请输入密码',
         icon: 'none',
-        duration: 1000,
+        duration: 1000
       })
       return
     }
@@ -114,21 +112,23 @@ class YingXin extends Component<IProps, PageState> {
     return request({
       url: '/api/yingxin',
       data
-    }).then((res) => {
-      Taro.hideLoading()
-
-      if (res?.data?.data?.length > 0) {
-        this.setState({
-          yingxinData: res?.data?.data || {}
-        })
-      } else {
-        this.showError()
-      }
-    }).catch(() => {
-      Taro.hideLoading()
-
-      this.showError()
     })
+      .then(res => {
+        Taro.hideLoading()
+
+        if (res?.data?.data?.length > 0) {
+          this.setState({
+            yingxinData: res?.data?.data || {}
+          })
+        } else {
+          this.showError()
+        }
+      })
+      .catch(() => {
+        Taro.hideLoading()
+
+        this.showError()
+      })
   }
 
   showError = () => {
@@ -139,14 +139,13 @@ class YingXin extends Component<IProps, PageState> {
     })
   }
 
-
-  render () {
+  render() {
     const { yingxinData, id, password } = this.state
 
     return (
       <View className="yingxin-page">
-        {
-          !yingxinData && <Fragment>
+        {!yingxinData && (
+          <Fragment>
             <View className="input-container">
               <AtInput
                 name="id"
@@ -154,7 +153,7 @@ class YingXin extends Component<IProps, PageState> {
                 type="text"
                 placeholder="请输入考生号"
                 value={id}
-                onChange={(e) => this.onInputChange('id', e)}
+                onChange={e => this.onInputChange('id', e)}
                 focus
               ></AtInput>
               <AtInput
@@ -163,49 +162,108 @@ class YingXin extends Component<IProps, PageState> {
                 type="text"
                 placeholder="密码(初始身份证后六位)"
                 value={password}
-                onChange={(e) => this.onInputChange('password', e)}
+                onChange={e => this.onInputChange('password', e)}
               ></AtInput>
               <View className="info-wrapper">
-                <View className="info">*注1：登录用户名为14位考生号，14位考生号为(年份(2位)+省份代码(2位)+10位考生号)，例如黑龙江省考生需在10位考生号前加(1923)。</View>
-                <View className="info">*注2：初始密码为身份证号后六位（如最后一位X，需要大写）。</View>
+                <View className="info">
+                  *注1：登录用户名为14位考生号，14位考生号为(年份(2位)+省份代码(2位)+10位考生号)，例如黑龙江省考生需在10位考生号前加(1923)。
+                </View>
+                <View className="info">
+                  *注2：初始密码为身份证号后六位（如最后一位X，需要大写）。
+                </View>
               </View>
-              <AtButton className="button" type="primary" onClick={this.onConfirm}>查询</AtButton>
+              <AtButton
+                className="button"
+                type="primary"
+                onClick={this.onConfirm}
+              >
+                查询
+              </AtButton>
               <Ad className="advertising" unitId="adunit-2d76930b51ac0dbe"></Ad>
             </View>
           </Fragment>
-        }
+        )}
 
-        {
-          yingxinData && <Fragment>
+        {yingxinData && (
+          <Fragment>
             <View className="title">新生信息</View>
             <View className="info-wrapper">
-              <View className="info">更多信息（在线缴费等）请浏览器访问 <Text selectable>http://yingxin.hrbust.edu.cn</Text> 查看</View>
+              <View className="info">
+                更多信息（在线缴费等）请浏览器访问{' '}
+                <Text userSelect>http://yingxin.hrbust.edu.cn</Text> 查看
+              </View>
             </View>
 
             <AtTimeline
               className="time-line"
               items={[
-                { title: '姓名', content: [yingxinData.getStudentInformat.XM], icon: 'stop' },
-                { title: '专业', content: [`学院：${yingxinData.getStudentInformat.UNIT_NAME}`, `专业：${yingxinData.getStudentInformat.MAJOR_NAME}`], icon: 'stop' },
-                { title: '考生号', content: [yingxinData.getStudentInformat.KSH], icon: 'stop' },
-                { title: '班级', content: [yingxinData.getStudentInformat.CLASS_NAME], icon: 'stop' },
-                { title: '学号', content: [yingxinData.getStudentInformat.XH], icon: 'stop' },
-                { title: '辅导员', content: [`姓名：${yingxinData.getStudentInformat.COUN_XM}`, `电话：${yingxinData.getStudentInformat.COUN_TEL}`], icon: 'stop' },
-                { title: '寝室', content: [yingxinData.getStudentInformat.ROOM_NAME], icon: 'stop' },
-                { title: '寝室', content: [yingxinData.getStudentInformat.ROOM_NAME], icon: 'stop' },
-                { title: '学费', content: [`学费：${yingxinData.getPayment[0].PRICE}元`, `住宿费：${yingxinData.getPayment[1].PRICE}元`], icon: 'stop' },
+                {
+                  title: '姓名',
+                  content: [yingxinData.getStudentInformat.XM],
+                  icon: 'stop'
+                },
+                {
+                  title: '专业',
+                  content: [
+                    `学院：${yingxinData.getStudentInformat.UNIT_NAME}`,
+                    `专业：${yingxinData.getStudentInformat.MAJOR_NAME}`
+                  ],
+                  icon: 'stop'
+                },
+                {
+                  title: '考生号',
+                  content: [yingxinData.getStudentInformat.KSH],
+                  icon: 'stop'
+                },
+                {
+                  title: '班级',
+                  content: [yingxinData.getStudentInformat.CLASS_NAME],
+                  icon: 'stop'
+                },
+                {
+                  title: '学号',
+                  content: [yingxinData.getStudentInformat.XH],
+                  icon: 'stop'
+                },
+                {
+                  title: '辅导员',
+                  content: [
+                    `姓名：${yingxinData.getStudentInformat.COUN_XM}`,
+                    `电话：${yingxinData.getStudentInformat.COUN_TEL}`
+                  ],
+                  icon: 'stop'
+                },
+                {
+                  title: '寝室',
+                  content: [yingxinData.getStudentInformat.ROOM_NAME],
+                  icon: 'stop'
+                },
+                {
+                  title: '寝室',
+                  content: [yingxinData.getStudentInformat.ROOM_NAME],
+                  icon: 'stop'
+                },
+                {
+                  title: '学费',
+                  content: [
+                    `学费：${yingxinData.getPayment[0].PRICE}元`,
+                    `住宿费：${yingxinData.getPayment[1].PRICE}元`
+                  ],
+                  icon: 'stop'
+                }
               ]}
-            >
-            </AtTimeline>
+            ></AtTimeline>
           </Fragment>
-        }
+        )}
       </View>
     )
   }
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  user: state.user,
+  user: state.user
 })
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps)(YingXin)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps
+)(YingXin)

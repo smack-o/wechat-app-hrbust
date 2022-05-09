@@ -2,7 +2,7 @@ import { APIS } from '@/services2'
 import { getCdnUrl, withRequest } from '@/utils'
 import { goPage } from '@/utils/router'
 import Taro from '@tarojs/taro'
-import { Image, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { routes } from '@/app.config'
 import Avatar from '@/components/Avatar'
@@ -104,7 +104,9 @@ export default function WallItem(props: IWallItemProps) {
               mode="widthFix"
               onClick={onLikeClick}
             ></Image>
-            {localIsLikeCount}
+            <Text className={localIsLike ? 'red-text' : ''}>
+              {localIsLikeCount}
+            </Text>
           </View>
         </View>
       </View>

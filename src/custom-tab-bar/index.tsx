@@ -6,6 +6,7 @@ import { IRootState } from '@/types'
 import cn from 'classnames'
 import { store } from '@/redux/store'
 import { toLogin } from '@/utils'
+import '@/assets/icon/soul.png'
 import './index.less'
 
 const tabInfo = {
@@ -28,8 +29,8 @@ const tabInfo = {
     {
       pagePath: 'pages3/community/index',
       text: 'Soul',
-      iconPath: '/assets/icon/find.png',
-      selectedIconPath: '/assets/icon/find_selected.png'
+      iconPath: '/assets/icon/soul.png',
+      selectedIconPath: '/assets/icon/soul.png'
     },
     {
       pagePath: 'pages/shop/index',

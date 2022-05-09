@@ -233,7 +233,10 @@ class Index extends Component<IProps, PageState> {
 
         {(!isWechatLogin || !isLogin) && (
           <View className="login-wrapper">
-            <View className="login" onClick={() => toLogin(isWechatLogin)}>
+            <View
+              className="login"
+              onClick={() => toLogin(isWechatLogin, routes.login)}
+            >
               <Text className="login-text" style="color: #999999">
                 部分校园功能仅对绑定学号用户开放
               </Text>

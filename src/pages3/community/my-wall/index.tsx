@@ -75,10 +75,6 @@ class Message extends Component<IProps, PageState> {
   render() {
     const { list } = this.state
 
-    // TODO: 兜底页
-    if (list.length === 0) {
-      return null
-    }
     return (
       <View className={prefix}>
         <BrickMessageList list={list}></BrickMessageList>

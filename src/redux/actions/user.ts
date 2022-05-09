@@ -105,7 +105,7 @@ export const initHandler = async (dispatch: Dispatch) => {
 
       // 获取学生信息 异步
       userInfo().then(studentInfoRes => {
-        const studentInfo = studentInfoRes.data.studentInfo
+        const studentInfo = studentInfoRes.data.studentInfo || {}
         dispatch({
           type: UPDATE_USERINFO,
           data: {
@@ -114,7 +114,7 @@ export const initHandler = async (dispatch: Dispatch) => {
               studentInfo &&
               studentInfo.username
             ),
-            studentInfo: studentInfoRes.data.studentInfo
+            studentInfo
           }
         })
       })

@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { View } from '@tarojs/components'
 import { IRootState } from '@/types'
 import Taro from '@tarojs/taro'
-import { loginModal } from '@/utils'
+import { withShare } from '@/components'
+import { routes } from '@/app.config'
 import BottomBar, { barList } from './_components/bottom-bar'
 
 import './index.less'
@@ -26,6 +27,8 @@ class Discover extends Component<IProps, PageState> {
   }
 
   ref = createRef<any>()
+  onShareAppMessage() {}
+  onShareTimeline() {}
 
   onShow = () => {
     this.ref?.current?.onShow?.()
@@ -75,4 +78,9 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(Discover)
+)(
+  withShare({
+    title: '分享了你理工喵社区，快来看看吧',
+    path: routes.community
+  })(Discover)
+)

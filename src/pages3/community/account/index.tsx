@@ -4,10 +4,12 @@ import { View, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { withRequest } from '@/utils'
+import { getCdnUrl, loginModal, withRequest } from '@/utils'
 
 import Avatar, { NickName } from '@/components/Avatar'
 import Time from '@/components/Time'
+import { routes } from '@/app.config'
+import { withShare } from '@/components'
 import BrickMessageList from '../_components/brick-message-list'
 import MateMessageList from '../_components/mate-message-list'
 import Tab from '../_components/tab'
@@ -46,6 +48,15 @@ class OtherAccount extends Component<IProps, PageState> {
   pageNum = 0
   pageSize = 20
   fetching = false
+
+  $shareOptions = {
+    title: '分享给你个人主页',
+    imageUrl: '',
+    path: routes.account
+  }
+
+  onShareAppMessage() {}
+  onShareTimeline() {}
 
   fetchBrickList = async (reset?: boolean) => {
     this.fetching = true
@@ -102,7 +113,8 @@ class OtherAccount extends Component<IProps, PageState> {
     }
   ]
 
-  onLoad(e) {
+  async onLoad(e) {
+    await loginModal()
     if (e.id) {
       this.id = e.id
       this.getUserInfo()
@@ -126,6 +138,15 @@ class OtherAccount extends Component<IProps, PageState> {
     Taro.setNavigationBarTitle({
       title: `${res?.userInfo?.customName || res?.userInfo?.nickName} 的主页`
     })
+
+    this.$shareOptions = {
+      title: `分享给你 ${res?.userInfo?.customName ||
+        res?.userInfo?.nickName} 的主页`,
+      imageUrl: res?.userInfo?.customAvatarUrl
+        ? getCdnUrl(res?.userInfo?.customAvatarUrl.key)
+        : res?.userInfo?.avatarUrl || '',
+      path: `${routes.otherAccount}?id=${this.id}`
+    }
   }
 
   init = async () => {
@@ -227,4 +248,4 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(OtherAccount)
+)(withShare()(OtherAccount))

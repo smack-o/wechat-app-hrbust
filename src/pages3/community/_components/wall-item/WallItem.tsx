@@ -128,6 +128,7 @@ export default function WallItem(props: IWallItemProps) {
         time={createdAt}
         publisher={publisher}
         timeType={timeType}
+        isPublisher={isPublisher}
       ></PublisherTitle>
       <View
         className={classNames(

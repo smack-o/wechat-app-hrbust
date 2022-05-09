@@ -75,15 +75,15 @@ class Message extends Component<IProps, PageState> {
   render() {
     const { list } = this.state
 
-    // TODO: 兜底页
-    if (list.length === 0) {
-      return null
-    }
     return (
       <View className={prefix}>
-        {list.map(item => {
-          return <MessageItem key={item._id} data={item}></MessageItem>
-        })}
+        {list.length === 0 ? (
+          <View className="community-no-data">暂无消息</View>
+        ) : (
+          list.map(item => {
+            return <MessageItem key={item._id} data={item}></MessageItem>
+          })
+        )}
       </View>
     )
   }

@@ -64,9 +64,9 @@ export default function ListItem(props: IProps) {
           mode="aspectFill"
           src={getCdnUrl(photo.key)}
         ></Image>
-      ) : (
+      ) : rightContent ? (
         <View className={`${prefix}-right`}>{rightContent}</View>
-      )}
+      ) : null}
     </View>
   )
 }

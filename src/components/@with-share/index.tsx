@@ -5,31 +5,33 @@ import Taro from '@tarojs/taro'
 import { getCurrentPageUrl } from '@/utils'
 
 export type Options = {
-  title?: string,
-  imageUrl?: string,
-  path?: string,
-  query?: string,
+  title?: string
+  imageUrl?: string
+  path?: string
+  query?: string
 }
 
 const defaultOptions = {
   title: '理工喵',
   imageUrl: '',
   path: 'pages/index/index',
-  query: '',
+  query: ''
 }
 
 function withShare(opts: Options = defaultOptions) {
   return function demoComponent(WrappedComponent: ComponentClass) {
     return class WithShare extends WrappedComponent {
       async componentWillMount() {
-        Taro.showShareMenu({
-          withShareTicket: true,
-          // @ts-ignore
-          menus: ['shareAppMessage', 'shareTimeline']
-        })
+        // console.log('componentWillMount')
+        // Taro.showShareMenu({
+        //   withShareTicket: true,
+        //   // @ts-ignore
+        //   menus: ['shareAppMessage', 'shareTimeline']
+        // })
       }
 
-      $setShareInfo: () => Options
+      $setShareInfo?: () => Options
+      $shareOptions?: Options
 
       // 点击分享的那一刻会进行调用
       onShareAppMessage() {
@@ -48,6 +50,19 @@ function withShare(opts: Options = defaultOptions) {
       getShareInfo = () => {
         // let { title, imageUrl, path = null } = opts;
         let options = { ...opts }
+        console.log(
+          this.$setShareInfo,
+          'this.$setShareInfo',
+          this.$setShareInfo?.(),
+          this.$shareOptions
+        )
+
+        if (this.$shareOptions) {
+          options = {
+            ...options,
+            ...(this.$shareOptions || {})
+          }
+        }
         // 从继承的组件获取配置
         if (this.$setShareInfo && typeof this.$setShareInfo === 'function') {
           // opts = this.$setShareInfo()
@@ -76,4 +91,3 @@ function withShare(opts: Options = defaultOptions) {
 }
 
 export default withShare
-

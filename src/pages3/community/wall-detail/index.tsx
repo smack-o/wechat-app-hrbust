@@ -4,8 +4,9 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IRootState } from '@/types'
 import { APIS } from '@/services2'
-import { withRequest, showToast, loginModal } from '@/utils'
+import { withRequest, showToast, loginModal, getCdnUrl } from '@/utils'
 import { routes } from '@/app.config'
+import { withShare } from '@/components'
 import './index.less'
 import WallItem from '../_components/wall-item'
 import { CommentType } from '../_components/comment-input'
@@ -25,7 +26,10 @@ type PageState = {
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 const prefix = 'wall-detail'
-class CreateWall extends Component<IProps, PageState> {
+
+// @withShare({ title: '分享' })
+
+class WallDetail extends Component<IProps, PageState> {
   state: PageState = {
     data: undefined,
     commentList: [],
@@ -45,6 +49,15 @@ class CreateWall extends Component<IProps, PageState> {
       this.getComment()
     }
   }
+
+  $shareOptions = {
+    title: '分享了你一条表白墙',
+    imageUrl: '',
+    path: routes.community
+  }
+
+  onShareAppMessage() {}
+  onShareTimeline() {}
 
   getData = async () => {
     const [err, res] = await withRequest(APIS.WallApi.apiWallIdGet)({
@@ -69,9 +82,15 @@ class CreateWall extends Component<IProps, PageState> {
         })
         return
       }
+
       this.setState({
         data: res
       })
+      this.$shareOptions = {
+        title: '分享你一条表白墙',
+        imageUrl: res?.photos?.[0]?.key ? getCdnUrl(res?.photos?.[0].key) : '',
+        path: routes.wallDetail + '?id=' + res._id
+      }
     }
   }
 
@@ -182,4 +201,4 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(CreateWall)
+)(withShare({ title: '分享了你一条表白墙' })(WallDetail))

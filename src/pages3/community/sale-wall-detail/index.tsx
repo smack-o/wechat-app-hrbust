@@ -7,6 +7,7 @@ import { APIS } from '@/services2'
 import { getCdnUrl, loginModal, showToast, withRequest } from '@/utils'
 import classNames from 'classnames'
 import { routes } from '@/app.config'
+import { withShare } from '@/components'
 import PublisherTitle from '../_components/publisher-title'
 import maleIcon from './imgs/male.png'
 import femaleIcon from './imgs/female.png'
@@ -33,7 +34,7 @@ type PageState = {
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 const prefix = 'sale-wall-detail'
-class CreateWall extends Component<IProps, PageState> {
+class SaleWallDetail extends Component<IProps, PageState> {
   state: PageState = {
     data: undefined,
     isLikeLocal: false,
@@ -67,6 +68,15 @@ class CreateWall extends Component<IProps, PageState> {
       this.getComment()
     }
   }
+
+  $shareOptions = {
+    title: '分享了你一条卖舍友',
+    imageUrl: '',
+    path: routes.community
+  }
+
+  onShareAppMessage() {}
+  onShareTimeline() {}
 
   onImageClick = (index: number) => {
     const photos = this.state.data?.photos || []
@@ -108,6 +118,12 @@ class CreateWall extends Component<IProps, PageState> {
         isLikeLocal: res.isLike,
         likeCountLocal: res.likeCount
       })
+
+      this.$shareOptions = {
+        title: '分享你一条卖舍友',
+        imageUrl: getCdnUrl(res?.photos?.[0]?.key),
+        path: routes.saleWallDetail + '?id=' + res._id
+      }
     }
   }
 
@@ -249,6 +265,7 @@ class CreateWall extends Component<IProps, PageState> {
           time={createdAt}
           publisher={publisher}
           timeType="relative"
+          isPublisher={isPublisher}
         ></PublisherTitle>
         <Swiper
           circular
@@ -332,4 +349,4 @@ const mapStateToProps = (state: IRootState) => ({
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapStateToProps
-)(CreateWall)
+)(withShare({ title: '分享了你一条卖舍友' })(SaleWallDetail))

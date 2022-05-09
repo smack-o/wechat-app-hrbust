@@ -23,13 +23,20 @@ type Props = {
     userInfo?: UserInfo
     _id?: string
   }
+  isPublisher?: boolean
   time?: string | number
   className?: string
   timeType?: 'relative' | 'absolute'
 }
 
 export default function PublisherTitle(props: Props) {
-  const { publisher, time, className, timeType = 'absolute' } = props
+  const {
+    publisher,
+    time,
+    className,
+    timeType = 'absolute',
+    isPublisher
+  } = props
 
   return (
     <View className={cn(`${prefix}__publisher`, className)}>
@@ -37,6 +44,7 @@ export default function PublisherTitle(props: Props) {
         {...publisher?.userInfo}
         onClickType="jump"
         _id={publisher?._id}
+        isPublisher={isPublisher}
       ></Avatar>
 
       <Time time={time} type={timeType}></Time>

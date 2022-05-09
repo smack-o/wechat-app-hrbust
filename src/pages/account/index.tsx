@@ -134,7 +134,7 @@ class Account extends Component<IProps, PageState> {
             </View>
             <View className="student">
               <Image className="image" src={authIcon} />
-              <View>{studentInfo.name}</View>
+              <View>{studentInfo?.name}</View>
             </View>
           </View>
         </View>
@@ -142,7 +142,7 @@ class Account extends Component<IProps, PageState> {
           <AtButton
             type="primary"
             className="login-button"
-            onClick={() => toLogin(isWechatLogin)}
+            onClick={() => toLogin(isWechatLogin, routes.login)}
           >
             立即登录
           </AtButton>

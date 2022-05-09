@@ -31,7 +31,8 @@ export default function WallItem(props: IWallItemProps) {
       isLike,
       _id,
       createdAt,
-      commentCount
+      commentCount,
+      isPublisher
     } = {},
     timeType
   } = props
@@ -84,6 +85,7 @@ export default function WallItem(props: IWallItemProps) {
           avatarSize="40rpx"
           onClickType="jump"
           _id={publisher?._id}
+          isPublisher={isPublisher}
           // avatarUrl={publisher?.userInfo?.avatarUrl || ''}
           // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>

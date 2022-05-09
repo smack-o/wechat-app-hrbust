@@ -137,7 +137,14 @@ export function CommentList(props: IProps) {
       ) : (
         <View className={prefix}>
           {listLocal.map((item, index) => {
-            const { replyComment = [], content, from, type, to } = item
+            const {
+              replyComment = [],
+              content,
+              from,
+              type,
+              to,
+              isPublisher
+            } = item
             return (
               <Fragment key={item._id}>
                 <View
@@ -152,6 +159,8 @@ export function CommentList(props: IProps) {
                     avatarSize={avatarSize}
                     customAvatarUrl={from?.userInfo?.customAvatarUrl}
                     avatarUrl={from?.userInfo?.avatarUrl}
+                    _id={from?._id}
+                    onClickType="jump"
                   ></Avatar>
                   <View className={`${prefix}__item-right`}>
                     <View className={`${prefix}__item__title`}>
@@ -159,6 +168,7 @@ export function CommentList(props: IProps) {
                         className={`${prefix}__item__title__name`}
                         nickName={from?.userInfo?.nickName}
                         customName={from?.userInfo?.customName}
+                        isPublisher={isPublisher}
                       ></NickName>
                       <Time
                         className={`${prefix}__item__title__time`}
@@ -173,7 +183,7 @@ export function CommentList(props: IProps) {
                     </View>
 
                     <View className={`${prefix}__item-footer`}>
-                      {item.isPublisher && (
+                      {isPublisher && (
                         <View
                           className={`${prefix}__item-footer__delete blue-text`}
                           onClick={e => onDelete(index, e)}

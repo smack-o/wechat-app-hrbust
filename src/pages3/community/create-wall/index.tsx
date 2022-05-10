@@ -6,7 +6,12 @@ import { AtButton, AtImagePicker } from 'taro-ui'
 import { goPage, routes } from '@/utils/router'
 import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
-import { showToast, uploadFileToServer, withRequest } from '@/utils'
+import {
+  requestSubscribeMessage,
+  showToast,
+  uploadFileToServer,
+  withRequest
+} from '@/utils'
 import { File } from 'taro-ui/types/image-picker'
 
 import './index.less'
@@ -51,6 +56,8 @@ class CreateWall extends Component<IProps, PageState> {
 
   onSubmit = async () => {
     const { to, tel, content, files } = this.state
+
+    await requestSubscribeMessage()
 
     if (!content) {
       Taro.showToast({

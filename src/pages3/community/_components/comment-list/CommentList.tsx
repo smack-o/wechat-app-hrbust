@@ -1,4 +1,10 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import Taro from '@tarojs/taro'
 import { Image, Text, View } from '@tarojs/components'
 import { APIS } from '@/services2'
@@ -32,6 +38,7 @@ interface IProps {
    * 父级评论 id
    */
   parentId?: string
+  replyCount?: number
 }
 
 const prefix = 'comment-list'
@@ -41,15 +48,21 @@ export function CommentList(props: IProps) {
     list = [],
     avatarSize = '70rpx',
     parentId = '',
-    onCommentItemClick
+    onCommentItemClick,
+    replyCount = 0
   } = props
 
   const [listLocal, setListLocal] = useState(list)
   const [pageNum, setPageNum] = useState(1)
-  const [showReplyMore, setShowReplyMore] = useState(list.length >= 3)
+
+  let replyCountLocal = useMemo(() => replyCount, [replyCount])
+  console.log(listLocal.length, replyCount, replyCountLocal)
+  const showReplyMore = listLocal.length < replyCountLocal
+  // const [showReplyMore, setShowReplyMore] = useState(list.length < replyCount)
 
   useEffect(() => {
     setListLocal(list)
+    setPageNum(1)
   }, [list])
 
   // 点赞
@@ -95,6 +108,7 @@ export function CommentList(props: IProps) {
                 title: '删除成功',
                 icon: 'success'
               })
+              replyCountLocal && (replyCountLocal -= 1)
             }
           }
         }
@@ -122,9 +136,9 @@ export function CommentList(props: IProps) {
     setPageNum(pageNum + 1)
     if (!err && res) {
       setListLocal(listLocal.concat(res))
-      if (res.length < 3) {
-        setShowReplyMore(false)
-      }
+      // if (res.length < 3) {
+      //   setShowReplyMore(false)
+      // }
     }
   }, [listLocal, pageNum, parentId])
 
@@ -214,6 +228,7 @@ export function CommentList(props: IProps) {
                       avatarSize="50rpx"
                       parentId={item._id}
                       onCommentItemClick={onCommentItemClick}
+                      replyCount={item.replyCount}
                     ></CommentList>
                   </View>
                 )}

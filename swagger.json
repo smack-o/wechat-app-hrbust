@@ -584,6 +584,11 @@
                         "description": "收藏数量",
                         "default": 0
                       },
+                      "replyCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
                       "replyComment": {
                         "type": "array",
                         "items": {
@@ -926,6 +931,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -937,7 +947,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -951,7 +962,8 @@
                       "isPublisher",
                       "isLike",
                       "likeCount",
-                      "collectCount"
+                      "collectCount",
+                      "replyCount"
                     ]
                   }
                 },
@@ -1394,6 +1406,11 @@
                         "description": "收藏数量",
                         "default": 0
                       },
+                      "replyCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
                       "replyComment": {
                         "type": "array",
                         "items": {
@@ -1736,6 +1753,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -1747,7 +1769,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -1761,7 +1784,8 @@
                       "isPublisher",
                       "isLike",
                       "likeCount",
-                      "collectCount"
+                      "collectCount",
+                      "replyCount"
                     ]
                   }
                 },
@@ -2204,6 +2228,11 @@
                         "description": "收藏数量",
                         "default": 0
                       },
+                      "replyCount": {
+                        "type": "number",
+                        "description": "收藏数量",
+                        "default": 0
+                      },
                       "replyComment": {
                         "type": "array",
                         "items": {
@@ -2546,6 +2575,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -2557,7 +2591,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -2571,7 +2606,8 @@
                       "isPublisher",
                       "isLike",
                       "likeCount",
-                      "collectCount"
+                      "collectCount",
+                      "replyCount"
                     ]
                   }
                 },
@@ -3291,6 +3327,130 @@
       }
     },
     "/api/legalcheck": {
+      "get": {
+        "summary": "确认开发者签名",
+        "description": "确认开发者签名",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        100001,
+                        100002,
+                        400001,
+                        400002,
+                        400003,
+                        500000,
+                        500001,
+                        500002
+                      ]
+                    },
+                    "resultCode": {
+                      "type": "string",
+                      "enum": [
+                        "SUCCESS",
+                        "ERR_PARAM",
+                        "SEN_MESSAGE",
+                        "NOT_WECHAT_AUTH",
+                        "NOT_LOGIN",
+                        "NOT_AUTH",
+                        "ERROR",
+                        "FAIL_UPLOAD",
+                        "FACE_COMPARER_UPLOAD"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "detail": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "resultCode",
+                    "message"
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Media"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
       "post": {
         "summary": "微信审核回调",
         "description": "微信审核回调",
@@ -4642,6 +4802,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -4653,7 +4818,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -5368,6 +5534,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -5379,7 +5550,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -6102,6 +6274,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -6113,7 +6290,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -6817,6 +6995,11 @@
                             "type": "number",
                             "description": "收藏数量",
                             "default": 0
+                          },
+                          "replyCount": {
+                            "type": "number",
+                            "description": "收藏数量",
+                            "default": 0
                           }
                         },
                         "required": [
@@ -6828,7 +7011,8 @@
                           "isPublisher",
                           "isLike",
                           "likeCount",
-                          "collectCount"
+                          "collectCount",
+                          "replyCount"
                         ]
                       }
                     }
@@ -7682,6 +7866,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -7693,7 +7882,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -8415,6 +8605,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -8426,7 +8621,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -10338,6 +10534,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -10349,7 +10550,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -11054,6 +11256,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -11065,7 +11272,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -11778,6 +11986,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -11789,7 +12002,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -12483,6 +12697,11 @@
                             "type": "number",
                             "description": "收藏数量",
                             "default": 0
+                          },
+                          "replyCount": {
+                            "type": "number",
+                            "description": "收藏数量",
+                            "default": 0
                           }
                         },
                         "required": [
@@ -12494,7 +12713,8 @@
                           "isPublisher",
                           "isLike",
                           "likeCount",
-                          "collectCount"
+                          "collectCount",
+                          "replyCount"
                         ]
                       }
                     }
@@ -13338,6 +13558,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -13349,7 +13574,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }
@@ -14061,6 +14287,11 @@
                               "type": "number",
                               "description": "收藏数量",
                               "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
                             }
                           },
                           "required": [
@@ -14072,7 +14303,8 @@
                             "isPublisher",
                             "isLike",
                             "likeCount",
-                            "collectCount"
+                            "collectCount",
+                            "replyCount"
                           ]
                         }
                       }

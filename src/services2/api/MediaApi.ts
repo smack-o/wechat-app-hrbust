@@ -49,6 +49,27 @@ export class MediaApi {
   }
 
   /**
+   * 确认开发者签名
+   * @summary 确认开发者签名
+   
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiLegalcheckGet = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const url = this.$basePath + '/api/legalcheck'
+    const p: any = {}
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
    * 微信审核回调
    * @summary 微信审核回调
    

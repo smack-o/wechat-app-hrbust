@@ -13,6 +13,9 @@ import { AtButton, AtIcon } from 'taro-ui'
 import authIcon from './res/authentication.png'
 import removeBindingIcon from './res/remove_binding.png'
 import contactIcon from './res/contact.png'
+import myWallIcon from './res/my_wall.png'
+import mySaleWallIcon from './res/my_sale_wall.png'
+import myMessageIcon from './res/my_message.png'
 
 import './index.less'
 
@@ -171,7 +174,7 @@ class Account extends Component<IProps, PageState> {
             className="item button"
             onClick={() => goPage(routes.message)}
           >
-            <Image className="image" src={contactIcon} />
+            <Image className="image" src={myMessageIcon} />
             <View className="info">
               <View className="title">
                 <View>我的消息</View>
@@ -184,7 +187,7 @@ class Account extends Component<IProps, PageState> {
             </View>
           </Button>
           <Button className="item button" onClick={() => goPage(routes.myWall)}>
-            <Image className="image" src={contactIcon} />
+            <Image className="image" src={myWallIcon} />
             <View className="info">
               <View>我的表白</View>
               <Image className="arrow-right" src={arrowRight} />
@@ -194,7 +197,7 @@ class Account extends Component<IProps, PageState> {
             className="item button"
             onClick={() => goPage(routes.mySaleWall)}
           >
-            <Image className="image" src={contactIcon} />
+            <Image className="image" src={mySaleWallIcon} />
             <View className="info">
               <View>我的舍友</View>
               <Image className="arrow-right" src={arrowRight} />

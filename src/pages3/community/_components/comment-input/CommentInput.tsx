@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Input, View } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import FixBock from '@/components/fix-block'
+import { requestSubscribeMessage } from '@/utils'
 import './CommentInput.less'
 
 interface IProps {
@@ -43,10 +44,12 @@ export default function CommentInput(props: IProps) {
     setValue(e.target.value)
   }, [])
 
-  const onSubmitHandle = async () => {
+  const onSubmitHandle = useCallback(async () => {
+    await requestSubscribeMessage()
+
     await onSubmit?.(value)
     setValue('')
-  }
+  }, [onSubmit, value])
 
   const onBlurHandler = useCallback(() => {
     // 延迟清除数据

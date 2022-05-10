@@ -194,3 +194,17 @@ export const getCdnUrl = (params?: {
   // TODO: 缺省图补充
   return `${process.env.CND_PREFIX}/${key}`
 }
+
+export const requestSubscribeMessage = (): Promise<void> => {
+  return new Promise(resolve => {
+    wx.requestSubscribeMessage({
+      tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc'],
+      success() {
+        resolve()
+      },
+      fail() {
+        resolve()
+      }
+    })
+  })
+}

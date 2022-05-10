@@ -148,17 +148,11 @@ export default function WallItem(props: IWallItemProps) {
           )
         })}
       </View>
-      <View className={`${prefix}__content`}>
-        {to && (
-          <Text user-select className={`${prefix}__content-to`}>
-            @{to}
-          </Text>
-        )}
+      <Text user-select className={`${prefix}__content`}>
+        {to && <Text className={`${prefix}__content-to`}>@{to}</Text>}
 
-        <Text className={`${prefix}__content-detail`} user-select>
-          {content}
-        </Text>
-      </View>
+        <Text className={`${prefix}__content-detail`}>{content}</Text>
+      </Text>
       <View className={`${prefix}__footer`}>
         {showDelete && isPublisher && (
           <View

@@ -58,13 +58,16 @@ const switchTo = (path: string, index: number) => () => {
       toLogin(isWechatLogin, url)
       return
     }
-    wx.requestSubscribeMessage({
-      tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc'],
-      success: () => {
-        Taro.navigateTo({
-          url
-        })
-      }
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['g0WWyXyMj-fU7kscwpXU89Q_Ola7sfJgIjKv7CdIVIc'],
+    //   success: () => {
+    //     Taro.navigateTo({
+    //       url
+    //     })
+    //   }
+    // })
+    Taro.navigateTo({
+      url
     })
     return
   }

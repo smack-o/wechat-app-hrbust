@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Image, View, Input, Ad } from '@tarojs/components'
 import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
-import { navigateTo } from '@tarojs/taro'
+import Taro, { navigateTo } from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
 import Tab from '../tab'
 import { ITabProps } from '../tab/Tab'
@@ -52,11 +52,19 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   async componentDidMount() {
-    await loginModal()
-    await this.init()
-    this.setState({
-      loading: false
-    })
+    try {
+      Taro.showLoading({
+        title: '加载中...'
+      })
+      await loginModal()
+      await this.init()
+      this.setState({
+        loading: false
+      })
+      Taro.hideLoading()
+    } catch (error) {
+      Taro.hideLoading()
+    }
   }
 
   init = async () => {

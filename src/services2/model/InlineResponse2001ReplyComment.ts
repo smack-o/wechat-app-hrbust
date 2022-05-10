@@ -27,6 +27,7 @@ import * as models from './models'
   * @property `isLike` 是否点赞
   * @property `likeCount` 点赞数
   * @property `collectCount` 收藏数量
+  * @property `replyCount` 收藏数量
   */
 export interface InlineResponse2001ReplyComment {
   'from'?: models.InlineResponse2001From;
@@ -79,5 +80,9 @@ export interface InlineResponse2001ReplyComment {
    * 收藏数量
    */
   'collectCount': number;
+  /**
+   * 收藏数量
+   */
+  'replyCount': number;
 }
 

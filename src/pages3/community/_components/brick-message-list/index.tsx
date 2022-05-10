@@ -23,6 +23,7 @@ export default function BrickMessageList(props: IProps) {
           <ListItem
             key={item._id}
             userInfo={item.publisher?.userInfo}
+            userTags={item.publisher?.tags}
             onClick={() => {
               goPage(`${routes.wallDetail}?id=${item._id}`)
             }}

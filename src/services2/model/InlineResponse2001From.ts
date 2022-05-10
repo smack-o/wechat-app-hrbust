@@ -24,6 +24,7 @@ import * as models from './models'
   * @property `mateLikeCount` 卖舍友点赞数量
   * @property `mateCollectCount` 卖舍友收藏数量
   * @property `matePublishCount` 卖舍友发布数量
+  * @property `[tags]` 
   */
 export interface InlineResponse2001From {
   /**
@@ -67,5 +68,6 @@ export interface InlineResponse2001From {
    * 卖舍友发布数量
    */
   'matePublishCount': number;
+  'tags'?: Array<string>;
 }
 

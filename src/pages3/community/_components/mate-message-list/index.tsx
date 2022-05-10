@@ -23,6 +23,7 @@ export default function MateMessageList(props: IProps) {
           <ListItem
             key={item._id}
             userInfo={item.publisher?.userInfo}
+            userTags={item.publisher?.tags}
             onClick={() => {
               goPage(`${routes.saleWallDetail}?id=${item._id}`)
             }}

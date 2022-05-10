@@ -183,6 +183,7 @@ export function CommentList(props: IProps) {
                         nickName={from?.userInfo?.nickName}
                         customName={from?.userInfo?.customName}
                         isPublisher={isPublisher}
+                        tags={from?.tags}
                       ></NickName>
                       <Time
                         className={`${prefix}__item__title__time`}

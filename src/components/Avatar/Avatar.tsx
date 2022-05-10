@@ -13,12 +13,14 @@ export function NickName(props: {
   customName?: string
   nickName?: string
   isPublisher?: boolean
+  tags?: string[]
 }) {
-  const { customName, nickName, className = '' } = props
+  const { customName, nickName, className = '', tags = [] } = props
   const name = customName || nickName
   return name ? (
     <View className={`${prefix}__name ${className}`}>
       <Text user-select>{name}</Text>
+      {tags.length > 0 && <Text className={`${prefix}__tag`}>{tags[0]}</Text>}
       {/* {isPublisher ? '(我)' : ''} */}
     </View>
   ) : null
@@ -31,6 +33,7 @@ export default function Avatar(
     onClick?: () => void
     onClickType?: 'preview' | 'jump'
     isPublisher?: boolean
+    userTags?: string[]
   }
 ) {
   const {
@@ -43,7 +46,8 @@ export default function Avatar(
     className,
     avatarSize = '70rpx',
     onClick,
-    onClickType
+    onClickType,
+    userTags
   } = props
 
   const avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl) : avatarUrl
@@ -90,6 +94,7 @@ export default function Avatar(
         customName={customName}
         nickName={nickName}
         isPublisher={isPublisher}
+        tags={userTags}
       ></NickName>
     </View>
   )

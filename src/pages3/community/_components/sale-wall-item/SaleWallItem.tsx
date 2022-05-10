@@ -86,6 +86,7 @@ export default function WallItem(props: IWallItemProps) {
           onClickType="jump"
           _id={publisher?._id}
           isPublisher={isPublisher}
+          userTags={publisher?.tags}
           // avatarUrl={publisher?.userInfo?.avatarUrl || ''}
           // nickName={publisher?.userInfo?.nickName || ''}
         ></Avatar>

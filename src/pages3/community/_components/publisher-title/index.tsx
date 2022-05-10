@@ -22,11 +22,13 @@ type Props = {
   publisher?: {
     userInfo?: UserInfo
     _id?: string
+    tags?: string[]
   }
   isPublisher?: boolean
   time?: string | number
   className?: string
   timeType?: 'relative' | 'absolute'
+  userTags?: string[]
 }
 
 export default function PublisherTitle(props: Props) {
@@ -45,6 +47,7 @@ export default function PublisherTitle(props: Props) {
         onClickType="jump"
         _id={publisher?._id}
         isPublisher={isPublisher}
+        userTags={publisher?.tags}
       ></Avatar>
 
       <Time time={time} type={timeType}></Time>

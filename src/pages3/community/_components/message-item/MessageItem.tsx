@@ -97,6 +97,7 @@ export default function MessageItem(props: IProps) {
       content={content}
       time={createdAt}
       userId={from?._id}
+      userTags={from?.tags}
     ></ListItem>
   )
 }

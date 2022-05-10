@@ -17,6 +17,7 @@ type IProps = {
     key?: string
   }
   userId?: string
+  userTags?: string[]
 }
 
 const prefix = 'community-list-item'
@@ -29,7 +30,8 @@ export default function ListItem(props: IProps) {
     time,
     content,
     rightContent,
-    photo
+    photo,
+    userTags
   } = props
 
   return (
@@ -49,6 +51,7 @@ export default function ListItem(props: IProps) {
             className={`${prefix}-center__name`}
             nickName={userInfo?.nickName}
             customName={userInfo?.customName}
+            tags={userTags}
           ></NickName>
         </View>
         <View user-select className={`${prefix}-center__content`}>

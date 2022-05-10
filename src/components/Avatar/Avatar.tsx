@@ -18,7 +18,7 @@ export function NickName(props: {
   const name = customName || nickName
   return name ? (
     <View className={`${prefix}__name ${className}`}>
-      <Text userSelect>{name}</Text>
+      <Text user-select>{name}</Text>
       {/* {isPublisher ? '(我)' : ''} */}
     </View>
   ) : null
@@ -46,7 +46,7 @@ export default function Avatar(
     onClickType
   } = props
 
-  const avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl.key) : avatarUrl
+  const avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl) : avatarUrl
 
   const onAvatarClick = useCallback(
     e => {

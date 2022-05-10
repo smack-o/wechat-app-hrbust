@@ -70,7 +70,7 @@ export default function WallItem(props: IWallItemProps) {
       wx.previewMedia({
         current: index,
         sources: photos.map(item => ({
-          url: getCdnUrl(item.key),
+          url: getCdnUrl(item),
           type: 'image'
         })),
         showmenu: true
@@ -143,19 +143,19 @@ export default function WallItem(props: IWallItemProps) {
               className={`${prefix}__photos-item`}
               key={photo.key}
               mode={photos.length > 1 ? 'aspectFill' : 'widthFix'}
-              src={getCdnUrl(photo.key)}
+              src={getCdnUrl(photo)}
             ></Image>
           )
         })}
       </View>
       <View className={`${prefix}__content`}>
         {to && (
-          <Text userSelect className={`${prefix}__content-to`}>
+          <Text user-select className={`${prefix}__content-to`}>
             @{to}
           </Text>
         )}
 
-        <Text className={`${prefix}__content-detail`} userSelect>
+        <Text className={`${prefix}__content-detail`} user-select>
           {content}
         </Text>
       </View>

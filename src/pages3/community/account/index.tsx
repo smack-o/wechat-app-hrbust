@@ -142,9 +142,7 @@ class OtherAccount extends Component<IProps, PageState> {
     this.$shareOptions = {
       title: `分享给你 ${res?.userInfo?.customName ||
         res?.userInfo?.nickName} 的主页`,
-      imageUrl: res?.userInfo?.customAvatarUrl
-        ? getCdnUrl(res?.userInfo?.customAvatarUrl.key)
-        : res?.userInfo?.avatarUrl || '',
+      imageUrl: getCdnUrl(res?.userInfo?.customAvatarUrl),
       path: `${routes.otherAccount}?id=${this.id}`
     }
   }

@@ -331,12 +331,12 @@ class Grade extends Component<IProps, PageState> {
               <Image className="pinggu_image" src={pingguImg} mode="widthFix" />
               <View className="color-blue">查看如何评教</View>
               <View>{needComments}</View>
-              <Text userSelect className="pinggu__info">
+              <Text user-select className="pinggu__info">
                 请您去教务在线官网进行评估课程
               </Text>
             </View>
             <View>
-              <Text userSelect className="pinggu__info">
+              <Text user-select className="pinggu__info">
                 教务在线地址：http://jwzx.hrbust.edu.cn
               </Text>
             </View>

@@ -75,7 +75,7 @@ export default function WallItem(props: IWallItemProps) {
             height && width ? Taro.pxTransform((height / width) * 347) : 'auto'
         }}
         className={`${prefix}__photo`}
-        src={getCdnUrl(key)}
+        src={getCdnUrl(photos[0])}
         mode="widthFix"
       ></Image>
       <View className={`${prefix}__info`}>

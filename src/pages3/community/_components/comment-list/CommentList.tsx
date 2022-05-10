@@ -176,7 +176,7 @@ export function CommentList(props: IProps) {
                         type="relative"
                       ></Time>
                     </View>
-                    <Text userSelect className={`${prefix}__item__content`}>
+                    <Text user-select className={`${prefix}__item__content`}>
                       {type === CommentType.ReplyComment
                         ? `@${to?.userInfo?.customName}: ${content}`
                         : content}

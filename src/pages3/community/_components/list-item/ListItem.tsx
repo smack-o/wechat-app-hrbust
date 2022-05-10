@@ -51,7 +51,7 @@ export default function ListItem(props: IProps) {
             customName={userInfo?.customName}
           ></NickName>
         </View>
-        <Text userSelect className={`${prefix}-center__content`}>
+        <Text user-select className={`${prefix}-center__content`}>
           {content}
         </Text>
         <Time
@@ -64,7 +64,7 @@ export default function ListItem(props: IProps) {
         <Image
           className={`${prefix}-right image`}
           mode="aspectFill"
-          src={getCdnUrl(photo.key)}
+          src={getCdnUrl(photo)}
         ></Image>
       ) : rightContent ? (
         <View className={`${prefix}-right`}>{rightContent}</View>

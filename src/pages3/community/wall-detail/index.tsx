@@ -88,7 +88,7 @@ class WallDetail extends Component<IProps, PageState> {
       })
       this.$shareOptions = {
         title: '分享你一条表白墙',
-        imageUrl: res?.photos?.[0]?.key ? getCdnUrl(res?.photos?.[0].key) : '',
+        imageUrl: getCdnUrl(res?.photos?.[0]),
         path: routes.wallDetail + '?id=' + res._id
       }
     }

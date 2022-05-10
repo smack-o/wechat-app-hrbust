@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { url } from 'swagger'
+import illegalityImg from '@/assets/img/illegality_img.png'
 
 // export { default as config } from '../../mallConfig'
 export { default as dateFormat } from './dateFormat'
@@ -179,7 +179,18 @@ export const saveImage = async (url: string) => {
 export const delay = (timeout: number) =>
   new Promise((resolve, reject) => setTimeout(resolve, timeout))
 
-export const getCdnUrl = (key?: string) => {
+export const getCdnUrl = (params?: {
+  checkCode?: number
+  status?: number
+  key?: string
+}) => {
+  if (!params) {
+    return ''
+  }
+  const { status, key } = params
+  if (status === 2) {
+    return illegalityImg
+  }
   // TODO: 缺省图补充
   return `${process.env.CND_PREFIX}/${key}`
 }

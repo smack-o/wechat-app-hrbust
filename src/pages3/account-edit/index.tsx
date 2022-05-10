@@ -43,7 +43,7 @@ class AccountEdit extends Component<IProps, PageState> {
       }
     } = this.props
 
-    this.avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl.key) : avatarUrl
+    this.avatar = customAvatarUrl ? getCdnUrl(customAvatarUrl) : avatarUrl
 
     this.setState({
       name: customName || nickName || '',

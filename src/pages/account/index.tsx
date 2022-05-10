@@ -122,7 +122,7 @@ class Account extends Component<IProps, PageState> {
             <View className="name">
               {/* <OpenData type="userNickName" lang="zh_CN"></OpenData> */}
               <Text>{customName || nickName}</Text>
-              {/* <Text userSelect className="username">
+              {/* <Text user-select className="username">
                 {studentInfo.username}
               </Text> */}
               <AtIcon

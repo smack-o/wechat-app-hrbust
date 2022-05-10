@@ -84,7 +84,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
     wx.previewMedia({
       current: index,
       sources: photos.map(item => ({
-        url: getCdnUrl(item.key),
+        url: getCdnUrl(item),
         type: 'image'
       })),
       showmenu: true
@@ -121,7 +121,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
 
       this.$shareOptions = {
         title: '分享你一条卖舍友',
-        imageUrl: getCdnUrl(res?.photos?.[0]?.key),
+        imageUrl: getCdnUrl(res?.photos?.[0]),
         path: routes.saleWallDetail + '?id=' + res._id
       }
     }
@@ -278,7 +278,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
             <SwiperItem key={photo.key}>
               <Image
                 mode="aspectFill"
-                src={getCdnUrl(photo.key)}
+                src={getCdnUrl(photo)}
                 className={`${prefix}__swiper-item`}
                 onClick={() => this.onImageClick(index)}
               ></Image>
@@ -294,26 +294,26 @@ class SaleWallDetail extends Component<IProps, PageState> {
         </View>
         <View className={`${prefix}__info`}>
           <View className={`${prefix}__info-item`}>
-            <Text userSelect className={`${prefix}__info-item__title`}>
+            <Text user-select className={`${prefix}__info-item__title`}>
               专业：
             </Text>
-            <Text userSelect className={`${prefix}__info-item__text`}>
+            <Text user-select className={`${prefix}__info-item__text`}>
               {major}
             </Text>
           </View>
           <View className={`${prefix}__info-item`}>
-            <Text userSelect className={`${prefix}__info-item__title`}>
+            <Text user-select className={`${prefix}__info-item__title`}>
               喜欢TA：
             </Text>
-            <Text userSelect className={`${prefix}__info-item__text`}>
+            <Text user-select className={`${prefix}__info-item__text`}>
               {content}
             </Text>
           </View>
           <View className={`${prefix}__info-item`}>
-            <Text userSelect className={`${prefix}__info-item__title`}>
+            <Text user-select className={`${prefix}__info-item__title`}>
               舍友简介：
             </Text>
-            <Text userSelect className={`${prefix}__info-item__text`}>
+            <Text user-select className={`${prefix}__info-item__text`}>
               {description}
             </Text>
           </View>

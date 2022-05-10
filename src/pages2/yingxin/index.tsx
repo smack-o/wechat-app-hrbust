@@ -190,7 +190,7 @@ class YingXin extends Component<IProps, PageState> {
             <View className="info-wrapper">
               <View className="info">
                 更多信息（在线缴费等）请浏览器访问{' '}
-                <Text userSelect>http://yingxin.hrbust.edu.cn</Text> 查看
+                <Text user-select>http://yingxin.hrbust.edu.cn</Text> 查看
               </View>
             </View>
 

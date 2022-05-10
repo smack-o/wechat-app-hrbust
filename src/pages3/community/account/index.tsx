@@ -195,7 +195,11 @@ class OtherAccount extends Component<IProps, PageState> {
           <View className={`${prefix}-info__other`}>
             <View className={`${prefix}-info__other-item`}>
               <View>获赞</View>
-              <View>83</View>
+              <View>
+                {(user?.brickLikeCount || 0) +
+                  (user?.commentLikeCount || 0) +
+                  user?.mateLikeCount || 0}
+              </View>
             </View>
             <View className={`${prefix}-info__other-item`}>
               <View>关注</View>

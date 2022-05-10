@@ -68,6 +68,17 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   pageSize = 20
   fetching = false
 
+  // 重新进入页面时，需要重新获取数据
+  onShow = () => {
+    if (
+      this.state.listLeft.list.length === 0 &&
+      this.state.listRight.list.length === 0
+    ) {
+      return
+    }
+    this.fetchList(false, true)
+  }
+
   async componentDidMount() {
     try {
       Taro.showLoading({
@@ -89,12 +100,21 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
     await this.fetchList(true)
   }
 
-  fetchList = async (reset?: boolean) => {
+  fetchList = async (reset?: boolean, refresh?: boolean) => {
     this.fetching = true
+    let pageNum = String(this.pageNum)
+    let pageSize = String(this.pageSize)
+
+    // 刷新当前数据
+    if (refresh) {
+      pageNum = '0'
+      pageSize = String((this.pageNum + 1) * this.pageSize)
+    }
+
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({
-      pageNum: String(this.pageNum),
-      pageSize: String(this.pageSize)
+      pageNum,
+      pageSize
     })
 
     this.fetching = false
@@ -106,7 +126,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
     this.listPush(res, reset)
 
     this.setState({
-      hasNext: res.length === this.pageSize
+      hasNext: res.length >= this.pageSize
     })
   }
 
@@ -115,9 +135,9 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
    * @param list
    * @param reset
    */
-  listPush = (list: List, reset?: boolean) => {
+  listPush = (list: List, reset?: boolean, refresh?: boolean) => {
     let { listLeft, listRight } = this.state
-    if (reset) {
+    if (reset || refresh) {
       listLeft = {
         height: 0,
         list: []

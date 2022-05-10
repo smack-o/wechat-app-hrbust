@@ -51,6 +51,14 @@ export default class Wall extends React.Component<WallProps, WallState> {
     loading: true
   }
 
+  // 重新进入页面时，需要重新获取数据
+  onShow = () => {
+    if (this.state.list.length === 0) {
+      return
+    }
+    this.fetchList(false, true)
+  }
+
   async componentDidMount() {
     try {
       Taro.showLoading({
@@ -72,12 +80,21 @@ export default class Wall extends React.Component<WallProps, WallState> {
     await this.fetchList(true)
   }
 
-  fetchList = async (reset?: boolean) => {
+  fetchList = async (reset?: boolean, refresh?: boolean) => {
     this.fetching = true
+    let pageNum = String(this.pageNum)
+    let pageSize = String(this.pageSize)
+
+    // 刷新当前数据
+    if (refresh) {
+      pageNum = '0'
+      pageSize = String((this.pageNum + 1) * this.pageSize)
+    }
+
     const api = this.tabList[this.state.activeTab].api
     const [err, res] = await withRequest(api)({
-      pageNum: String(this.pageNum),
-      pageSize: String(this.pageSize)
+      pageNum,
+      pageSize
     })
 
     this.fetching = false
@@ -87,8 +104,8 @@ export default class Wall extends React.Component<WallProps, WallState> {
     }
 
     this.setState({
-      list: reset ? res : this.state.list.concat(res),
-      hasNext: res.length === this.pageSize
+      list: reset || refresh ? res : this.state.list.concat(res),
+      hasNext: res.length >= this.pageSize
     })
   }
 
@@ -120,8 +137,6 @@ export default class Wall extends React.Component<WallProps, WallState> {
       url: routes.createWall
     })
   }
-
-  onItemClick = () => {}
 
   render() {
     const { activeTab, loading, list = [] } = this.state

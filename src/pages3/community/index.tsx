@@ -27,10 +27,24 @@ class Discover extends Component<IProps, PageState> {
   }
 
   ref = createRef<any>()
+
+  $shareOptions = {
+    title: '分享了你理工喵社区，快来看看吧',
+    path: routes.community
+  }
+
   onShareAppMessage() {}
   onShareTimeline() {}
 
-  onShow = () => {
+  onLoad(e) {
+    if (e.currentTab !== undefined) {
+      this.setState({
+        currentTab: +e.currentTab
+      })
+    }
+  }
+
+  componentDidShow() {
     this.ref?.current?.onShow?.()
   }
 
@@ -41,6 +55,7 @@ class Discover extends Component<IProps, PageState> {
     this.setState({
       currentTab: index
     })
+    this.$shareOptions.path = `${routes.community}?currentTab=${index}`
   }
 
   // 下拉同步课表

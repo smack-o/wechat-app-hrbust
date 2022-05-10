@@ -172,12 +172,21 @@ class SaleWallDetail extends Component<IProps, PageState> {
     })
   }
 
-  getComment = async (reset?: boolean) => {
+  getComment = async (reset?: boolean, refresh?: boolean) => {
     this.fetching = true
+    let pageNum = String(this.pageNum)
+    let pageSize = String(this.pageSize)
+
+    // 刷新当前数据
+    if (refresh) {
+      pageNum = '0'
+      pageSize = String((this.pageNum + 1) * this.pageSize)
+    }
+
     const [err, res] = await withRequest(APIS.CommentApi.apiCommentMateIdGet)({
       id: this.id,
-      pageNum: String(this.pageNum),
-      pageSize: String(this.pageSize)
+      pageNum,
+      pageSize
     })
 
     this.fetching = false
@@ -187,8 +196,9 @@ class SaleWallDetail extends Component<IProps, PageState> {
     }
 
     this.setState({
-      commentList: reset ? res : (this.state.commentList || []).concat(res),
-      hasNext: res.length === this.pageSize
+      commentList:
+        reset || refresh ? res : (this.state.commentList || []).concat(res),
+      hasNext: res.length >= this.pageSize
     })
   }
 
@@ -221,7 +231,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
       title: '评论成功',
       icon: 'success'
     })
-    this.getComment(true)
+    this.getComment(false, true)
     this.getData()
   }
 

@@ -44,28 +44,28 @@ export default function MessageItem(props: IProps) {
   const content = useMemo(() => {
     if (type === TypeEnum.BrickLike) {
       return (
-        <Text user-select className={`${prefix}-center__content-detail`}>
+        <View className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的表白墙
-        </Text>
+        </View>
       )
     } else if (type === TypeEnum.MateLike) {
       return (
-        <Text user-select className={`${prefix}-center__content-detail`}>
+        <View className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的卖舍友
-        </Text>
+        </View>
       )
     } else if (type === TypeEnum.Comment) {
       return (
-        <Text user-select className={`${prefix}-center__content-detail`}>
+        <View className={`${prefix}-center__content-detail`}>
           {contentText}
-        </Text>
+        </View>
       )
     } else if (type === TypeEnum.CommentLike) {
       return (
-        <Text user-select className={`${prefix}-center__content-detail`}>
-          <Image className="star-icon" src={likeIcon}></Image>赞了你的评论:{' '}
+        <View className={`${prefix}-center__content-detail`}>
+          <Image className="star-icon" src={likeIcon}></Image>
           {contentText}
-        </Text>
+        </View>
       )
     }
     return '您有一条新消息'

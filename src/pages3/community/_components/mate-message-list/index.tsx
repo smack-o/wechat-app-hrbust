@@ -28,7 +28,6 @@ export default function MateMessageList(props: IProps) {
             }}
             time={item.createdAt}
             photo={item.photos?.[0]}
-            rightContent={item.content}
             content={
               <View>
                 舍友&nbsp;

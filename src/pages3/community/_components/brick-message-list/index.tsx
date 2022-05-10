@@ -28,7 +28,7 @@ export default function BrickMessageList(props: IProps) {
             }}
             time={item.createdAt}
             photo={item.photos?.[0]}
-            rightContent={item.content}
+            // rightContent={item.content}
             content={
               <View>
                 {item.to && (

@@ -51,9 +51,9 @@ export default function ListItem(props: IProps) {
             customName={userInfo?.customName}
           ></NickName>
         </View>
-        <Text user-select className={`${prefix}-center__content`}>
+        <View user-select className={`${prefix}-center__content`}>
           {content}
-        </Text>
+        </View>
         <Time
           className={`${prefix}-center__time`}
           type="relative"

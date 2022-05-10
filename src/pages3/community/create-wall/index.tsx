@@ -159,7 +159,7 @@ class CreateWall extends Component<IProps, PageState> {
             className={`${prefix}__form-item__input`}
             placeholder="请输入表白对象手机号(非必填)"
             value={tel}
-            type="text"
+            type="number"
             onInput={e => this.onInputChange('tel', e)}
           ></Input>
         </View>
@@ -193,7 +193,8 @@ class CreateWall extends Component<IProps, PageState> {
 
         <View className={`${prefix}__tips`}>
           <View className={`${prefix}__tips-title`}>*关于表白墙</View>
-          您可选填您所表白的对象的手机号，在您提交表白信息后，系统会以短信的形式向他发送一则消息，通知TA登录该小程序查看您对TA的表白；TA只需登录该小程序在表白墙中搜索自己的手机号码即可查看表白信息。每天只能发送3条短信表白墙。
+          表白墙不局限于表白，可以用来发日常内容，所以表白对象以及手机号都不是必填项。
+          您可选填您所表白的对象的手机号，在您提交表白信息后，系统会以短信的形式向他发送一则消息，通知TA登录该小程序查看您对TA的表白；TA只需登录该小程序在表白墙中搜索自己的手机号码即可查看表白信息。每天只能发送2条短信表白墙。
         </View>
         <AtButton
           type="primary"

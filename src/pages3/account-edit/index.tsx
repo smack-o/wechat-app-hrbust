@@ -175,7 +175,8 @@ class AccountEdit extends Component<IProps, PageState> {
             className={`${prefix}__form-item__input`}
             placeholder="请输入新昵称(非必填)"
             value={name}
-            type="text"
+            // @ts-ignore
+            type="nickname"
             onInput={e => this.onInputChange('name', e)}
           ></Input>
         </View>

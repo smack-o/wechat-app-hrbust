@@ -123,7 +123,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
       return Promise.reject()
     }
 
-    this.listPush(res, reset)
+    this.listPush(res, reset, refresh)
 
     this.setState({
       hasNext: res.length >= this.pageSize

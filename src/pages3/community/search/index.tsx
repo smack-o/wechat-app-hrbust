@@ -25,7 +25,7 @@ interface IState {
   tag: TagType
   brickList: BrickList
   mateList: MateList
-  hasNext: boolean
+  // hasNext: boolean
   keyword: string
 }
 export default class Search extends React.Component<{}, IState> {
@@ -33,13 +33,15 @@ export default class Search extends React.Component<{}, IState> {
     tag: TagType.brick,
     brickList: [],
     mateList: [],
-    hasNext: true,
+    // hasNext: true,
     keyword: ''
   }
 
   pageNum = 0
   pageSize = 20
   fetching = false
+
+  onPullDownRefresh = () => {}
 
   onKeywordChange = e => {
     this.setState({
@@ -96,10 +98,17 @@ export default class Search extends React.Component<{}, IState> {
       return
     }
 
+    if (this.pageNum === 0 && res.length === 0) {
+      Taro.showToast({
+        title: '没有搜索到内容',
+        icon: 'none'
+      })
+    }
+
     this.setState({
       brickList: reset ? res : this.state.brickList.concat(res),
-      mateList: [],
-      hasNext: res.length === this.pageSize
+      mateList: []
+      // hasNext: res.length === this.pageSize
     })
   }
 
@@ -119,15 +128,22 @@ export default class Search extends React.Component<{}, IState> {
       return
     }
 
+    if (this.pageNum === 0 && res.length === 0) {
+      Taro.showToast({
+        title: '没有搜索到内容',
+        icon: 'none'
+      })
+    }
+
     this.setState({
       mateList: reset ? res : this.state.mateList.concat(res),
-      brickList: [],
-      hasNext: res.length === this.pageSize
+      brickList: []
+      // hasNext: res.length === this.pageSize
     })
   }
 
   render() {
-    const { tag, hasNext } = this.state
+    const { tag } = this.state
     return (
       <View className={prefix}>
         <View className={`${prefix}-input`}>
@@ -164,16 +180,21 @@ export default class Search extends React.Component<{}, IState> {
           </AtTag>
         </View>
         <View className={`${prefix}-list`}>
-          {tag === TagType.brick &&
+          {tag === TagType.brick && this.state.brickList.length === 0 ? (
+            <View className="community-no-data">暂无内容</View>
+          ) : (
             this.state.brickList.map(item => (
               <WallItem
                 data={item}
                 key={item._id}
                 onClick={() => goPage(`${routes.wallDetail}?id=${item._id}`)}
               ></WallItem>
-            ))}
+            ))
+          )}
 
-          {tag === TagType.mate && (
+          {tag === TagType.mate && this.state.mateList.length === 0 ? (
+            <View className="community-no-data">暂无内容</View>
+          ) : (
             <View className={`${prefix}__sale-wall-list`}>
               {this.state.mateList.map(item => (
                 <SaleWallItem data={item} key={item._id}></SaleWallItem>
@@ -181,7 +202,6 @@ export default class Search extends React.Component<{}, IState> {
             </View>
           )}
         </View>
-        {!hasNext && <View>没有更多了</View>}
       </View>
     )
   }

@@ -16,18 +16,18 @@ import * as models from './models'
   * @property `code` 
   * @property `resultCode` 
   * @property `message` 
-  * @property `result` 
+  * @property `[result]` 
   * @property `[error]` 
   */
-export interface InlineResponse2008 {
-  'code': InlineResponse2008.CodeEnum;
-  'resultCode': InlineResponse2008.ResultCodeEnum;
+export interface InlineResponse20013 {
+  'code': InlineResponse20013.CodeEnum;
+  'resultCode': InlineResponse20013.ResultCodeEnum;
   'message': string;
-  'result': Array<models.InlineResponse2008Result>;
+  'result'?: models.InlineResponse20012Result;
   'error'?: models.InlineResponse200ResultError;
 }
 
-export namespace InlineResponse2008 {
+export namespace InlineResponse20013 {
   export enum CodeEnum {
     _100001 = '100001' as any,
     _100002 = '100002' as any,

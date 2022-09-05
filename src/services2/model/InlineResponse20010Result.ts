@@ -15,7 +15,7 @@ import * as models from './models'
 /**
   * @property `id` 请求参数 id
   */
-export interface InlineResponse2009Result {
+export interface InlineResponse20010Result {
   /**
    * 请求参数 id
    */

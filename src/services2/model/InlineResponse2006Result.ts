@@ -19,6 +19,8 @@ import * as models from './models'
   * @property `name` 资源名称
   * @property `nameEn` 资源英文名称
   * @property `description` 资源描述
+  * @property `isLike` 是否点赞
+  * @property `likeCount` 点赞数
   * @property `[price]` 价格
   * @property `[cover]` 
   * @property `[downloadUrl]` 下载列表
@@ -26,6 +28,7 @@ import * as models from './models'
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
+  * @property `[publisher]` 
   */
 export interface InlineResponse2006Result {
   /**
@@ -53,6 +56,14 @@ export interface InlineResponse2006Result {
    */
   'description': string;
   /**
+   * 是否点赞
+   */
+  'isLike': boolean;
+  /**
+   * 点赞数
+   */
+  'likeCount': number;
+  /**
    * 价格
    */
   'price'?: boolean;
@@ -77,5 +88,6 @@ export interface InlineResponse2006Result {
    * 热门评论
    */
   'hotComments'?: Array<models.InlineResponse2001ReplyComment>;
+  'publisher'?: models.InlineResponse2001From;
 }
 

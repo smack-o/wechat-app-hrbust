@@ -107,6 +107,28 @@ export interface ParamsapiCommentMateIdGet {
   * request body
   */
 export type ParamsBodyapiCommentPost = models.Data
+/**
+  * @description apiCommentResourceIdGet参数
+  * @property `id` 请求参数 id
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiCommentResourceIdGet {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
 
 export class CommentApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -269,6 +291,34 @@ export class CommentApi {
     return ajax.ajax({
       ...opt,
       method: 'POST',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取资源评论列表
+   * @summary 获取资源评论列表
+   * @param params ParamsapiCommentResourceIdGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2001
+   */
+  public apiCommentResourceIdGet = (
+    params: ParamsapiCommentResourceIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2001>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/comment/resource/${id}`
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
       url,
       ...p
     })

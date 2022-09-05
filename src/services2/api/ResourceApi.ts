@@ -16,6 +16,28 @@ import * as models from '../model/models'
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description apiResourceIdGet参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiResourceIdGet {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
+  * @description apiResourceLikeIdPut参数
+  * @property `id` 请求参数 id
+  */
+export interface ParamsapiResourceLikeIdPut {
+  // pathParams
+  /**
+   * 请求参数 id
+   */
+  id: string;
+}
+/**
   * @description apiResourceListGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -31,6 +53,64 @@ export interface ParamsapiResourceListGet {
    */
   pageSize?: string;
 }
+/**
+  * @description apiResourceListHotGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiResourceListHotGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
+  * @description apiResourceListLikeGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  * @property `[id]` 请求参数 id
+  */
+export interface ParamsapiResourceListLikeGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+  /**
+   * 请求参数 id
+   */
+  id?: string;
+}
+/**
+  * @description apiResourceSearchGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  * @property `[keyword]` 关键字
+  */
+export interface ParamsapiResourceSearchGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+  /**
+   * 关键字
+   */
+  keyword?: string;
+}
 
 export class ResourceApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -41,6 +121,56 @@ export class ResourceApi {
     }
   }
 
+  /**
+   * 获取详情
+   * @summary 获取详情
+   * @param params ParamsapiResourceIdGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2007
+   */
+  public apiResourceIdGet = (
+    params: ParamsapiResourceIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2007>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/resource/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 点赞/取消 资源
+   * @summary 点赞/取消 资源
+   * @param params ParamsapiResourceLikeIdPut
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse200
+   */
+  public apiResourceLikeIdPut = (
+    params: ParamsapiResourceLikeIdPut,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse200>  => {
+    const {
+    id,
+} = params
+    const url = this.$basePath + `/api/resource/like/${id}`
+    const p: any = {}
+    ajax.check(params.id, 'id')
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
+      url,
+      ...p
+    })
+  }
   /**
    * 获取游戏商品列表
    * @summary 获取游戏商品列表
@@ -58,6 +188,80 @@ export class ResourceApi {
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取热门列表
+   * @summary 获取热门列表
+   * @param params ParamsapiResourceListHotGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiResourceListHotGet = (
+    params: ParamsapiResourceListHotGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/resource/list/hot'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取用户点赞的表白墙列表
+   * @summary 获取用户点赞的表白墙列表
+   * @param params ParamsapiResourceListLikeGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiResourceListLikeGet = (
+    params: ParamsapiResourceListLikeGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/resource/list/like'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('id' in params) p.query.id = params.id
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 根据关键字模糊搜索
+   * @summary 根据关键字模糊搜索
+   * @param params ParamsapiResourceSearchGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiResourceSearchGet = (
+    params: ParamsapiResourceSearchGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/resource/search'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('keyword' in params) p.query.keyword = params.keyword
     return ajax.ajax({
       ...opt,
       method: 'GET',

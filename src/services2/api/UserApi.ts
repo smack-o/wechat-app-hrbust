@@ -54,12 +54,12 @@ export class UserApi {
    * @param params ParamsapiUserGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
   public apiUserGet = (
     params: ParamsapiUserGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     p.query = {}
@@ -77,12 +77,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserPut// request body
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
   public apiUserPut = (
     
     data: ParamsBodyapiUserPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const url = this.$basePath + '/api/user'
     const p: any = {}
     p.data = data
@@ -99,12 +99,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxAuthPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
   public apiUserWxAuthPost = (
     
     data: ParamsBodyapiUserWxAuthPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const url = this.$basePath + '/api/user/wx/auth'
     const p: any = {}
     p.data = data
@@ -121,12 +121,12 @@ export class UserApi {
    
    * @param data: ParamsBodyapiUserWxLoginPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
   public apiUserWxLoginPost = (
     
     data: ParamsBodyapiUserWxLoginPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const url = this.$basePath + '/api/user/wx/login'
     const p: any = {}
     p.data = data

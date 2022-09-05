@@ -32,7 +32,7 @@ import * as models from './models'
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
   */
-export interface InlineResponse2007Result {
+export interface InlineResponse2008Result {
   /**
    * 创建时间
    */

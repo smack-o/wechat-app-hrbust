@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { APIS } from '@/services2'
-import { withRequest } from '@/utils'
-import { Image, View, Text } from '@tarojs/components'
+import { withRequest, copy, showToast } from '@/utils'
+import { Image, View, Text, Ad } from '@tarojs/components'
+import { AtActionSheet, AtButton, AtActionSheetItem, AtCard } from 'taro-ui'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
@@ -16,9 +17,37 @@ interface IResourceProps {
   showDelete?: boolean
   showHotComments?: boolean
   showDetail?: boolean
+  onShowAd?: (callback: Function) => void
 }
 
 const prefix = 'resource-item'
+
+export enum ResourceDownloadType {
+  /**
+   * 百度网盘
+   */
+  BAIDU,
+  /**
+   * 阿里网盘
+   */
+  ALIYUN,
+  /**
+   * 天翼网盘
+   */
+  TIANYI
+}
+
+const downLoadInfo = [
+  {
+    name: '百度网盘'
+  },
+  {
+    name: '阿里网盘'
+  },
+  {
+    name: '天翼网盘'
+  }
+]
 
 export default function Resource(props: IResourceProps) {
   const {
@@ -36,17 +65,28 @@ export default function Resource(props: IResourceProps) {
       name,
       nameEn,
       description,
-      hotComments = []
+      hotComments = [],
+      downloadUrl
     } = {},
     timeType,
     onClick,
-    showDelete = false,
+    // showDelete = false,
     showHotComments = false,
-    showDetail = false
+    showDetail = false,
+    onShowAd
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
   const [localIsLikeCount, setLocalIsLikeCount] = useState(likeCount || 0)
+  // const [showDownLoadUrlSheet, setShowDownLoadUrlSheet] = useState(false)
+  const [showDownloadDetail, setShowDownloadDetail] = useState(false)
+  // const [showDownLoadDetailModal, setDownLoadDetailModal] = useState(false)
+  // const [modalContent, setModalContent] = useState<{
+  //   url: string
+  //   downloadType: ResourceDownloadType
+  //   password?: string
+  //   decompressionPassword?: string
+  // }>()
 
   useEffect(() => {
     setLocalIsLike(isLike)
@@ -109,6 +149,32 @@ export default function Resource(props: IResourceProps) {
   //   })
   // }, [_id])
 
+  const onGetUrl = () => {
+    onShowAd?.(onShowDownloadDetail)
+  }
+
+  // const toggleDownLoadUrlSheet = useCallback(() => {
+  //   setShowDownLoadUrlSheet(!showDownLoadUrlSheet)
+  // }, [showDownLoadUrlSheet])
+
+  // const onDownLoadItemClick = (index: number) => {
+  //   if (!downloadUrl) {
+  //     return
+  //   }
+  //   copy(downloadUrl[index].url)
+  //   showToast({
+  //     title: '复制成功，请粘贴到浏览器打开'
+  //   })
+  //   onShowDownloadDetail()
+  // }
+
+  const onShowDownloadDetail = () => {
+    setShowDownloadDetail(true)
+    showToast({
+      title: '获取成功'
+    })
+  }
+
   return (
     <View className={prefix} onClick={onClick}>
       <PublisherTitle
@@ -140,8 +206,63 @@ export default function Resource(props: IResourceProps) {
         {nameEn ? `(${nameEn})` : ''}
       </Text>
       {showDetail && (
-        // @ts-ignore
-        <wemark md={description} link highlight type="wemark"></wemark>
+        <Fragment>
+          {/* @ts-ignore */}
+          <wemark md={description} link highlight type="wemark"></wemark>
+          {/* @ts-ignore */}
+          <ad
+            unit-id="adunit-a51bed72a19360d9"
+            ad-type="video"
+            ad-theme="white"
+          >
+            {/* @ts-ignore */}
+          </ad>
+
+          {showDownloadDetail ? (
+            <View>
+              {downloadUrl?.map((item, index) => {
+                const { url, password, decompressionPassword } = item
+                return (
+                  <AtCard
+                    className={`${prefix}__url-card`}
+                    note="点击复制到浏览器打开"
+                    extra={downLoadInfo[item.downloadType]?.name}
+                    title={`下载链接${downloadUrl.length > 1 ? index + 1 : ''}`}
+                    key={index}
+                    onClick={() => {
+                      copy(url)
+                    }}
+                  >
+                    <Text
+                      className={`${prefix}__url-card__text url`}
+                      user-select
+                    >
+                      {url}
+                    </Text>
+                    {password && (
+                      <Text className={`${prefix}__url-card__text`} user-select>
+                        密码：{password}
+                      </Text>
+                    )}
+                    {decompressionPassword && (
+                      <Text className={`${prefix}__url-card__text`} user-select>
+                        解压密码：{decompressionPassword}
+                      </Text>
+                    )}
+                  </AtCard>
+                )
+              })}
+            </View>
+          ) : (
+            <AtButton
+              className={`${prefix}__get-url-btn`}
+              type="primary"
+              onClick={onGetUrl}
+            >
+              点击获取下载地址
+            </AtButton>
+          )}
+        </Fragment>
       )}
       <View className={`${prefix}__footer`}>
         {/* {showDelete && false && (
@@ -180,6 +301,22 @@ export default function Resource(props: IResourceProps) {
           })}
         </View>
       )}
+
+      {/* <AtActionSheet
+        isOpened={showDownLoadUrlSheet}
+        onCancel={toggleDownLoadUrlSheet}
+      >
+        {downloadUrl?.map((item, index) => {
+          return (
+            <AtActionSheetItem
+              key={index}
+              onClick={() => onDownLoadItemClick(index)}
+            >
+              点击获取链接{index + 1} ({downLoadInfo[item.downloadType]?.name})
+            </AtActionSheetItem>
+          )
+        })}
+      </AtActionSheet> */}
     </View>
   )
 }

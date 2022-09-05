@@ -41,6 +41,12 @@ class ResourceDetail extends Component<IProps, PageState> {
   pageSize = 20
   fetching = false
 
+  // 在页面中定义激励视频广告
+  videoAd: any = null
+  loadAdError: boolean
+
+  adCallback?: Function
+
   async onLoad(e) {
     await loginModal()
     if (e.id) {
@@ -48,12 +54,72 @@ class ResourceDetail extends Component<IProps, PageState> {
       this.getData()
       this.getComment()
     }
+
+    // 在页面onLoad回调事件中创建激励视频广告实例
+    if (wx.createRewardedVideoAd) {
+      this.videoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-3e946876c54cdba5'
+      })
+      this.videoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      this.videoAd.onError(err => {
+        console.log('onError event emit', err)
+        this.loadAdError = true
+      })
+      this.videoAd.onClose(res => {
+        console.log('onClose event emit', res)
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          this.adCallback?.()
+        } else {
+          // 播放中途退出，不下发游戏奖励
+        }
+      })
+    }
   }
 
   $shareOptions = {
     title: '分享了你一条表白墙',
     imageUrl: '',
     path: routes.community
+  }
+
+  onShowAd = (callback: Function) => {
+    this.adCallback = callback
+    if (this.videoAd && !this.loadAdError) {
+      Taro.showModal({
+        title: '是否观看广告',
+        content: '资源共享限时免费，但是资源收集不易，看个广告支持一下吧~',
+        success: res => {
+          if (res.confirm) {
+            // 用户触发广告后，显示激励视频广告
+            this.videoAd.show().catch(() => {
+              // 失败重试
+              this.videoAd
+                .load()
+                .then(() => this.videoAd.show())
+                .catch(err => {
+                  console.log(err)
+                  // 失败重试一次
+                  this.videoAd!.load()
+                    .then(() => this.videoAd.show())
+                    .catch(err => {
+                      console.log(err)
+                      callback()
+                    })
+                })
+            })
+          } else if (res.cancel) {
+            // console.log('用户点击取消')
+          }
+        }
+      })
+      return
+    } else {
+      callback?.()
+    }
   }
 
   onShareAppMessage() {}
@@ -190,7 +256,13 @@ class ResourceDetail extends Component<IProps, PageState> {
     }
     return (
       <View className={prefix}>
-        <ResourceItem data={data} timeType="relative" showDelete></ResourceItem>
+        <ResourceItem
+          showDetail
+          data={data}
+          timeType="relative"
+          showDelete
+          onShowAd={this.onShowAd}
+        ></ResourceItem>
         <View className={`${prefix}__border-line`}></View>
         <View className={`${prefix}__comment-list`}>
           <CommentList

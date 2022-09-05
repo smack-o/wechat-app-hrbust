@@ -216,6 +216,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "资源详情",
+          "pathName": "pages3/community/resource-detail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

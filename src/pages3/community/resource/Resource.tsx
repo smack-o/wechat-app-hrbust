@@ -192,7 +192,7 @@ export default class Resource extends React.Component<
             })
           )}
         </Tab>
-        <View className="wall__add-wall" onClick={this.onAddWallClick}></View>
+        {/* <View className="wall__add-wall" onClick={this.onAddWallClick}></View> */}
         {/* {!hasNext && <View>到底了~</View>} */}
       </View>
     )

@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { APIS } from '@/services2'
 import { withRequest, copy, showToast } from '@/utils'
 import { Image, View, Text, Ad } from '@tarojs/components'
-import { AtActionSheet, AtButton, AtActionSheetItem, AtCard } from 'taro-ui'
+import { AtButton, AtCard } from 'taro-ui'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'

@@ -4,4 +4,8 @@ build
 
 src/third-utils
 src/components/wxml2canvas/utils
+src/page3/community/_components/wemark
+
+gst
+
 *.rdb

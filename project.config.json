@@ -209,6 +209,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "资源分享",
+          "pathName": "pages3/community/resource/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

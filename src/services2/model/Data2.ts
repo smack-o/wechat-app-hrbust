@@ -17,6 +17,7 @@ import * as models from './models'
   * @property `[width]` 图片宽度
   * @property `[type]` 图片类型
   * @property `[url]` 图片 url
+  * @property `[client]` bucket client name
   */
 export interface Data2 {
   /**
@@ -35,5 +36,9 @@ export interface Data2 {
    * 图片 url
    */
   'url'?: string;
+  /**
+   * bucket client name
+   */
+  'client'?: string;
 }
 

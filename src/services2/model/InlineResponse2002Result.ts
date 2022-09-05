@@ -18,6 +18,7 @@ import * as models from './models'
   * @property `[height]` 图片高度
   * @property `[width]` 图片宽度
   * @property `[type]` 图片类型
+  * @property `[bucket]` 图片 bucket
   * @property `_id` 图片 id
   */
 export interface InlineResponse2002Result {
@@ -38,6 +39,10 @@ export interface InlineResponse2002Result {
    * 图片类型
    */
   'type'?: string;
+  /**
+   * 图片 bucket
+   */
+  'bucket'?: string;
   /**
    * 图片 id
    */

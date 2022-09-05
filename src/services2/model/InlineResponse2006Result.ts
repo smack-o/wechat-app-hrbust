@@ -15,19 +15,14 @@ import * as models from './models'
 /**
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
-  * @property `_id` 表白墙id
-  * @property `isPublisher` 是否是发布者
-  * @property `isLike` 是否点赞
-  * @property `likeCount` 点赞数
-  * @property `isCollect` 是否收藏
-  * @property `collectCount` 收藏数量
-  * @property `[publisher]` 
-  * @property `name` 姓名
-  * @property `gender` 
-  * @property `major` 主修专业
-  * @property `description` 描述
-  * @property `[content]` 内容
-  * @property `[photos]` 图片列表
+  * @property `_id` id
+  * @property `name` 资源名称
+  * @property `nameEn` 资源英文名称
+  * @property `description` 资源描述
+  * @property `[price]` 价格
+  * @property `[cover]` 
+  * @property `[downloadUrl]` 下载列表
+  * @property `[images]` 图片列表
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
@@ -42,51 +37,34 @@ export interface InlineResponse2006Result {
    */
   'updatedAt': number;
   /**
-   * 表白墙id
+   * id
    */
   '_id': string;
   /**
-   * 是否是发布者
-   */
-  'isPublisher': boolean;
-  /**
-   * 是否点赞
-   */
-  'isLike': boolean;
-  /**
-   * 点赞数
-   */
-  'likeCount': number;
-  /**
-   * 是否收藏
-   */
-  'isCollect': boolean;
-  /**
-   * 收藏数量
-   */
-  'collectCount': number;
-  'publisher'?: models.InlineResponse2001From;
-  /**
-   * 姓名
+   * 资源名称
    */
   'name': string;
-  'gender': number;
   /**
-   * 主修专业
+   * 资源英文名称
    */
-  'major': string;
+  'nameEn': string;
   /**
-   * 描述
+   * 资源描述
    */
   'description': string;
   /**
-   * 内容
+   * 价格
    */
-  'content'?: string;
+  'price'?: boolean;
+  'cover'?: models.InlineResponse2001FromUserInfoCustomAvatarUrl;
+  /**
+   * 下载列表
+   */
+  'downloadUrl'?: Array<models.InlineResponse2006DownloadUrl>;
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2001FromUserInfoCustomAvatarUrl>;
+  'images'?: Array<models.InlineResponse2001FromUserInfoCustomAvatarUrl>;
   /**
    * 是否删除
    */

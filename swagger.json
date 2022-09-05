@@ -299,6 +299,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -445,6 +450,11 @@
                                   "type": {
                                     "type": "string",
                                     "description": "图片类型",
+                                    "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
                                     "default": ""
                                   }
                                 },
@@ -661,6 +671,11 @@
                                           "type": "string",
                                           "description": "图片类型",
                                           "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
+                                          "default": ""
                                         }
                                       },
                                       "required": [
@@ -807,6 +822,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -1149,6 +1169,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -1295,6 +1320,11 @@
                                   "type": {
                                     "type": "string",
                                     "description": "图片类型",
+                                    "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
                                     "default": ""
                                   }
                                 },
@@ -1511,6 +1541,11 @@
                                           "type": "string",
                                           "description": "图片类型",
                                           "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
+                                          "default": ""
                                         }
                                       },
                                       "required": [
@@ -1657,6 +1692,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -1999,6 +2039,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -2145,6 +2190,11 @@
                                   "type": {
                                     "type": "string",
                                     "description": "图片类型",
+                                    "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
                                     "default": ""
                                   }
                                 },
@@ -2361,6 +2411,11 @@
                                           "type": "string",
                                           "description": "图片类型",
                                           "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
+                                          "default": ""
                                         }
                                       },
                                       "required": [
@@ -2507,6 +2562,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -3103,6 +3163,11 @@
                       "description": "图片类型",
                       "default": ""
                     },
+                    "bucket": {
+                      "type": "string",
+                      "description": "图片 bucket",
+                      "default": ""
+                    },
                     "_id": {
                       "type": "string",
                       "description": "图片 id",
@@ -3176,6 +3241,11 @@
                   "description": "图片 url",
                   "default": "",
                   "require": true
+                },
+                "client": {
+                  "type": "string",
+                  "description": "bucket client name",
+                  "default": ""
                 }
               }
             },
@@ -3247,6 +3317,11 @@
                     "type": {
                       "type": "string",
                       "description": "图片类型",
+                      "default": ""
+                    },
+                    "bucket": {
+                      "type": "string",
+                      "description": "图片 bucket",
                       "default": ""
                     },
                     "_id": {
@@ -3789,6 +3864,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -3936,6 +4016,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -4078,6 +4163,11 @@
                               "type": {
                                 "type": "string",
                                 "description": "图片类型",
+                                "default": ""
+                              },
+                              "bucket": {
+                                "type": "string",
+                                "description": "图片 bucket",
                                 "default": ""
                               }
                             },
@@ -4231,6 +4321,664 @@
         },
         "tags": [
           "Message"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/resource/list": {
+      "get": {
+        "summary": "获取游戏商品列表",
+        "description": "获取游戏商品列表",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "string",
+            "description": "分页页码",
+            "default": "0",
+            "require": true,
+            "in": "query"
+          },
+          {
+            "name": "pageSize",
+            "type": "string",
+            "description": "每页数量",
+            "default": "20",
+            "require": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    100001,
+                    100002,
+                    400001,
+                    400002,
+                    400003,
+                    500000,
+                    500001,
+                    500002
+                  ]
+                },
+                "resultCode": {
+                  "type": "string",
+                  "enum": [
+                    "SUCCESS",
+                    "ERR_PARAM",
+                    "SEN_MESSAGE",
+                    "NOT_WECHAT_AUTH",
+                    "NOT_LOGIN",
+                    "NOT_AUTH",
+                    "ERROR",
+                    "FAIL_UPLOAD",
+                    "FACE_COMPARER_UPLOAD"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "createdAt": {
+                        "type": "integer",
+                        "description": "创建时间"
+                      },
+                      "updatedAt": {
+                        "type": "integer",
+                        "description": "更新时间"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "description": "id",
+                        "default": ""
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "资源名称",
+                        "default": ""
+                      },
+                      "nameEn": {
+                        "type": "string",
+                        "description": "资源英文名称",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "资源描述",
+                        "default": ""
+                      },
+                      "price": {
+                        "type": "boolean",
+                        "description": "价格",
+                        "default": 0
+                      },
+                      "cover": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "description": "图片 url",
+                            "default": ""
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "0",
+                              "1",
+                              "2"
+                            ]
+                          },
+                          "height": {
+                            "type": "number",
+                            "description": "图片高度",
+                            "default": 0
+                          },
+                          "width": {
+                            "type": "number",
+                            "description": "图片宽度",
+                            "default": 0
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "图片类型",
+                            "default": ""
+                          },
+                          "bucket": {
+                            "type": "string",
+                            "description": "图片 bucket",
+                            "default": ""
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "status"
+                        ]
+                      },
+                      "downloadUrl": {
+                        "type": "array",
+                        "description": "下载列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "downloadType": {
+                              "type": "number",
+                              "description": "下载类型"
+                            },
+                            "url": {
+                              "type": "string",
+                              "description": "下载地址"
+                            },
+                            "password": {
+                              "type": "string",
+                              "description": "下载密码"
+                            },
+                            "decompressionPassword": {
+                              "type": "string",
+                              "description": "解压密码"
+                            }
+                          },
+                          "required": [
+                            "downloadType",
+                            "url"
+                          ]
+                        }
+                      },
+                      "images": {
+                        "type": "array",
+                        "description": "图片列表",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "description": "图片 url",
+                              "default": ""
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "0",
+                                "1",
+                                "2"
+                              ]
+                            },
+                            "height": {
+                              "type": "number",
+                              "description": "图片高度",
+                              "default": 0
+                            },
+                            "width": {
+                              "type": "number",
+                              "description": "图片宽度",
+                              "default": 0
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "图片类型",
+                              "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "status"
+                          ]
+                        }
+                      },
+                      "isDelete": {
+                        "type": "boolean",
+                        "description": "是否删除",
+                        "default": false
+                      },
+                      "commentCount": {
+                        "type": "number",
+                        "description": "评论数",
+                        "default": 0
+                      },
+                      "hotComments": {
+                        "type": "array",
+                        "description": "热门评论",
+                        "default": [],
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "user id",
+                                  "default": ""
+                                },
+                                "createdAt": {
+                                  "type": "integer",
+                                  "description": "创建时间"
+                                },
+                                "userInfo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "nickName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customAvatarUrl": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string",
+                                          "description": "图片 url",
+                                          "default": ""
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "0",
+                                            "1",
+                                            "2"
+                                          ]
+                                        },
+                                        "height": {
+                                          "type": "number",
+                                          "description": "图片高度",
+                                          "default": 0
+                                        },
+                                        "width": {
+                                          "type": "number",
+                                          "description": "图片宽度",
+                                          "default": 0
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
+                                          "default": ""
+                                        }
+                                      },
+                                      "required": [
+                                        "key",
+                                        "status"
+                                      ]
+                                    },
+                                    "gender": {
+                                      "type": "number",
+                                      "default": 0
+                                    },
+                                    "avatarUrl": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "language": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "city": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "province": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "country": {
+                                      "type": "string",
+                                      "default": ""
+                                    }
+                                  }
+                                },
+                                "commentLikeCount": {
+                                  "type": "number",
+                                  "description": "评论点赞数量",
+                                  "default": ""
+                                },
+                                "commentPublishCount": {
+                                  "type": "number",
+                                  "description": "评论发布数量",
+                                  "default": ""
+                                },
+                                "brickLikeCount": {
+                                  "type": "number",
+                                  "description": "表白墙点赞数量",
+                                  "default": ""
+                                },
+                                "brickCollectCount": {
+                                  "type": "number",
+                                  "description": "表白墙收藏数量",
+                                  "default": ""
+                                },
+                                "brickPublishCount": {
+                                  "type": "number",
+                                  "description": "表白墙发布数量",
+                                  "default": ""
+                                },
+                                "mateLikeCount": {
+                                  "type": "number",
+                                  "description": "卖舍友点赞数量",
+                                  "default": ""
+                                },
+                                "mateCollectCount": {
+                                  "type": "number",
+                                  "description": "卖舍友收藏数量",
+                                  "default": ""
+                                },
+                                "matePublishCount": {
+                                  "type": "number",
+                                  "description": "卖舍友发布数量",
+                                  "default": ""
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "default": [],
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "createdAt",
+                                "commentLikeCount",
+                                "commentPublishCount",
+                                "brickLikeCount",
+                                "brickCollectCount",
+                                "brickPublishCount",
+                                "mateLikeCount",
+                                "mateCollectCount",
+                                "matePublishCount"
+                              ]
+                            },
+                            "to": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "user id",
+                                  "default": ""
+                                },
+                                "createdAt": {
+                                  "type": "integer",
+                                  "description": "创建时间"
+                                },
+                                "userInfo": {
+                                  "type": "object",
+                                  "properties": {
+                                    "nickName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customName": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "customAvatarUrl": {
+                                      "type": "object",
+                                      "properties": {
+                                        "key": {
+                                          "type": "string",
+                                          "description": "图片 url",
+                                          "default": ""
+                                        },
+                                        "status": {
+                                          "type": "string",
+                                          "enum": [
+                                            "0",
+                                            "1",
+                                            "2"
+                                          ]
+                                        },
+                                        "height": {
+                                          "type": "number",
+                                          "description": "图片高度",
+                                          "default": 0
+                                        },
+                                        "width": {
+                                          "type": "number",
+                                          "description": "图片宽度",
+                                          "default": 0
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
+                                          "default": ""
+                                        }
+                                      },
+                                      "required": [
+                                        "key",
+                                        "status"
+                                      ]
+                                    },
+                                    "gender": {
+                                      "type": "number",
+                                      "default": 0
+                                    },
+                                    "avatarUrl": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "language": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "city": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "province": {
+                                      "type": "string",
+                                      "default": ""
+                                    },
+                                    "country": {
+                                      "type": "string",
+                                      "default": ""
+                                    }
+                                  }
+                                },
+                                "commentLikeCount": {
+                                  "type": "number",
+                                  "description": "评论点赞数量",
+                                  "default": ""
+                                },
+                                "commentPublishCount": {
+                                  "type": "number",
+                                  "description": "评论发布数量",
+                                  "default": ""
+                                },
+                                "brickLikeCount": {
+                                  "type": "number",
+                                  "description": "表白墙点赞数量",
+                                  "default": ""
+                                },
+                                "brickCollectCount": {
+                                  "type": "number",
+                                  "description": "表白墙收藏数量",
+                                  "default": ""
+                                },
+                                "brickPublishCount": {
+                                  "type": "number",
+                                  "description": "表白墙发布数量",
+                                  "default": ""
+                                },
+                                "mateLikeCount": {
+                                  "type": "number",
+                                  "description": "卖舍友点赞数量",
+                                  "default": ""
+                                },
+                                "mateCollectCount": {
+                                  "type": "number",
+                                  "description": "卖舍友收藏数量",
+                                  "default": ""
+                                },
+                                "matePublishCount": {
+                                  "type": "number",
+                                  "description": "卖舍友发布数量",
+                                  "default": ""
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "default": [],
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "createdAt",
+                                "commentLikeCount",
+                                "commentPublishCount",
+                                "brickLikeCount",
+                                "brickCollectCount",
+                                "brickPublishCount",
+                                "mateLikeCount",
+                                "mateCollectCount",
+                                "matePublishCount"
+                              ]
+                            },
+                            "type": {
+                              "type": "number",
+                              "description": "评论类型",
+                              "default": 0
+                            },
+                            "brickId": {
+                              "type": "string",
+                              "description": "若评论表白墙，需要表白墙 id",
+                              "default": ""
+                            },
+                            "mateId": {
+                              "type": "string",
+                              "description": "若评论卖舍友，需要卖舍友 id",
+                              "default": ""
+                            },
+                            "commentId": {
+                              "type": "string",
+                              "description": "评论回复评论，需要评论 id",
+                              "default": ""
+                            },
+                            "content": {
+                              "type": "string",
+                              "description": "评论内容",
+                              "default": ""
+                            },
+                            "createdAt": {
+                              "type": "integer",
+                              "description": "创建时间"
+                            },
+                            "updatedAt": {
+                              "type": "integer",
+                              "description": "更新时间"
+                            },
+                            "_id": {
+                              "type": "string",
+                              "description": "id",
+                              "default": ""
+                            },
+                            "isPublisher": {
+                              "type": "boolean",
+                              "description": "是否是发布者",
+                              "default": false
+                            },
+                            "isLike": {
+                              "type": "boolean",
+                              "description": "是否点赞",
+                              "default": false
+                            },
+                            "likeCount": {
+                              "type": "number",
+                              "description": "点赞数",
+                              "default": 0
+                            },
+                            "collectCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
+                            },
+                            "replyCount": {
+                              "type": "number",
+                              "description": "收藏数量",
+                              "default": 0
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "content",
+                            "createdAt",
+                            "updatedAt",
+                            "_id",
+                            "isPublisher",
+                            "isLike",
+                            "likeCount",
+                            "collectCount",
+                            "replyCount"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "createdAt",
+                      "updatedAt",
+                      "_id",
+                      "name",
+                      "nameEn",
+                      "description",
+                      "isDelete",
+                      "commentCount"
+                    ]
+                  }
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "resultCode",
+                "message",
+                "result"
+              ]
+            }
+          }
+        },
+        "tags": [
+          "Resource"
         ],
         "security": [
           {
@@ -4393,6 +5141,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -4545,6 +5298,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -4622,6 +5380,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -4769,6 +5532,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -5146,6 +5914,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -5298,6 +6071,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -5375,6 +6153,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -5522,6 +6305,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -5907,6 +6695,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -6059,6 +6852,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -6136,6 +6934,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -6283,6 +7086,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -6649,6 +7457,11 @@
                                   "type": "string",
                                   "description": "图片类型",
                                   "default": ""
+                                },
+                                "bucket": {
+                                  "type": "string",
+                                  "description": "图片 bucket",
+                                  "default": ""
                                 }
                               },
                               "required": [
@@ -6801,6 +7614,11 @@
                             "type": "string",
                             "description": "图片类型",
                             "default": ""
+                          },
+                          "bucket": {
+                            "type": "string",
+                            "description": "图片 bucket",
+                            "default": ""
                           }
                         },
                         "required": [
@@ -6878,6 +7696,11 @@
                                       "type": {
                                         "type": "string",
                                         "description": "图片类型",
+                                        "default": ""
+                                      },
+                                      "bucket": {
+                                        "type": "string",
+                                        "description": "图片 bucket",
                                         "default": ""
                                       }
                                     },
@@ -7025,6 +7848,11 @@
                                       "type": {
                                         "type": "string",
                                         "description": "图片类型",
+                                        "default": ""
+                                      },
+                                      "bucket": {
+                                        "type": "string",
+                                        "description": "图片 bucket",
                                         "default": ""
                                       }
                                     },
@@ -7541,6 +8369,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -7693,6 +8526,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -7770,6 +8608,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -7917,6 +8760,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -8301,6 +9149,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -8453,6 +9306,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -8530,6 +9388,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -8677,6 +9540,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -9270,6 +10138,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -9533,6 +10406,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -9767,6 +10645,11 @@
                             "type": {
                               "type": "string",
                               "description": "图片类型",
+                              "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
                               "default": ""
                             }
                           },
@@ -10008,6 +10891,11 @@
                             "type": {
                               "type": "string",
                               "description": "图片类型",
+                              "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
                               "default": ""
                             }
                           },
@@ -10288,6 +11176,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -10431,6 +11324,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -10508,6 +11406,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -10655,6 +11558,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -11031,6 +11939,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -11174,6 +12087,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -11251,6 +12169,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -11398,6 +12321,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -11782,6 +12710,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -11925,6 +12858,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -12002,6 +12940,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -12149,6 +13092,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -12514,6 +13462,11 @@
                                   "type": "string",
                                   "description": "图片类型",
                                   "default": ""
+                                },
+                                "bucket": {
+                                  "type": "string",
+                                  "description": "图片 bucket",
+                                  "default": ""
                                 }
                               },
                               "required": [
@@ -12657,6 +13610,11 @@
                             "type": "string",
                             "description": "图片类型",
                             "default": ""
+                          },
+                          "bucket": {
+                            "type": "string",
+                            "description": "图片 bucket",
+                            "default": ""
                           }
                         },
                         "required": [
@@ -12734,6 +13692,11 @@
                                       "type": {
                                         "type": "string",
                                         "description": "图片类型",
+                                        "default": ""
+                                      },
+                                      "bucket": {
+                                        "type": "string",
+                                        "description": "图片 bucket",
                                         "default": ""
                                       }
                                     },
@@ -12881,6 +13844,11 @@
                                       "type": {
                                         "type": "string",
                                         "description": "图片类型",
+                                        "default": ""
+                                      },
+                                      "bucket": {
+                                        "type": "string",
+                                        "description": "图片 bucket",
                                         "default": ""
                                       }
                                     },
@@ -13396,6 +14364,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -13539,6 +14512,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -13616,6 +14594,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -13763,6 +14746,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -14146,6 +15134,11 @@
                                     "type": "string",
                                     "description": "图片类型",
                                     "default": ""
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "description": "图片 bucket",
+                                    "default": ""
                                   }
                                 },
                                 "required": [
@@ -14289,6 +15282,11 @@
                               "type": "string",
                               "description": "图片类型",
                               "default": ""
+                            },
+                            "bucket": {
+                              "type": "string",
+                              "description": "图片 bucket",
+                              "default": ""
                             }
                           },
                           "required": [
@@ -14366,6 +15364,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },
@@ -14513,6 +15516,11 @@
                                         "type": {
                                           "type": "string",
                                           "description": "图片类型",
+                                          "default": ""
+                                        },
+                                        "bucket": {
+                                          "type": "string",
+                                          "description": "图片 bucket",
                                           "default": ""
                                         }
                                       },

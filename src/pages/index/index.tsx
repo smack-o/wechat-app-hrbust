@@ -24,6 +24,7 @@ import doNotTouchMeIcon from '@/assets/icon/do_not_touch_me.png'
 import arrowRight from '@/assets/icon/arrow_right.png'
 import CommentIcon from '@/assets/community-imgs/comment.png'
 import LikeIcon from '@/assets/community-imgs/like.png'
+import ViewIcon from '@/assets/community-imgs/view.png'
 import { getCdnUrl, toLogin, withRequest } from '@/utils'
 import Time from '@/components/Time'
 
@@ -76,7 +77,7 @@ class Index extends Component<IProps, PageState> {
 
     await this.props.user.getUserInfoPromise
 
-    if (this.props.user.config.global.showAllResource) {
+    if (this.props.user.config.global?.config?.showAllResource) {
       this.getResource()
       this.getWall()
     }
@@ -442,7 +443,11 @@ class Index extends Component<IProps, PageState> {
                       <View className={`${prefix}__footer`}>
                         <View className={`${prefix}__footer-right`}>
                           <View className={`${prefix}__footer-item`}>
-                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            <Image
+                              src={ViewIcon}
+                              className="view-icon"
+                              mode="widthFix"
+                            ></Image>
                             {item.viewCount}
                           </View>
                           <View className={`${prefix}__footer-item`}>
@@ -504,7 +509,11 @@ class Index extends Component<IProps, PageState> {
                       <View className={`${prefix}__footer`}>
                         <View className={`${prefix}__footer-right`}>
                           <View className={`${prefix}__footer-item`}>
-                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            <Image
+                              src={ViewIcon}
+                              className="view-icon"
+                              mode="widthFix"
+                            ></Image>
                             {item.viewCount}
                           </View>
                           <View className={`${prefix}__footer-item`}>

@@ -78,7 +78,10 @@ export interface UserState {
   }
   unreadCount: number
   config: {
-    [key: string]: any
+    [key: string]: {
+      key: string
+      config: { [key: string]: any }
+    }
   }
 }
 

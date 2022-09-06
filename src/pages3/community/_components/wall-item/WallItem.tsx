@@ -7,6 +7,7 @@ import classNames from 'classnames'
 
 import CommentIcon from '@/assets/community-imgs/comment.png'
 import LikeIcon from '@/assets/community-imgs/like.png'
+import ViewIcon from '@/assets/community-imgs/view.png'
 import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
 import PublisherTitle from '@/components/publisher-title'
 
@@ -164,7 +165,7 @@ export default function WallItem(props: IWallItemProps) {
           </View>
         )}
         <View className={`${prefix}__footer-item`}>
-          <Image src={CommentIcon} mode="widthFix"></Image>
+          <Image src={ViewIcon} className="view-icon" mode="widthFix"></Image>
           {viewCount}
         </View>
         <View className={`${prefix}__footer-item`}>

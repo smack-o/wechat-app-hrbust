@@ -7,6 +7,7 @@ import Taro from '@tarojs/taro'
 
 import CommentIcon from '@/assets/community-imgs/comment.png'
 import LikeIcon from '@/assets/community-imgs/like.png'
+import ViewIcon from '@/assets/community-imgs/view.png'
 import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
 import PublisherTitle from '@/components/publisher-title'
 import './ResourceItem.less'
@@ -379,7 +380,7 @@ export default function Resource(props: IResourceProps) {
         </View>
         <View className={`${prefix}__footer-right`}>
           <View className={`${prefix}__footer-item`}>
-            <Image src={CommentIcon} mode="widthFix"></Image>
+            <Image src={ViewIcon} className="view-icon" mode="widthFix"></Image>
             {viewCount}
           </View>
           <View className={`${prefix}__footer-item`}>

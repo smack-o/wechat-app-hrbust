@@ -138,13 +138,6 @@ export class Resource extends React.Component<ResourceProps, ResourceState> {
       }
     })
   }
-  // 重新进入页面时，需要重新获取数据
-  onShow = () => {
-    if (this.state.list.length === 0) {
-      return
-    }
-    this.fetchList(false, true)
-  }
 
   async componentDidShow() {
     try {
@@ -155,7 +148,7 @@ export class Resource extends React.Component<ResourceProps, ResourceState> {
 
       await this.props.user.getUserInfoPromise
 
-      if (!this.props.user.config.global.showAllResource) {
+      if (!this.props.user.config.global?.config?.showAllResource) {
         this.showAllResource = false
       }
 

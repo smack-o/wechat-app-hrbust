@@ -21,12 +21,16 @@ import afficheIcon from '@/assets/icon/affiche.png'
 import phoneBookIcon from '@/assets/icon/phone_book.png'
 import newStudentIcon from '@/assets/icon/new_student.png'
 import doNotTouchMeIcon from '@/assets/icon/do_not_touch_me.png'
-import { toLogin, withRequest } from '@/utils'
-import bgImg from './res/home-bg.png'
+import arrowRight from '@/assets/icon/arrow_right.png'
+import CommentIcon from '@/assets/community-imgs/comment.png'
+import LikeIcon from '@/assets/community-imgs/like.png'
+import { getCdnUrl, toLogin, withRequest } from '@/utils'
+import Time from '@/components/Time'
+
+// import bgImg from './res/home-bg.png'
 import SwiperChild from './components/SwiperChild'
 
 import './index.less'
-// import ResourceItem from '@/pages3/community/_components/resource-item'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
@@ -36,7 +40,8 @@ type PageOwnProps = {}
 
 type PageState = {
   cIndex: number
-  resourceList: GetApiResultType<typeof APIS.ResourceApi.apiResourceListGet>
+  resourceList: GetApiResultType<typeof APIS.ResourceApi.apiResourceListHotGet>
+  wallList: GetApiResultType<typeof APIS.WallApi.apiWallListHotGet>
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -44,17 +49,21 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 let interstitialAd: Taro.InterstitialAd
 
 const SWIPER_MARGIN = '45rpx'
+const prefix = 'index-container'
 class Index extends Component<IProps, PageState> {
   state: PageState = {
     cIndex: 0,
-    resourceList: []
+    resourceList: [],
+    wallList: []
   }
 
   componentDidShow() {
     // banner
+
     this.props.getBanner()
 
     this.getResource()
+    this.getWall()
     // 在适合的场景显示插屏广告
     if (interstitialAd) {
       interstitialAd.show().catch(err => {
@@ -64,19 +73,35 @@ class Index extends Component<IProps, PageState> {
   }
 
   getResource = async () => {
+    await this.props.user.getUserInfoPromise
     const [err, res] = await withRequest(
-      APIS.ResourceApi.apiResourceListHotAnonymousGet
+      APIS.ResourceApi.apiResourceListHotGet
     )({
       pageNum: '0',
-      pageSize: '10'
+      pageSize: '4'
     })
 
-    this.setState({
-      resourceList: res
-    })
     if (err) {
       return
     }
+    this.setState({
+      resourceList: res
+    })
+  }
+
+  getWall = async () => {
+    await this.props.user.getUserInfoPromise
+    const [err, res] = await withRequest(APIS.WallApi.apiWallListHotGet)({
+      pageNum: '0',
+      pageSize: '4'
+    })
+
+    if (err) {
+      return
+    }
+    this.setState({
+      wallList: res
+    })
   }
 
   onLoad() {
@@ -263,7 +288,7 @@ class Index extends Component<IProps, PageState> {
   }
 
   render() {
-    const { cIndex, resourceList } = this.state
+    const { cIndex, resourceList, wallList } = this.state
     const {
       banners,
       user: { isLogin, isWechatLogin },
@@ -322,9 +347,9 @@ class Index extends Component<IProps, PageState> {
           })}
         </View>
 
-        {isLogin && (
+        {/* {isLogin && (
           <Image className="discover-image" src={bgImg} mode="widthFix" />
-        )}
+        )} */}
 
         {(!isWechatLogin || !isLogin) && (
           <View className="login-wrapper">
@@ -361,6 +386,136 @@ class Index extends Component<IProps, PageState> {
             })}
           </View>
         )} */}
+        {wallList.length > 0 && (
+          <Fragment>
+            <View className="placeholder-block"></View>
+            <View className="info">
+              <View className="info-title">
+                <View className="line"></View>
+                <View className="title">热门表白墙</View>
+              </View>
+              <View className="info-content">
+                {wallList.map(item => {
+                  return (
+                    <View
+                      className="item-wrapper"
+                      key={item._id}
+                      onClick={() =>
+                        goPage(`${routes.wallDetail}?id=${item._id}`)
+                      }
+                    >
+                      <View className="item">
+                        {item.photos && item.photos.length > 0 && (
+                          <Image
+                            className="image"
+                            mode="widthFix"
+                            src={getCdnUrl(item.photos[0])}
+                          ></Image>
+                        )}
+                        {/* <Image className="image" src={item.images} mode="widthFix" /> */}
+                        <View className="text">
+                          <View className="title">{item.content}</View>
+                          <View className="date">
+                            发布日期：<Time time={item.createdAt}></Time>
+                          </View>
+                        </View>
+                        <Image className="arrow-right" src={arrowRight} />
+                      </View>
+                      <View className={`${prefix}__footer`}>
+                        <View className={`${prefix}__footer-right`}>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            {item.viewCount}
+                          </View>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            {item.commentCount}
+                          </View>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={LikeIcon} mode="widthFix"></Image>
+                            <Text>{item.likeCount}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  )
+                })}
+              </View>
+              <View
+                className="load-more"
+                onClick={() => {
+                  Taro.navigateTo({
+                    url: routes.community
+                  })
+                }}
+              >
+                查看更多
+              </View>
+            </View>
+          </Fragment>
+        )}
+
+        {resourceList.length > 0 && (
+          <Fragment>
+            <View className="placeholder-block"></View>
+            <View className="info">
+              <View className="info-title">
+                <View className="line"></View>
+                <View className="title">热门资源</View>
+              </View>
+              <View className="info-content">
+                {resourceList.map(item => {
+                  return (
+                    <View
+                      className="item-wrapper"
+                      key={item._id}
+                      onClick={() =>
+                        goPage(`${routes.resourceDetail}?id=${item._id}`)
+                      }
+                    >
+                      <View className="item">
+                        {/* <Image className="image" src={item.images} mode="widthFix" /> */}
+                        <View className="text">
+                          <View className="title">{item.name}</View>
+                          <View className="date">
+                            发布日期：<Time time={item.createdAt}></Time>
+                          </View>
+                        </View>
+                        <Image className="arrow-right" src={arrowRight} />
+                      </View>
+                      <View className={`${prefix}__footer`}>
+                        <View className={`${prefix}__footer-right`}>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            {item.viewCount}
+                          </View>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={CommentIcon} mode="widthFix"></Image>
+                            {item.commentCount}
+                          </View>
+                          <View className={`${prefix}__footer-item`}>
+                            <Image src={LikeIcon} mode="widthFix"></Image>
+                            <Text>{item.likeCount}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  )
+                })}
+              </View>
+              <View
+                className="load-more"
+                onClick={() => {
+                  Taro.switchTab({
+                    url: routes.resource
+                  })
+                }}
+              >
+                查看更多
+              </View>
+            </View>
+          </Fragment>
+        )}
 
         <View
           className="shop-icon"

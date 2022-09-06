@@ -47,7 +47,8 @@ export default function WallItem(props: IWallItemProps) {
       createdAt,
       commentCount,
       isPublisher,
-      hotComments = []
+      hotComments = [],
+      viewCount
     } = {},
     timeType,
     onClick,
@@ -162,6 +163,10 @@ export default function WallItem(props: IWallItemProps) {
             删除
           </View>
         )}
+        <View className={`${prefix}__footer-item`}>
+          <Image src={CommentIcon} mode="widthFix"></Image>
+          {viewCount}
+        </View>
         <View className={`${prefix}__footer-item`}>
           <Image src={CommentIcon} mode="widthFix"></Image>
           {commentCount}

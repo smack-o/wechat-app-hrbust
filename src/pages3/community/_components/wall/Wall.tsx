@@ -52,14 +52,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   // 重新进入页面时，需要重新获取数据
-  onShow = () => {
-    if (this.state.list.length === 0) {
-      return
-    }
-    this.fetchList(false, true)
-  }
-
-  async componentDidShow() {
+  onShow = async () => {
     try {
       await loginModal()
       Taro.showLoading({
@@ -71,6 +64,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
       })
       Taro.hideLoading()
     } catch (error) {
+      console.log(error, 'error')
       Taro.hideLoading()
     }
   }
@@ -145,7 +139,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   render() {
     const { activeTab, loading, list = [] } = this.state
-
+    console.log(loading, 'loading')
     if (loading) {
       return null
     }

@@ -308,6 +308,7 @@ export default class Resource extends React.Component<
                     onClick={() =>
                       goPage(`${routes.resourceDetail}?id=${item._id}`)
                     }
+                    showTop={activeTab === 0}
                   ></ResourceItem>
                   {index !== 0 && index % 5 === 0 && (
                     <View className="wall-ad">

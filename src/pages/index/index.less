@@ -1,13 +1,8 @@
 @import '~@/styles/lib.less';
 
 .index-container {
-  .info {
-    padding: 40rpx 0 76rpx;
-    text-align: center;
-    font-size: 26rpx;
-    line-height: 41rpx;
-    color: #999999;
-  }
+  padding-bottom: 300rpx;
+
   .discover-image {
     width: 532rpx;
     margin: 0 auto;
@@ -72,7 +67,7 @@
   }
 
   .login-wrapper {
-    margin-top: 100px;
+    margin-top: 40rpx;
     display: flex;
     justify-content: center;
     margin-bottom: 40rpx;
@@ -177,5 +172,111 @@
   .resource-wrapper {
     padding-bottom: 300rpx;
     background: #eaeef0;
+  }
+
+  .info {
+    padding: 0 20rpx;
+    .load-more {
+      font-size: 28rpx;
+      color: #3399ff;
+      text-align: center;
+      padding: 20rpx 0;
+    }
+  }
+
+  .info-title {
+    font-size: 36rpx;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+    padding: 40rpx 30rpx 30rpx;
+    display: flex;
+    align-items: center;
+
+    .title {
+      position: relative;
+      display: inline-block;
+    }
+    .line {
+      display: inline-block;
+      width: 4rpx;
+      height: 36rpx;
+      background: orangered;
+      margin-right: 20rpx;
+    }
+  }
+  .info-content {
+    .item-wrapper {
+      border-bottom: 1rpx solid #eeeeee;
+      padding: 0 20rpx;
+    }
+    .item {
+      margin: 20rpx 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .text {
+        // margin-left: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 465px;
+        .title {
+          font-size: 26px;
+          margin-bottom: 20px;
+          .text-overflow(100%);
+        }
+        .date {
+          font-size: 24px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #d1d1d6;
+          line-height: 33px;
+          display: flex;
+        }
+      }
+      .image {
+        width: 100px;
+        height: 100px;
+      }
+      .arrow-right {
+        width: 12px;
+        height: 20px;
+      }
+    }
+  }
+
+  .placeholder-block {
+    width: 100%;
+    height: 20rpx;
+    background-color: #eaeef0;
+  }
+
+  &__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    font-size: 22rpx;
+
+    &-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-right: 28rpx;
+      font-family: TrebuchetMS, Rotobo, 'Microsoft YaHei', sans-serif;
+      image {
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 8rpx;
+      }
+    }
   }
 }

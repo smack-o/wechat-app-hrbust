@@ -31,6 +31,7 @@ import * as models from './models'
   * @property `[tag]` 标签
   * @property `[publisher]` 
   * @property `viewCount` 浏览数
+  * @property `top` 置顶
   */
 export interface InlineResponse2006Result {
   /**
@@ -99,5 +100,9 @@ export interface InlineResponse2006Result {
    * 浏览数
    */
   'viewCount': number;
+  /**
+   * 置顶
+   */
+  'top': number;
 }
 

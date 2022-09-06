@@ -80,7 +80,7 @@ class ResourceDetail extends Component<IProps, PageState> {
     }
   }
 
-  $shareOptions = {
+  _shareOptions = {
     title: '分享了你一条表白墙',
     imageUrl: '',
     path: routes.community
@@ -152,7 +152,7 @@ class ResourceDetail extends Component<IProps, PageState> {
       this.setState({
         data: res
       })
-      this.$shareOptions = {
+      this._shareOptions = {
         title: '分享你一个资源:' + res.name,
         // imageUrl: getCdnUrl(res?.photos?.[0]),
         imageUrl: '',

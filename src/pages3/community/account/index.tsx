@@ -48,7 +48,7 @@ class OtherAccount extends Component<IProps, PageState> {
   pageSize = 20
   fetching = false
 
-  $shareOptions = {
+  _shareOptions = {
     title: '分享给你个人主页',
     imageUrl: '',
     path: routes.account
@@ -138,7 +138,7 @@ class OtherAccount extends Component<IProps, PageState> {
       title: `${res?.userInfo?.customName || res?.userInfo?.nickName} 的主页`
     })
 
-    this.$shareOptions = {
+    this._shareOptions = {
       title: `分享给你 ${res?.userInfo?.customName ||
         res?.userInfo?.nickName} 的主页`,
       imageUrl: getCdnUrl(res?.userInfo?.customAvatarUrl),

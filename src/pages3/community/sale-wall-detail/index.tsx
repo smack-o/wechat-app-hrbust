@@ -69,7 +69,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
     }
   }
 
-  $shareOptions = {
+  _shareOptions = {
     title: '分享了你一条卖舍友',
     imageUrl: '',
     path: routes.community
@@ -119,7 +119,7 @@ class SaleWallDetail extends Component<IProps, PageState> {
         likeCountLocal: res.likeCount
       })
 
-      this.$shareOptions = {
+      this._shareOptions = {
         title: '分享你一条卖舍友',
         imageUrl: getCdnUrl(res?.photos?.[0]),
         path: routes.saleWallDetail + '?id=' + res._id

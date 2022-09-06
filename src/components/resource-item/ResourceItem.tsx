@@ -19,6 +19,7 @@ interface IResourceProps {
   showHotComments?: boolean
   showDetail?: boolean
   onShowAd?: (callback: Function) => void
+  showTop?: boolean
 }
 
 const prefix = 'resource-item'
@@ -108,7 +109,8 @@ export default function Resource(props: IResourceProps) {
     // showDelete = false,
     showHotComments = false,
     showDetail = false,
-    onShowAd
+    onShowAd,
+    showTop = false
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -372,7 +374,9 @@ export default function Resource(props: IResourceProps) {
             删除
           </View>
         )} */}
-        <View className={`${prefix}__footer-left`}>{top === 1 && '置顶'}</View>
+        <View className={`${prefix}__footer-left`}>
+          {showTop && top === 1 && '置顶'}
+        </View>
         <View className={`${prefix}__footer-right`}>
           <View className={`${prefix}__footer-item`}>
             <Image src={CommentIcon} mode="widthFix"></Image>

@@ -65,6 +65,22 @@ export interface ParamsapiWallListGet {
   pageSize?: string;
 }
 /**
+  * @description apiWallListHotAnonymousGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiWallListHotAnonymousGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
   * @description apiWallListHotGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -245,6 +261,30 @@ export class WallApi {
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.InlineResponse20012>  => {
     const url = this.$basePath + '/api/wall/list'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取热门列表
+   * @summary 获取热门列表
+   * @param params ParamsapiWallListHotAnonymousGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse20012
+   */
+  public apiWallListHotAnonymousGet = (
+    params: ParamsapiWallListHotAnonymousGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse20012>  => {
+    const url = this.$basePath + '/api/wall/list/hot/anonymous'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum

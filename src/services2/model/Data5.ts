@@ -13,25 +13,34 @@
 import * as models from './models'
 
 /**
-  * @property `[nickName]` 
-  * @property `[customName]` 
+  * @property `[name]` 姓名
   * @property `[gender]` 
-  * @property `[avatarUrl]` 
-  * @property `[language]` 
-  * @property `[city]` 
-  * @property `[province]` 
-  * @property `[country]` 
-  * @property `[customAvatarUrl]` 
+  * @property `[major]` 主修专业
+  * @property `[description]` 描述
+  * @property `[content]` 内容
+  * @property `[photos]` 图片列表
   */
 export interface Data5 {
-  'nickName'?: string;
-  'customName'?: string;
+  /**
+   * 姓名
+   */
+  'name'?: string;
   'gender'?: number;
-  'avatarUrl'?: string;
-  'language'?: string;
-  'city'?: string;
-  'province'?: string;
-  'country'?: string;
-  'customAvatarUrl'?: string;
+  /**
+   * 主修专业
+   */
+  'major'?: string;
+  /**
+   * 描述
+   */
+  'description'?: string;
+  /**
+   * 内容
+   */
+  'content'?: string;
+  /**
+   * 图片列表
+   */
+  'photos'?: Array<string>;
 }
 

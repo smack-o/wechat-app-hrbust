@@ -47,12 +47,12 @@ export class MessageApi {
    * @param params ParamsapiMessageListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2004
+   * @returns models.InlineResponse2005
    */
   public apiMessageListGet = (
     params: ParamsapiMessageListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2004>  => {
+  ) : AjaxPromise<models.InlineResponse2005>  => {
     const url = this.$basePath + '/api/message/list'
     const p: any = {}
     p.query = {}
@@ -71,12 +71,12 @@ export class MessageApi {
    
    
    * @param opt ajax config
-   * @returns models.InlineResponse2005
+   * @returns models.InlineResponse2006
    */
   public apiMessageUnreadcountGet = (
     
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2005>  => {
+  ) : AjaxPromise<models.InlineResponse2006>  => {
     const url = this.$basePath + '/api/message/unreadcount'
     const p: any = {}
     return ajax.ajax({

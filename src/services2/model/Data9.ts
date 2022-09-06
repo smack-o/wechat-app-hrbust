@@ -13,22 +13,27 @@
 import * as models from './models'
 
 /**
-  * @property `confidence` 比对相似度
-  * @property `qualityScoreA` 图片A质量
-  * @property `qualityScoreB` 图片B质量
+  * @property `[to]` wall id
+  * @property `[tel]` 表白人的手机号
+  * @property `[content]` 内容
+  * @property `[photos]` 图片列表
   */
-export interface InlineResponse2004Result {
+export interface Data9 {
   /**
-   * 比对相似度
+   * wall id
    */
-  'confidence': string;
+  'to'?: string;
   /**
-   * 图片A质量
+   * 表白人的手机号
    */
-  'qualityScoreA': string;
+  'tel'?: string;
   /**
-   * 图片B质量
+   * 内容
    */
-  'qualityScoreB': string;
+  'content'?: string;
+  /**
+   * 图片列表
+   */
+  'photos'?: Array<string>;
 }
 

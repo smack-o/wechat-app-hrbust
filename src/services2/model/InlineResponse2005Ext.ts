@@ -18,7 +18,7 @@ import * as models from './models'
   * @property `mateId` brickId
   * @property `commentId` brickId
   */
-export interface InlineResponse2004Ext {
+export interface InlineResponse2005Ext {
   'photo'?: models.InlineResponse2001FromUserInfoCustomAvatarUrl;
   /**
    * brickId

@@ -19,6 +19,7 @@ export const GET_GRADES = 'user/GET_GRADES'
 export const SET_CURRENT_TERM = 'user/SET_CURRENT_TERM'
 export const UPDATE_USERINFO_PROMISE = 'user/UPDATE_USERINFO_PROMISE'
 export const SET_UNREAD_COUNT = 'user/SET_UNREAD_COUNT'
+export const UPDATE_CONFIG = 'user/UPDATE_CONFIG'
 
 export const setCurrentTerm = (term: number) => ({
   type: SET_CURRENT_TERM,
@@ -96,6 +97,18 @@ export const initHandler = async (dispatch: Dispatch) => {
       // 判断是否有用户名
       isWechatLogin: !!res?.userInfo?.nickName
     }
+
+    const [configErr, configRes] = await withRequest(
+      APIS.ConfigApi.apiConfigGet
+    )({ key: 'global' })
+
+    if (!configErr && configRes) {
+      dispatch({
+        type: UPDATE_CONFIG,
+        data: { global: configRes }
+      })
+    }
+
     if (data.isWechatLogin) {
       data.userInfo = res?.userInfo
       dispatch({

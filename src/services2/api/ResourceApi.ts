@@ -59,22 +59,6 @@ export interface ParamsapiResourceListGet {
   tag?: string;
 }
 /**
-  * @description apiResourceListHotAnonymousGet参数
-  * @property `[pageNum]` 分页页码
-  * @property `[pageSize]` 每页数量
-  */
-export interface ParamsapiResourceListHotAnonymousGet {
-  // queryParams
-  /**
-   * 分页页码
-   */
-  pageNum?: string;
-  /**
-   * 每页数量
-   */
-  pageSize?: string;
-}
-/**
   * @description apiResourceListHotGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -169,12 +153,12 @@ export class ResourceApi {
    * @param params ParamsapiResourceIdGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2007
+   * @returns models.InlineResponse2008
    */
   public apiResourceIdGet = (
     params: ParamsapiResourceIdGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2007>  => {
+  ) : AjaxPromise<models.InlineResponse2008>  => {
     const {
     id,
 } = params
@@ -219,12 +203,12 @@ export class ResourceApi {
    * @param params ParamsapiResourceListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2006
+   * @returns models.InlineResponse2007
    */
   public apiResourceListGet = (
     params: ParamsapiResourceListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const url = this.$basePath + '/api/resource/list'
     const p: any = {}
     p.query = {}
@@ -239,41 +223,17 @@ export class ResourceApi {
     })
   }
   /**
-   * 匿名获取热门列表
-   * @summary 匿名获取热门列表
-   * @param params ParamsapiResourceListHotAnonymousGet
-   
-   * @param opt ajax config
-   * @returns models.InlineResponse2006
-   */
-  public apiResourceListHotAnonymousGet = (
-    params: ParamsapiResourceListHotAnonymousGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
-    const url = this.$basePath + '/api/resource/list/hot/anonymous'
-    const p: any = {}
-    p.query = {}
-    if ('pageNum' in params) p.query.pageNum = params.pageNum
-    if ('pageSize' in params) p.query.pageSize = params.pageSize
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    })
-  }
-  /**
    * 获取热门列表
    * @summary 获取热门列表
    * @param params ParamsapiResourceListHotGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2006
+   * @returns models.InlineResponse2007
    */
   public apiResourceListHotGet = (
     params: ParamsapiResourceListHotGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const url = this.$basePath + '/api/resource/list/hot'
     const p: any = {}
     p.query = {}
@@ -292,12 +252,12 @@ export class ResourceApi {
    * @param params ParamsapiResourceListLikeGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2006
+   * @returns models.InlineResponse2007
    */
   public apiResourceListLikeGet = (
     params: ParamsapiResourceListLikeGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const url = this.$basePath + '/api/resource/list/like'
     const p: any = {}
     p.query = {}
@@ -317,12 +277,12 @@ export class ResourceApi {
    * @param params ParamsapiResourceListTopGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2006
+   * @returns models.InlineResponse2007
    */
   public apiResourceListTopGet = (
     params: ParamsapiResourceListTopGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const url = this.$basePath + '/api/resource/list/top'
     const p: any = {}
     p.query = {}
@@ -342,12 +302,12 @@ export class ResourceApi {
    * @param params ParamsapiResourceSearchGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse2006
+   * @returns models.InlineResponse2007
    */
   public apiResourceSearchGet = (
     params: ParamsapiResourceSearchGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2006>  => {
+  ) : AjaxPromise<models.InlineResponse2007>  => {
     const url = this.$basePath + '/api/resource/search'
     const p: any = {}
     p.query = {}

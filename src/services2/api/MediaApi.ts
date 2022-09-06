@@ -18,7 +18,7 @@ import * as models from '../model/models'
 /**
   * request body
   */
-export type ParamsBodyapiMediaComparefacePost = models.Data3
+export type ParamsBodyapiMediaComparefacePost = models.Data4
 /**
   * @description apiMediaPost参数
   * @property `file` file content
@@ -33,11 +33,11 @@ export interface ParamsapiMediaPost {
 /**
   * request body
   */
-export type ParamsBodyapiMediaPost = models.Data1
+export type ParamsBodyapiMediaPost = models.Data2
 /**
   * request body
   */
-export type ParamsBodyapiMediaUrlPost = models.Data2
+export type ParamsBodyapiMediaUrlPost = models.Data3
 
 export class MediaApi {
   protected $basePath = ''.replace(/\/$/, '')
@@ -96,12 +96,12 @@ export class MediaApi {
    
    * @param data: ParamsBodyapiMediaComparefacePost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2003
+   * @returns models.InlineResponse2004
    */
   public apiMediaComparefacePost = (
     
     data: ParamsBodyapiMediaComparefacePost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2003>  => {
+  ) : AjaxPromise<models.InlineResponse2004>  => {
     const url = this.$basePath + '/api/media/compareface'
     const p: any = {}
     p.data = data
@@ -118,12 +118,12 @@ export class MediaApi {
    * @param params ParamsapiMediaPost
    * @param data: ParamsBodyapiMediaPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2002
+   * @returns models.InlineResponse2003
    */
   public apiMediaPost = (
     params: ParamsapiMediaPost,
     data: ParamsBodyapiMediaPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2002>  => {
+  ) : AjaxPromise<models.InlineResponse2003>  => {
     const url = this.$basePath + '/api/media'
     const p: any = {}
     p.form = new FormData()
@@ -152,12 +152,12 @@ export class MediaApi {
    
    * @param data: ParamsBodyapiMediaUrlPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse2002
+   * @returns models.InlineResponse2003
    */
   public apiMediaUrlPost = (
     
     data: ParamsBodyapiMediaUrlPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse2002>  => {
+  ) : AjaxPromise<models.InlineResponse2003>  => {
     const url = this.$basePath + '/api/media/url'
     const p: any = {}
     p.data = data

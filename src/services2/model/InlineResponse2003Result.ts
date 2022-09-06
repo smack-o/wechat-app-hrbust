@@ -13,22 +13,46 @@
 import * as models from './models'
 
 /**
-  * @property `confidence` 比对相似度
-  * @property `qualityScoreA` 图片A质量
-  * @property `qualityScoreB` 图片B质量
+  * @property `key` 图片 url
+  * @property `status` 
+  * @property `[height]` 图片高度
+  * @property `[width]` 图片宽度
+  * @property `[type]` 图片类型
+  * @property `[bucket]` 图片 bucket
+  * @property `_id` 图片 id
   */
 export interface InlineResponse2003Result {
   /**
-   * 比对相似度
+   * 图片 url
    */
-  'confidence': string;
+  'key': string;
+  'status': InlineResponse2003Result.StatusEnum;
   /**
-   * 图片A质量
+   * 图片高度
    */
-  'qualityScoreA': string;
+  'height'?: number;
   /**
-   * 图片B质量
+   * 图片宽度
    */
-  'qualityScoreB': string;
+  'width'?: number;
+  /**
+   * 图片类型
+   */
+  'type'?: string;
+  /**
+   * 图片 bucket
+   */
+  'bucket'?: string;
+  /**
+   * 图片 id
+   */
+  '_id': string;
 }
 
+export namespace InlineResponse2003Result {
+  export enum StatusEnum {
+    _0 = '0' as any,
+    _1 = '1' as any,
+    _2 = '2' as any
+  }
+}

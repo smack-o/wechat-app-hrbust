@@ -1,4 +1,5 @@
 import CommentApi from './CommentApi'
+import ConfigApi from './ConfigApi'
 import MediaApi from './MediaApi'
 import MessageApi from './MessageApi'
 import ResourceApi from './ResourceApi'
@@ -7,10 +8,11 @@ import UserApi from './UserApi'
 import WallApi from './WallApi'
 
 export * from './CommentApi'
+export * from './ConfigApi'
 export * from './MediaApi'
 export * from './MessageApi'
 export * from './ResourceApi'
 export * from './SaleWallApi'
 export * from './UserApi'
 export * from './WallApi'
-export const APIS = { CommentApi, MediaApi, MessageApi, ResourceApi, SaleWallApi, UserApi, WallApi }
+export const APIS = { CommentApi, ConfigApi, MediaApi, MessageApi, ResourceApi, SaleWallApi, UserApi, WallApi }

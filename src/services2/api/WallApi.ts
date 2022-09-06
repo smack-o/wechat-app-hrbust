@@ -65,22 +65,6 @@ export interface ParamsapiWallListGet {
   pageSize?: string;
 }
 /**
-  * @description apiWallListHotAnonymousGet参数
-  * @property `[pageNum]` 分页页码
-  * @property `[pageSize]` 每页数量
-  */
-export interface ParamsapiWallListHotAnonymousGet {
-  // queryParams
-  /**
-   * 分页页码
-   */
-  pageNum?: string;
-  /**
-   * 每页数量
-   */
-  pageSize?: string;
-}
-/**
   * @description apiWallListHotGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -141,7 +125,7 @@ export interface ParamsapiWallListPublishGet {
 /**
   * request body
   */
-export type ParamsBodyapiWallPost = models.Data8
+export type ParamsBodyapiWallPost = models.Data9
 /**
   * @description apiWallSearchGet参数
   * @property `[pageNum]` 分页页码
@@ -204,12 +188,12 @@ export class WallApi {
    * @param params ParamsapiWallIdGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20013
+   * @returns models.InlineResponse20014
    */
   public apiWallIdGet = (
     params: ParamsapiWallIdGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20013>  => {
+  ) : AjaxPromise<models.InlineResponse20014>  => {
     const {
     id,
 } = params
@@ -254,37 +238,13 @@ export class WallApi {
    * @param params ParamsapiWallListGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20012
+   * @returns models.InlineResponse20013
    */
   public apiWallListGet = (
     params: ParamsapiWallListGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
+  ) : AjaxPromise<models.InlineResponse20013>  => {
     const url = this.$basePath + '/api/wall/list'
-    const p: any = {}
-    p.query = {}
-    if ('pageNum' in params) p.query.pageNum = params.pageNum
-    if ('pageSize' in params) p.query.pageSize = params.pageSize
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    })
-  }
-  /**
-   * 获取热门列表
-   * @summary 获取热门列表
-   * @param params ParamsapiWallListHotAnonymousGet
-   
-   * @param opt ajax config
-   * @returns models.InlineResponse20012
-   */
-  public apiWallListHotAnonymousGet = (
-    params: ParamsapiWallListHotAnonymousGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
-    const url = this.$basePath + '/api/wall/list/hot/anonymous'
     const p: any = {}
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
@@ -302,12 +262,12 @@ export class WallApi {
    * @param params ParamsapiWallListHotGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20012
+   * @returns models.InlineResponse20013
    */
   public apiWallListHotGet = (
     params: ParamsapiWallListHotGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
+  ) : AjaxPromise<models.InlineResponse20013>  => {
     const url = this.$basePath + '/api/wall/list/hot'
     const p: any = {}
     p.query = {}
@@ -326,12 +286,12 @@ export class WallApi {
    * @param params ParamsapiWallListLikeGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20012
+   * @returns models.InlineResponse20013
    */
   public apiWallListLikeGet = (
     params: ParamsapiWallListLikeGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
+  ) : AjaxPromise<models.InlineResponse20013>  => {
     const url = this.$basePath + '/api/wall/list/like'
     const p: any = {}
     p.query = {}
@@ -351,12 +311,12 @@ export class WallApi {
    * @param params ParamsapiWallListPublishGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20012
+   * @returns models.InlineResponse20013
    */
   public apiWallListPublishGet = (
     params: ParamsapiWallListPublishGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
+  ) : AjaxPromise<models.InlineResponse20013>  => {
     const url = this.$basePath + '/api/wall/list/publish'
     const p: any = {}
     p.query = {}
@@ -376,12 +336,12 @@ export class WallApi {
    
    * @param data: ParamsBodyapiWallPost// request body
    * @param opt ajax config
-   * @returns models.InlineResponse20010
+   * @returns models.InlineResponse20011
    */
   public apiWallPost = (
     
     data: ParamsBodyapiWallPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20010>  => {
+  ) : AjaxPromise<models.InlineResponse20011>  => {
     const url = this.$basePath + '/api/wall'
     const p: any = {}
     p.data = data
@@ -398,12 +358,12 @@ export class WallApi {
    * @param params ParamsapiWallSearchGet
    
    * @param opt ajax config
-   * @returns models.InlineResponse20012
+   * @returns models.InlineResponse20013
    */
   public apiWallSearchGet = (
     params: ParamsapiWallSearchGet,
     opt?: ExtraFetchParams
-  ) : AjaxPromise<models.InlineResponse20012>  => {
+  ) : AjaxPromise<models.InlineResponse20013>  => {
     const url = this.$basePath + '/api/wall/search'
     const p: any = {}
     p.query = {}

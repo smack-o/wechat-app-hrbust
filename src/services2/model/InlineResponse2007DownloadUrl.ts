@@ -18,7 +18,7 @@ import * as models from './models'
   * @property `[password]` 下载密码
   * @property `[decompressionPassword]` 解压密码
   */
-export interface InlineResponse2006DownloadUrl {
+export interface InlineResponse2007DownloadUrl {
   /**
    * 下载类型
    */

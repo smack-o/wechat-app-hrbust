@@ -56,24 +56,43 @@ class Index extends Component<IProps, PageState> {
     resourceList: [],
     wallList: []
   }
+  config = {} as { [key: string]: any }
 
   componentDidShow() {
-    // banner
+    this.handleShow()
+  }
 
+  handleShow = async () => {
+    // banner
+    // await this.getConfig()
     this.props.getBanner()
 
-    this.getResource()
-    this.getWall()
     // 在适合的场景显示插屏广告
     if (interstitialAd) {
       interstitialAd.show().catch(err => {
         console.log(err)
       })
     }
+
+    await this.props.user.getUserInfoPromise
+
+    if (this.props.user.config.global.showAllResource) {
+      this.getResource()
+      this.getWall()
+    }
   }
 
+  // getConfig = async () => {
+  //   const [err, res] = await withRequest(APIS.ConfigApi.apiConfigGet)({
+  //     key: 'global'
+  //   })
+  //   if (err) {
+  //     return
+  //   }
+  //   this.config = res || {}
+  // }
+
   getResource = async () => {
-    await this.props.user.getUserInfoPromise
     const [err, res] = await withRequest(
       APIS.ResourceApi.apiResourceListHotGet
     )({
@@ -90,7 +109,6 @@ class Index extends Component<IProps, PageState> {
   }
 
   getWall = async () => {
-    await this.props.user.getUserInfoPromise
     const [err, res] = await withRequest(APIS.WallApi.apiWallListHotGet)({
       pageNum: '0',
       pageSize: '4'

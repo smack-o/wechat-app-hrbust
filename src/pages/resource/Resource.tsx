@@ -2,10 +2,14 @@ import React, { Fragment } from 'react'
 import { Image, View, Input, Ad, Text } from '@tarojs/components'
 import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
-import Taro, { navigateTo } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
 import { AtIcon } from 'taro-ui'
+import { connect } from 'react-redux'
+import { IRootState } from '@/types'
+
 import SearchIcon from '@/assets/community-imgs/search.png'
+import { withShare } from '@/components'
 import Tab from '../../components/tab'
 import { ITabProps } from '../../components/tab/Tab'
 import ResourceItem, {
@@ -16,6 +20,8 @@ import ResourceItem, {
 
 import './Resource.less'
 
+type PropsFromState = ReturnType<typeof mapStateToProps>
+
 type ResourceState = {
   list: GetApiResultType<typeof APIS.ResourceApi.apiResourceListGet>
   activeTab: number
@@ -25,12 +31,9 @@ type ResourceState = {
   activeArrow: boolean
 }
 
-type ResourceProps = {}
+type ResourceProps = {} & PropsFromState
 
-export default class Resource extends React.Component<
-  ResourceProps,
-  ResourceState
-> {
+export class Resource extends React.Component<ResourceProps, ResourceState> {
   pageNum = 0
   pageSize = 20
   fetching = false
@@ -66,12 +69,17 @@ export default class Resource extends React.Component<
     activeArrow: false
   }
 
+  showAllResource = true
+
   constructor(props) {
     super(props)
     this.tabList = [
       {
         key: 'all',
         render: () => {
+          if (!this.showAllResource) {
+            return resourceInfo[ResourceTag.STUDY].name
+          }
           return (
             <Text className="resource-tab">
               {this.tagList[this.state.curTagIndex].text}
@@ -139,12 +147,18 @@ export default class Resource extends React.Component<
   }
 
   async componentDidShow() {
-    console.log('componentDidShow')
     try {
       await loginModal()
       Taro.showLoading({
         title: '加载中...'
       })
+
+      await this.props.user.getUserInfoPromise
+
+      if (!this.props.user.config.global.showAllResource) {
+        this.showAllResource = false
+      }
+
       await this.init()
       this.setState({
         loading: false
@@ -244,6 +258,14 @@ export default class Resource extends React.Component<
       return
     }
 
+    if (index === 2 && !this.showAllResource) {
+      Taro.showToast({
+        title: '维护中，请稍后重试',
+        icon: 'none'
+      })
+      return
+    }
+
     this.setState(
       {
         activeTab: index
@@ -331,3 +353,13 @@ export default class Resource extends React.Component<
     )
   }
 }
+
+const mapStateToProps = (state: IRootState) => ({
+  user: state.user
+})
+
+export default connect<PropsFromState, {}, ResourceProps>(mapStateToProps)(
+  withShare({
+    title: '理工喵儿，资源分享专区'
+  })(Resource)
+)

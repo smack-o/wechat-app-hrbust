@@ -15,23 +15,25 @@ import * as models from './models'
 /**
   * @property `createdAt` 创建时间
   * @property `updatedAt` 更新时间
-  * @property `_id` 表白墙id
-  * @property `isPublisher` 是否是发布者
+  * @property `_id` id
+  * @property `name` 资源名称
+  * @property `nameEn` 资源英文名称
+  * @property `description` 资源描述
   * @property `isLike` 是否点赞
   * @property `likeCount` 点赞数
-  * @property `isCollect` 是否收藏
-  * @property `collectCount` 收藏数量
-  * @property `[publisher]` 
-  * @property `to` wall id
-  * @property `tel` 手机号
-  * @property `content` 内容
-  * @property `[photos]` 图片列表
+  * @property `[price]` 价格
+  * @property `[cover]` 
+  * @property `[downloadUrl]` 下载列表
+  * @property `[images]` 图片列表
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
+  * @property `[tag]` 标签
+  * @property `[publisher]` 
   * @property `viewCount` 浏览数
+  * @property `top` 置顶
   */
-export interface InlineResponse20012Result {
+export interface InlineResponse2007Result {
   /**
    * 创建时间
    */
@@ -41,13 +43,21 @@ export interface InlineResponse20012Result {
    */
   'updatedAt': number;
   /**
-   * 表白墙id
+   * id
    */
   '_id': string;
   /**
-   * 是否是发布者
+   * 资源名称
    */
-  'isPublisher': boolean;
+  'name': string;
+  /**
+   * 资源英文名称
+   */
+  'nameEn': string;
+  /**
+   * 资源描述
+   */
+  'description': string;
   /**
    * 是否点赞
    */
@@ -57,30 +67,18 @@ export interface InlineResponse20012Result {
    */
   'likeCount': number;
   /**
-   * 是否收藏
+   * 价格
    */
-  'isCollect': boolean;
+  'price'?: boolean;
+  'cover'?: models.InlineResponse2001FromUserInfoCustomAvatarUrl;
   /**
-   * 收藏数量
+   * 下载列表
    */
-  'collectCount': number;
-  'publisher'?: models.InlineResponse2001From;
-  /**
-   * wall id
-   */
-  'to': string;
-  /**
-   * 手机号
-   */
-  'tel': string;
-  /**
-   * 内容
-   */
-  'content': string;
+  'downloadUrl'?: Array<models.InlineResponse2007DownloadUrl>;
   /**
    * 图片列表
    */
-  'photos'?: Array<models.InlineResponse2001FromUserInfoCustomAvatarUrl>;
+  'images'?: Array<models.InlineResponse2001FromUserInfoCustomAvatarUrl>;
   /**
    * 是否删除
    */
@@ -94,8 +92,17 @@ export interface InlineResponse20012Result {
    */
   'hotComments'?: Array<models.InlineResponse2001ReplyComment>;
   /**
+   * 标签
+   */
+  'tag'?: Array<string>;
+  'publisher'?: models.InlineResponse2001From;
+  /**
    * 浏览数
    */
   'viewCount': number;
+  /**
+   * 置顶
+   */
+  'top': number;
 }
 

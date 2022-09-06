@@ -68,7 +68,15 @@ export enum ResourceDownloadType {
   /**
    * 天翼网盘
    */
-  TIANYI
+  TIANYI,
+  /**
+   * 夸克
+   */
+  QUARK,
+  /**
+   * 其它
+   */
+  OTHER
 }
 
 const downLoadInfo = [
@@ -80,6 +88,12 @@ const downLoadInfo = [
   },
   {
     name: '天翼网盘'
+  },
+  {
+    name: '夸克网盘'
+  },
+  {
+    name: '其它'
   }
 ]
 

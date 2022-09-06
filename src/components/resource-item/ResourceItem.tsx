@@ -5,10 +5,10 @@ import { Image, View, Text, Ad } from '@tarojs/components'
 import { AtButton, AtCard } from 'taro-ui'
 import Taro from '@tarojs/taro'
 
-import CommentIcon from '../../imgs/comment.png'
-import LikeIcon from '../../imgs/like.png'
-import LikeSelectedIcon from '../../imgs/like_selected.png'
-import PublisherTitle from '../publisher-title'
+import CommentIcon from '@/assets/community-imgs/comment.png'
+import LikeIcon from '@/assets/community-imgs/like.png'
+import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
+import PublisherTitle from '@/components/publisher-title'
 import './ResourceItem.less'
 
 interface IResourceProps {

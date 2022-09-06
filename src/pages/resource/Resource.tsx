@@ -5,14 +5,14 @@ import { APIS } from '@/services2'
 import Taro, { navigateTo } from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
 import { AtIcon } from 'taro-ui'
-import Tab from '../_components/tab'
-import { ITabProps } from '../_components/tab/Tab'
+import SearchIcon from '@/assets/community-imgs/search.png'
+import Tab from '../../components/tab'
+import { ITabProps } from '../../components/tab/Tab'
 import ResourceItem, {
   ResourceTag,
   resourceInfo
-} from '../_components/resource-item'
+} from '../../components/resource-item'
 // import AddWallIcon from '../../imgs/add_wall.png'
-import SearchIcon from '../imgs/search.png'
 
 import './Resource.less'
 
@@ -107,7 +107,6 @@ export default class Resource extends React.Component<
   }
 
   onShowTagSheet = () => {
-    console.log(1)
     this.setState({
       activeArrow: true
     })
@@ -139,12 +138,13 @@ export default class Resource extends React.Component<
     this.fetchList(false, true)
   }
 
-  async componentDidMount() {
+  async componentDidShow() {
+    console.log('componentDidShow')
     try {
+      await loginModal()
       Taro.showLoading({
         title: '加载中...'
       })
-      await loginModal()
       await this.init()
       this.setState({
         loading: false

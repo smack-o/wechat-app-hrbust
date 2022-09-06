@@ -59,6 +59,22 @@ export interface ParamsapiResourceListGet {
   tag?: string;
 }
 /**
+  * @description apiResourceListHotAnonymousGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  */
+export interface ParamsapiResourceListHotAnonymousGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+}
+/**
   * @description apiResourceListHotGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
@@ -215,6 +231,30 @@ export class ResourceApi {
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
     if ('tag' in params) p.query.tag = params.tag
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 匿名获取热门列表
+   * @summary 匿名获取热门列表
+   * @param params ParamsapiResourceListHotAnonymousGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiResourceListHotAnonymousGet = (
+    params: ParamsapiResourceListHotAnonymousGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/resource/list/hot/anonymous'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
     return ajax.ajax({
       ...opt,
       method: 'GET',

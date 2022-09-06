@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch, bindActionCreators } from 'redux'
 import Taro from '@tarojs/taro'
@@ -9,6 +9,7 @@ import { IRootState } from '@/types'
 import cn from 'classnames'
 import { goPage, routes } from '@/utils/router'
 import { Loading, withShare } from '@/components'
+import { APIS } from '@/services2'
 
 // images
 import courseIcon from '@/assets/icon/course.png'
@@ -16,11 +17,16 @@ import examIcon from '@/assets/icon/exam_schedule.png'
 import gradeIcon from '@/assets/icon/grade.png'
 import shopIcon from '@/assets/icon/shop_selected.png'
 import queryRoomIcon from '@/assets/icon/query_room.png'
-import { toLogin } from '@/utils'
+import afficheIcon from '@/assets/icon/affiche.png'
+import phoneBookIcon from '@/assets/icon/phone_book.png'
+import newStudentIcon from '@/assets/icon/new_student.png'
+import doNotTouchMeIcon from '@/assets/icon/do_not_touch_me.png'
+import { toLogin, withRequest } from '@/utils'
 import bgImg from './res/home-bg.png'
 import SwiperChild from './components/SwiperChild'
 
 import './index.less'
+// import ResourceItem from '@/pages3/community/_components/resource-item'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
@@ -30,6 +36,7 @@ type PageOwnProps = {}
 
 type PageState = {
   cIndex: number
+  resourceList: GetApiResultType<typeof APIS.ResourceApi.apiResourceListGet>
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -38,19 +45,37 @@ let interstitialAd: Taro.InterstitialAd
 
 const SWIPER_MARGIN = '45rpx'
 class Index extends Component<IProps, PageState> {
-  state = {
-    cIndex: 0
+  state: PageState = {
+    cIndex: 0,
+    resourceList: []
   }
 
   componentDidShow() {
     // banner
     this.props.getBanner()
 
+    this.getResource()
     // 在适合的场景显示插屏广告
     if (interstitialAd) {
       interstitialAd.show().catch(err => {
         console.log(err)
       })
+    }
+  }
+
+  getResource = async () => {
+    const [err, res] = await withRequest(
+      APIS.ResourceApi.apiResourceListHotAnonymousGet
+    )({
+      pageNum: '0',
+      pageSize: '10'
+    })
+
+    this.setState({
+      resourceList: res
+    })
+    if (err) {
+      return
     }
   }
 
@@ -76,48 +101,48 @@ class Index extends Component<IProps, PageState> {
 
   // 金刚位模块列表
   modules = [
-    {
-      image: courseIcon,
-      text: '课表',
-      url: routes.course,
-      needLogin: true,
-      shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
-    },
-    {
-      image: gradeIcon,
-      text: '成绩查询',
-      url: routes.grade,
-      needLogin: true,
-      shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
-    },
     // {
-    //   image: '../assets/icon/cetlogo.png',
-    //   text: '无证查询',
-    //   url: './cet4',
+    //   image: courseIcon,
+    //   text: '课表',
+    //   url: routes.course,
     //   needLogin: true,
-    //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
+    //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(243, 170, 66, 0.2);'
     // },
     // {
-    //   image: '../assets/icon/affiche.png',
-    //   text: '教务公告',
-    //   url: './news/news',
+    //   image: gradeIcon,
+    //   text: '成绩查询',
+    //   url: routes.grade,
     //   needLogin: true,
-    //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+    //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(233, 96, 110, 0.2);'
     // },
-    {
-      image: queryRoomIcon,
-      text: '查空教室',
-      url: routes.classroom,
-      needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
-    },
-    {
-      image: examIcon,
-      text: '考试安排',
-      url: routes.exam,
-      needLogin: true,
-      shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
-    }
+    // // {
+    // //   image: '../assets/icon/cetlogo.png',
+    // //   text: '无证查询',
+    // //   url: './cet4',
+    // //   needLogin: true,
+    // //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(183, 98, 237, 0.2);'
+    // // },
+    // // {
+    // //   image: '../assets/icon/affiche.png',
+    // //   text: '教务公告',
+    // //   url: './news/news',
+    // //   needLogin: true,
+    // //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(72, 98, 246, 0.2);'
+    // // },
+    // {
+    //   image: queryRoomIcon,
+    //   text: '查空教室',
+    //   url: routes.classroom,
+    //   needLogin: true,
+    //   shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
+    // },
+    // {
+    //   image: examIcon,
+    //   text: '考试安排',
+    //   url: routes.exam,
+    //   needLogin: true,
+    //   shadowColor: 'box-shadow: 0px 5px 25px 0px rgba(95, 205, 222, 0.2);'
+    // }
     // {
     //   image: '../assets/icon/news_icon.png',
     //   text: '教务公告',
@@ -135,6 +160,64 @@ class Index extends Component<IProps, PageState> {
     //   // text: '新生速查',
     //   // url: '../info/info',
     // }
+    {
+      image: courseIcon,
+      text: '课表',
+      url: routes.course,
+      needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
+    },
+    {
+      image: gradeIcon,
+      text: '成绩查询',
+      url: routes.grade,
+      needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
+    },
+    {
+      image: queryRoomIcon,
+      text: '查空教室',
+      url: routes.classroom,
+      needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
+    },
+    {
+      image: examIcon,
+      text: '考试安排',
+      url: routes.exam,
+      needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+    },
+    {
+      image: afficheIcon,
+      text: '教务公告',
+      url: routes.news,
+      // needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+    },
+    {
+      image: phoneBookIcon,
+      text: '理工电邮',
+      url: `${routes.webview}?url=${encodeURIComponent(
+        'https://mp.weixin.qq.com/s/8Lsdsd7tMdjM6YgU2rGkbA'
+      )}&title=理工电邮`,
+      // needLogin: true,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
+    },
+    {
+      image: newStudentIcon,
+      text: '新生速查',
+      url: routes.yingxin,
+      needLogin: false,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+    },
+    {
+      image: doNotTouchMeIcon,
+      text: '别点我',
+      url: routes.aboutme,
+      needLogin: false,
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+    }
   ]
 
   // 测试更改主题逻辑
@@ -153,13 +236,25 @@ class Index extends Component<IProps, PageState> {
 
   goPage = (index: number) => {
     const {
-      user: { isLogin }
+      user: { isLogin, isWechatLogin }
     } = this.props
     const { needLogin, url } = this.modules[index]
     if (!isLogin && needLogin) {
-      Taro.showToast({
-        title: '该功能需要登录~请先登录！',
-        icon: 'none'
+      // Taro.showToast({
+      //   title: '该功能需要登录~请先登录！',
+      //   icon: 'none'
+      // })
+      Taro.showModal({
+        title: '提示',
+        content: '该功能需要登录~请先登录！',
+        confirmText: '去登录',
+        success: function(res) {
+          if (res.confirm) {
+            toLogin(isWechatLogin, routes.login)
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
       })
       return
     }
@@ -168,7 +263,7 @@ class Index extends Component<IProps, PageState> {
   }
 
   render() {
-    const { cIndex } = this.state
+    const { cIndex, resourceList } = this.state
     const {
       banners,
       user: { isLogin, isWechatLogin },
@@ -248,6 +343,24 @@ class Index extends Component<IProps, PageState> {
             </View>
           </View>
         )}
+        {/*
+        {resourceList.length > 0 && (
+          <View className="resource-wrapper">
+            {resourceList.map((item, index) => {
+              return (
+                <Fragment key={item._id}>
+                  <ResourceItem
+                    showHotComments
+                    data={item}
+                    onClick={() =>
+                      goPage(`${routes.resourceDetail}?id=${item._id}`)
+                    }
+                  ></ResourceItem>
+                </Fragment>
+              )
+            })}
+          </View>
+        )} */}
 
         <View
           className="shop-icon"

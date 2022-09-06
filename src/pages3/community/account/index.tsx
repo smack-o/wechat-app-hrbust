@@ -10,14 +10,13 @@ import Avatar, { NickName } from '@/components/Avatar'
 import Time from '@/components/Time'
 import { routes } from '@/app.config'
 import { withShare } from '@/components'
+import bgIcon from '@/assets/community-imgs/account_bg.png'
 import BrickMessageList from '../_components/brick-message-list'
 import MateMessageList from '../_components/mate-message-list'
 import Tab from '../_components/tab'
 import { ITabProps } from '../_components/tab/Tab'
 
 import './index.less'
-
-import bgIcon from '../imgs/account_bg.png'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}

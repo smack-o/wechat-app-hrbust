@@ -3,7 +3,7 @@ import { APIS } from '@/services2'
 import { View, Image, Text } from '@tarojs/components'
 import { goPage } from '@/utils/router'
 import { routes } from '@/app.config'
-import likeIcon from '../../imgs/like.png'
+import likeIcon from '@/assets/community-imgs/like.png'
 import './MessageItem.less'
 import ListItem from '../list-item'
 

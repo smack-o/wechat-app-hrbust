@@ -21,8 +21,8 @@ const tabInfo = {
       selectedIconPath: '/assets/icon/home_selected.png'
     },
     {
-      pagePath: 'pages/campus/index',
-      text: '校园',
+      pagePath: 'pages/resource/index',
+      text: '资源站',
       iconPath: '/assets/icon/campus.png',
       selectedIconPath: '/assets/icon/campus_selected.png'
     },

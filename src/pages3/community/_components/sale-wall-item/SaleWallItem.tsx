@@ -9,9 +9,9 @@ import Avatar from '@/components/Avatar'
 import Time from '@/components/Time'
 import classNames from 'classnames'
 
-import SaleWallLike from '../../imgs/sale_wall_like.png'
-import SaleWallLiked from '../../imgs/sale_wall_liked.png'
-import CommentIcon from '../../imgs/comment.png'
+import SaleWallLike from '@/assets/community-imgs/sale_wall_like.png'
+import SaleWallLiked from '@/assets/community-imgs/sale_wall_liked.png'
+import CommentIcon from '@/assets/community-imgs/comment.png'
 // import { Avatar, Time } from '../publisher-title'
 import './SaleWallItem.less'
 

@@ -111,7 +111,7 @@
         },
         {
           "name": "资源分享",
-          "pathName": "pages3/community/resource/index",
+          "pathName": "pages/resource/index",
           "query": "",
           "launchMode": "default",
           "scene": null

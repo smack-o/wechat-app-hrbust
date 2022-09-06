@@ -2,10 +2,11 @@ export const router = {
   // 分包，pages 主包目前只放 tab 签的四个主页面，其它功能页面都放入 subPackages 中
   pages: {
     index: 'index/index', // 首页
-    campus: 'campus/index', // 校园
+    // campus: 'campus/index', // 校园
     // discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
-    shop: 'shop/index' // 校园购
+    shop: 'shop/index', // 校园购
+    resource: 'resource/index' // 资源分享首页
     // 'pages/course',
     // 'pages/courseDetail',
     // 'pages/choiceTrem',
@@ -47,7 +48,7 @@ export const router = {
     mySaleWall: 'community/my-sale-wall/index', // 我的卖舍友
     search: 'community/search/index', // 搜索
     otherAccount: 'community/account/index', // 其他用户主页
-    games: 'community/resource/index', // 资源分享首页
+    // games: 'community/resource/index', // 资源分享首页
     resourceDetail: 'community/resource-detail/index', // 资源分享详情
     searchResource: 'community/search-resource/index' // 资源分享搜索
   }
@@ -100,8 +101,8 @@ export default {
         selectedIconPath: 'assets/icon/home_selected.png'
       },
       {
-        pagePath: 'pages/campus/index',
-        text: '校园',
+        pagePath: 'pages/resource/index',
+        text: '资源分享',
         iconPath: 'assets/icon/campus.png',
         selectedIconPath: 'assets/icon/campus_selected.png'
       },

@@ -5,10 +5,10 @@ import { getCdnUrl, showToast, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
 
-import CommentIcon from '../../imgs/comment.png'
-import LikeIcon from '../../imgs/like.png'
-import LikeSelectedIcon from '../../imgs/like_selected.png'
-import PublisherTitle from '../publisher-title'
+import CommentIcon from '@/assets/community-imgs/comment.png'
+import LikeIcon from '@/assets/community-imgs/like.png'
+import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
+import PublisherTitle from '@/components/publisher-title'
 
 import './WallItem.less'
 

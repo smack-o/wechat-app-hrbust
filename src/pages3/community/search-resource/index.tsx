@@ -4,9 +4,9 @@ import Taro from '@tarojs/taro'
 import { APIS } from '@/services2'
 import { withRequest } from '@/utils'
 import { goPage, routes } from '@/utils/router'
-import SearchIcon from '../imgs/search.png'
+import SearchIcon from '@/assets/community-imgs/search.png'
+import ResourceItem from '@/components/resource-item'
 import './index.less'
-import ResourceItem from '../_components/resource-item'
 
 const prefix = 'community-search'
 

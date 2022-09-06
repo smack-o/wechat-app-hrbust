@@ -11,10 +11,10 @@ import { APIS } from '@/services2'
 import Avatar, { NickName } from '@/components/Avatar'
 import { showToast, withRequest } from '@/utils'
 import Time from '@/components/Time'
+import LikeIcon from '@/assets/community-imgs/like.png'
+import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
 import CommentInput, { CommentType } from '../comment-input'
 import './CommentList.less'
-import LikeIcon from '../../imgs/like.png'
-import LikeSelectedIcon from '../../imgs/like_selected.png'
 
 interface IWrapperProps {
   hotList?: GetApiResultType<typeof APIS.CommentApi.apiCommentBrickIdGet>

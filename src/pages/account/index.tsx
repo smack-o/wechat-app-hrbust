@@ -16,6 +16,7 @@ import contactIcon from './res/contact.png'
 import myWallIcon from './res/my_wall.png'
 import mySaleWallIcon from './res/my_sale_wall.png'
 import myMessageIcon from './res/my_message.png'
+// images
 
 import './index.less'
 
@@ -155,7 +156,7 @@ class Account extends Component<IProps, PageState> {
           <AtButton
             type="primary"
             className="login-button"
-            onClick={() => toLogin(isWechatLogin)}
+            onClick={() => toLogin(isWechatLogin, routes.login)}
           >
             绑定学号
           </AtButton>

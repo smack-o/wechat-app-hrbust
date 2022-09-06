@@ -4,9 +4,9 @@ import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import Taro, { navigateTo } from '@tarojs/taro'
 import { routes } from '@/app.config'
+import AddSaleWallIcon from '@/assets/community-imgs/add_sale_wall.png'
 import Tab from '../tab'
 import { ITabProps } from '../tab/Tab'
-import AddSaleWallIcon from '../../imgs/add_sale_wall.png'
 import SaleWallItem from '../sale-wall-item'
 
 import './SaleWall.less'
@@ -81,10 +81,10 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
 
   async componentDidMount() {
     try {
+      await loginModal()
       Taro.showLoading({
         title: '加载中...'
       })
-      await loginModal()
       await this.init()
       this.setState({
         loading: false
@@ -101,6 +101,9 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
   }
 
   fetchList = async (reset?: boolean, refresh?: boolean) => {
+    Taro.showLoading({
+      title: '加载中...'
+    })
     this.fetching = true
     let pageNum = String(this.pageNum)
     let pageSize = String(this.pageSize)
@@ -119,6 +122,7 @@ export default class SaleWall extends React.Component<WallProps, WallState> {
 
     this.fetching = false
 
+    Taro.hideLoading()
     if (err || !res) {
       return Promise.reject()
     }

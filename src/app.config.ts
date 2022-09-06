@@ -48,7 +48,8 @@ export const router = {
     search: 'community/search/index', // 搜索
     otherAccount: 'community/account/index', // 其他用户主页
     games: 'community/resource/index', // 资源分享首页
-    resourceDetail: 'community/resource-detail/index' // 资源分享详情
+    resourceDetail: 'community/resource-detail/index', // 资源分享详情
+    searchResource: 'community/search-resource/index' // 资源分享搜索
   }
 }
 

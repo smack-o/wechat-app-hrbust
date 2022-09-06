@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react'
-import { Image, View, Input, Ad } from '@tarojs/components'
+import { Image, View, Input, Ad, Text } from '@tarojs/components'
 import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import Taro, { navigateTo } from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
+import { AtIcon } from 'taro-ui'
 import Tab from '../_components/tab'
 import { ITabProps } from '../_components/tab/Tab'
-import ResourceItem from '../_components/resource-item'
+import ResourceItem, {
+  ResourceTag,
+  resourceInfo
+} from '../_components/resource-item'
 // import AddWallIcon from '../../imgs/add_wall.png'
 import SearchIcon from '../imgs/search.png'
 
@@ -17,6 +21,8 @@ type ResourceState = {
   activeTab: number
   hasNext: boolean
   loading: boolean
+  curTagIndex: number
+  activeArrow: boolean
 }
 
 type ResourceProps = {}
@@ -25,35 +31,106 @@ export default class Resource extends React.Component<
   ResourceProps,
   ResourceState
 > {
-  tabList = [
-    {
-      key: 'all',
-      text: '全部',
-      api: APIS.ResourceApi.apiResourceListGet
-    },
-    {
-      key: 'like',
-      text: '喜欢',
-      api: APIS.ResourceApi.apiResourceListLikeGet
-    },
-    {
-      key: 'hot',
-      text: '最热',
-      api: APIS.ResourceApi.apiResourceListHotGet
-    }
-  ]
-
   pageNum = 0
   pageSize = 20
   fetching = false
+  tabList = [] as {
+    key: string
+    render?: () => React.ReactNode
+    api:
+      | typeof APIS.ResourceApi.apiResourceListGet
+      | typeof APIS.ResourceApi.apiResourceListLikeGet
+      | typeof APIS.ResourceApi.apiResourceListHotGet
+    api2?: typeof APIS.ResourceApi.apiResourceListTopGet
+    text?: string
+  }[]
+
+  tagList = [
+    {
+      key: '',
+      text: '全部'
+    }
+  ].concat(
+    Object.keys(resourceInfo).map(key => ({
+      key,
+      text: resourceInfo[key].name
+    }))
+  )
 
   state: ResourceState = {
     list: [],
     activeTab: 0,
     hasNext: true,
-    loading: true
+    loading: true,
+    curTagIndex: 0,
+    activeArrow: false
   }
 
+  constructor(props) {
+    super(props)
+    this.tabList = [
+      {
+        key: 'all',
+        render: () => {
+          return (
+            <Text className="resource-tab">
+              {this.tagList[this.state.curTagIndex].text}
+              <AtIcon
+                onClick={e => {
+                  e.stopPropagation()
+                  this.onShowTagSheet()
+                }}
+                value="chevron-down"
+                size={20}
+                className={
+                  'resource-tab-icon' +
+                  (this.state.activeArrow ? ' resource-tab-icon--active' : '')
+                }
+              ></AtIcon>
+            </Text>
+          )
+        },
+        api: APIS.ResourceApi.apiResourceListGet,
+        api2: APIS.ResourceApi.apiResourceListTopGet
+      },
+      {
+        key: 'like',
+        text: '喜欢',
+        api: APIS.ResourceApi.apiResourceListLikeGet
+      },
+      {
+        key: 'hot',
+        text: '最热',
+        api: APIS.ResourceApi.apiResourceListHotGet
+      }
+    ]
+  }
+
+  onShowTagSheet = () => {
+    console.log(1)
+    this.setState({
+      activeArrow: true
+    })
+    Taro.showActionSheet({
+      itemList: this.tagList.map(item => item.text),
+      success: res => {
+        // console.log(res)
+        this.setState({
+          // @ts-ignore
+          curTagIndex: res.tapIndex
+        })
+        this.fetchList(true)
+        this.setState({
+          activeArrow: false
+        })
+      },
+      fail: () => {
+        this.setState({
+          activeArrow: false
+        })
+      }
+    })
+  }
   // 重新进入页面时，需要重新获取数据
   onShow = () => {
     if (this.state.list.length === 0) {
@@ -84,6 +161,9 @@ export default class Resource extends React.Component<
   }
 
   fetchList = async (reset?: boolean, refresh?: boolean) => {
+    Taro.showLoading({
+      title: '加载中...'
+    })
     this.fetching = true
     let pageNum = String(this.pageNum)
     let pageSize = String(this.pageSize)
@@ -95,24 +175,75 @@ export default class Resource extends React.Component<
     }
 
     const api = this.tabList[this.state.activeTab].api
-    const [err, res] = await withRequest(api)({
+    const api2 = this.tabList[this.state.activeTab].api2
+    const query: {
+      pageNum?: string
+      pageSize?: string
+      tag?: string
+    } = {
       pageNum,
       pageSize
-    })
+    }
 
+    const tag = this.tagList[this.state.curTagIndex].key
+
+    // tag 筛选
+    if (this.state.activeTab === 0 && tag) {
+      query.tag = tag
+    }
+
+    const fetchList = [withRequest(api)(query)]
+
+    // 置顶逻辑
+    if ((reset || refresh) && api2) {
+      fetchList.push(
+        withRequest(api2)({
+          pageNum: '0',
+          pageSize: '999'
+        })
+      )
+    }
+
+    const [commonRes, topRes] = await Promise.all(fetchList)
+
+    Taro.hideLoading()
     this.fetching = false
 
-    if (err || !res) {
+    const [commonErr, commonData] = commonRes
+
+    if (commonErr || !commonData) {
       return Promise.reject()
     }
 
+    let list = [] as ResourceState['list']
+
+    // 置顶逻辑
+    if ((reset || refresh) && topRes && !topRes[0] && topRes[1]) {
+      list = list.concat(topRes[1])
+    }
+
+    if (reset || refresh) {
+      list = list.concat(commonData)
+    } else {
+      list = this.state.list.concat(commonData)
+    }
+
+    console.log(list, 'list')
+
     this.setState({
-      list: reset || refresh ? res : this.state.list.concat(res),
-      hasNext: res.length >= this.pageSize
+      list,
+      hasNext: commonData.length >= this.pageSize
     })
   }
 
   onTabChange: ITabProps['onChange'] = async index => {
+    if (this.state.activeTab === index) {
+      if (index === 0) {
+        this.onShowTagSheet()
+      }
+      return
+    }
+
     this.setState(
       {
         activeTab: index
@@ -149,20 +280,21 @@ export default class Resource extends React.Component<
     }
 
     return (
-      <View className="wall">
+      <View className="resource">
         <View
-          className="wall-search"
+          className="resource-search"
           onClick={() => {
-            goPage(routes.search)
+            goPage(routes.searchResource)
           }}
         >
-          <Image className="wall-search__icon" src={SearchIcon}></Image>
+          <Image className="resource-search__icon" src={SearchIcon}></Image>
           <Input placeholder="搜索关键词" disabled></Input>
         </View>
         <Tab
           currentIndex={activeTab}
           tabList={this.tabList}
           onChange={this.onTabChange}
+          canClickSameTab
         >
           {list.length === 0 ? (
             <View className="community-no-data">暂无内容</View>

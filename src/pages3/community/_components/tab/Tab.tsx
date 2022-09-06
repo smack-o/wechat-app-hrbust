@@ -7,7 +7,8 @@ import './Tab.less'
 
 interface ITabItem<Key> {
   key: Key
-  text: string
+  text?: string
+  render?: () => React.ReactNode
 }
 
 export interface ITabProps<Key = string> {
@@ -17,19 +18,27 @@ export interface ITabProps<Key = string> {
   onChange?: (index: number, key?: Key, text?: string) => void
   /** fix 距离顶部距离 */
   fixBlockTop?: number
+  /** 点击相同 tab 是否有响应 */
+  canClickSameTab?: boolean
 }
 
 const prefix = 'community-tab'
 
 export default function TopBar<Key>(props: ITabProps<Key>) {
-  const { currentIndex, tabList, onChange, children } = props
+  const {
+    currentIndex,
+    tabList,
+    onChange,
+    children,
+    canClickSameTab = false
+  } = props
 
   return (
     <View className={prefix}>
       {/* <FixBlock top={0}> */}
       <View className={`${prefix}-title`}>
         {tabList.map((tabItem, index) => {
-          const { key, text } = tabItem
+          const { key, text, render } = tabItem
           return (
             <View
               key={index}
@@ -37,12 +46,12 @@ export default function TopBar<Key>(props: ITabProps<Key>) {
                 current: currentIndex === index
               })}
               onClick={() => {
-                if (currentIndex !== index) {
+                if (currentIndex !== index || canClickSameTab) {
                   onChange?.(index, key, text)
                 }
               }}
             >
-              {text}
+              {render ? render() : text}
               {currentIndex === index && (
                 <View className={`${prefix}-active-bar`}></View>
               )}

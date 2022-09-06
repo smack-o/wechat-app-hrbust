@@ -41,6 +41,7 @@ export interface ParamsapiResourceLikeIdPut {
   * @description apiResourceListGet参数
   * @property `[pageNum]` 分页页码
   * @property `[pageSize]` 每页数量
+  * @property `[tag]` 标签
   */
 export interface ParamsapiResourceListGet {
   // queryParams
@@ -52,6 +53,10 @@ export interface ParamsapiResourceListGet {
    * 每页数量
    */
   pageSize?: string;
+  /**
+   * 标签
+   */
+  tag?: string;
 }
 /**
   * @description apiResourceListHotGet参数
@@ -89,6 +94,27 @@ export interface ParamsapiResourceListLikeGet {
    * 请求参数 id
    */
   id?: string;
+}
+/**
+  * @description apiResourceListTopGet参数
+  * @property `[pageNum]` 分页页码
+  * @property `[pageSize]` 每页数量
+  * @property `[tag]` 标签
+  */
+export interface ParamsapiResourceListTopGet {
+  // queryParams
+  /**
+   * 分页页码
+   */
+  pageNum?: string;
+  /**
+   * 每页数量
+   */
+  pageSize?: string;
+  /**
+   * 标签
+   */
+  tag?: string;
 }
 /**
   * @description apiResourceSearchGet参数
@@ -172,8 +198,8 @@ export class ResourceApi {
     })
   }
   /**
-   * 获取游戏商品列表
-   * @summary 获取游戏商品列表
+   * 获取资源列表
+   * @summary 获取资源列表
    * @param params ParamsapiResourceListGet
    
    * @param opt ajax config
@@ -188,6 +214,7 @@ export class ResourceApi {
     p.query = {}
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('tag' in params) p.query.tag = params.tag
     return ajax.ajax({
       ...opt,
       method: 'GET',
@@ -237,6 +264,31 @@ export class ResourceApi {
     if ('pageNum' in params) p.query.pageNum = params.pageNum
     if ('pageSize' in params) p.query.pageSize = params.pageSize
     if ('id' in params) p.query.id = params.id
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    })
+  }
+  /**
+   * 获取资源列表
+   * @summary 获取资源列表
+   * @param params ParamsapiResourceListTopGet
+   
+   * @param opt ajax config
+   * @returns models.InlineResponse2006
+   */
+  public apiResourceListTopGet = (
+    params: ParamsapiResourceListTopGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.InlineResponse2006>  => {
+    const url = this.$basePath + '/api/resource/list/top'
+    const p: any = {}
+    p.query = {}
+    if ('pageNum' in params) p.query.pageNum = params.pageNum
+    if ('pageSize' in params) p.query.pageSize = params.pageSize
+    if ('tag' in params) p.query.tag = params.tag
     return ajax.ajax({
       ...opt,
       method: 'GET',

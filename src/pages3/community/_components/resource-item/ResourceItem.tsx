@@ -3,6 +3,7 @@ import { APIS } from '@/services2'
 import { withRequest, copy, showToast } from '@/utils'
 import { Image, View, Text, Ad } from '@tarojs/components'
 import { AtButton, AtCard } from 'taro-ui'
+import Taro from '@tarojs/taro'
 
 import CommentIcon from '../../imgs/comment.png'
 import LikeIcon from '../../imgs/like.png'
@@ -21,6 +22,37 @@ interface IResourceProps {
 }
 
 const prefix = 'resource-item'
+
+export enum ResourceTag {
+  /**
+   * 电影、电视剧
+   * Movie
+   * Film
+   */
+  MOVIE = 'movie',
+  /**
+   * 游戏
+   * Game
+   */
+  GAME = 'game',
+  /**
+   * 学习资源
+   * Study
+   */
+  STUDY = 'study'
+}
+
+export const resourceInfo = {
+  [ResourceTag.MOVIE]: {
+    name: '电影'
+  },
+  [ResourceTag.GAME]: {
+    name: '游戏'
+  },
+  [ResourceTag.STUDY]: {
+    name: '学习'
+  }
+}
 
 export enum ResourceDownloadType {
   /**
@@ -66,7 +98,10 @@ export default function Resource(props: IResourceProps) {
       nameEn,
       description,
       hotComments = [],
-      downloadUrl
+      downloadUrl,
+      tag = [],
+      viewCount,
+      top
     } = {},
     timeType,
     onClick,
@@ -175,8 +210,33 @@ export default function Resource(props: IResourceProps) {
     })
   }
 
+  // TODO: 举报投诉逻辑
+  const onComplaint = () => {
+    Taro.showModal({
+      title: '投诉成功',
+      content: '理工喵已收到投诉，会尽快在核实后进行处理。',
+      success: function(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
+
   return (
     <View className={prefix} onClick={onClick}>
+      {!showDetail && tag.length > 0 && (
+        <View className={`${prefix}-tags`}>
+          {tag.map(item => (
+            <View className={`${prefix}-tags__tag`} key={item}>
+              {resourceInfo[item].name}
+            </View>
+          ))}
+        </View>
+      )}
+
       <PublisherTitle
         time={createdAt}
         publisher={publisher}
@@ -207,18 +267,57 @@ export default function Resource(props: IResourceProps) {
       </Text>
       {showDetail && (
         <Fragment>
+          {tag.length > 0 && (
+            <View className={`${prefix}-detail-tags`}>
+              标签：
+              {tag.map(item => resourceInfo[item].name).join('，')}
+            </View>
+          )}
+          <View className="line"></View>
           {/* @ts-ignore */}
           <wemark md={description} link highlight type="wemark"></wemark>
-          {/* @ts-ignore */}
-          <ad
-            unit-id="adunit-a51bed72a19360d9"
-            ad-type="video"
-            ad-theme="white"
-          >
+          <AtCard className={`${prefix}__url-card`} title="免责声明">
+            <View className="mianze-text">
+              1、本站所有内容均为爱好者分享发布的网盘链接介绍展示帖子，本站不存储任何实质资源数据。
+            </View>
+            <View className="mianze-text">
+              2、本站禁止发布分享爱奇艺、B站、优酷、腾讯视频等媒体平台收费热播独播影视作品；禁止分享正在热播或者上映不足
+              3 个月影视作品。
+            </View>
+            <View className="mianze-text">
+              3、本站不提供任何资源下载服务，不提供任何资源存储服务，不提供任何资源上传服务。
+            </View>
+            <View className="mianze-text">
+              4、本文内所有链接指向的云盘网盘资源，其版权归版权方所有！其实际管理权为分享者所有，本站无法操作相关资源。
+            </View>
+            <View className="mianze-text">
+              5、本站不对任何资源的合法性、真实性、有效性、安全性、准确性、完整性、可靠性、适用性、合法性、版权性等进行任何形式的保证。
+            </View>
+            <View className="mianze-text">
+              6、本站不对任何资源的下载、使用、传播、复制、转载、分享等行为承担任何责任。
+            </View>
+            <View className="mianze-text">
+              7、如您认为本站任何介绍帖侵犯了您的合法版权，请点击{' '}
+              <Text className="complaint-btn" onClick={onComplaint}>
+                版权投诉
+              </Text>{' '}
+              进行投诉，我们将在确认本文链接指向的资源存在侵权后，立即删除相关介绍帖子！
+            </View>
+          </AtCard>
+          <View className="ad">
             {/* @ts-ignore */}
-          </ad>
+            <ad
+              unit-id="adunit-a51bed72a19360d9"
+              ad-type="video"
+              ad-theme="white"
+            >
+              {/* @ts-ignore */}
+            </ad>
+          </View>
 
-          {showDownloadDetail ? (
+          {downloadUrl?.length === 0 ? (
+            ''
+          ) : showDownloadDetail ? (
             <View>
               {downloadUrl?.map((item, index) => {
                 const { url, password, decompressionPassword } = item
@@ -273,18 +372,25 @@ export default function Resource(props: IResourceProps) {
             删除
           </View>
         )} */}
-        <View className={`${prefix}__footer-item`}>
-          <Image src={CommentIcon} mode="widthFix"></Image>
-          {commentCount}
-        </View>
-        <View className={`${prefix}__footer-item`} onClick={onLikeClick}>
-          <Image
-            src={localIsLike ? LikeSelectedIcon : LikeIcon}
-            mode="widthFix"
-          ></Image>
-          <Text className={localIsLike ? 'red-text' : ''}>
-            {localIsLikeCount}
-          </Text>
+        <View className={`${prefix}__footer-left`}>{top === 1 && '置顶'}</View>
+        <View className={`${prefix}__footer-right`}>
+          <View className={`${prefix}__footer-item`}>
+            <Image src={CommentIcon} mode="widthFix"></Image>
+            {viewCount}
+          </View>
+          <View className={`${prefix}__footer-item`}>
+            <Image src={CommentIcon} mode="widthFix"></Image>
+            {commentCount}
+          </View>
+          <View className={`${prefix}__footer-item`} onClick={onLikeClick}>
+            <Image
+              src={localIsLike ? LikeSelectedIcon : LikeIcon}
+              mode="widthFix"
+            ></Image>
+            <Text className={localIsLike ? 'red-text' : ''}>
+              {localIsLikeCount}
+            </Text>
+          </View>
         </View>
       </View>
       {showHotComments && hotComments.length > 0 && (

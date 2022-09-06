@@ -28,7 +28,9 @@ import * as models from './models'
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
+  * @property `[tag]` 标签
   * @property `[publisher]` 
+  * @property `viewCount` 浏览数
   */
 export interface InlineResponse2006Result {
   /**
@@ -88,6 +90,14 @@ export interface InlineResponse2006Result {
    * 热门评论
    */
   'hotComments'?: Array<models.InlineResponse2001ReplyComment>;
+  /**
+   * 标签
+   */
+  'tag'?: Array<string>;
   'publisher'?: models.InlineResponse2001From;
+  /**
+   * 浏览数
+   */
+  'viewCount': number;
 }
 

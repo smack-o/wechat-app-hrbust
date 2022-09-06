@@ -29,6 +29,7 @@ import * as models from './models'
   * @property `isDelete` 是否删除
   * @property `commentCount` 评论数
   * @property `[hotComments]` 热门评论
+  * @property `viewCount` 浏览数
   */
 export interface InlineResponse20012Result {
   /**
@@ -92,5 +93,9 @@ export interface InlineResponse20012Result {
    * 热门评论
    */
   'hotComments'?: Array<models.InlineResponse2001ReplyComment>;
+  /**
+   * 浏览数
+   */
+  'viewCount': number;
 }
 

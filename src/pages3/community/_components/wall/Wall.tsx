@@ -52,7 +52,15 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   // 重新进入页面时，需要重新获取数据
-  onShow = async () => {
+  onShow = () => {
+    if (this.state.list.length === 0) {
+      return
+    }
+    this.fetchList(false, true)
+  }
+
+  // 重新进入页面时，需要重新获取数据
+  componentDidMount = async () => {
     try {
       await loginModal()
       Taro.showLoading({

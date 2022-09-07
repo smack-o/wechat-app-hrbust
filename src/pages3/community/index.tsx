@@ -56,7 +56,10 @@ class Discover extends Component<IProps, PageState> {
       currentTab: index
     })
 
-    this._shareOptions.path = `${routes.community}?currentTab=${index}`
+    this._shareOptions = {
+      title: '分享了你理工喵社区，快来看看吧',
+      path: `${routes.community}?currentTab=${index}`
+    }
   }
 
   // 下拉同步课表

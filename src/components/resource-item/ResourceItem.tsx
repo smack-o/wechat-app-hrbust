@@ -46,7 +46,7 @@ export enum ResourceTag {
 
 export const resourceInfo = {
   [ResourceTag.MOVIE]: {
-    name: '电影'
+    name: '影视'
   },
   [ResourceTag.GAME]: {
     name: '游戏'
@@ -357,7 +357,7 @@ export default function Resource(props: IResourceProps) {
                     </Text>
                     {password && (
                       <Text className={`${prefix}__url-card__text`} user-select>
-                        密码：{password}
+                        网盘密码：{password}
                       </Text>
                     )}
                     {decompressionPassword && (
@@ -365,6 +365,7 @@ export default function Resource(props: IResourceProps) {
                         解压密码：{decompressionPassword}
                       </Text>
                     )}
+                    r
                   </AtCard>
                 )
               })}

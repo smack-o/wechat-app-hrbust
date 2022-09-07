@@ -98,7 +98,7 @@ class Index extends Component<IProps, PageState> {
       APIS.ResourceApi.apiResourceListHotGet
     )({
       pageNum: '0',
-      pageSize: '4'
+      pageSize: '5'
     })
 
     if (err) {
@@ -112,7 +112,7 @@ class Index extends Component<IProps, PageState> {
   getWall = async () => {
     const [err, res] = await withRequest(APIS.WallApi.apiWallListHotGet)({
       pageNum: '0',
-      pageSize: '4'
+      pageSize: '3'
     })
 
     if (err) {
@@ -427,7 +427,7 @@ class Index extends Component<IProps, PageState> {
                         {item.photos && item.photos.length > 0 && (
                           <Image
                             className="image"
-                            mode="widthFix"
+                            mode="aspectFill"
                             src={getCdnUrl(item.photos[0])}
                           ></Image>
                         )}

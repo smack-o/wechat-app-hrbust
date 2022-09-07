@@ -21,6 +21,10 @@ export enum TypeEnum {
    */
   MateLike = 'MateLike' as any,
   /**
+   * `MateLike` 点赞卖舍友
+   */
+  ResourceLike = 'ResourceLike' as any,
+  /**
    * 点赞评论
    */
   CommentLike = 'CommentLike' as any,
@@ -52,6 +56,12 @@ export default function MessageItem(props: IProps) {
       return (
         <View className={`${prefix}-center__content-detail`}>
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的卖舍友
+        </View>
+      )
+    } else if (type === TypeEnum.ResourceLike) {
+      return (
+        <View className={`${prefix}-center__content-detail`}>
+          <Image className="star-icon" src={likeIcon}></Image>赞了你发布的资源
         </View>
       )
     } else if (type === TypeEnum.Comment) {

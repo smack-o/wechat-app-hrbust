@@ -32,7 +32,6 @@ class Discover extends Component<IProps, PageState> {
     title: '分享了你理工喵社区，快来看看吧',
     path: routes.community
   }
-  a = 1
 
   onShareAppMessage() {}
   onShareTimeline() {}
@@ -56,7 +55,7 @@ class Discover extends Component<IProps, PageState> {
     this.setState({
       currentTab: index
     })
-    console.log(this.a, this._shareOptions, 'this._shareOptions')
+
     this._shareOptions.path = `${routes.community}?currentTab=${index}`
   }
 

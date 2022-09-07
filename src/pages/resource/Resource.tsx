@@ -139,6 +139,11 @@ export class Resource extends React.Component<ResourceProps, ResourceState> {
     })
   }
 
+  setStateP = (state: any): Promise<void> =>
+    new Promise(resolve => {
+      this.setState(state, () => resolve())
+    })
+
   async componentDidShow() {
     try {
       await loginModal()
@@ -150,6 +155,9 @@ export class Resource extends React.Component<ResourceProps, ResourceState> {
 
       if (!this.props.user.config.global?.config?.showAllResource) {
         this.showAllResource = false
+        await this.setStateP({
+          curTagIndex: 3
+        })
       }
 
       await this.init()
@@ -279,7 +287,10 @@ export class Resource extends React.Component<ResourceProps, ResourceState> {
     })
   }
 
-  onPullDownRefresh = async () => this.init()
+  onPullDownRefresh = async () => {
+    this.init()
+    Taro.stopPullDownRefresh()
+  }
 
   // onAddWallClick = () => {
   //   navigateTo({

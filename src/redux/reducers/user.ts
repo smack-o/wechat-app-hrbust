@@ -105,7 +105,7 @@ const INITIAL_STATE: UserState = {
     country: '',
     gender: 0,
     language: 'zh_CN',
-    nickName: '许岩',
+    nickName: '',
     province: '',
     customAvatarUrl: {
       checkCode: 1,

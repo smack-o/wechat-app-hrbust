@@ -82,6 +82,8 @@ export default function MessageItem(props: IProps) {
         goPage(`${routes.wallDetail}?id=${ext?.brickId}`)
       } else if (ext?.mateId) {
         goPage(`${routes.saleWallDetail}?id=${ext?.mateId}`)
+      } else if (ext?.resourceId) {
+        goPage(`${routes.resourceDetail}?id=${ext?.resourceId}`)
       }
     } else if (type === TypeEnum.Hot) {
       // goPage(`${routes.mateDetail}?id=${ext?.mateId}`)

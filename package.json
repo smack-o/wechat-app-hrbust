@@ -31,12 +31,6 @@
     "lint-fix": "npm run lint -- --fix",
     "api": "autos -c swagger.js --clear && eslint src/services2/**/**.ts --fix"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "browserslist": [
     "last 3 versions",
     "Android >= 4.1",

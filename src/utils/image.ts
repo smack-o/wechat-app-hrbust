@@ -9,7 +9,7 @@ export const compressImage = (url: string, quality = 30): Promise<string> =>
   new Promise((resolve, reject) => {
     Taro.compressImage({
       src: url,
-      success: res => {
+      success: (res) => {
         // IMP: 开发者工具中后缀名有问题，无法上传文件，需要手动更改
         // if (isDevtools) {
         //   // const filePath = res.tempFilePath.replace('.', '')
@@ -21,9 +21,9 @@ export const compressImage = (url: string, quality = 30): Promise<string> =>
         resolve(res.tempFilePath)
       },
       quality,
-      fail: error => {
+      fail: (error) => {
         reject(error)
-      }
+      },
     })
   })
 
@@ -35,10 +35,10 @@ export const compressImage = (url: string, quality = 30): Promise<string> =>
 export const uploadFileToServer = async ({
   url = '',
   quality = 80,
-  isNotTmpFile = false
+  isNotTmpFile = false,
 }) => {
   const { height, width, type } = await Taro.getImageInfo({
-    src: url
+    src: url,
   })
 
   // 非临时文件，使用网络上传接口
@@ -47,7 +47,7 @@ export const uploadFileToServer = async ({
       url,
       height,
       width,
-      type
+      type,
     })
     if (!err) {
       return res?._id
@@ -71,19 +71,19 @@ export const uploadFileToServer = async ({
       formData: {
         height,
         width,
-        type
-      }
+        type,
+      },
     })
     const res = JSON.parse(data)
 
-    if (!res?.result?.id) {
+    if (!res?.result?._id) {
       throw new Error('上传失败')
     }
     return res.result.id
   } catch (error) {
     Taro.showToast({
       title: '上传失败',
-      icon: 'none'
+      icon: 'none',
     })
     return Promise.reject(error)
   }

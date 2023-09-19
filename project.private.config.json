@@ -1,102 +1,80 @@
 {
   "condition": {
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
     "miniprogram": {
       "list": [
         {
-          "id": -1,
           "name": "首页",
           "pathName": "pages/index/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "校园页面",
           "pathName": "pages/campus/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "发现页面",
           "pathName": "pages/discover/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "个人中心",
           "pathName": "pages/account/index",
           "query": "",
           "scene": null
         },
         {
-          "id": 4,
           "name": "查询考试信息",
           "pathName": "pages2/exam/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "登录",
           "pathName": "pages2/login/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "查询成绩",
           "pathName": "pages2/grade/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "成绩分享",
           "pathName": "pages2/grade/share/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "关于我们",
           "pathName": "pages3/aboutme/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "课表主页面",
           "pathName": "pages2/course/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "课表学期选择页面",
           "pathName": "pages2/course-term/index",
           "query": "term=5",
           "scene": null
         },
         {
-          "id": -1,
           "name": "优惠购",
           "pathName": "pages/shop/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "70周年校庆",
           "pathName": "pages3/school-anniversary/index",
           "query": "",
@@ -106,10 +84,11 @@
           "name": "新建表白墙",
           "pathName": "pages2/create-wall",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
-  }
+  },
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html"
 }

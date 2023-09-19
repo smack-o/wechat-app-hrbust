@@ -33,7 +33,8 @@
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "ignoreUploadUnusedFiles": false
   },
   "compileType": "miniprogram",
   "simulatorType": "wechat",
@@ -212,5 +213,15 @@
         }
       ]
     }
+  },
+  "libVersion": "3.0.1",
+  "srcMiniprogramRoot": "dist/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }

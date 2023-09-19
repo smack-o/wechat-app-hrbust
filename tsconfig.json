@@ -18,7 +18,7 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "**/*/.d.ts"],
+    "typeRoots": ["node_modules/@types", "**/*/.d.ts", "src/types", "types"],
     "paths": {
       "@/*": ["./src/*"],
       "@services/*": ["src/services2/*"],

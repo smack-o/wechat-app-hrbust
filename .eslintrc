@@ -12,7 +12,7 @@
     ],
     "semi": "off",
     "@typescript-eslint/semi": ["error", "never"],
-    "no-undef": "error",
+    "no-undef": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "react/no-unused-state": "error",
     "no-shadow": "off",

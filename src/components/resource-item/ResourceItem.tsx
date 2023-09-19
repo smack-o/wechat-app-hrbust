@@ -41,19 +41,19 @@ export enum ResourceTag {
    * 学习资源
    * Study
    */
-  STUDY = 'study'
+  STUDY = 'study',
 }
 
 export const resourceInfo = {
   [ResourceTag.MOVIE]: {
-    name: '影视'
+    name: '影视',
   },
   [ResourceTag.GAME]: {
-    name: '游戏'
+    name: '游戏',
   },
   [ResourceTag.STUDY]: {
-    name: '学习'
-  }
+    name: '学习',
+  },
 }
 
 export enum ResourceDownloadType {
@@ -76,25 +76,25 @@ export enum ResourceDownloadType {
   /**
    * 其它
    */
-  OTHER
+  OTHER,
 }
 
 const downLoadInfo = [
   {
-    name: '百度网盘'
+    name: '百度网盘',
   },
   {
-    name: '阿里网盘'
+    name: '阿里网盘',
   },
   {
-    name: '天翼网盘'
+    name: '天翼网盘',
   },
   {
-    name: '夸克网盘'
+    name: '夸克网盘',
   },
   {
-    name: '其它'
-  }
+    name: '其它',
+  },
 ]
 
 export default function Resource(props: IResourceProps) {
@@ -117,7 +117,7 @@ export default function Resource(props: IResourceProps) {
       downloadUrl,
       tag = [],
       viewCount,
-      top
+      top,
     } = {},
     timeType,
     onClick,
@@ -125,7 +125,7 @@ export default function Resource(props: IResourceProps) {
     showHotComments = false,
     showDetail = false,
     onShowAd,
-    showTop = false
+    showTop = false,
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -159,14 +159,14 @@ export default function Resource(props: IResourceProps) {
   // }, [])
 
   const onLikeClick = useCallback(
-    async e => {
+    async (e) => {
       e.stopPropagation()
       if (!_id) {
         return
       }
 
       const [err] = await withRequest(APIS.ResourceApi.apiResourceLikeIdPut)({
-        id: _id
+        id: _id,
       })
 
       // 本地变更
@@ -223,7 +223,7 @@ export default function Resource(props: IResourceProps) {
   const onShowDownloadDetail = () => {
     setShowDownloadDetail(true)
     showToast({
-      title: '获取成功'
+      title: '获取成功',
     })
   }
 
@@ -232,13 +232,13 @@ export default function Resource(props: IResourceProps) {
     Taro.showModal({
       title: '投诉成功',
       content: '理工喵已收到投诉，会尽快在核实后进行处理。',
-      success: function(res) {
+      success: function (res) {
         if (res.confirm) {
           console.log('用户点击确定')
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
-      }
+      },
     })
   }
 
@@ -246,7 +246,7 @@ export default function Resource(props: IResourceProps) {
     <View className={prefix} onClick={onClick}>
       {!showDetail && tag.length > 0 && (
         <View className={`${prefix}-tags`}>
-          {tag.map(item => (
+          {tag.map((item) => (
             <View className={`${prefix}-tags__tag`} key={item}>
               {resourceInfo[item].name}
             </View>
@@ -287,7 +287,7 @@ export default function Resource(props: IResourceProps) {
           {tag.length > 0 && (
             <View className={`${prefix}-detail-tags`}>
               标签：
-              {tag.map(item => resourceInfo[item].name).join('，')}
+              {tag.map((item) => resourceInfo[item].name).join('，')}
             </View>
           )}
           <View className="line"></View>
@@ -415,7 +415,7 @@ export default function Resource(props: IResourceProps) {
       </View>
       {showHotComments && hotComments.length > 0 && (
         <View className={`${prefix}__comment-list`}>
-          {hotComments.map(item => {
+          {hotComments.map((item) => {
             return (
               <View key={item._id} className={`${prefix}__comment-list__item`}>
                 <Text className="blue-text">

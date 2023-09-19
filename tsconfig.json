@@ -15,18 +15,17 @@
     "sourceMap": true,
     "baseUrl": ".",
     "rootDir": ".",
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
+    "jsx": "react-jsx",
     "allowJs": true,
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "global.d.ts"],
     "paths": {
       "@/*": ["./src/*"],
-      "@/*": ["./src/*"],
       "@services/*": ["src/services2/*"],
       "@ajax": ["src/utils/ajax"]
     }
   },
+  "include": ["./src", "./types", "./config"],
   "exclude": ["node_modules", "dist"],
   "compileOnSave": false
 }

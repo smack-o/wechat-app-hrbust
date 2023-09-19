@@ -6,7 +6,7 @@ export const router = {
     // discover: 'discover/index', // 发现
     account: 'account/index', // 个人中心
     shop: 'shop/index', // 校园购
-    resource: 'resource/index' // 资源分享首页
+    resource: 'resource/index', // 资源分享首页
     // 'pages/course',
     // 'pages/courseDetail',
     // 'pages/choiceTrem',
@@ -32,7 +32,7 @@ export const router = {
     news: 'news/index', // 教务新闻
     classroom: 'classroom/index', // 空教室查询
     classroomList: 'classroom-list/index', // 空教室查询结果
-    pddSearch: 'pdd-search/index' // 品多多搜索页面,
+    pddSearch: 'pdd-search/index', // 品多多搜索页面,
   },
   pages3: {
     accountEdit: 'account-edit/index', // 个人中心，编辑个人信息页面
@@ -50,26 +50,24 @@ export const router = {
     otherAccount: 'community/account/index', // 其他用户主页
     // games: 'community/resource/index', // 资源分享首页
     resourceDetail: 'community/resource-detail/index', // 资源分享详情
-    searchResource: 'community/search-resource/index' // 资源分享搜索
-  }
+    searchResource: 'community/search-resource/index', // 资源分享搜索
+  },
 }
 
 export const pages = Object.keys(router.pages).map(
-  path => `pages/${router.pages[path]}`
+  (path) => `pages/${router.pages[path]}`
 )
 
 export type Routers = {
-  [key in keyof typeof router['pages']]: string
-} &
-  {
-    [key in keyof typeof router['pages2']]: string
-  } &
-  {
-    [key in keyof typeof router['pages3']]: string
-  }
+  [key in keyof (typeof router)['pages']]: string
+} & {
+  [key in keyof (typeof router)['pages2']]: string
+} & {
+  [key in keyof (typeof router)['pages3']]: string
+}
 
 export const routes: Routers = Object.keys(router).reduce((r, packageName) => {
-  Object.keys(router[packageName]).forEach(routerName => {
+  Object.keys(router[packageName]).forEach((routerName) => {
     r[routerName] = `/${packageName}/${router[packageName][routerName]}`
   })
   return r
@@ -80,12 +78,12 @@ export default {
   subPackages: [
     {
       root: 'pages2',
-      pages: Object.values(router.pages2)
+      pages: Object.values(router.pages2),
     },
     {
       root: 'pages3',
-      pages: Object.values(router.pages3)
-    }
+      pages: Object.values(router.pages3),
+    },
   ],
   tabBar: {
     custom: true,
@@ -98,13 +96,13 @@ export default {
         pagePath: 'pages/index/index',
         text: '首页',
         iconPath: 'assets/icon/home.png',
-        selectedIconPath: 'assets/icon/home_selected.png'
+        selectedIconPath: 'assets/icon/home_selected.png',
       },
       {
         pagePath: 'pages/resource/index',
         text: '资源分享',
         iconPath: 'assets/icon/campus.png',
-        selectedIconPath: 'assets/icon/campus_selected.png'
+        selectedIconPath: 'assets/icon/campus_selected.png',
       },
       // {
       //   pagePath: 'pages/discover/index',
@@ -116,28 +114,28 @@ export default {
         pagePath: 'pages/shop/index',
         text: '优惠购',
         iconPath: 'assets/icon/shop.png',
-        selectedIconPath: 'assets/icon/shop_selected.png'
+        selectedIconPath: 'assets/icon/shop_selected.png',
       },
       {
         pagePath: 'pages/account/index',
         text: '我',
         iconPath: 'assets/icon/account.png',
-        selectedIconPath: 'assets/icon/account_selected.png'
-      }
-    ]
+        selectedIconPath: 'assets/icon/account_selected.png',
+      },
+    ],
   },
 
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#ffffff',
     navigationBarTitleText: '理工喵',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
   },
 
   plugins: {
     waimai: {
       version: '1.1.0',
-      provider: 'wx05e29bcb0dd5320e'
-    }
-  }
+      provider: 'wx05e29bcb0dd5320e',
+    },
+  },
 }

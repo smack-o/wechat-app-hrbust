@@ -1,14 +1,11 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "wechat-app-hrbust",
-  "description": "",
-  "appid": "wxaed2c04fd10b6e1a",
   "setting": {
     "urlCheck": false,
     "es6": false,
     "postcss": false,
     "preloadBackgroundData": false,
-    "minified": false,
+    "minified": true,
     "newFeature": true,
     "coverView": true,
     "autoAudits": false,
@@ -18,8 +15,6 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -31,117 +26,91 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
-    "minifyWXML": true,
+    "minifyWXML": false,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "enhance": false,
+    "ignoreUploadUnusedFiles": false
   },
-  "compileType": "miniprogram",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
+  "appid": "wxaed2c04fd10b6e1a",
+  "projectname": "quickstart-wx-cloud",
+  "libVersion": "2.14.1",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
     "miniprogram": {
       "list": [
         {
-          "id": -1,
           "name": "首页",
           "pathName": "pages/index/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "校园页面",
           "pathName": "pages/campus/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "发现页面",
           "pathName": "pages/discover/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "个人中心",
           "pathName": "pages/account/index",
           "query": "",
           "scene": null
         },
         {
-          "id": 4,
           "name": "查询考试信息",
           "pathName": "pages2/exam/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "登录",
           "pathName": "pages2/login/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "查询成绩",
           "pathName": "pages2/grade/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "成绩分享",
           "pathName": "pages2/grade/share/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "关于我们",
           "pathName": "pages3/aboutme/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "课表主页面",
           "pathName": "pages2/course/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "课表学期选择页面",
           "pathName": "pages2/course-term/index",
           "query": "term=5",
           "scene": null
         },
         {
-          "id": -1,
           "name": "优惠购",
           "pathName": "pages/shop/index",
           "query": "",
           "scene": null
         },
         {
-          "id": -1,
           "name": "70周年校庆",
           "pathName": "pages3/school-anniversary/index",
           "query": "",
@@ -151,43 +120,43 @@
           "name": "创建表白墙",
           "pathName": "pages3/community/create-wall/index",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "表白墙首页",
           "pathName": "pages3/community/index",
           "query": "__key_=16503398361591",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "我的",
           "pathName": "pages/account/index",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "表白墙详情页",
           "pathName": "pages3/community/wall-detail/index",
           "query": "id=625fac6c708756da5cb35dd1",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "新建卖舍友",
           "pathName": "pages3/community/create-sale-wall/index",
           "query": "",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "卖舍友详情",
           "pathName": "pages3/community/sale-wall-detail/index",
           "query": "id=6267aa71dd6e7a40bc8b4687",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "消息列表页面",
@@ -226,5 +195,15 @@
         }
       ]
     }
+  },
+  "srcMiniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }

@@ -1,5 +1,5 @@
 import { InlineResponse200, InlineResponse200ResultError } from '@/services2'
-import Taro, { RequestParams } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 // import { config, getCurrentPageUrl } from '@/utils'
 // import { routes } from './router'
 
@@ -9,15 +9,16 @@ const env = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
 
 const hosts = {
   // dev: 'http://118.89.247.29:8791',
-  dev: 'http://localhost:8791',
+  // dev: 'http://localhost:8791',
   // dev: 'http://192.168.31.122:8791',
   // dev: 'https://hrbust-dev.smackgg.cn',
-  prod: 'https://hrbust-dev.smackgg.com'
+  dev: 'https://hrbust-dev.smackgg.com',
+  prod: 'https://hrbust-dev.smackgg.com',
 }
 
 export const API_BASE_URL = hosts[env]
 
-export default (option: RequestParams): Promise<Request.requestResult> =>
+export default (option: Taro.request.Option): Promise<Request.requestResult> =>
   new Promise((resolve, reject) => {
     const { url, data = {} } = option
     let reqUrl = API_BASE_URL + url
@@ -42,9 +43,9 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
       url: reqUrl,
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        cookie
+        cookie,
       },
-      success: res => {
+      success: (res) => {
         if (res && res.statusCode === 200 && res.data.status === 200) {
           const { header } = res
           // @ts-ignore
@@ -54,7 +55,7 @@ export default (option: RequestParams): Promise<Request.requestResult> =>
         }
         reject(res && res.data)
       },
-      fail: error => reject(error)
+      fail: (error) => reject(error),
     })
   })
 
@@ -93,7 +94,7 @@ export function withRequest<
   T extends (...args: any[]) => Promise<R>
 >(request: T, showToast = true): RequestValue<R, T> {
   const callback = (...args: Parameters<T>) =>
-    request(...args).then(res => {
+    request(...args).then((res) => {
       if (res.code === 0 && res.result) {
         return [null, res.result, res]
       }
@@ -105,7 +106,7 @@ export function withRequest<
           title: message,
           // @ts-ignore
           icon: 'error',
-          duration: 2000
+          duration: 2000,
         })
       }
 

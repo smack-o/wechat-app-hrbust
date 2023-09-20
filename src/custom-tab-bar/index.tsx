@@ -18,33 +18,33 @@ const tabInfo = {
       pagePath: 'pages/index/index',
       text: '首页',
       iconPath: '/assets/icon/home.png',
-      selectedIconPath: '/assets/icon/home_selected.png'
+      selectedIconPath: '/assets/icon/home_selected.png',
     },
     {
       pagePath: 'pages/resource/index',
       text: '资源站',
       iconPath: '/assets/icon/campus.png',
-      selectedIconPath: '/assets/icon/campus_selected.png'
+      selectedIconPath: '/assets/icon/campus_selected.png',
     },
     {
       pagePath: 'pages3/community/index',
       text: 'Soul',
       iconPath: '/assets/icon/soul.png',
-      selectedIconPath: '/assets/icon/soul.png'
+      selectedIconPath: '/assets/icon/soul.png',
     },
     {
       pagePath: 'pages/shop/index',
       text: '优惠购',
       iconPath: '/assets/icon/shop.png',
-      selectedIconPath: '/assets/icon/shop_selected.png'
+      selectedIconPath: '/assets/icon/shop_selected.png',
     },
     {
       pagePath: 'pages/account/index',
       text: '我',
       iconPath: '/assets/icon/account.png',
-      selectedIconPath: '/assets/icon/account_selected.png'
-    }
-  ]
+      selectedIconPath: '/assets/icon/account_selected.png',
+    },
+  ],
 }
 
 const isEqualPath = (a: string, b: string) =>
@@ -52,6 +52,14 @@ const isEqualPath = (a: string, b: string) =>
 
 const switchTo = (path: string, index: number) => () => {
   const url = '/' + path
+
+  if (index === 1) {
+    Taro.showToast({
+      title: '暂不可用',
+      icon: 'none',
+    })
+    return
+  }
   if (index === 2) {
     const isWechatLogin = store.getState().user.isWechatLogin
     if (!isWechatLogin) {
@@ -67,12 +75,12 @@ const switchTo = (path: string, index: number) => () => {
     //   }
     // })
     Taro.navigateTo({
-      url
+      url,
     })
     return
   }
   Taro.switchTab({
-    url
+    url,
   })
 }
 
@@ -91,7 +99,7 @@ export function CustomTabBar(props: IProps) {
 
   useEffect(() => {
     // @ts-ignore
-    wx.onAppRoute(function(res) {
+    wx.onAppRoute(function (res) {
       setPath(res.path)
     })
   }, [])
@@ -104,7 +112,7 @@ export function CustomTabBar(props: IProps) {
         return (
           <CoverView
             className={cn('tab-bar-item', {
-              large: index === 2
+              large: index === 2,
             })}
             onClick={switchTo(item.pagePath, index)}
             data-path={item.pagePath}
@@ -117,7 +125,7 @@ export function CustomTabBar(props: IProps) {
             <CoverView
               className="custom-tab-item-text"
               style={{
-                color: isSelected ? tabInfo.selectedColor : tabInfo.color
+                color: isSelected ? tabInfo.selectedColor : tabInfo.color,
               }}
             >
               {item.text}
@@ -135,7 +143,7 @@ export function CustomTabBar(props: IProps) {
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  unreadCount: state.user.unreadCount
+  unreadCount: state.user.unreadCount,
 })
 
 export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(

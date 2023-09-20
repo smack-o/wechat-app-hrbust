@@ -55,7 +55,7 @@ class Index extends Component<IProps, PageState> {
   state: PageState = {
     cIndex: 0,
     resourceList: [],
-    wallList: []
+    wallList: [],
   }
   config = {} as { [key: string]: any }
 
@@ -70,17 +70,16 @@ class Index extends Component<IProps, PageState> {
 
     // 在适合的场景显示插屏广告
     if (interstitialAd) {
-      interstitialAd.show().catch(err => {
+      interstitialAd.show().catch((err) => {
         console.log(err)
       })
     }
 
     await this.props.user.getUserInfoPromise
-
-    if (this.props.user.config.global?.config?.showAllResource) {
-      this.getResource()
-      this.getWall()
-    }
+    this.getWall()
+    // if (this.props.user.config.global?.config?.showAllResource) {
+    //   this.getResource()
+    // }
   }
 
   // getConfig = async () => {
@@ -93,33 +92,33 @@ class Index extends Component<IProps, PageState> {
   //   this.config = res || {}
   // }
 
-  getResource = async () => {
-    const [err, res] = await withRequest(
-      APIS.ResourceApi.apiResourceListHotGet
-    )({
-      pageNum: '0',
-      pageSize: '5'
-    })
+  // getResource = async () => {
+  //   const [err, res] = await withRequest(
+  //     APIS.ResourceApi.apiResourceListHotGet
+  //   )({
+  //     pageNum: '0',
+  //     pageSize: '5',
+  //   })
 
-    if (err) {
-      return
-    }
-    this.setState({
-      resourceList: res
-    })
-  }
+  //   if (err) {
+  //     return
+  //   }
+  //   this.setState({
+  //     resourceList: res,
+  //   })
+  // }
 
   getWall = async () => {
     const [err, res] = await withRequest(APIS.WallApi.apiWallListHotGet)({
       pageNum: '0',
-      pageSize: '3'
+      pageSize: '10',
     })
 
     if (err) {
       return
     }
     this.setState({
-      wallList: res
+      wallList: res,
     })
   }
 
@@ -209,35 +208,35 @@ class Index extends Component<IProps, PageState> {
       text: '课表',
       url: routes.course,
       needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(243, 170, 66, 0.2);',
     },
     {
       image: gradeIcon,
       text: '成绩查询',
       url: routes.grade,
       needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(233, 96, 110, 0.2);',
     },
     {
       image: queryRoomIcon,
       text: '查空教室',
       url: routes.classroom,
       needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(255, 0, 220, 0.2);',
     },
     {
       image: examIcon,
       text: '考试安排',
       url: routes.exam,
       needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(95, 205, 222, 0.2);',
     },
     {
       image: afficheIcon,
       text: '教务公告',
       url: routes.news,
       // needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);',
     },
     {
       image: phoneBookIcon,
@@ -246,22 +245,22 @@ class Index extends Component<IProps, PageState> {
         'https://mp.weixin.qq.com/s/8Lsdsd7tMdjM6YgU2rGkbA'
       )}&title=理工电邮`,
       // needLogin: true,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(20, 235, 89, 0.2);',
     },
     {
       image: newStudentIcon,
       text: '新生速查',
       url: routes.yingxin,
       needLogin: false,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);',
     },
     {
       image: doNotTouchMeIcon,
       text: '别点我',
       url: routes.aboutme,
       needLogin: false,
-      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);'
-    }
+      shadowColor: 'box-shadow: 0px 10px 25px 0px rgba(72, 98, 246, 0.2);',
+    },
   ]
 
   // 测试更改主题逻辑
@@ -274,13 +273,13 @@ class Index extends Component<IProps, PageState> {
   // 轮播图index变更
   slideChange = (e: TaroBaseEventOrig) => {
     this.setState({
-      cIndex: e.detail.current
+      cIndex: e.detail.current,
     })
   }
 
   goPage = (index: number) => {
     const {
-      user: { isLogin, isWechatLogin }
+      user: { isLogin, isWechatLogin },
     } = this.props
     const { needLogin, url } = this.modules[index]
     if (!isLogin && needLogin) {
@@ -292,13 +291,13 @@ class Index extends Component<IProps, PageState> {
         title: '提示',
         content: '该功能需要登录~请先登录！',
         confirmText: '去登录',
-        success: function(res) {
+        success: function (res) {
           if (res.confirm) {
             toLogin(isWechatLogin, routes.login)
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
-        }
+        },
       })
       return
     }
@@ -311,7 +310,7 @@ class Index extends Component<IProps, PageState> {
     const {
       banners,
       user: { isLogin, isWechatLogin },
-      loading
+      loading,
     } = this.props
 
     if (loading) {
@@ -350,7 +349,7 @@ class Index extends Component<IProps, PageState> {
               <View
                 key={index}
                 className={cn('module', {
-                  disabled: !(isLogin || !item.needLogin)
+                  disabled: !(isLogin || !item.needLogin),
                 })}
                 onClick={() => this.goPage(index)}
               >
@@ -414,7 +413,7 @@ class Index extends Component<IProps, PageState> {
                 <View className="title">热门表白墙</View>
               </View>
               <View className="info-content">
-                {wallList.map(item => {
+                {wallList.map((item) => {
                   return (
                     <View
                       className="item-wrapper"
@@ -468,7 +467,7 @@ class Index extends Component<IProps, PageState> {
                 className="load-more"
                 onClick={() => {
                   Taro.navigateTo({
-                    url: routes.community
+                    url: routes.community,
                   })
                 }}
               >
@@ -487,7 +486,7 @@ class Index extends Component<IProps, PageState> {
                 <View className="title">热门资源</View>
               </View>
               <View className="info-content">
-                {resourceList.map(item => {
+                {resourceList.map((item) => {
                   return (
                     <View
                       className="item-wrapper"
@@ -534,7 +533,7 @@ class Index extends Component<IProps, PageState> {
                 className="load-more"
                 onClick={() => {
                   Taro.switchTab({
-                    url: routes.resource
+                    url: routes.resource,
                   })
                 }}
               >
@@ -559,7 +558,7 @@ class Index extends Component<IProps, PageState> {
 const mapStateToProps = (state: IRootState) => ({
   user: state.user,
   banners: state.common.banners,
-  loading: state.global.loading
+  loading: state.global.loading,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -570,6 +569,6 @@ export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
   mapDispatchToProps
 )(
   withShare({
-    title: '理工喵儿，理工人专属小程序'
+    title: '理工喵儿，理工人专属小程序',
   })(Index)
 )

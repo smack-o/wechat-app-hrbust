@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "setting": {
     "urlCheck": false,
-    "es6": false,
+    "es6": true,
     "postcss": false,
     "preloadBackgroundData": false,
     "minified": true,
@@ -26,10 +26,10 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
-    "minifyWXML": false,
+    "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "enhance": false,
+    "enhance": true,
     "ignoreUploadUnusedFiles": false
   },
   "appid": "wxaed2c04fd10b6e1a",

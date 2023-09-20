@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch, bindActionCreators } from 'redux'
 import Taro from '@tarojs/taro'

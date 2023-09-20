@@ -3,7 +3,7 @@ import { APIS } from '@/services2'
 import { View, Image, Text } from '@tarojs/components'
 import { goPage } from '@/utils/router'
 import { routes } from '@/app.config'
-import likeIcon from '../../imgs/like.png'
+import likeIcon from '@/assets/community-imgs/like.png'
 import './MessageItem.less'
 import ListItem from '../list-item'
 
@@ -20,6 +20,10 @@ export enum TypeEnum {
    * `MateLike` 点赞卖舍友
    */
   MateLike = 'MateLike' as any,
+  /**
+   * `MateLike` 点赞卖舍友
+   */
+  ResourceLike = 'ResourceLike' as any,
   /**
    * 点赞评论
    */
@@ -54,6 +58,12 @@ export default function MessageItem(props: IProps) {
           <Image className="star-icon" src={likeIcon}></Image>赞了你发布的卖舍友
         </View>
       )
+    } else if (type === TypeEnum.ResourceLike) {
+      return (
+        <View className={`${prefix}-center__content-detail`}>
+          <Image className="star-icon" src={likeIcon}></Image>赞了你发布的资源
+        </View>
+      )
     } else if (type === TypeEnum.Comment) {
       return (
         <View className={`${prefix}-center__content-detail`}>
@@ -82,6 +92,8 @@ export default function MessageItem(props: IProps) {
         goPage(`${routes.wallDetail}?id=${ext?.brickId}`)
       } else if (ext?.mateId) {
         goPage(`${routes.saleWallDetail}?id=${ext?.mateId}`)
+      } else if (ext?.resourceId) {
+        goPage(`${routes.resourceDetail}?id=${ext?.resourceId}`)
       }
     } else if (type === TypeEnum.Hot) {
       // goPage(`${routes.mateDetail}?id=${ext?.mateId}`)

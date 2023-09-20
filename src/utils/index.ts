@@ -208,3 +208,9 @@ export const requestSubscribeMessage = (): Promise<void> => {
     })
   })
 }
+
+export function copy(target: string) {
+  Taro.setClipboardData({
+    data: target
+  })
+}

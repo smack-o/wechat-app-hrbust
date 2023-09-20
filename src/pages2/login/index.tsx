@@ -134,7 +134,10 @@ class Login extends Component<IProps, PageState> {
 
     return (
       <View className="login-page">
-        <View className="title">账号学号（可以暂时不绑定）</View>
+        <View className="title">账号学号</View>
+        <View className="desc">
+          学号可以暂时不绑定，未绑定学号理工喵部分服务不可用
+        </View>
         <AtInput
           name="username"
           title="学号"
@@ -185,6 +188,9 @@ class Login extends Component<IProps, PageState> {
           </View>
           <View className="item">
             *学号可以暂时不绑定，未绑定学号理工喵部分服务不可用
+          </View>
+          <View className="item orange">
+            *理工喵账号密码均与哈理工教务在线同步，若登录失败请先查看教务在线是否修改过密码
           </View>
         </View>
         <AtButton

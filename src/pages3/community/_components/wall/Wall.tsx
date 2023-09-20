@@ -4,11 +4,11 @@ import { loginModal, withRequest } from '@/utils'
 import { APIS } from '@/services2'
 import Taro, { navigateTo } from '@tarojs/taro'
 import { goPage, routes } from '@/utils/router'
+import AddWallIcon from '@/assets/community-imgs/add_wall.png'
+import SearchIcon from '@/assets/community-imgs/search.png'
 import Tab from '../tab'
 import { ITabProps } from '../tab/Tab'
 import WallItem from '../wall-item'
-import AddWallIcon from '../../imgs/add_wall.png'
-import SearchIcon from '../../imgs/search.png'
 
 import './Wall.less'
 
@@ -59,18 +59,20 @@ export default class Wall extends React.Component<WallProps, WallState> {
     this.fetchList(false, true)
   }
 
-  async componentDidMount() {
+  // 重新进入页面时，需要重新获取数据
+  componentDidMount = async () => {
     try {
+      await loginModal()
       Taro.showLoading({
         title: '加载中...'
       })
-      await loginModal()
       await this.init()
       this.setState({
         loading: false
       })
       Taro.hideLoading()
     } catch (error) {
+      console.log(error, 'error')
       Taro.hideLoading()
     }
   }
@@ -81,6 +83,9 @@ export default class Wall extends React.Component<WallProps, WallState> {
   }
 
   fetchList = async (reset?: boolean, refresh?: boolean) => {
+    Taro.showLoading({
+      title: '加载中...'
+    })
     this.fetching = true
     let pageNum = String(this.pageNum)
     let pageSize = String(this.pageSize)
@@ -98,6 +103,8 @@ export default class Wall extends React.Component<WallProps, WallState> {
     })
 
     this.fetching = false
+
+    Taro.hideLoading()
 
     if (err || !res) {
       return Promise.reject()
@@ -140,7 +147,7 @@ export default class Wall extends React.Component<WallProps, WallState> {
 
   render() {
     const { activeTab, loading, list = [] } = this.state
-
+    console.log(loading, 'loading')
     if (loading) {
       return null
     }

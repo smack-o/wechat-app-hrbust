@@ -16,6 +16,7 @@ import contactIcon from './res/contact.png'
 import myWallIcon from './res/my_wall.png'
 import mySaleWallIcon from './res/my_sale_wall.png'
 import myMessageIcon from './res/my_message.png'
+// images
 
 import './index.less'
 
@@ -33,13 +34,13 @@ type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
 
 class Account extends Component<IProps, PageState> {
   state = {
-    version: '1.0.0'
+    version: '1.0.0',
   }
 
   componentDidShow() {
     const { miniProgram } = Taro.getAccountInfoSync() || {}
     this.setState({
-      version: miniProgram.version
+      version: miniProgram.version,
     })
     this.props.getUnreadCount()
   }
@@ -51,10 +52,10 @@ class Account extends Component<IProps, PageState> {
     Taro.showModal({
       title: '确定要解绑学号？',
       content: '解绑学号将删除当前学号的部分信息，需要重新绑定拉取~',
-      success: async res => {
+      success: async (res) => {
         if (res.confirm) {
           Taro.showLoading({
-            title: '加载中...'
+            title: '加载中...',
           })
           const [err] = await cError(this.props.logout())
           Taro.hideLoading()
@@ -65,11 +66,11 @@ class Account extends Component<IProps, PageState> {
                 // 解绑 session 也会失效，需要重新登录
                 // TODO 后续需要优化后端逻辑，此时不应该失效，只做解绑操作即可
                 this.props.init()
-              }
+              },
             })
           }
         }
-      }
+      },
     })
   }
 
@@ -93,10 +94,10 @@ class Account extends Component<IProps, PageState> {
           avatarUrl = '',
           nickName = '',
           customAvatarUrl,
-          customName = ''
+          customName = '',
         },
-        unreadCount
-      }
+        unreadCount,
+      },
     } = this.props
     const { version } = this.state
 
@@ -155,7 +156,7 @@ class Account extends Component<IProps, PageState> {
           <AtButton
             type="primary"
             className="login-button"
-            onClick={() => toLogin(isWechatLogin)}
+            onClick={() => toLogin(isWechatLogin, routes.login)}
           >
             绑定学号
           </AtButton>
@@ -219,7 +220,7 @@ class Account extends Component<IProps, PageState> {
 }
 
 const mapStateToProps = (state: IRootState) => ({
-  user: state.user
+  user: state.user,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

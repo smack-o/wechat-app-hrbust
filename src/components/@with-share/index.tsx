@@ -31,7 +31,7 @@ function withShare(opts: Options = defaultOptions) {
       }
 
       $setShareInfo?: () => Options
-      $shareOptions?: Options
+      _shareOptions?: Options
 
       // 点击分享的那一刻会进行调用
       onShareAppMessage() {
@@ -54,13 +54,13 @@ function withShare(opts: Options = defaultOptions) {
           this.$setShareInfo,
           'this.$setShareInfo',
           this.$setShareInfo?.(),
-          this.$shareOptions
+          this._shareOptions
         )
 
-        if (this.$shareOptions) {
+        if (this._shareOptions) {
           options = {
             ...options,
-            ...(this.$shareOptions || {})
+            ...(this._shareOptions || {})
           }
         }
         // 从继承的组件获取配置

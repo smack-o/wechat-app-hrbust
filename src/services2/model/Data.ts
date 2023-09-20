@@ -17,6 +17,7 @@ import * as models from './models'
   * @property `[type]` 评论类型
   * @property `[brickId]` 若评论表白墙，需要表白墙 id
   * @property `[mateId]` 若评论卖舍友，需要卖舍友 id
+  * @property `[resourceId]` 若评论资源，需要资源 id
   * @property `[commentId]` 评论回复评论，需要评论 id
   * @property `[content]` 评论内容
   */
@@ -37,6 +38,10 @@ export interface Data {
    * 若评论卖舍友，需要卖舍友 id
    */
   'mateId'?: string;
+  /**
+   * 若评论资源，需要资源 id
+   */
+  'resourceId'?: string;
   /**
    * 评论回复评论，需要评论 id
    */

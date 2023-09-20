@@ -10,14 +10,13 @@ import Avatar, { NickName } from '@/components/Avatar'
 import Time from '@/components/Time'
 import { routes } from '@/app.config'
 import { withShare } from '@/components'
+import bgIcon from '@/assets/community-imgs/account_bg.png'
 import BrickMessageList from '../_components/brick-message-list'
 import MateMessageList from '../_components/mate-message-list'
 import Tab from '../_components/tab'
 import { ITabProps } from '../_components/tab/Tab'
 
 import './index.less'
-
-import bgIcon from '../imgs/account_bg.png'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 type PropsFromDispatch = {}
@@ -49,7 +48,7 @@ class OtherAccount extends Component<IProps, PageState> {
   pageSize = 20
   fetching = false
 
-  $shareOptions = {
+  _shareOptions = {
     title: '分享给你个人主页',
     imageUrl: '',
     path: routes.account
@@ -139,7 +138,7 @@ class OtherAccount extends Component<IProps, PageState> {
       title: `${res?.userInfo?.customName || res?.userInfo?.nickName} 的主页`
     })
 
-    this.$shareOptions = {
+    this._shareOptions = {
       title: `分享给你 ${res?.userInfo?.customName ||
         res?.userInfo?.nickName} 的主页`,
       imageUrl: getCdnUrl(res?.userInfo?.customAvatarUrl),

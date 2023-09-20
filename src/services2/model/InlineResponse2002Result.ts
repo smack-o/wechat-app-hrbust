@@ -13,41 +13,32 @@
 import * as models from './models'
 
 /**
-  * @property `key` 图片 url
-  * @property `status` 
-  * @property `[height]` 图片高度
-  * @property `[width]` 图片宽度
-  * @property `[type]` 图片类型
-  * @property `_id` 图片 id
+  * @property `createdAt` 创建时间
+  * @property `updatedAt` 更新时间
+  * @property `_id` id
+  * @property `key` key
+  * @property `config` 配置
   */
 export interface InlineResponse2002Result {
   /**
-   * 图片 url
+   * 创建时间
    */
-  'key': string;
-  'status': InlineResponse2002Result.StatusEnum;
+  'createdAt': number;
   /**
-   * 图片高度
+   * 更新时间
    */
-  'height'?: number;
+  'updatedAt': number;
   /**
-   * 图片宽度
-   */
-  'width'?: number;
-  /**
-   * 图片类型
-   */
-  'type'?: string;
-  /**
-   * 图片 id
+   * id
    */
   '_id': string;
+  /**
+   * key
+   */
+  'key': string;
+  /**
+   * 配置
+   */
+  'config': any;
 }
 
-export namespace InlineResponse2002Result {
-  export enum StatusEnum {
-    _0 = '0' as any,
-    _1 = '1' as any,
-    _2 = '2' as any
-  }
-}

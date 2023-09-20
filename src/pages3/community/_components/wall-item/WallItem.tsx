@@ -5,10 +5,11 @@ import { getCdnUrl, showToast, withRequest } from '@/utils'
 import { Image, View, Text } from '@tarojs/components'
 import classNames from 'classnames'
 
-import CommentIcon from '../../imgs/comment.png'
-import LikeIcon from '../../imgs/like.png'
-import LikeSelectedIcon from '../../imgs/like_selected.png'
-import PublisherTitle from '../publisher-title'
+import CommentIcon from '@/assets/community-imgs/comment.png'
+import LikeIcon from '@/assets/community-imgs/like.png'
+import ViewIcon from '@/assets/community-imgs/view.png'
+import LikeSelectedIcon from '@/assets/community-imgs/like_selected.png'
+import PublisherTitle from '@/components/publisher-title'
 
 import './WallItem.less'
 
@@ -47,7 +48,8 @@ export default function WallItem(props: IWallItemProps) {
       createdAt,
       commentCount,
       isPublisher,
-      hotComments = []
+      hotComments = [],
+      viewCount
     } = {},
     timeType,
     onClick,
@@ -162,6 +164,10 @@ export default function WallItem(props: IWallItemProps) {
             删除
           </View>
         )}
+        <View className={`${prefix}__footer-item`}>
+          <Image src={ViewIcon} className="view-icon" mode="widthFix"></Image>
+          {viewCount}
+        </View>
         <View className={`${prefix}__footer-item`}>
           <Image src={CommentIcon} mode="widthFix"></Image>
           {commentCount}

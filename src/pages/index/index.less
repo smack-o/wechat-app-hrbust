@@ -1,13 +1,8 @@
 @import '~@/styles/lib.less';
 
 .index-container {
-  .info {
-    padding: 40rpx 0 76rpx;
-    text-align: center;
-    font-size: 26rpx;
-    line-height: 41rpx;
-    color: #999999;
-  }
+  padding-bottom: 300rpx;
+
   .discover-image {
     width: 532rpx;
     margin: 0 auto;
@@ -37,45 +32,42 @@
   }
   .modules {
     display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 30prx;
-    padding-bottom: 30rpx;
-    margin-left: 85rpx;
-    margin-right: 85rpx;
+    padding-top: 30px;
+    // box-shadow: 0px 5px 30px 0px rgba(0, 0, 80, 0.07);
+    padding: 30px 71px 20px;
     .module {
-      width: 110rpx;
+      width: 25%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    .modules_image {
-      width: 80rpx;
-      height: 80rpx;
-      border-radius: 40rpx;
-      margin-bottom: 30rpx;
+      margin-bottom: 40px;
+      .modules_image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      .modules_text {
+        font-size: 26px;
+        color: #333333;
+        margin-top: 30px;
+      }
+
+      &.disabled {
+        filter: opacity(20%);
+      }
     }
 
-    .module.disabled {
-      filter: opacity(20%);
-      // filter: opacity(20%);
-    }
-    // .modules_dark {
-    //   filter: opacity(15%) saturate(0%);
-    // }
-    // .modules_light {
-    //   filter: opacity(25%) saturate(0%);
-    // }
     .modules_text {
-      font-size: 26rpx;
+      font-size: 26px;
       color: #333333;
     }
   }
 
   .login-wrapper {
-    margin-top: 100px;
+    margin-top: 40rpx;
     display: flex;
     justify-content: center;
     margin-bottom: 40rpx;
@@ -174,6 +166,123 @@
     animation: breatheAnimation 2s linear infinite;
     image {
       width: 80rpx;
+    }
+  }
+
+  .resource-wrapper {
+    padding-bottom: 300rpx;
+    background: #eaeef0;
+  }
+
+  .info {
+    padding: 0 20rpx;
+    .load-more {
+      font-size: 28rpx;
+      color: #3399ff;
+      text-align: center;
+      padding: 20rpx 0;
+    }
+  }
+
+  .info-title {
+    font-size: 36rpx;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+    padding: 40rpx 30rpx 30rpx;
+    display: flex;
+    align-items: center;
+
+    .title {
+      position: relative;
+      display: inline-block;
+    }
+    .line {
+      display: inline-block;
+      width: 4rpx;
+      height: 36rpx;
+      background: orangered;
+      margin-right: 20rpx;
+    }
+  }
+  .info-content {
+    .item-wrapper {
+      border-bottom: 1rpx solid #eeeeee;
+      padding: 0 20rpx;
+    }
+    .item {
+      margin: 20rpx 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .text {
+        // margin-left: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 465px;
+        .title {
+          font-size: 26px;
+          margin-bottom: 20px;
+          .text-overflow(100%);
+        }
+        .date {
+          font-size: 24px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #d1d1d6;
+          line-height: 33px;
+          display: flex;
+        }
+      }
+      .image {
+        width: 100px;
+        height: 100px;
+      }
+      .arrow-right {
+        width: 12px;
+        height: 20px;
+      }
+    }
+  }
+
+  .placeholder-block {
+    width: 100%;
+    height: 20rpx;
+    background-color: #eaeef0;
+  }
+
+  &__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    font-size: 22rpx;
+
+    &-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-right: 28rpx;
+      font-family: TrebuchetMS, Rotobo, 'Microsoft YaHei', sans-serif;
+      .view-icon {
+        width: 35rpx;
+        height: 35rpx;
+        margin-right: 10rpx;
+      }
+
+      image {
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 8rpx;
+      }
     }
   }
 }

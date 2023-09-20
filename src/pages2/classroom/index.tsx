@@ -16,23 +16,22 @@ type PropsFromState = ReturnType<typeof mapStateToProps>
 
 type PropsFromDispatch = ReturnType<typeof mapDispatchToProps>
 
-type PageOwnProps = {
-}
+type PageOwnProps = {}
 
 type PageState = {
   loading: boolean
   captchaImage: string
   isShowCaptchaModal: boolean
-  aids: { id: string, label: string }[],
-  buildingids: { id: string, label: string }[],
-  rooms: { id: string, label: string }[],
-  whichweeks: { id: string, label: string }[],
-  weeks: { id: string, label: string }[],
-  choiceAidsIndex: number,
-  choiceBuildingidsIndex: number,
-  choiceRoomsIndex: number,
-  choiceWhichweeksIndex: number,
-  choiceWeeksIndex: number,
+  aids: { id: string; label: string }[]
+  buildingids: { id: string; label: string }[]
+  rooms: { id: string; label: string }[]
+  whichweeks: { id: string; label: string }[]
+  weeks: { id: string; label: string }[]
+  choiceAidsIndex: number
+  choiceBuildingidsIndex: number
+  choiceRoomsIndex: number
+  choiceWhichweeksIndex: number
+  choiceWeeksIndex: number
 }
 
 type IProps = PropsFromState & PropsFromDispatch & PageOwnProps
@@ -68,7 +67,7 @@ class QueryClassroom extends Component<IProps, PageState> {
 
   async onLoad() {
     const videoAd = Taro.createRewardedVideoAd({
-      adUnitId: 'adunit-edbb9cf449e6b124'
+      adUnitId: 'adunit-edbb9cf449e6b124',
     })
     videoAd.onLoad(() => {})
     videoAd.onError((err) => {
@@ -78,10 +77,13 @@ class QueryClassroom extends Component<IProps, PageState> {
     videoAd.onClose((res) => {
       // 用户点击了【关闭广告】按钮
       if (res && res.isEnded) {
-        Taro.setStorageSync('classroom:thisDayTimeData', JSON.stringify({
-          timestamp: this.thisDayTimestamp,
-          times: -1
-        }))
+        Taro.setStorageSync(
+          'classroom:thisDayTimeData',
+          JSON.stringify({
+            timestamp: this.thisDayTimestamp,
+            times: -1,
+          })
+        )
         // 正常播放结束，可以下发游戏奖励
       } else {
         // 播放中途退出，不下发游戏奖励
@@ -89,28 +91,31 @@ class QueryClassroom extends Component<IProps, PageState> {
     })
     this.videoAd = videoAd
 
-    this.thisDayTimestamp = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1
+    this.thisDayTimestamp =
+      new Date(new Date().toLocaleDateString()).getTime() +
+      24 * 60 * 60 * 1000 -
+      1
 
     Taro.showShareMenu({
-      withShareTicket: true
+      withShareTicket: true,
     })
     await this.getWeekAndTerm()
     await this.roomschedulequery()
 
     // 设置当前周几
-    const day = (new Date()).getDay() - 1
+    const day = new Date().getDay() - 1
 
     this.setState({
       // 设置学期周数
       choiceWhichweeksIndex: this.thisWeek - 1,
-      choiceWeeksIndex: day === -1 ? 6 : day
+      choiceWeeksIndex: day === -1 ? 6 : day,
     })
   }
 
-  async getWeekAndTerm () {
+  async getWeekAndTerm() {
     Taro.showLoading({
       title: '加载中',
-      mask: true
+      mask: true,
     })
     const [err, res] = await cError(request({ url: '/api/hrbust/week' }))
     Taro.hideLoading()
@@ -146,26 +151,32 @@ class QueryClassroom extends Component<IProps, PageState> {
     this.roomschedulequery({ captcha })
   }
 
-  onChange = (name: string, event: TaroBaseEventOrig) => {
+  setStateP = (state: any): Promise<void> =>
+    new Promise((resolve) => {
+      this.setState(state, () => resolve())
+    })
+
+  onChange = async (name: string, event: TaroBaseEventOrig) => {
     // const index = `choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`;
     // this[`choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`] = event.detail.value
     const nextState = {
-      [`choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`]: event.detail.value
+      [`choice${name.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}Index`]:
+        event.detail.value,
     } as PageState
 
-    this.setState(nextState)
+    await this.setStateP(nextState)
 
     // console.log(this.aids[this.choiceAidsIndex].label)
     if (name === 'aids' || name === 'buildingids' || name === 'rooms') {
       switch (name) {
         case 'aids':
-          this.setState({
+          await this.setStateP({
             choiceBuildingidsIndex: -1,
             choiceRoomsIndex: -1,
           })
           break
         case 'buildingids':
-          this.setState({
+          await this.setStateP({
             choiceRoomsIndex: -1,
           })
           break
@@ -173,21 +184,46 @@ class QueryClassroom extends Component<IProps, PageState> {
           break
       }
 
-      const { aids, choiceAidsIndex, buildingids, choiceBuildingidsIndex, rooms, choiceRoomsIndex } = this.state
+      const {
+        aids,
+        choiceAidsIndex,
+        buildingids,
+        choiceBuildingidsIndex,
+        rooms,
+        choiceRoomsIndex,
+      } = this.state
+
+      console.log(
+        aids,
+        choiceAidsIndex,
+        buildingids,
+        choiceBuildingidsIndex,
+        rooms,
+        choiceRoomsIndex
+      )
       this.roomschedulequery({
         aid: aids[choiceAidsIndex] ? aids[choiceAidsIndex].id : '-1',
-        buildingid: buildingids[choiceBuildingidsIndex] ? buildingids[choiceBuildingidsIndex].id : '-1',
-        room: rooms[choiceRoomsIndex] ? aids[choiceRoomsIndex].id : '-1'
+        buildingid: buildingids[choiceBuildingidsIndex]
+          ? buildingids[choiceBuildingidsIndex].id
+          : '-1',
+        room: rooms[choiceRoomsIndex] ? aids[choiceRoomsIndex].id : '-1',
       })
     }
   }
 
-  roomschedulequery = async (data?: { aid?: string, buildingid?: string, room?: string, captcha?: string }) => {
+  roomschedulequery = async (data?: {
+    aid?: string
+    buildingid?: string
+    room?: string
+    captcha?: string
+  }) => {
     Taro.showLoading({
       title: '加载中',
-      mask: true
+      mask: true,
     })
-    const [err, res] = await cError(request({ url: '/api/hrbust/roomschedulequery', data }))
+    const [err, res] = await cError(
+      request({ url: '/api/hrbust/roomschedulequery', data })
+    )
     Taro.hideLoading()
 
     // 登录失效，需要输入验证码
@@ -202,7 +238,7 @@ class QueryClassroom extends Component<IProps, PageState> {
         title: '验证码输入错误，请重新输入',
         complete: () => {
           this.showCaptchaModal(res.data.captcha)
-        }
+        },
       })
       return
     }
@@ -211,19 +247,19 @@ class QueryClassroom extends Component<IProps, PageState> {
       Taro.showModal({
         title: '账号密码错误',
         content: '可能是您近期更改教务在线密码了，是否重新登录？',
-        success (mRes) {
+        success(mRes) {
           if (mRes.confirm) {
             // console.log('用户点击确定')
             Taro.reLaunch({
-              url: routes.login
+              url: routes.login,
             })
           } else if (res.cancel) {
             // console.log('用户点击取消')
             Taro.switchTab({
-              url: routes.index
+              url: routes.index,
             })
           }
-        }
+        },
       })
       return
     }
@@ -247,11 +283,11 @@ class QueryClassroom extends Component<IProps, PageState> {
         aids,
         buildingids: buildingids.reverse(),
         rooms,
-        whichweeks: whichweeks.map(week => {
+        whichweeks: whichweeks.map((week) => {
           if (+week.label === +this.thisWeek) {
             return {
               ...week,
-              label: week.label + '(本周)'
+              label: week.label + '(本周)',
             }
           }
           return week
@@ -266,25 +302,30 @@ class QueryClassroom extends Component<IProps, PageState> {
   }
 
   async roomschedule() {
-    const { choiceAidsIndex, choiceBuildingidsIndex, choiceWhichweeksIndex, choiceWeeksIndex } = this.state
+    const {
+      choiceAidsIndex,
+      choiceBuildingidsIndex,
+      choiceWhichweeksIndex,
+      choiceWeeksIndex,
+    } = this.state
     if (choiceAidsIndex < 0) {
       Taro.showToast({
         title: '请选择校区',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
     if (choiceBuildingidsIndex < 0) {
       Taro.showToast({
         title: '请选择教学楼',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
     if (choiceWhichweeksIndex < 0) {
       Taro.showToast({
         title: '请选择周数',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
@@ -292,7 +333,7 @@ class QueryClassroom extends Component<IProps, PageState> {
     if (choiceWeeksIndex < 0) {
       Taro.showToast({
         title: '请选择日期',
-        icon: 'none'
+        icon: 'none',
       })
       return
     }
@@ -311,22 +352,30 @@ class QueryClassroom extends Component<IProps, PageState> {
 
     // 用户触发广告后，显示激励视频广告
     // console.log(this.videoAd, this.loadAdError, thisDayTimeData, thisDayTimeData.times >= 2)
-    if (this.videoAd && !this.loadAdError && thisDayTimeData && thisDayTimeData.times >= 2) {
+    if (
+      this.videoAd &&
+      !this.loadAdError &&
+      thisDayTimeData &&
+      thisDayTimeData.times >= 2
+    ) {
       Taro.showModal({
         title: '是否观看广告',
-        content: '每日前两次免费查询，观看完广告今日不限次数查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
+        content:
+          '每日前两次免费查询，观看完广告今日不限次数查询。（理工喵已经没钱恰饭啦，大家理解下哈~）',
         success: (res) => {
           if (res.confirm && this.videoAd) {
             this.videoAd.show().catch(() => {
-            // 失败重试
-              this.videoAd!.load().then(() => this.videoAd!.show()).catch(() => {
-                console.log('激励视频 广告显示失败')
-              })
+              // 失败重试
+              this.videoAd!.load()
+                .then(() => this.videoAd!.show())
+                .catch(() => {
+                  console.log('激励视频 广告显示失败')
+                })
             })
           } else if (res.cancel) {
             // console.log('用户点击取消')
           }
-        }
+        },
       })
       return
     }
@@ -334,7 +383,10 @@ class QueryClassroom extends Component<IProps, PageState> {
     const dataKeys = ['aid', 'buildingid', 'room', 'whichweek', 'week']
 
     const data = dataKeys.reduce((pre, key) => {
-      const index = this.state[`choice${key.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}sIndex`]
+      const index =
+        this.state[
+          `choice${key.replace(/( |^)[a-z]/g, (L) => L.toUpperCase())}sIndex`
+        ]
       if (index >= 0 && this.state[`${key}s`][index]) {
         pre[key] = this.state[`${key}s`][index].id
       }
@@ -351,71 +403,151 @@ class QueryClassroom extends Component<IProps, PageState> {
 
     Taro.showLoading({
       title: '查询中',
-      mask: true
+      mask: true,
     })
-    const [err, res] = await cError(request({ url: '/api/hrbust/roomschedule', data }))
+    const [err, res] = await cError(
+      request({ url: '/api/hrbust/roomschedule', data })
+    )
     Taro.hideLoading()
     if (!err) {
       // 如果有计数数据
       if (thisDayTimeData) {
         if (thisDayTimeData.times !== -1) {
-          Taro.setStorageSync('classroom:thisDayTimeData', JSON.stringify({
-            timestamp: this.thisDayTimestamp,
-            times: thisDayTimeData.times + 1
-          }))
+          Taro.setStorageSync(
+            'classroom:thisDayTimeData',
+            JSON.stringify({
+              timestamp: this.thisDayTimestamp,
+              times: thisDayTimeData.times + 1,
+            })
+          )
         }
       } else {
-        Taro.setStorageSync('classroom:thisDayTimeData', JSON.stringify({
-          timestamp: this.thisDayTimestamp,
-          times: 1
-        }))
+        Taro.setStorageSync(
+          'classroom:thisDayTimeData',
+          JSON.stringify({
+            timestamp: this.thisDayTimestamp,
+            times: 1,
+          })
+        )
       }
 
       // 更新 redux
       await this.props.updateClassrooms(res.data.list)
 
       Taro.navigateTo({
-        url: routes.classroomList
+        url: routes.classroomList,
       })
     }
   }
 
-  render () {
-    const { loading, captchaImage, isShowCaptchaModal, aids, choiceAidsIndex, choiceBuildingidsIndex, buildingids, whichweeks, choiceWhichweeksIndex, weeks, choiceWeeksIndex } = this.state
+  render() {
+    const {
+      loading,
+      captchaImage,
+      isShowCaptchaModal,
+      aids,
+      choiceAidsIndex,
+      choiceBuildingidsIndex,
+      buildingids,
+      whichweeks,
+      choiceWhichweeksIndex,
+      weeks,
+      choiceWeeksIndex,
+    } = this.state
     return (
       <Fragment>
-        <CaptchaModal captchaImage={captchaImage} onSubmit={this.onCaptchaModalSubmit} isOpened={isShowCaptchaModal}></CaptchaModal>
+        <CaptchaModal
+          captchaImage={captchaImage}
+          onSubmit={this.onCaptchaModalSubmit}
+          isOpened={isShowCaptchaModal}
+        ></CaptchaModal>
         <Loading loading={loading}></Loading>
         <View className="query-classroom">
-          <Picker mode="selector" rangeKey="label" onChange={(e) => this.onChange('aids', e)} value={choiceAidsIndex} range={aids}>
+          <Picker
+            mode="selector"
+            rangeKey="label"
+            onChange={(e) => this.onChange('aids', e)}
+            value={choiceAidsIndex}
+            range={aids}
+          >
             <View className="selector">
-              <View className="label">选择校区<text className="color-red">*</text></View>
+              <View className="label">
+                选择校区<text className="color-red">*</text>
+              </View>
               <View className="selector-input">
-                { aids[choiceAidsIndex] ? <View className="selector-content">{aids[choiceAidsIndex].label}</View> : <View className="selector-placeholder">请选择校区</View>}
+                {aids[choiceAidsIndex] ? (
+                  <View className="selector-content">
+                    {aids[choiceAidsIndex].label}
+                  </View>
+                ) : (
+                  <View className="selector-placeholder">请选择校区</View>
+                )}
               </View>
             </View>
           </Picker>
-          <Picker mode="selector" rangeKey="label" onChange={(e) => this.onChange('buildingids', e)} value={choiceBuildingidsIndex} range={buildingids}>
+          <Picker
+            mode="selector"
+            rangeKey="label"
+            onChange={(e) => this.onChange('buildingids', e)}
+            value={choiceBuildingidsIndex}
+            range={buildingids}
+          >
             <View className="selector">
-              <View className="label">选择教学楼<text className="color-red">*</text></View>
+              <View className="label">
+                选择教学楼<text className="color-red">*</text>
+              </View>
               <View className="selector-input">
-                { buildingids[choiceBuildingidsIndex] ? <View className="selector-content">{buildingids[choiceBuildingidsIndex].label}</View> : <View className="selector-placeholder">请选择教学楼</View>}
+                {buildingids[choiceBuildingidsIndex] ? (
+                  <View className="selector-content">
+                    {buildingids[choiceBuildingidsIndex].label}
+                  </View>
+                ) : (
+                  <View className="selector-placeholder">请选择教学楼</View>
+                )}
               </View>
             </View>
           </Picker>
-          <Picker mode="selector" rangeKey="label" onChange={(e) => this.onChange('whichweeks', e)} value={choiceWhichweeksIndex} range={whichweeks}>
+          <Picker
+            mode="selector"
+            rangeKey="label"
+            onChange={(e) => this.onChange('whichweeks', e)}
+            value={choiceWhichweeksIndex}
+            range={whichweeks}
+          >
             <View className="selector">
-              <View className="label">选择周数<text className="color-red">*</text></View>
+              <View className="label">
+                选择周数<text className="color-red">*</text>
+              </View>
               <View className="selector-input">
-                {whichweeks[choiceWhichweeksIndex] ? <View className="selector-content">{whichweeks[choiceWhichweeksIndex].label}</View> : <View className="selector-placeholder">请选择周数</View>}
+                {whichweeks[choiceWhichweeksIndex] ? (
+                  <View className="selector-content">
+                    {whichweeks[choiceWhichweeksIndex].label}
+                  </View>
+                ) : (
+                  <View className="selector-placeholder">请选择周数</View>
+                )}
               </View>
             </View>
           </Picker>
-          <Picker mode="selector" rangeKey="label" onChange={(e) => this.onChange('weeks', e)} value={choiceWeeksIndex} range={weeks}>
+          <Picker
+            mode="selector"
+            rangeKey="label"
+            onChange={(e) => this.onChange('weeks', e)}
+            value={choiceWeeksIndex}
+            range={weeks}
+          >
             <View className="selector">
-              <View className="label">选择日期<Text className="color-red">*</Text></View>
+              <View className="label">
+                选择日期<Text className="color-red">*</Text>
+              </View>
               <View className="selector-input">
-                { weeks[choiceWeeksIndex] ? <View className="selector-content">{weeks[choiceWeeksIndex].label}</View> : <View className="selector-placeholder">请选择日期</View>}
+                {weeks[choiceWeeksIndex] ? (
+                  <View className="selector-content">
+                    {weeks[choiceWeeksIndex].label}
+                  </View>
+                ) : (
+                  <View className="selector-placeholder">请选择日期</View>
+                )}
               </View>
             </View>
           </Picker>
@@ -425,10 +557,16 @@ class QueryClassroom extends Component<IProps, PageState> {
 
           <View className="infos">
             <View>*特别说明：</View>
-            <View>1.标有“<Text className="color-red">*</Text>”的选项为必选项</View>
-            <View>2.理工喵所有教室信息均来自教务在线，部分教室可能会有临时安排，查询结果仅供参考，请以教室实际占用情况为准</View>
+            <View>
+              1.标有“<Text className="color-red">*</Text>”的选项为必选项
+            </View>
+            <View>
+              2.理工喵所有教室信息均来自教务在线，部分教室可能会有临时安排，查询结果仅供参考，请以教室实际占用情况为准
+            </View>
             <View>3.如有其它问题请联系我们的客服哦~</View>
-            <View>4.每天前两次免费使用，第三次开始需要观看广告，观看广告后本日不限次数（理解下哈大家，理工喵已经快没有猫粮了，喵~）~</View>
+            <View>
+              4.每天前两次免费使用，第三次开始需要观看广告，观看广告后本日不限次数（理解下哈大家，理工喵已经快没有猫粮了，喵~）~
+            </View>
           </View>
         </View>
       </Fragment>
@@ -440,6 +578,10 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({ updateClassrooms }, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ updateClassrooms }, dispatch)
 
-export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(mapStateToProps, mapDispatchToProps)(QueryClassroom)
+export default connect<PropsFromState, PropsFromDispatch, PageOwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(QueryClassroom)

@@ -25,7 +25,11 @@ export enum CommentType {
   /**
    * 评论回复
    */
-  ReplyComment = 2
+  ReplyComment = 2,
+  /**
+   * 游戏商品评论
+   */
+  ResourceComment = 3
 }
 
 const prefix = 'comment-input'

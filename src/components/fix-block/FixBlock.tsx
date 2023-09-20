@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from 'react'
-// import { PxToRem } from '@src/utils'
+// import { PxToRem } from '@/utils'
 import cn from 'classnames'
 import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'

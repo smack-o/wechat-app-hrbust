@@ -7,7 +7,8 @@ import {
   GET_GRADES,
   SET_CURRENT_TERM,
   UPDATE_USERINFO_PROMISE,
-  SET_UNREAD_COUNT
+  SET_UNREAD_COUNT,
+  UPDATE_CONFIG
 } from '../actions/user'
 
 const studentInfo = JSON.parse(Taro.getStorageSync('studentInfo') || '{}')
@@ -76,6 +77,12 @@ export interface UserState {
     country?: string
   }
   unreadCount: number
+  config: {
+    [key: string]: {
+      key: string
+      config: { [key: string]: any }
+    }
+  }
 }
 
 const INITIAL_STATE: UserState = {
@@ -98,7 +105,7 @@ const INITIAL_STATE: UserState = {
     country: '',
     gender: 0,
     language: 'zh_CN',
-    nickName: '许岩',
+    nickName: '',
     province: '',
     customAvatarUrl: {
       checkCode: 1,
@@ -107,7 +114,8 @@ const INITIAL_STATE: UserState = {
     },
     customName: ''
   },
-  unreadCount: 0
+  unreadCount: 0,
+  config: {}
 }
 
 export default function user(
@@ -128,6 +136,15 @@ export default function user(
       return {
         ...state,
         getUserInfoPromise: action.data
+      }
+
+    case UPDATE_CONFIG:
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          ...action.data
+        }
       }
 
     case SET_UNREAD_COUNT:

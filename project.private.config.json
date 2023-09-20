@@ -1,4 +1,8 @@
 {
+  "setting": {
+    "compileHotReLoad": true,
+    "bigPackageSizeSupport": true
+  },
   "condition": {
     "miniprogram": {
       "list": [
@@ -35,6 +39,12 @@
         {
           "name": "登录",
           "pathName": "pages2/login/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "空教室查询",
+          "pathName": "pages2/classroom/index",
           "query": "",
           "scene": null
         },
@@ -81,8 +91,78 @@
           "scene": null
         },
         {
-          "name": "新建表白墙",
-          "pathName": "pages2/create-wall",
+          "name": "创建表白墙",
+          "pathName": "pages3/community/create-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "表白墙首页",
+          "pathName": "pages3/community/index",
+          "query": "__key_=16503398361591",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/account/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "表白墙详情页",
+          "pathName": "pages3/community/wall-detail/index",
+          "query": "id=625fac6c708756da5cb35dd1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "新建卖舍友",
+          "pathName": "pages3/community/create-sale-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "卖舍友详情",
+          "pathName": "pages3/community/sale-wall-detail/index",
+          "query": "id=6267aa71dd6e7a40bc8b4687",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "消息列表页面",
+          "pathName": "pages3/community/message/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的表白墙",
+          "pathName": "pages3/community/my-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的卖舍友",
+          "pathName": "pages3/community/my-sale-wall/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "资源分享",
+          "pathName": "pages/resource/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "资源详情",
+          "pathName": "pages3/community/resource-detail/index",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -90,5 +170,7 @@
       ]
     }
   },
-  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html"
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "理工喵",
+  "libVersion": "3.0.1"
 }

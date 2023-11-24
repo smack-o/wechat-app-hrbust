@@ -76,7 +76,7 @@ export const uploadFileToServer = async ({
     })
     const res = JSON.parse(data)
 
-    if (!res?.result?._id) {
+    if (!res?.result?._id || !res?.result?.id) {
       throw new Error('上传失败')
     }
     return res.result.id

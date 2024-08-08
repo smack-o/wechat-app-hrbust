@@ -5,6 +5,7 @@ import { getCdnUrl } from '@/utils'
 import Time from '@/components/Time'
 import { UserState } from '@/redux/reducers/user'
 import './ListItem.less'
+import ImageCache from '@/components/ImageCache'
 
 type IProps = {
   onClick: () => void
@@ -31,7 +32,7 @@ export default function ListItem(props: IProps) {
     content,
     rightContent,
     photo,
-    userTags
+    userTags,
   } = props
 
   return (
@@ -64,11 +65,11 @@ export default function ListItem(props: IProps) {
         ></Time>
       </View>
       {photo?.key ? (
-        <Image
+        <ImageCache
           className={`${prefix}-right image`}
           mode="aspectFill"
           src={getCdnUrl(photo)}
-        ></Image>
+        ></ImageCache>
       ) : rightContent ? (
         <View className={`${prefix}-right`}>{rightContent}</View>
       ) : null}

@@ -32,6 +32,7 @@ import Time from '@/components/Time'
 import SwiperChild from './components/SwiperChild'
 
 import './index.less'
+import ImageCache from '@/components/ImageCache'
 
 type PropsFromState = ReturnType<typeof mapStateToProps>
 
@@ -424,11 +425,11 @@ class Index extends Component<IProps, PageState> {
                     >
                       <View className="item">
                         {item.photos && item.photos.length > 0 && (
-                          <Image
+                          <ImageCache
                             className="image"
                             mode="aspectFill"
                             src={getCdnUrl(item.photos[0])}
-                          ></Image>
+                          ></ImageCache>
                         )}
                         {/* <Image className="image" src={item.images} mode="widthFix" /> */}
                         <View className="text">

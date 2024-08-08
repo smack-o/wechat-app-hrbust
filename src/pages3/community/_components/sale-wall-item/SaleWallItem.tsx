@@ -14,6 +14,7 @@ import SaleWallLiked from '@/assets/community-imgs/sale_wall_liked.png'
 import CommentIcon from '@/assets/community-imgs/comment.png'
 // import { Avatar, Time } from '../publisher-title'
 import './SaleWallItem.less'
+import ImageCache from '@/components/ImageCache'
 
 interface IWallItemProps {
   data: GetApiResultType<typeof APIS.SaleWallApi.apiSaleWallListGet>[0]
@@ -32,9 +33,9 @@ export default function WallItem(props: IWallItemProps) {
       _id,
       createdAt,
       commentCount,
-      isPublisher
+      isPublisher,
     } = {},
-    timeType
+    timeType,
   } = props
 
   const [localIsLike, setLocalIsLike] = useState(isLike)
@@ -46,10 +47,10 @@ export default function WallItem(props: IWallItemProps) {
   }, [isLike, likeCount])
 
   const onLikeClick = useCallback(
-    async e => {
+    async (e) => {
       e.stopPropagation()
       const [err] = await withRequest(APIS.SaleWallApi.apiSaleWallLikeIdPut)({
-        id: _id || ''
+        id: _id || '',
       })
 
       // 本地变更
@@ -69,15 +70,15 @@ export default function WallItem(props: IWallItemProps) {
 
   return (
     <View className={prefix} onClick={onItemClick}>
-      <Image
+      <ImageCache
         style={{
           height:
-            height && width ? Taro.pxTransform((height / width) * 347) : 'auto'
+            height && width ? Taro.pxTransform((height / width) * 347) : 'auto',
         }}
         className={`${prefix}__photo`}
         src={getCdnUrl(photos[0])}
         mode="widthFix"
-      ></Image>
+      ></ImageCache>
       <View className={`${prefix}__info`}>
         <Avatar
           className={`${prefix}__avatar`}
@@ -94,7 +95,7 @@ export default function WallItem(props: IWallItemProps) {
           <Time time={createdAt || ''} type={timeType}></Time>
           <View
             className={classNames(`${prefix}__info-like`, {
-              active: localIsLike && !isLike
+              active: localIsLike && !isLike,
             })}
           >
             <Image src={CommentIcon} mode="widthFix"></Image>

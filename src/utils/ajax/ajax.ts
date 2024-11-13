@@ -10,17 +10,18 @@ const defaultAjax = ajax.ajax
 const COOKIE_KEY = 'new_cookie'
 const CSRF_TOKEN_KEY = 'csrfToken'
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use((response) => {
   const { headers } = response
 
   // 小程序 cookie 用逗号分割，只能特殊处理
-  const cookie = ((headers['set-cookie'] || '') as string)
+  const cookie = (
+    (headers['set-cookie'] || headers['Set-Cookie'] || '') as string
+  )
     .split(/,(?=[^,]*=)/)
     .join(';')
 
   const SESSION_ID = Cookie.parse(cookie).SESSION_ID
 
-  console.log(Cookie.serialize('SESSION_ID', SESSION_ID))
   SESSION_ID &&
     Taro.setStorageSync(COOKIE_KEY, Cookie.serialize('SESSION_ID', SESSION_ID))
 
@@ -37,7 +38,7 @@ export const getHeader = () => {
 
   return {
     Cookie: cookie,
-    'x-csrf-token': csrfToken
+    'x-csrf-token': csrfToken,
   }
 }
 
@@ -57,8 +58,8 @@ ajax.ajax = (
       ...options,
       headers: {
         ...headers,
-        ...getHeader()
-      }
+        ...getHeader(),
+      },
     },
     path,
     basePath

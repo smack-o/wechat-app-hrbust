@@ -1,0 +1,25 @@
+@import '~@/styles/lib.less';
+
+.sale-wall {
+  min-height: 100vh;
+  background: #eaeef0;
+
+  &__add-wall {
+    position: fixed;
+    bottom: calc(164px + constant(safe-area-inset-bottom));
+    bottom: calc(164px + env(safe-area-inset-bottom));
+    right: 30px;
+
+    image {
+      height: 162px;
+      width: 162px;
+    }
+  }
+
+  &__list {
+    margin: 0 auto;
+    padding: 20px 16px;
+    width: 100%;
+    display: flex;
+  }
+}

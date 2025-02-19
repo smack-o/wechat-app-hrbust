@@ -1,0 +1,65 @@
+@import "../../sub-vendors.wxss";/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages3/community/search/index.less ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.community-search {
+  min-height: 100vh;
+  background: #eaeef0;
+}
+.community-search-input {
+  position: relative;
+  width: 100%;
+  height: 110rpx;
+  background: #ffffff;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.community-search-input__icon {
+  position: absolute;
+  left: 60rpx;
+  width: 36rpx;
+  height: 36rpx;
+}
+.community-search-input input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 690rpx;
+  height: 88rpx;
+  background: #f7f9f8;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 40rpx;
+  padding: 0 40rpx 0 97rpx;
+}
+.community-search-tags {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20rpx;
+}
+.community-search-tags .at-tag {
+  margin-right: 20rpx;
+}
+.community-search__sale-wall-list {
+  margin: 0 auto;
+  width: 100%;
+  padding: 20rpx 12rpx;
+  -webkit-column-count: 2;
+     -moz-column-count: 2;
+          column-count: 2;
+  -webkit-column-width: calc(50% - 16rpx);
+     -moz-column-width: calc(50% - 16rpx);
+          column-width: calc(50% - 16rpx);
+  -webkit-column-gap: 0rpx;
+     -moz-column-gap: 0rpx;
+          column-gap: 0rpx;
+}
+

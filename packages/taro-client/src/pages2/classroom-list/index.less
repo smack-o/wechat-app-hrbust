@@ -1,0 +1,114 @@
+.rooms-empty {
+  text-align: center;
+  margin-top: 200rpx;
+  color: gray;
+  font-size: 32rpx;
+}
+.classrooms-page {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: calc(126px + 35px);
+
+  .grade-list,
+  .grade-title-list {
+    display: flex;
+    flex-direction: column;
+
+    .title-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
+      width: 239rpx;
+      height: 130rpx;
+    }
+    .list-row {
+      width: 1060rpx;
+      height: 130rpx;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20rpx;
+      padding-bottom: 20rpx;
+      padding-right: 60rpx;
+    }
+    .list-row-even {
+      background-color: #f7f7f7;
+    }
+    .list-row-odd {
+      background-color: #fff;
+    }
+    .list-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20rpx 0;
+    }
+    .list-text {
+      font-size: 26rpx;
+      text-align: center;
+    }
+    .room {
+      width: 239rpx;
+      padding: 0 30rpx 0 60rpx;
+      flex: none;
+    }
+
+    .type {
+      width: 148rpx;
+      padding: 0 14rpx;
+      white-space: nowrap;
+      flex: none;
+    }
+
+    .amount {
+      width: 98rpx;
+      padding: 0 14rpx;
+      flex: none;
+    }
+
+    .info {
+      width: 98rpx;
+      padding: 0 14rpx;
+      flex: none;
+
+      .info-item {
+        width: 98rpx;
+        height: 40rpx;
+        border-radius: 20rpx;
+        font-size: 20rpx;
+        line-height: 40rpx;
+        color: #fff;
+        text-align: center;
+
+        &-red {
+          background: #e36363;
+        }
+
+        &-green {
+          background: #6dde9e;
+        }
+      }
+    }
+  }
+
+  .grade-title-list {
+    color: #999999;
+    font-size: 24rpx;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    // .list-text {
+    //   // font-weight: bolder;
+    // }
+  }
+
+  .list-row-title {
+    color: #999999;
+    height: 80rpx;
+  }
+}

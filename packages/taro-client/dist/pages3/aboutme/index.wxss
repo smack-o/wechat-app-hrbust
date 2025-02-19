@@ -1,0 +1,147 @@
+@import "../sub-vendors.wxss";/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages3/aboutme/index.less ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.aboutme-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f0f0f0;
+  color: #000;
+}
+.aboutme-page .bottom {
+  width: 100%;
+  height: 100rpx;
+  background-color: #000;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: none;
+}
+.aboutme-page .bottom::after {
+  border: none;
+}
+.aboutme-page .bottom .bottom__image {
+  height: 100%;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+}
+.aboutme-page .list-wrapper {
+  height: calc(100% - 100rpx);
+  width: 100%;
+  position: relative;
+}
+.aboutme-page .list {
+  width: 100%;
+  padding: 2.5rem 0.438rem 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.aboutme-page .list .wechat {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.aboutme-page .block {
+  height: 20rpx;
+  width: 100%;
+}
+.aboutme-page .button {
+  position: fixed;
+  top: 0;
+}
+.aboutme-page .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.aboutme-page .avatar .avatar__image {
+  width: 80rpx;
+  height: 80rpx;
+}
+.aboutme-page .content {
+  max-width: 480rpx;
+  min-height: 2.5rem;
+  text-align: left;
+  font-size: 28rpx;
+  margin: 0 28rpx;
+  border-radius: 12rpx;
+  vertical-align: top;
+  word-wrap: break-word;
+  word-break: break-all;
+  position: relative;
+}
+.aboutme-page .content.content-text::before {
+  content: '';
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 0.438rem;
+  height: 0.438rem;
+  position: absolute;
+  top: 0.938rem;
+  background-color: inherit;
+  border-right-color: inherit;
+  border-bottom-color: inherit;
+}
+.aboutme-page .content .picture {
+  border-radius: 0.125rem;
+  overflow: hidden;
+  position: relative;
+  width: 300rpx;
+}
+.aboutme-page .content .picture .content__image {
+  width: 300rpx;
+  border: 0;
+  display: block;
+  cursor: pointer;
+}
+.aboutme-page .left .content {
+  background-color: #fff;
+  border-color: #919191;
+}
+.aboutme-page .left .content::before {
+  background-color: #fff;
+  border-color: #919191;
+  left: -0.188rem;
+  -webkit-transform: rotate(135deg);
+      -ms-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+.aboutme-page .right {
+  -webkit-flex-direction: row-reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+.aboutme-page .right .content {
+  background-color: #90d936;
+  border-color: #92e749;
+}
+.aboutme-page .right .content::before {
+  background-color: #90d936;
+  border-color: #92e749;
+  right: -0.188rem;
+  -webkit-transform: rotate(135deg);
+      -ms-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+.aboutme-page .plain {
+  padding: 0.563rem 0.625rem;
+}
+

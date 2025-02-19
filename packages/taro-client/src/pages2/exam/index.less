@@ -1,0 +1,94 @@
+.exam-page {
+  .news-item {
+    margin: 40px 60px;
+    padding: 40px 32px 13px;
+    width: 630px;
+    // height: 210px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 30px 0px rgba(0, 0, 80, 0.07);
+    border-radius: 16px;
+    font-size: 26px;
+    box-sizing: border-box;
+    &.ending {
+      opacity: 0.8;
+      box-shadow: none;
+      border: solid 1px #f6f6f6;
+      // background-color: #cccccc;
+      color: #cccccc !important;
+      .news-message {
+        color: #cccccc !important;
+
+        .time {
+          // font-family: PingFangSC-Medium;
+          font-weight: bolder;
+        }
+        .dateExtend {
+          color: #cccccc;
+        }
+        .position {
+          color: #cccccc !important;
+        }
+        .info {
+          color: #cccccc !important;
+          &.text-red {
+            color: #cccccc !important;
+          }
+        }
+      }
+    }
+    .news-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      .top {
+        color: #6dde9e;
+      }
+    }
+    .text-small {
+      // text-align: right;
+      color: #cccccc;
+    }
+    .flex-box {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 27px;
+    }
+    .news-message {
+      font-size: 26px;
+      line-height: 22px;
+      color: #333333;
+
+      .time {
+        // font-family: PingFangSC-Medium;
+        font-weight: bolder;
+      }
+      .dateExtend {
+        color: #cccccc;
+      }
+      .position {
+        color: #999999;
+      }
+      .info {
+        color: #6dde9e;
+        &.text-red {
+          color: #f47aa9;
+        }
+      }
+    }
+  }
+  .advertising {
+    transform-origin: center bottom;
+    transform: scale(0.84) !important;
+    // margin: 40px 0;
+    margin-top: -40px;
+    margin-bottom: 40px;
+    // padding: 40px 32px 13px;
+    // width: 630px;
+    // height: 210px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 30px 0px rgba(0, 0, 80, 0.07);
+    border-radius: 16px;
+    font-size: 26px;
+    box-sizing: border-box;
+  }
+}

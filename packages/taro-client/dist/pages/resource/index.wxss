@@ -1,0 +1,230 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/components/tab/Tab.less ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.community-tab-title {
+  height: 104rpx;
+  padding: 0 32rpx;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  font-size: 32rpx;
+  color: #d1d1d6;
+  line-height: 45rpx;
+  background: #fff;
+}
+.community-tab__item {
+  margin-right: 64rpx;
+  position: relative;
+}
+.community-tab__item:last-of-type {
+  margin-right: 0;
+}
+.community-tab__item.current {
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #4e4c56;
+}
+.community-tab-active-bar {
+  position: absolute;
+  bottom: -16rpx;
+  left: 50%;
+  margin-left: -16rpx;
+  display: block;
+  width: 32rpx;
+  height: 6rpx;
+  background-color: #3399ff;
+  -webkit-animation-name: rubberBand;
+          animation-name: rubberBand;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+@-webkit-keyframes rubberBand {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+            transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+            transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+            transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+            transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+            transform: scale3d(1.05, 0.95, 1);
+  }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes rubberBand {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+            transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+            transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+            transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+            transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+            transform: scale3d(1.05, 0.95, 1);
+  }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+.rubberBand {
+  -webkit-animation-name: rubberBand;
+          animation-name: rubberBand;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages/resource/Resource.less ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+view,
+page {
+  --bg-color: #000;
+  --bg-color2: red;
+}
+/**
+  less utils
+*/
+@-webkit-keyframes breatheAnimation {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+@keyframes breatheAnimation {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+.resource {
+  min-height: 100vh;
+  padding-bottom: 300rpx;
+  background: #eaeef0;
+}
+.resource-tab {
+  position: relative;
+}
+.resource-tab-icon {
+  font-size: 20rpx;
+  position: absolute;
+  right: 0;
+  right: -50rpx;
+  top: 4rpx;
+}
+.resource-tab-icon--active {
+  position: absolute;
+  right: -50rpx;
+  top: -1rpx;
+  /* top: 4rpx; */
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+.resource-ad {
+  margin: 15rpx 0;
+}
+.resource__add-wall {
+  position: fixed;
+  bottom: calc(164rpx + constant(safe-area-inset-bottom));
+  bottom: calc(164rpx + env(safe-area-inset-bottom));
+  right: 30rpx;
+}
+.resource__add-wall image {
+  height: 162rpx;
+  width: 162rpx;
+}
+.resource-search {
+  position: relative;
+  width: 100%;
+  height: 110rpx;
+  background: #ffffff;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.resource-search__icon {
+  position: absolute;
+  left: 60rpx;
+  width: 36rpx;
+  height: 36rpx;
+}
+.resource-search input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 690rpx;
+  height: 88rpx;
+  background: #f7f9f8;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 40rpx;
+  padding: 0 40rpx 0 97rpx;
+}
+

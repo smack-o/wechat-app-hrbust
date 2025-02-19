@@ -1,0 +1,96 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages2/classroom/index.less ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.query-classroom {
+  padding-top: 40rpx;
+}
+.query-classroom .selector {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 30rpx;
+}
+.query-classroom .selector .label {
+  position: relative;
+  width: 200rpx;
+  text-align: right;
+  margin-right: 38rpx;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  color: #999999;
+}
+.query-classroom .selector .color-red {
+  position: absolute;
+  right: -18rpx;
+  margin-top: 2rpx;
+}
+.query-classroom .selector .small-size {
+  font-size: 20rpx;
+}
+.query-classroom .selector-input {
+  position: relative;
+  width: 460rpx;
+  height: 66rpx;
+  border-radius: 38rpx;
+  border: 1rpx solid #dcdcdc;
+  font-size: 24rpx;
+  line-height: 66rpx;
+  padding: 0 50rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #000;
+}
+.query-classroom .selector-input .selector-placeholder {
+  color: #cccccc;
+}
+.query-classroom .selector-input::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 30rpx;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 14rpx 13rpx 0 13rpx;
+  border-color: #bbbbbb transparent transparent transparent;
+}
+.query-classroom .button {
+  width: 630rpx;
+  height: 80rpx;
+  margin: 100rpx auto 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #6dde9e;
+  -webkit-box-shadow: 0rpx 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+          box-shadow: 0rpx 10rpx 25rpx 0rpx rgba(109, 222, 158, 0.26);
+  border-radius: 40rpx;
+}
+.query-classroom .button .button-text {
+  font-size: 26rpx;
+  color: #ffffff;
+}
+.query-classroom .infos {
+  width: 604rpx;
+  margin: 60rpx auto 0;
+  font-size: 24rpx;
+  color: #999999;
+}
+.query-classroom .color-red {
+  font-size: 30rpx;
+  color: #ff0000;
+  margin-top: 6rpx;
+}
+

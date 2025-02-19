@@ -1,0 +1,75 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/custom-tab-bar/index.less ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 96rpx;
+  background: white;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab-bar-border {
+  background-color: rgba(0, 0, 0, 0.33);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1rpx;
+  -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.tab-bar-item {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  text-align: center;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.tab-bar-item cover-image {
+  width: 30rpx;
+  height: 30rpx;
+}
+.tab-bar-item.large cover-image {
+  height: 56rpx;
+  width: 56rpx;
+}
+.tab-bar-item cover-view {
+  font-size: 20rpx;
+  overflow: auto;
+}
+.custom-tab-item-dot {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  line-height: 22rpx;
+  right: 35rpx;
+  top: 5rpx;
+  min-width: 22rpx;
+  height: 22rpx;
+  font-size: 14rpx !important;
+  background: red;
+  border-radius: 50%;
+  color: white;
+}
+

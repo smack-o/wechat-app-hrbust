@@ -1,0 +1,70 @@
+@import '~@/styles/lib.less';
+
+.resource {
+  min-height: 100vh;
+  padding-bottom: 300rpx;
+  background: #eaeef0;
+
+  &-tab {
+    position: relative;
+    &-icon {
+      font-size: 20px;
+      position: absolute;
+      right: 0;
+      right: -50rpx;
+      top: 4rpx;
+
+      &--active {
+        position: absolute;
+        right: -50rpx;
+        top: -1rpx;
+        /* top: 4rpx; */
+        transform: rotate(180deg);
+      }
+    }
+  }
+  &-ad {
+    margin: 15px 0;
+  }
+  &__add-wall {
+    position: fixed;
+    bottom: calc(164px + constant(safe-area-inset-bottom));
+    bottom: calc(164px + env(safe-area-inset-bottom));
+    right: 30px;
+
+    image {
+      height: 162px;
+      width: 162px;
+    }
+  }
+
+  &-search {
+    position: relative;
+    width: 100%;
+    height: 110px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+      position: absolute;
+      left: 60px;
+      width: 36px;
+      height: 36px;
+    }
+    input {
+      box-sizing: border-box;
+      width: 690px;
+      height: 88px;
+      background: #f7f9f8;
+      border-radius: 16px;
+      font-size: 28px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      // color: #d1d1d6;
+      line-height: 40px;
+      padding: 0 40px 0 97px;
+    }
+  }
+}

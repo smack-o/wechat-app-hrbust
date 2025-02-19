@@ -1,0 +1,187 @@
+@import "../../sub-vendors.wxss";/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages3/community/sale-wall-detail/index.less ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+view,
+page {
+  --bg-color: #000;
+  --bg-color2: red;
+}
+/**
+  less utils
+*/
+@-webkit-keyframes breatheAnimation {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+@keyframes breatheAnimation {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+.sale-wall-detail {
+  background: #fff;
+  min-height: 100vh;
+  padding: 0 20rpx;
+}
+.sale-wall-detail__title {
+  padding: 25rpx 10rpx;
+}
+.sale-wall-detail__swiper {
+  height: 532rpx;
+}
+.sale-wall-detail__swiper-item {
+  width: 710rpx;
+  height: 532rpx;
+  border-radius: 12rpx;
+}
+.sale-wall-detail__name {
+  text-align: center;
+  font-size: 42rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #292934;
+  line-height: 59rpx;
+  margin-top: 40rpx;
+}
+.sale-wall-detail__gender {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #9a9a9a;
+  line-height: 37rpx;
+  margin-top: 30rpx;
+}
+.sale-wall-detail__gender image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 8rpx;
+}
+.sale-wall-detail__location {
+  margin-left: 100rpx;
+}
+.sale-wall-detail__info {
+  margin-top: 50rpx;
+  padding: 0 10rpx;
+  width: 670rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #4e4c56;
+  line-height: 50rpx;
+}
+.sale-wall-detail__info-item {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.sale-wall-detail__info-item__title {
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  width: 160rpx;
+}
+.sale-wall-detail__info-item__text {
+  font-size: 28rpx;
+  color: #9a9a9a;
+}
+.sale-wall-detail__like {
+  position: relative;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 180rpx;
+  height: 180rpx;
+  background: #f7f9f8;
+  border-radius: 50%;
+  margin: 80rpx auto 20rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #ff5167;
+  line-height: 40rpx;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+.sale-wall-detail__like.liked {
+  -webkit-filter: none;
+          filter: none;
+}
+.sale-wall-detail__like image {
+  width: 70rpx;
+  height: 70rpx;
+}
+.sale-wall-detail__like-tips {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #4e4c56;
+  line-height: 33rpx;
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+.sale-wall-detail__border-line {
+  width: 670rpx;
+  height: 2rpx;
+  background-color: #f7f9f8;
+  margin: 40rpx auto;
+}
+.sale-wall-detail__comment-title {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #cdcdcd;
+  line-height: 42rpx;
+  margin-left: 40rpx;
+  margin-bottom: 20rpx;
+}
+.sale-wall-detail__comment-list {
+  padding: 0 20rpx;
+}
+.sale-wall-detail__delete {
+  text-align: right;
+  margin-right: 40rpx;
+}
+

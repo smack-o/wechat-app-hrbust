@@ -1,0 +1,54 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../node_modules/.pnpm/css-loader@6.11.0_webpack@5.78.0_@swc+core@1.3.23_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[1]!../../node_modules/.pnpm/postcss-loader@7.3.4_postcss@8.5.2_typescript@5.7.3_webpack@5.78.0_@swc+core@1.3.23_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[2]!../../node_modules/.pnpm/less-loader@10.2.0_less@4.2.2_webpack@5.78.0_@swc+core@1.3.23_/node_modules/less-loader/dist/cjs.js!./src/pages2/course-detail/index.less ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.course-detail-page {
+  padding-bottom: 35rpx;
+}
+.course-detail-page .detial {
+  position: fixed;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding-top: 40rpx;
+  z-index: 100;
+  background-color: #f4f7f9;
+}
+.course-detail-page .detial view {
+  margin-bottom: 10rpx;
+}
+.course-detail-page .detial .course-name {
+  font-size: 30rpx;
+}
+.course-detail-page .detial .detial-current-week,
+.course-detail-page .detial .detail-not-current-week {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 40rpx;
+  padding: 40rpx;
+  font-size: 24rpx;
+  background-color: #fff;
+}
+.course-detail-page .detial .detial-current-week {
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1;
+  color: #3f627e;
+  font-weight: 700;
+}
+.course-detail-page .detial .detail-not-current-week {
+  -webkit-order: 5;
+      -ms-flex-order: 5;
+          order: 5;
+  color: #ccc;
+}
+

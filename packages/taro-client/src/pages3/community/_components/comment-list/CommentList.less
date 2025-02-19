@@ -1,0 +1,112 @@
+@import '~@/styles/lib.less';
+
+.comment-list {
+  padding: 28px 20px;
+  background: #f7f9f8;
+  margin-bottom: 60px;
+
+  &__replay-more {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  &__comment-title {
+    font-size: 30px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #cdcdcd;
+    line-height: 42px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #fff;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &-replay {
+      padding-left: 20px;
+
+      .comment-list {
+        margin-bottom: 20px;
+      }
+      .comment-list__item {
+        margin-right: -20px;
+      }
+    }
+
+    &__avatar {
+      image {
+        margin-right: 16px;
+      }
+    }
+    &-right {
+      flex: 1;
+    }
+
+    &__title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &__name {
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #3399ff;
+        line-height: 34px;
+        font-size: 24px;
+      }
+
+      &__time {
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #cdcdcd;
+        line-height: 34px;
+      }
+    }
+
+    &__content {
+      display: block;
+      margin-top: 8px;
+      font-size: 28px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #4e4c56;
+      line-height: 40px;
+    }
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+
+      &__delete {
+        font-size: 24px;
+        margin-right: 28px;
+      }
+
+      &__like {
+        display: flex;
+        align-items: center;
+        margin-right: 28px;
+        font-family: TrebuchetMS, Rotobo, 'Microsoft YaHei', sans-serif;
+        image {
+          width: 40px;
+          height: 40px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  &__community-no-data {
+    padding: 40px 0;
+  }
+}
